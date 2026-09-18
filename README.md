@@ -2,7 +2,7 @@
 
 本仓库发布课程概览、第一讲和第一讲术语索引。讲义支持连续阅读、逐页演示、交互图示与答案揭示。
 
-网站：https://zzh-tech.github.io/parallel-computing-course/
+网站：https://visionary-laboratory.github.io/parallel-computing-course/
 
 ## 发布
 
