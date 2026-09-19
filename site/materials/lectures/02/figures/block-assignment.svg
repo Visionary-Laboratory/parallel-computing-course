@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">Grid 描述工作，SM 承载执行</title><desc id="desc">Grid 描述工作，SM 承载执行。8 个逻辑 block；下图只是一种允许的分派，编号不绑定物理 SM</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Grid 描述工作，SM 承载执行</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">8 个逻辑 block；下图只是一种允许的分派，编号不绑定物理 SM</text>
+<rect x="51" y="123" width="112" height="51" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="107.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 0</text>
+<rect x="180" y="123" width="112" height="51" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="236.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 1</text>
+<rect x="309" y="123" width="112" height="51" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="365.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 2</text>
+<rect x="438" y="123" width="112" height="51" rx="8" fill="#EDF1F3" stroke="#687680" stroke-width="1.5"/>
+<text x="494.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 3</text>
+<rect x="567" y="123" width="112" height="51" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="623.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 4</text>
+<rect x="696" y="123" width="112" height="51" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="752.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 5</text>
+<rect x="825" y="123" width="112" height="51" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="881.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 6</text>
+<rect x="954" y="123" width="112" height="51" rx="8" fill="#EDF1F3" stroke="#687680" stroke-width="1.5"/>
+<text x="1010.0" y="155.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">Block 7</text>
+<text x="948" y="204" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">3、7 等待资源</text>
+<rect x="74" y="276" width="310" height="189" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="229" y="313" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">SM 0</text>
+<rect x="96" y="334" width="266" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="229.0" y="362.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">驻留 Block 0</text>
+<rect x="96" y="391" width="266" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="229.0" y="419.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">驻留 Block 6</text>
+<line x1="229" y1="217" x2="229" y2="264" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="431" y="276" width="310" height="189" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="586" y="313" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">SM 1</text>
+<rect x="453" y="334" width="266" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="586.0" y="362.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">驻留 Block 2</text>
+<rect x="453" y="391" width="266" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="586.0" y="419.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">驻留 Block 5</text>
+<line x1="586" y1="217" x2="586" y2="264" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="788" y="276" width="310" height="189" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="943" y="313" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">SM 2</text>
+<rect x="810" y="334" width="266" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="943.0" y="362.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">驻留 Block 1</text>
+<rect x="810" y="391" width="266" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="943.0" y="419.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">驻留 Block 4</text>
+<line x1="943" y1="217" x2="943" y2="264" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="229" y1="220" x2="943" y2="220" stroke="#176B52" stroke-width="2"/>
+<line x1="430" y1="180" x2="430" y2="220" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">每个 SM 画两个槽位只是示例；可同时驻留多少 block 由线程、寄存器、共享内存等共同限制。</text>
+</g></svg>

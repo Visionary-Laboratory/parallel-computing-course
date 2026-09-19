@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">放大子分区 0：调度的是 warp，执行有通路宽度</title><desc id="desc">放大子分区 0：调度的是 warp，执行有通路宽度。V100 历史实例；只画关键资源，warp 的 32 个线程不等于 32 条独立控制流</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">放大子分区 0：调度的是 warp，执行有通路宽度</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">V100 历史实例；只画关键资源，warp 的 32 个线程不等于 32 条独立控制流</text>
+<rect x="50" y="125" width="287" height="106" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="193.5" y="171.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器</text>
+<text x="193.5" y="201.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">从就绪 warp 中选择</text>
+<rect x="50" y="261" width="287" height="110" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="193.5" y="308.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">寄存器文件</text>
+<text x="193.5" y="338.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">16K × 32-bit = 64 KB</text>
+<line x1="338" y1="177" x2="414" y2="177" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="338" y1="317" x2="414" y2="317" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="427" y="126" width="640" height="273" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="450" y="162" font-size="23" fill="#20372F" text-anchor="start" font-weight="600">运算资源</text>
+<text x="450" y="206" font-size="20" fill="#176B52" text-anchor="start" font-weight="400">FP32</text>
+<rect x="539" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="569" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="599" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="629" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="659" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="689" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="719" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="749" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="779" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="809" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="839" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="869" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="899" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="929" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="959" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="989" y="183" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1047" y="206" font-size="20" fill="#176B52" text-anchor="end" font-weight="400">×16</text>
+<text x="450" y="255" font-size="20" fill="#176B52" text-anchor="start" font-weight="400">INT32</text>
+<rect x="539" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="569" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="599" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="629" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="659" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="689" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="719" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="749" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="779" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="809" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="839" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="869" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="899" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="929" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="959" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="989" y="232" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1047" y="255" font-size="20" fill="#176B52" text-anchor="end" font-weight="400">×16</text>
+<text x="450" y="304" font-size="20" fill="#176B52" text-anchor="start" font-weight="400">FP64</text>
+<rect x="539" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="569" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="599" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="629" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="659" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="689" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="719" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="749" y="281" width="24" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1047" y="304" font-size="20" fill="#176B52" text-anchor="end" font-weight="400">×8</text>
+<text x="450" y="353" font-size="20" fill="#176B52" text-anchor="start" font-weight="400">Tensor</text>
+<rect x="539" y="330" width="84" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="639" y="330" width="84" height="29" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1047" y="353" font-size="20" fill="#176B52" text-anchor="end" font-weight="400">×2</text>
+<rect x="240" y="436" width="760" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="620.0" y="475.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">32 个线程的 FP32 指令，分批送入 16 条 FP32 通路</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">通路吞吐宽度不等于指令结果延迟；图中省略 L0 指令缓存、LD/ST、SFU 等资源。</text>
+</g></svg>

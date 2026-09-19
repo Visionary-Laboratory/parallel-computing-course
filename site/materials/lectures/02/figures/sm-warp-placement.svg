@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc">
+<title id="title">一个 SM：两个 block，八个驻留 warp</title><desc id="desc">SM0示意驻留block0和block6，各有128线程、4个warp。子分区s的调度器示意管理B0.Ws和B6.Ws，s为0到3，具体编号映射不是CUDA保证。一个block的warp跨越四个子分区，一个子分区管理两个block的warp。各线程状态驻留于寄存器，子分区共享SM级L1和shared memory物理资源，不表示不同block共享彼此的内存区域。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">一个 SM：两个 block，八个驻留 warp</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">沿用每 block 128 线程；四列是 V100 子分区，warp 归属仅作教学示意。</text>
+<rect x="31" y="109" width="1057" height="468" rx="12" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="55" y="153" font-size="28" fill="#176B52" text-anchor="start" font-weight="700">SM 0</text>
+<rect x="187" y="124" width="413" height="60" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="393.5" y="162.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">Block 0：128 线程 / 4 warps</text>
+<rect x="631" y="124" width="432" height="60" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="847.0" y="162.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">Block 6：128 线程 / 4 warps</text>
+<rect x="45" y="211" width="232" height="292" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="161" y="240" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">子分区 0</text>
+<rect x="57" y="255" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="161.0" y="283.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B0.W0 的状态</text>
+<rect x="57" y="311" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="161.0" y="339.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B6.W0 的状态</text>
+<line x1="161" y1="357" x2="161" y2="374" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="57" y="382" width="208" height="43" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="161.0" y="410.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器 0</text>
+<line x1="161" y1="427" x2="161" y2="446" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="57" y="454" width="208" height="36" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="161.0" y="479.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">相应算术执行资源</text>
+<rect x="315" y="211" width="232" height="292" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="431" y="240" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">子分区 1</text>
+<rect x="327" y="255" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="431.0" y="283.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B0.W1 的状态</text>
+<rect x="327" y="311" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="431.0" y="339.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B6.W1 的状态</text>
+<line x1="431" y1="357" x2="431" y2="374" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="327" y="382" width="208" height="43" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="431.0" y="410.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器 1</text>
+<line x1="431" y1="427" x2="431" y2="446" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="327" y="454" width="208" height="36" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="431.0" y="479.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">相应算术执行资源</text>
+<rect x="585" y="211" width="232" height="292" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="701" y="240" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">子分区 2</text>
+<rect x="597" y="255" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="701.0" y="283.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B0.W2 的状态</text>
+<rect x="597" y="311" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="701.0" y="339.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B6.W2 的状态</text>
+<line x1="701" y1="357" x2="701" y2="374" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="597" y="382" width="208" height="43" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="701.0" y="410.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器 2</text>
+<line x1="701" y1="427" x2="701" y2="446" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="597" y="454" width="208" height="36" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="701.0" y="479.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">相应算术执行资源</text>
+<rect x="855" y="211" width="232" height="292" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="971" y="240" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">子分区 3</text>
+<rect x="867" y="255" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="971.0" y="283.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B0.W3 的状态</text>
+<rect x="867" y="311" width="208" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="971.0" y="339.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">B6.W3 的状态</text>
+<line x1="971" y1="357" x2="971" y2="374" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="867" y="382" width="208" height="43" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="971.0" y="410.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器 3</text>
+<line x1="971" y1="427" x2="971" y2="446" stroke="#936015" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="867" y="454" width="208" height="36" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="971.0" y="479.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">相应算术执行资源</text>
+<rect x="106" y="529" width="908" height="35" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.0" y="553.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">SM 级物理资源：L1 / shared memory；各 block 的共享内存区域仍各自独立</text>
+<line x1="32" y1="591" x2="1088" y2="591" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="620" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">每列可保留多组 warp 状态；每次选就绪指令，不表示这些 warp 同周期全部发射。</text>
+</g></svg>

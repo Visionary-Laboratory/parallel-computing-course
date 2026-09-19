@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc">
+<title id="title">8 个 block 互等，但只有 2 个已经驻留</title><desc id="desc">一个SM的资源只能同时容纳两个block。B0和B1已报到，报到计数为2/8，但程序要求等齐八个block才允许退出，因此仍占着资源。B2到B7尚未驻留，要等前两个块退出释放资源才能开始执行和报到。两组互相等待，程序可能无法继续。箭头表示等待关系，不是数据流或指令发射。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">8 个 block 互等，但只有 2 个已经驻留</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">假想 GPU：只有 1 个 SM，资源最多容纳 2 个 block；假设先装入 B0、B1。</text>
+<text x="230" y="143" font-size="24" fill="#176B52" text-anchor="middle" font-weight="600">已驻留：正在 SM 内等待</text>
+<rect x="50" y="164" width="380" height="308" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="240" y="199" font-size="23" fill="#176B52" text-anchor="middle" font-weight="600">唯一的 SM</text>
+<rect x="70" y="220" width="155" height="134" rx="8" fill="#FFFFFF" stroke="#176B52" stroke-width="1.5"/>
+<text x="147.5" y="258" font-size="28" fill="#176B52" text-anchor="middle" font-weight="700">B0</text>
+<text x="147.5" y="294" font-size="19" fill="#20372F" text-anchor="middle" font-weight="400">已报到</text>
+<text x="147.5" y="323" font-size="19" fill="#20372F" text-anchor="middle" font-weight="400">等齐 8 块才退出</text>
+<rect x="255" y="220" width="155" height="134" rx="8" fill="#FFFFFF" stroke="#176B52" stroke-width="1.5"/>
+<text x="332.5" y="258" font-size="28" fill="#176B52" text-anchor="middle" font-weight="700">B1</text>
+<text x="332.5" y="294" font-size="19" fill="#20372F" text-anchor="middle" font-weight="400">已报到</text>
+<text x="332.5" y="323" font-size="19" fill="#20372F" text-anchor="middle" font-weight="400">等齐 8 块才退出</text>
+<text x="240" y="398" font-size="29" fill="#B74836" text-anchor="middle" font-weight="700">报到计数：2 / 8</text>
+<text x="240" y="441" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">没有退出 → 资源没有释放</text>
+<text x="880" y="143" font-size="24" fill="#687680" text-anchor="middle" font-weight="600">尚未驻留：还没开始执行</text>
+<rect x="690" y="164" width="380" height="308" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="714" y="207" width="104" height="62" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="766.0" y="247.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">B2</text>
+<rect x="826" y="207" width="104" height="62" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="878.0" y="247.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">B3</text>
+<rect x="938" y="207" width="104" height="62" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="990.0" y="247.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">B4</text>
+<rect x="714" y="287" width="104" height="62" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="766.0" y="327.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">B5</text>
+<rect x="826" y="287" width="104" height="62" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="878.0" y="327.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">B6</text>
+<rect x="938" y="287" width="104" height="62" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="990.0" y="327.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">B7</text>
+<text x="880" y="400" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">需要先等 SM 有可用资源</text>
+<text x="880" y="436" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">才能开始执行、完成报到</text>
+<text x="560" y="232" font-size="22" fill="#B74836" text-anchor="middle" font-weight="600">等 6 块报到</text>
+<line x1="445" y1="251" x2="675" y2="251" stroke="#B74836" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="560" y="346" font-size="21" fill="#936015" text-anchor="middle" font-weight="600">等 2 块释放资源</text>
+<line x1="675" y1="365" x2="445" y2="365" stroke="#936015" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="50" y="501" width="1020" height="73" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="560.0" y="530.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">先运行的等后来者报到，后来者等先运行的退出。</text>
+<text x="560.0" y="560.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">不同 block 不保证同时驻留，不能依赖这样的全体互等。</text>
+<line x1="32" y1="591" x2="1088" y2="591" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="620" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">箭头表示等待关系；框表示资源占用，不是硬件插槽。B0、B1 先运行只是本例假设。</text>
+</g></svg>

@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="585" viewBox="0 0 1120 585" role="img" aria-labelledby="title desc">
+<title id="title">多核 × SIMD：两种并行性可以叠加</title><desc id="desc">多核 × SIMD：两种并行性可以叠加。假想芯片：16 个核，每核 8 个运算通道；不额外乘上驻留上下文数</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">多核 × SIMD：两种并行性可以叠加</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">假想芯片：16 个核，每核 8 个运算通道；不额外乘上驻留上下文数</text>
+<rect x="40" y="118" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="54" y="145" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 0</text>
+<rect x="115" y="130" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="54" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="81" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="108" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="135" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="162" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="189" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="216" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="243" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="310" y="118" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="324" y="145" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 1</text>
+<rect x="385" y="130" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="324" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="351" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="378" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="405" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="432" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="459" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="486" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="513" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="580" y="118" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="594" y="145" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 2</text>
+<rect x="655" y="130" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="594" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="621" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="648" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="675" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="702" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="729" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="756" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="783" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="850" y="118" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="864" y="145" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 3</text>
+<rect x="925" y="130" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="864" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="891" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="918" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="945" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="972" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="999" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1026" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1053" y="161" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="40" y="208" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="54" y="235" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 4</text>
+<rect x="115" y="220" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="54" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="81" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="108" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="135" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="162" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="189" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="216" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="243" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="310" y="208" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="324" y="235" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 5</text>
+<rect x="385" y="220" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="324" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="351" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="378" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="405" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="432" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="459" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="486" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="513" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="580" y="208" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="594" y="235" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 6</text>
+<rect x="655" y="220" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="594" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="621" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="648" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="675" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="702" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="729" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="756" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="783" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="850" y="208" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="864" y="235" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 7</text>
+<rect x="925" y="220" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="864" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="891" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="918" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="945" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="972" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="999" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1026" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1053" y="251" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="40" y="298" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="54" y="325" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 8</text>
+<rect x="115" y="310" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="54" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="81" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="108" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="135" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="162" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="189" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="216" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="243" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="310" y="298" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="324" y="325" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 9</text>
+<rect x="385" y="310" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="324" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="351" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="378" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="405" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="432" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="459" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="486" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="513" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="580" y="298" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="594" y="325" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 10</text>
+<rect x="655" y="310" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="594" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="621" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="648" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="675" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="702" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="729" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="756" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="783" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="850" y="298" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="864" y="325" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 11</text>
+<rect x="925" y="310" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="864" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="891" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="918" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="945" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="972" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="999" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1026" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1053" y="341" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="40" y="388" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="54" y="415" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 12</text>
+<rect x="115" y="400" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="54" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="81" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="108" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="135" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="162" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="189" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="216" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="243" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="310" y="388" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="324" y="415" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 13</text>
+<rect x="385" y="400" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="324" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="351" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="378" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="405" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="432" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="459" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="486" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="513" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="580" y="388" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="594" y="415" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 14</text>
+<rect x="655" y="400" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="594" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="621" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="648" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="675" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="702" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="729" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="756" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="783" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="850" y="388" width="245" height="76" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="864" y="415" font-size="18" fill="#20372F" text-anchor="start" font-weight="600">核 15</text>
+<rect x="925" y="400" width="152" height="18" rx="3" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<rect x="864" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="891" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="918" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="945" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="972" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="999" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1026" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1053" y="431" width="21" height="21" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="245" y="484" width="630" height="37" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="560.0" y="509.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">16 份控制 × 每份 8 个通道 = 128 个运算通道</text>
+<line x1="32" y1="536" x2="1088" y2="536" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="565" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">金色条：每核的控制；绿色格：运算通道。假设各核都有独立、就绪且适合向量化的工作。</text>
+</g></svg>

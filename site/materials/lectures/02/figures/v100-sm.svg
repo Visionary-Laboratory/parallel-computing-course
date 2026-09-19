@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">放大 SM 0：四个子分区，共享片上存储</title><desc id="desc">放大 SM 0：四个子分区，共享片上存储。沿用整卡图的绿色选区；每个子分区都有独立的 warp 调度器与寄存器文件</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">放大 SM 0：四个子分区，共享片上存储</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">沿用整卡图的绿色选区；每个子分区都有独立的 warp 调度器与寄存器文件</text>
+<rect x="46" y="127" width="245" height="309" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="168" y="162" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">子分区 0</text>
+<rect x="59" y="183" width="219" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="168.5" y="212.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器</text>
+<rect x="59" y="242" width="219" height="46" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="168.5" y="271.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16K × 32-bit 寄存器</text>
+<rect x="59" y="301" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="168.5" y="330.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16 FP32 / 16 INT32</text>
+<rect x="59" y="360" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="168.5" y="389.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">8 FP64 / 2 Tensor</text>
+<line x1="168" y1="436" x2="168" y2="454" stroke="#246B96" stroke-width="2"/>
+<rect x="315" y="127" width="245" height="309" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="437" y="162" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">子分区 1</text>
+<rect x="328" y="183" width="219" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="437.5" y="212.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器</text>
+<rect x="328" y="242" width="219" height="46" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="437.5" y="271.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16K × 32-bit 寄存器</text>
+<rect x="328" y="301" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="437.5" y="330.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16 FP32 / 16 INT32</text>
+<rect x="328" y="360" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="437.5" y="389.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">8 FP64 / 2 Tensor</text>
+<line x1="437" y1="436" x2="437" y2="454" stroke="#246B96" stroke-width="2"/>
+<rect x="584" y="127" width="245" height="309" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="706" y="162" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">子分区 2</text>
+<rect x="597" y="183" width="219" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="706.5" y="212.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器</text>
+<rect x="597" y="242" width="219" height="46" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="706.5" y="271.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16K × 32-bit 寄存器</text>
+<rect x="597" y="301" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="706.5" y="330.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16 FP32 / 16 INT32</text>
+<rect x="597" y="360" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="706.5" y="389.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">8 FP64 / 2 Tensor</text>
+<line x1="706" y1="436" x2="706" y2="454" stroke="#246B96" stroke-width="2"/>
+<rect x="853" y="127" width="245" height="309" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="975" y="162" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">子分区 3</text>
+<rect x="866" y="183" width="219" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="975.5" y="212.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">warp 调度器</text>
+<rect x="866" y="242" width="219" height="46" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="975.5" y="271.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16K × 32-bit 寄存器</text>
+<rect x="866" y="301" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="975.5" y="330.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">16 FP32 / 16 INT32</text>
+<rect x="866" y="360" width="219" height="46" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="975.5" y="389.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">8 FP64 / 2 Tensor</text>
+<line x1="975" y1="436" x2="975" y2="454" stroke="#246B96" stroke-width="2"/>
+<line x1="168" y1="454" x2="975" y2="454" stroke="#246B96" stroke-width="2"/>
+<line x1="560" y1="454" x2="560" y2="465" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="140" y="472" width="840" height="36" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.0" y="497.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">SM 共享：128 KB L1 / shared memory 组合存储</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">每 SM 共 64K 个 32-bit 寄存器；128 KB 是组合存储容量，不是每个 block 可用的 shared memory。</text>
+</g></svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">分支掩码：8 个通道，只有部分通道在工作</title><desc id="desc">分支掩码：8 个通道，只有部分通道在工作。同一组：lane 0–2 走 A 路径（3 条运算），lane 3–7 走 B 路径（1 条运算）</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">分支掩码：8 个通道，只有部分通道在工作</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">同一组：lane 0–2 走 A 路径（3 条运算），lane 3–7 走 B 路径（1 条运算）</text>
+<text x="273" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 0</text>
+<text x="364" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 1</text>
+<text x="455" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 2</text>
+<text x="546" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 3</text>
+<text x="637" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 4</text>
+<text x="728" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 5</text>
+<text x="819" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 6</text>
+<text x="910" y="145" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">lane 7</text>
+<text x="60" y="198" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">A · 运算 1</text>
+<rect x="234" y="165" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="273.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="325" y="165" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="364.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="416" y="165" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="455.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="507" y="165" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="546.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="598" y="165" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="637.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="689" y="165" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="728.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="780" y="165" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="819.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="871" y="165" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="910.5" y="196.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="60" y="262" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">A · 运算 2</text>
+<rect x="234" y="229" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="273.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="325" y="229" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="364.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="416" y="229" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="455.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="507" y="229" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="546.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="598" y="229" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="637.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="689" y="229" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="728.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="780" y="229" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="819.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="871" y="229" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="910.5" y="260.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="60" y="326" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">A · 运算 3</text>
+<rect x="234" y="293" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="273.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="325" y="293" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="364.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="416" y="293" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="455.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="507" y="293" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="546.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="598" y="293" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="637.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="689" y="293" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="728.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="780" y="293" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="819.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="871" y="293" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="910.5" y="324.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="60" y="390" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">B · 运算 1</text>
+<rect x="234" y="357" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="273.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="325" y="357" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="364.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="416" y="357" width="79" height="49" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="455.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="507" y="357" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="546.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="598" y="357" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="637.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="689" y="357" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="728.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="780" y="357" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="819.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="871" y="357" width="79" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="910.5" y="388.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算</text>
+<rect x="137" y="443" width="847" height="58" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.5" y="479.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">有效工作 3 × 3 + 5 × 1 = 14　/　可用槽位 4 × 8 = 32</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">有效槽位占比 43.75%。仅统计这 4 条运算指令，不含分支控制、访存与路径合并成本。</text>
+</g></svg>

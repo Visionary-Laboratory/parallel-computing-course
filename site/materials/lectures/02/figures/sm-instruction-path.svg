@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="485" viewBox="0 0 1120 485" role="img" aria-labelledby="title desc">
+<title id="title">同一个线程，经过不同功能单元</title><desc id="desc">输出 y[777]对应block6、块内warp0和lane9；示意中该block驻留SM0，实际SM号由硬件分派。读取x[i]经加载存储单元进入该线程寄存器v；FP32执行通路计算v乘v加1得到r；存储经加载存储单元把r写入y[i]。其他lane使用自己的操作数。这是数据流阶段，不规定编译后的机器指令数、固定物理寄存器号或完成时序。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">同一个线程，经过不同功能单元</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">示意分派：SM 0 → B6.W0 → lane 9 → i=777；本页计算 y[i]=x[i]²+1。</text>
+<text x="195" y="149" font-size="27" fill="#20372F" text-anchor="middle" font-weight="700">① 读取数据</text>
+<rect x="42" y="174" width="308" height="75" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="196.0" y="219.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">LD/ST · 加载/存储单元</text>
+<rect x="42" y="274" width="308" height="68" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="196.0" y="316.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">x[i] → 寄存器 v</text>
+<line x1="196" y1="251" x2="196" y2="269" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="356" y1="208" x2="396" y2="208" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="558" y="149" font-size="27" fill="#20372F" text-anchor="middle" font-weight="700">② 浮点计算</text>
+<rect x="405" y="174" width="308" height="75" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="559.0" y="219.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">FP32 执行通路</text>
+<rect x="405" y="274" width="308" height="68" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="559.0" y="316.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">v×v+1 → 寄存器 r</text>
+<line x1="559" y1="251" x2="559" y2="269" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="719" y1="208" x2="759" y2="208" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="921" y="149" font-size="27" fill="#20372F" text-anchor="middle" font-weight="700">③ 写回结果</text>
+<rect x="768" y="174" width="308" height="75" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="922.0" y="219.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">LD/ST · 加载/存储单元</text>
+<rect x="768" y="274" width="308" height="68" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="922.0" y="316.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">寄存器 r → y[i]</text>
+<line x1="922" y1="251" x2="922" y2="269" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="560" y="393" font-size="25" fill="#20372F" text-anchor="middle" font-weight="700">状态属于线程；执行资源按指令类型使用，不与线程永久绑定。</text>
+<line x1="32" y1="436" x2="1088" y2="436" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="465" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">数据流示意，不代表仅有三条机器指令；访存可能命中缓存，并非每次都到 HBM。</text>
+</g></svg>

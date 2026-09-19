@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">同一份状态预算，容纳 16 个上下文</title><desc id="desc">同一份状态预算，容纳 16 个上下文。固定 64 个状态单元；只改变每个上下文保存状态的大小</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">同一份状态预算，容纳 16 个上下文</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">固定 64 个状态单元；只改变每个上下文保存状态的大小</text>
+<rect x="72" y="139" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="87" y="168" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T0</text>
+<rect x="145" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="180" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="215" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="250" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="325" y="139" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="340" y="168" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T1</text>
+<rect x="398" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="433" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="468" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="503" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="578" y="139" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="593" y="168" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T2</text>
+<rect x="651" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="686" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="721" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="756" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="831" y="139" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="846" y="168" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T3</text>
+<rect x="904" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="939" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="974" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="1009" y="159" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="72" y="216" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="87" y="245" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T4</text>
+<rect x="145" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="180" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="215" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="250" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="325" y="216" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="340" y="245" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T5</text>
+<rect x="398" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="433" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="468" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="503" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="578" y="216" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="593" y="245" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T6</text>
+<rect x="651" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="686" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="721" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="756" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="831" y="216" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="846" y="245" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T7</text>
+<rect x="904" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="939" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="974" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="1009" y="236" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="72" y="293" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="87" y="322" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T8</text>
+<rect x="145" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="180" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="215" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="250" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="325" y="293" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="340" y="322" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T9</text>
+<rect x="398" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="433" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="468" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="503" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="578" y="293" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="593" y="322" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T10</text>
+<rect x="651" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="686" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="721" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="756" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="831" y="293" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="846" y="322" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T11</text>
+<rect x="904" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="939" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="974" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="1009" y="313" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="72" y="370" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="87" y="399" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T12</text>
+<rect x="145" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="180" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="215" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="250" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="325" y="370" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="340" y="399" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T13</text>
+<rect x="398" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="433" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="468" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="503" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="578" y="370" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="593" y="399" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T14</text>
+<rect x="651" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="686" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="721" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="756" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="831" y="370" width="227" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="846" y="399" font-size="21" fill="#246B96" text-anchor="start" font-weight="600">T15</text>
+<rect x="904" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="939" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="974" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="1009" y="390" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#246B96" stroke-width="1.5"/>
+<rect x="250" y="458" width="620" height="47" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="560.0" y="490.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">64 ÷ 4 = 16 个可驻留上下文</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">状态单元为示意单位；寄存器等资源会限制驻留数量。驻留不保证就绪，更不保证同时发射。</text>
+</g></svg>

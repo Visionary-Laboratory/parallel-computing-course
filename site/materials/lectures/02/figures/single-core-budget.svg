@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">单核：用更多硬件寻找和利用独立指令</title><desc id="desc">单核：用更多硬件寻找和利用独立指令。同一条程序中的指令，并不都必须等前一条完成后才开始</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">单核：用更多硬件寻找和利用独立指令</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">同一条程序中的指令，并不都必须等前一条完成后才开始</text>
+<rect x="48" y="155" width="206" height="239" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="151.0" y="251.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">一条指令流</text>
+<text x="151.0" y="281.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">取指 → 译码</text>
+<text x="151.0" y="311.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">分支预测</text>
+<line x1="255" y1="270" x2="310" y2="270" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="320" y="125" width="340" height="312" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="490" y="163" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">依赖检查与乱序调度</text>
+<rect x="351" y="187" width="278" height="55" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="490.0" y="221.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">a = b × c</text>
+<rect x="351" y="260" width="278" height="55" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="490.0" y="294.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">d = a + 1</text>
+<rect x="351" y="333" width="278" height="55" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="490.0" y="367.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = y × z</text>
+<text x="491" y="421" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">就绪的独立指令可以先行</text>
+<rect x="768" y="162" width="300" height="72" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="918.0" y="205.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">运算通路 0</text>
+<line x1="665" y1="214" x2="757" y2="198" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="768" y="267" width="300" height="72" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="918.0" y="310.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">运算通路 1</text>
+<line x1="665" y1="365" x2="757" y2="303" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="768" y="385" width="300" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="918.0" y="418.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">寄存器与缓存</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">框大小只表达功能分工，不表示真实芯片面积；多发射仍受依赖、端口与访存限制。</text>
+</g></svg>

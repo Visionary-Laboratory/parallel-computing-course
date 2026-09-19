@@ -2,12 +2,25 @@
   "scope": [
     "course-overview",
     "01-introduction",
-    "first-lecture-glossary"
+    "02-execution-models",
+    "released-lecture-glossary"
   ],
-  "date": "2026-09-18",
-  "slides": 70,
-  "answers": 26,
-  "glossaryTerms": 37,
+  "date": "2026-09-20",
+  "lectures": [
+    {
+      "slug": "01-introduction",
+      "slides": 75,
+      "answers": 27
+    },
+    {
+      "slug": "02-execution-models",
+      "slides": 71,
+      "answers": 17
+    }
+  ],
+  "slides": 146,
+  "answers": 44,
+  "glossaryTerms": 55,
   "files": [
     {
       "path": "site/.nojekyll",
@@ -15,7 +28,7 @@
     },
     {
       "path": "site/404.html",
-      "sha256": "2ec2725e1bc80c86d3012a983da315a1aca4278bcd1a689ae6bfc311cb2da69d"
+      "sha256": "96f65256daeb629b2c4a507166ea1a63e90d5d71550235890c281518ec455a04"
     },
     {
       "path": "site/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
@@ -254,12 +267,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-BbA6Kd68.css",
-      "sha256": "516ce0b42975be61eb95ee11bf838bc72b0db1bae99990ef237b77f50470e7b8"
+      "path": "site/assets/index-B1CsRAST.css",
+      "sha256": "4bfc5e4bb0db3a7767b408a2ec86aa415e02f0103c7dd59cf4e1027145419500"
     },
     {
-      "path": "site/assets/index-DIyNGV2Q.js",
-      "sha256": "d68872a95094d6a013aecbb6ae0e15b9174f52ed1410fdf12d08f83e5d62a2d1"
+      "path": "site/assets/index-BTSm_wlG.js",
+      "sha256": "809a0640c20583526eca52c9e30d4f742687741d312acb939ce1fd3fe015f917"
     },
     {
       "path": "site/favicon.svg",
@@ -267,67 +280,235 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "942396a31bcea040029e5290ade14a7cce87d04e565bd610ad97db841187f684"
+      "sha256": "50fea518361a379404ebfac563f9409bc0a12b2bc8a4d562d3e5c6b9fc6d7e43"
     },
     {
       "path": "site/index.html",
-      "sha256": "2798cea467430e349ef6fd7bc73db835c26f018f8f9ab3318ed998cfa2077710"
+      "sha256": "97e483bf4a8b2040c9d958cd353767e21b5793d0b330912b68c1ed7eda07b0d2"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "cc7f285fd171a96f153688807897817c95c70d06878cb5789bc8e54a50bcadd8"
+      "sha256": "d9ce05d5994f5e3642737313eda93fde4765ca868cfeb20efb1b3bfa090fee95"
     },
     {
-      "path": "site/materials/ascend-ai-core-architecture.png",
+      "path": "site/lectures/02-execution-models/index.html",
+      "sha256": "736a39b604b8e055d52744462a1a556060a6945f0a867f58664c76b9cdcfd1a7"
+    },
+    {
+      "path": "site/materials/lectures/01/ascend-ai-core-architecture.png",
       "sha256": "e08dd1099923f6b6c08adfa5113a4ce05c02c33fc673496f8372c1573edb19bc"
     },
     {
-      "path": "site/materials/black-myth-wukong-graphics.jpg",
+      "path": "site/materials/lectures/01/black-myth-wukong-graphics.jpg",
       "sha256": "cc20d902832076f5e060da0c1bf03b68fced12c97d1fabe28389cb0dbe99633e"
     },
     {
-      "path": "site/materials/colossus-nvidia.jpg",
+      "path": "site/materials/lectures/01/colossus-nvidia.jpg",
       "sha256": "f217ce01c21e059ab3d9d6db7fb4d5eea6b0f19e1a7586b2f9af2eacb5a7eea5"
     },
     {
-      "path": "site/materials/compiler-vectorization.txt",
-      "sha256": "8b8a584451bdaaa5d8c1a4257d81cb38a9272a91287f84451af53567a3f0db16"
-    },
-    {
-      "path": "site/materials/gemm-memory.cpp",
-      "sha256": "3a53230b023edc5b6484ed6629e2983daf120e373a48d06db2a0764f586b8a0c"
-    },
-    {
-      "path": "site/materials/kitchen-keynote.png",
+      "path": "site/materials/lectures/01/kitchen-keynote.png",
       "sha256": "f8953a52d2ffc5af95cbcad238cf0c210a38c4945cafab511cca5afe9eb9ec18"
     },
     {
-      "path": "site/materials/matmul-naive.cpp",
-      "sha256": "10d7d6824f993aa60e03cd2bf1cc702164338fefb0f944cdf6668bd037b16cb1"
-    },
-    {
-      "path": "site/materials/measurement-notes.md",
-      "sha256": "1ad71614029efab51f588f58f264127ad53777ed3355c4ae9be5d66d5ab5bb27"
-    },
-    {
-      "path": "site/materials/measurement-output.csv",
-      "sha256": "0e65825c0c89b9548123081c06ca51a11ecfe5a454f2e21fa37220bfd8b7091d"
-    },
-    {
-      "path": "site/materials/nvidia-hgx-h200.jpg",
+      "path": "site/materials/lectures/01/nvidia-hgx-h200.jpg",
       "sha256": "7f01c9823a38204555aa3caad4c1e4224824ce4f6ccd8b33d751417657e00e22"
     },
     {
-      "path": "site/materials/nvidia-volta-fp16-fp32.png",
+      "path": "site/materials/lectures/01/nvidia-volta-fp16-fp32.png",
       "sha256": "c76598666d379e5511ca2c581277a6260a1babe878a25c76c7f7fd336648a31d"
     },
     {
-      "path": "site/materials/scaling-laws-kaplan.svg",
+      "path": "site/materials/lectures/01/scaling-laws-kaplan.svg",
       "sha256": "70332c5fee253c4424d1fd4cfb085f0a42741f631f3065d4cfb0fe0a23bcc2be"
     },
     {
-      "path": "site/materials/stargate-abilene.jpg",
+      "path": "site/materials/lectures/01/stargate-abilene.jpg",
       "sha256": "a31da526fd73e48551f867a899a4e3fcf8b70d400ce2c4f14003ac02a8f3adbc"
+    },
+    {
+      "path": "site/materials/lectures/02/aos-soa.svg",
+      "sha256": "e08eebe28c2f36b6dd227f65c3dec6fece32f38508a11e13362da0caaa4e62a2"
+    },
+    {
+      "path": "site/materials/lectures/02/block-waves.svg",
+      "sha256": "3431e915bea595d4e5b9f579f2c3205c82366949c90f8d733730b9b145703acd"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/block-assignment.svg",
+      "sha256": "1edac4d3f3a5ba0b5fddff58f6015d2c07b6583d4ead291ae870594b3110ce66"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/block-wait.svg",
+      "sha256": "b32731e3803a33130113f352e5f568b2e1bbdb2ef89065e2d600e52b47c08c94"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/branch-mask.svg",
+      "sha256": "a9925ffb00ed47e40397d7e813c45ed3d2084fae82a951354cbde975070f0f2e"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/four-cores.svg",
+      "sha256": "52f302c7f56057a15af6361dc4eff7bdde717c631cdcb454590a6fddcd6c1b76"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/gpu-two-hierarchies.svg",
+      "sha256": "ec525c2c01a42138bdbd34ec4c15447d7c2681d0f66f0e1ec27b289771d9ba48"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/independent-chains.svg",
+      "sha256": "d69d8cfb426a5bfbcd75edc94fea9169caa2422fae781078405331cb383d531c"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/lane-blocked.svg",
+      "sha256": "3d9bfd886b79d5bc3997aff57683bed966082ab4ce34b1bb33c6f00264e761df"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/lane-interleaved.svg",
+      "sha256": "7a4573713d778c547425313ca23db5ab7e1ece4ebd5565b97b35f6c324e9aa69"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/large-contexts.svg",
+      "sha256": "f49e6c868230e8c4920c893a64c3f145a15dc0c46dec2a97b3e304ea1ebcda30"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/many-simd-cores.svg",
+      "sha256": "6572293b56f8b5b19806986e46cf4b2dcec29ba5303d3ff638b1c8defa9c6cef"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/memory-dependencies.svg",
+      "sha256": "92c8cdf12b47a49bb3f7a0660e8d5222df2bd27a808a16950b50a87f87c88cf4"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/processor.svg",
+      "sha256": "de90203b202d241f7a9fc68aeae52f13d773d28fd2728a05d58fe4e2c73be84d"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/register-spill.svg",
+      "sha256": "4bfd06061b5ce514aa5d1bea39cd343922909b564957b69f71710f51763f963d"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/simd.svg",
+      "sha256": "4e04035f2c8e0a4b46a4cfdc84adb2aca2d948be255268e4c993fcd5c34e492f"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/single-core-budget.svg",
+      "sha256": "f7b4e036dc86aaefde699ba561b16e6aa747522a353033f8cfca96222e3d7011"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/sm-instruction-path.svg",
+      "sha256": "ba77c1078d51f6983bb0e4dc6c629524f8e9296fef4c067d5ee6f894b6661ed4"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/sm-warp-placement.svg",
+      "sha256": "cca9fdd71aeb3974efc38d31b16b76856ff011825fa2c6de71b3a8902886187e"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/small-contexts.svg",
+      "sha256": "e27762c2aa05e78fbaf960bd06c532406671d6f967f96c11f6140b4d8c9f6172"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/smt-contexts.svg",
+      "sha256": "987027cc0de54e54b401f297b0230938936e76dfd8db3e7d13c7b78651339d8a"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/smt-os-switch.svg",
+      "sha256": "2cfe6933f7e0a75f2fb1b2c40e21b60979aad3652d33107128cfbb2e4b600e5f"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/smt.svg",
+      "sha256": "ffbd25d29faef30ceb6db9d1fd3cad6e1372dcfc390f69324a2320ab6fc79483"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/spmd-vs-simd.svg",
+      "sha256": "c70083192391f73f6c169e67112692cf5c0186a6bb648a01e53ec17c394ca532"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/tail-mask.svg",
+      "sha256": "bbc42ad3d85ce595dd852d0ac5e98c35b3aab3bf2ee8715ae7d48b8c8d6a6b70"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/thread-overlap.svg",
+      "sha256": "6fd4777993c10efb035570a767042769bd95810265b467b31c490c582a52a0a0"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/v100-gpu.svg",
+      "sha256": "fea51dd2e401d1195bd494b3aa0bd6c0f1d4de1fa9c4344fe732b6195d893b89"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/v100-sm.svg",
+      "sha256": "a87f22175115fd5ccb0848c21f647bcb2cfa8fb9bbd4f4c442a940c7e0cb002e"
+    },
+    {
+      "path": "site/materials/lectures/02/figures/v100-subcore.svg",
+      "sha256": "1ae5b4a84a30c247e08c418b8553ad6e62ed808b38bf8959d69588b2665eb3cc"
+    },
+    {
+      "path": "site/materials/lectures/02/gemm-execution.svg",
+      "sha256": "767a081193fa913ea32542ef7964ae7db5b71560f0ceb6ce64334bca842ec855"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/gv100-chip-annotated.svg",
+      "sha256": "4d2360dcb8fb5faa9d8e940598cdeac1f1b0cd371a9bb138a9a6355831e69b6a"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/gv100-chip-original.png",
+      "sha256": "0ba1d73f5839b75115f095433797a2afb6f9013843605cefc9736e54e8ec8f98"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/v100-package-annotated.svg",
+      "sha256": "bc4425ee0c440f877e51672dc458278bd0451906ca7625545fac704e69870269"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/v100-package-original.png",
+      "sha256": "784dc82a9f4ea46a5cb8553ee455abde15636c543eefee3758cf64f78317503f"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/v100-partition-annotated.svg",
+      "sha256": "85285a94852a625265f8fb408a2a0455f02eef9ec037256d482c46fb44a7e30e"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/v100-partition-original.png",
+      "sha256": "84d0e8b6ad9f083e8dc2c33ae41fd5cf87c707c1547860e6c30b63228f355163"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/v100-sm-annotated.svg",
+      "sha256": "58a5f126e36d3ebc753717bd83cca00e1480a358d8c898264faaeae6b85a41b2"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/v100-sm-original.png",
+      "sha256": "faf16f1c94170a33a838ad5edfa4c14b414653552c784f01c9e27173a3b8056f"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-cache-annotated.svg",
+      "sha256": "bcb75e36668f203d74ced5cf424b72668133547e99b9c87866c59e0ca0657452"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-cache-original.png",
+      "sha256": "0376b6f034652ea0e6f9da16044d4e3d6244249f1b611cb95205d686a0c27492"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-core-annotated.svg",
+      "sha256": "040cb5b3ec42be44c1f176e7c9fe0eec3c4e7beb5abe0045e0e7c0dc3c4669cf"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-core-original.png",
+      "sha256": "5b4440517408a5db6bf01f0d9bf413050b2dc99268d0641f1f53d40d6ef106fa"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-die-annotated.svg",
+      "sha256": "3518f2ed0e3465ac3e66ee2526a1d72468de0aefcdb9de20b1968293f10787fb"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-die-original.png",
+      "sha256": "51a11e91972e67d452dd36e68981d213477a08c663aaa4e67fa46c89efdd065f"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-simd-annotated.svg",
+      "sha256": "1c30b143a0e6a527d03efad7e5dd89d06dd55545d879ed814e0e259fba156726"
+    },
+    {
+      "path": "site/materials/lectures/02/hardware/zen3-simd-original.png",
+      "sha256": "8097d301d565e9b66eab726e8666ba0605b5af64d62ecf41bae69a7147bc04a6"
     }
   ]
 }

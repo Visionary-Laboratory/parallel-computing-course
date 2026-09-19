@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">多核：复制执行能力，处理独立指令流</title><desc id="desc">多核：复制执行能力，处理独立指令流。每个核都有自己的控制和执行状态；数据共享仍需要存储系统支撑</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">多核：复制执行能力，处理独立指令流</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">每个核都有自己的控制和执行状态；数据共享仍需要存储系统支撑</text>
+<rect x="40" y="129" width="246" height="260" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="163" y="163" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">核心 0</text>
+<rect x="59" y="185" width="208" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="163.0" y="215.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">指令流 0</text>
+<rect x="59" y="243" width="95" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="106.5" y="281.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">ALU</text>
+<rect x="166" y="243" width="101" height="63" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="216.5" y="281.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">寄存器</text>
+<rect x="59" y="319" width="208" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="163.0" y="350.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">私有缓存</text>
+<line x1="163" y1="389" x2="163" y2="414" stroke="#246B96" stroke-width="2"/>
+<rect x="311" y="129" width="246" height="260" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="434" y="163" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">核心 1</text>
+<rect x="330" y="185" width="208" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="434.0" y="215.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">指令流 1</text>
+<rect x="330" y="243" width="95" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="377.5" y="281.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">ALU</text>
+<rect x="437" y="243" width="101" height="63" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="487.5" y="281.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">寄存器</text>
+<rect x="330" y="319" width="208" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="434.0" y="350.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">私有缓存</text>
+<line x1="434" y1="389" x2="434" y2="414" stroke="#246B96" stroke-width="2"/>
+<rect x="582" y="129" width="246" height="260" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="705" y="163" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">核心 2</text>
+<rect x="601" y="185" width="208" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="705.0" y="215.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">指令流 2</text>
+<rect x="601" y="243" width="95" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="648.5" y="281.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">ALU</text>
+<rect x="708" y="243" width="101" height="63" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="758.5" y="281.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">寄存器</text>
+<rect x="601" y="319" width="208" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="705.0" y="350.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">私有缓存</text>
+<line x1="705" y1="389" x2="705" y2="414" stroke="#246B96" stroke-width="2"/>
+<rect x="853" y="129" width="246" height="260" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="976" y="163" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">核心 3</text>
+<rect x="872" y="185" width="208" height="46" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="976.0" y="215.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">指令流 3</text>
+<rect x="872" y="243" width="95" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="919.5" y="281.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">ALU</text>
+<rect x="979" y="243" width="101" height="63" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="1029.5" y="281.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">寄存器</text>
+<rect x="872" y="319" width="208" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="976.0" y="350.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">私有缓存</text>
+<line x1="976" y1="389" x2="976" y2="414" stroke="#246B96" stroke-width="2"/>
+<line x1="163" y1="414" x2="976" y2="414" stroke="#246B96" stroke-width="3"/>
+<line x1="558" y1="414" x2="558" y2="443" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="262" y="451" width="590" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="557.0" y="482.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">共享的内存与互连：带宽不会自动变成四倍</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">独立的控制流可同时推进；共享数据访问仍受带宽、延迟和一致性协议约束。</text>
+</g></svg>

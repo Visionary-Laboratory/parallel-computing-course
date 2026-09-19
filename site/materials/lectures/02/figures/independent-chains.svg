@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
+<title id="title">一个线程内：交错推进四条独立计算链</title><desc id="desc">计算 p(v)=v³+2v²+3v+4；输入1、2、3、4，输出10、26、58、112。r0至r3分别保存四个输出的中间结果，各从1开始。逐个计算时，r0在时刻0、4、8发射，时刻12完成，随后计算其余输出，整批在48完成。交错计算时，第i个输出在i、i+4、i+8发射；时刻11发射最后一条，15全部完成。两种排程都在同一个CPU线程、同一个FMA流水线上计算12条指令，无需合并输出。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">一个线程内：交错推进四条独立计算链</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">r0～r3 是同一线程的中间值；FMA 延迟 4 周期，每周期最多发射 1 条。</text>
+<rect x="51" y="111" width="250" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="176.0" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算链 r0 → y[0]</text>
+<text x="176.0" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">输入 1，输出 10</text>
+<rect x="315" y="111" width="250" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="440.0" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算链 r1 → y[1]</text>
+<text x="440.0" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">输入 2，输出 26</text>
+<rect x="579" y="111" width="250" height="64" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="704.0" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算链 r2 → y[2]</text>
+<text x="704.0" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">输入 3，输出 58</text>
+<rect x="843" y="111" width="250" height="64" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="968.0" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">计算链 r3 → y[3]</text>
+<text x="968.0" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">输入 4，输出 112</text>
+<text x="48" y="215" font-size="22" fill="#566A63" text-anchor="start" font-weight="400">发射时刻 t</text>
+<text x="298" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">0</text>
+<text x="364" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">1</text>
+<text x="430" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">2</text>
+<text x="496" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<text x="562" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<text x="628" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">5</text>
+<text x="694" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">6</text>
+<text x="760" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">7</text>
+<text x="826" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">8</text>
+<text x="892" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">9</text>
+<text x="958" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">10</text>
+<text x="1024" y="215" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">11</text>
+<text x="48" y="262" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">逐个算完</text>
+<text x="48" y="296" font-size="22" fill="#176B52" text-anchor="start" font-weight="700">整批：48 周期</text>
+<rect x="268" y="235" width="60" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="298.0" y="258.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r0</text>
+<text x="298.0" y="288.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第1步</text>
+<rect x="334" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="364.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="400" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="430.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="466" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="496.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="532" y="235" width="60" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="562.0" y="258.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r0</text>
+<text x="562.0" y="288.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第2步</text>
+<rect x="598" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="628.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="664" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="694.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="730" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="760.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="796" y="235" width="60" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="826.0" y="258.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r0</text>
+<text x="826.0" y="288.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第3步</text>
+<rect x="862" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="892.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="928" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="958.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="994" y="235" width="60" height="64" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="1024.0" y="274.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<line x1="298" y1="313" x2="562" y2="313" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="430" y="338" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">同一个 r0 的两步，仍相隔 4 周期</text>
+<text x="48" y="422" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">交错计算</text>
+<text x="48" y="456" font-size="22" fill="#176B52" text-anchor="start" font-weight="700">整批：15 周期</text>
+<rect x="268" y="395" width="60" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="298.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r0</text>
+<text x="298.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第1步</text>
+<rect x="334" y="395" width="60" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="364.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r1</text>
+<text x="364.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第1步</text>
+<rect x="400" y="395" width="60" height="64" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="430.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r2</text>
+<text x="430.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第1步</text>
+<rect x="466" y="395" width="60" height="64" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="496.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r3</text>
+<text x="496.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第1步</text>
+<rect x="532" y="395" width="60" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="562.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r0</text>
+<text x="562.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第2步</text>
+<rect x="598" y="395" width="60" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="628.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r1</text>
+<text x="628.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第2步</text>
+<rect x="664" y="395" width="60" height="64" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="694.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r2</text>
+<text x="694.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第2步</text>
+<rect x="730" y="395" width="60" height="64" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="760.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r3</text>
+<text x="760.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第2步</text>
+<rect x="796" y="395" width="60" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="826.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r0</text>
+<text x="826.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第3步</text>
+<rect x="862" y="395" width="60" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="892.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r1</text>
+<text x="892.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第3步</text>
+<rect x="928" y="395" width="60" height="64" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="958.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r2</text>
+<text x="958.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第3步</text>
+<rect x="994" y="395" width="60" height="64" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="1024.0" y="418.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">r3</text>
+<text x="1024.0" y="448.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第3步</text>
+<line x1="298" y1="473" x2="562" y2="473" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="430" y="498" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">同一个 r0 的两步，仍相隔 4 周期</text>
+<text x="269" y="367" font-size="21" fill="#566A63" text-anchor="start" font-weight="400">上排继续：t=12 开始 r1，t=24 开始 r2，t=36 开始 r3。</text>
+<text x="269" y="543" font-size="22" fill="#20372F" text-anchor="start" font-weight="700">下排结束：t=11 发射最后一条，t=15 才全部完成。</text>
+<line x1="32" y1="571" x2="1088" y2="571" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="600" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">颜色区分计算链，不是线程；固定每输出 3 条 FMA，不计常量化简、访存与循环开销。</text>
+</g></svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="790" viewBox="0 0 1120 790" role="img" aria-labelledby="title desc">
+<title id="title">从输入 3 到输出 9：地址告诉我们去哪，数值才参与计算</title><desc id="desc">开始前，寄存器r2保存x[0]的示意地址0x1000，r3保存y[0]的示意地址0x2000。第一步load按r2取出内存中的3并存入r0。第二步运算单元读取r0，计算3乘3，将9存入r1。第三步store把r1中的9写到r3指向的y[0]。控制负责取指、译码和选择操作。地址不是输入数值，后续操作必须等依赖的结果准备好。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">从输入 3 到输出 9：地址告诉我们去哪，数值才参与计算</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">寄存器是核心内的高速暂存空间；下图按执行步骤排列，不是芯片的物理布局。</text>
+<rect x="40" y="111" width="502" height="56" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="291.0" y="146.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">r2 保存地址 0x1000 → x[0] 的位置</text>
+<rect x="578" y="111" width="502" height="56" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="829.0" y="146.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">r3 保存地址 0x2000 → y[0] 的位置</text>
+<rect x="40" y="188" width="1040" height="58" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="560.0" y="224.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">控制：PC（程序计数器）记录取指位置；取指、译码后选择要执行的操作</text>
+<rect x="40" y="275" width="308" height="408" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<circle cx="70" cy="306" r="17" fill="#FFF1CE" stroke="#936015" stroke-width="2"/>
+<text x="70" y="313.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<text x="98" y="314" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">读取输入 · load</text>
+<text x="194" y="357" font-size="23" fill="#246B96" text-anchor="middle" font-weight="600">r0 ← load [r2]</text>
+<line x1="194" y1="246" x2="194" y2="269" stroke="#936015" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<rect x="406" y="275" width="308" height="408" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<circle cx="436" cy="306" r="17" fill="#FFF1CE" stroke="#936015" stroke-width="2"/>
+<text x="436" y="313.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<text x="464" y="314" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">计算平方</text>
+<text x="560" y="357" font-size="23" fill="#246B96" text-anchor="middle" font-weight="600">r1 ← r0 × r0</text>
+<line x1="560" y1="246" x2="560" y2="269" stroke="#936015" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<rect x="772" y="275" width="308" height="408" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<circle cx="802" cy="306" r="17" fill="#FFF1CE" stroke="#936015" stroke-width="2"/>
+<text x="802" y="313.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<text x="830" y="314" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">写回输出 · store</text>
+<text x="926" y="357" font-size="23" fill="#246B96" text-anchor="middle" font-weight="600">store [r3] ← r1</text>
+<line x1="926" y1="246" x2="926" y2="269" stroke="#936015" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<text x="194" y="397" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">按 r2 中的地址读取</text>
+<rect x="61" y="414" width="266" height="81" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="194.0" y="448.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">内存 0x1000</text>
+<text x="194.0" y="478.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">x[0] = 3</text>
+<line x1="194" y1="505" x2="194" y2="585" stroke="#246B96" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="211" y="548" font-size="21" fill="#246B96" text-anchor="start" font-weight="400">读出的数值 3</text>
+<rect x="61" y="596" width="266" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="194.0" y="634.34" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">寄存器 r0 = 3</text>
+<rect x="427" y="389" width="266" height="56" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.0" y="425.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">寄存器 r0 = 3</text>
+<line x1="560" y1="455" x2="560" y2="474" stroke="#246B96" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="427" y="485" width="266" height="74" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="560.0" y="515.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">运算单元 ALU</text>
+<text x="560.0" y="545.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">3 × 3 = 9</text>
+<line x1="560" y1="569" x2="560" y2="586" stroke="#176B52" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="427" y="596" width="266" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.0" y="634.34" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">寄存器 r1 = 9</text>
+<rect x="793" y="414" width="266" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="926.0" y="452.34" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">寄存器 r1 = 9</text>
+<line x1="926" y1="483" x2="926" y2="556" stroke="#246B96" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="943" y="527" font-size="21" fill="#246B96" text-anchor="start" font-weight="400">写出的数值 9</text>
+<text x="926" y="585" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">按 r3 中的地址写入</text>
+<rect x="793" y="598" width="266" height="65" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="926.0" y="624.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">内存 0x2000</text>
+<text x="926.0" y="654.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">y[0] = 9</text>
+<line x1="355" y1="476" x2="399" y2="476" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="721" y1="476" x2="765" y2="476" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="560" y="723" font-size="24" fill="#176B52" text-anchor="middle" font-weight="600">① 读到 3，② 才能计算；② 得到 9，③ 才有本次结果可写。</text>
+<line x1="32" y1="741" x2="1088" y2="741" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="770" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">地址用来定位，数值参与运算；r 后的数字只是编号。0x1000 / 0x2000 是示意地址。</text>
+</g></svg>

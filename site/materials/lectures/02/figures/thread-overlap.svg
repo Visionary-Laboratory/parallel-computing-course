@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="670" viewBox="0 0 1120 670" role="img" aria-labelledby="title desc">
+<title id="title">硬件多线程：从另一份驻留上下文中找工作</title><desc id="desc">回顾第7页：r0等待时推进r1，两者是同一线程内的独立计算链。本页：T0没有就绪指令时，从另一份已驻留的线程上下文T1发射。教学模型每周期最多发射一条指令，每份上下文发射3周期后等待12周期。T0在0至2、15至17发射，T1在3至5、18至20发射。最下行是核心实际发射，6至14有空档。两份上下文的稳态利用率6/15=40%；不缩短等待，不复制执行单元，也不需要操作系统换入换出。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">硬件多线程：从另一份驻留上下文中找工作</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T0、T1 各有程序位置和寄存器状态；共享同一个核心的执行资源。</text>
+<rect x="48" y="112" width="488" height="86" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="292.0" y="147.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">回顾第7页 · 同一线程内</text>
+<text x="292.0" y="177.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">r0 等待 → 先推进独立的 r1</text>
+<line x1="546" y1="155" x2="574" y2="155" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="584" y="112" width="488" height="86" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="828.0" y="147.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">本页 · 多份驻留线程上下文</text>
+<text x="828.0" y="177.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">T0 无就绪指令 → 从 T1 发射</text>
+<rect x="192" y="221" width="150" height="34" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.0" y="244.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">T0 发射</text>
+<rect x="365" y="221" width="150" height="34" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="440.0" y="244.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">T1 发射</text>
+<rect x="538" y="221" width="256" height="34" rx="8" fill="#EDF1F3" stroke="#687680" stroke-width="1.5"/>
+<text x="666.0" y="244.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">斜线：本行未发射</text>
+<text x="46" y="314" font-size="21" fill="#20372F" text-anchor="start" font-weight="600">线程 T0</text>
+<rect x="192" y="286" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="211" y="314" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="233" y="286" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="252" y="314" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="274" y="286" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="293" y="314" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="315" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="356" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="397" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="438" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="479" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="520" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="561" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="602" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="643" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="684" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="725" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="766" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="807" y="286" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="826" y="314" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="848" y="286" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="867" y="314" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="889" y="286" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="908" y="314" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="930" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="971" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="1012" y="286" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="46" y="403" font-size="21" fill="#20372F" text-anchor="start" font-weight="600">线程 T1</text>
+<rect x="192" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="233" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="274" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="315" y="375" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="334" y="403" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="356" y="375" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="375" y="403" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="397" y="375" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="416" y="403" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="438" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="479" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="520" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="561" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="602" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="643" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="684" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="725" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="766" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="807" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="848" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="889" y="375" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="930" y="375" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="949" y="403" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="971" y="375" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="990" y="403" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="1012" y="375" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="1031" y="403" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<text x="46" y="492" font-size="21" fill="#20372F" text-anchor="start" font-weight="600">核心实际发射</text>
+<rect x="192" y="464" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="211" y="492" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="233" y="464" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="252" y="492" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="274" y="464" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="293" y="492" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="315" y="464" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="334" y="492" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="356" y="464" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="375" y="492" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="397" y="464" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="416" y="492" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="438" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="479" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="520" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="561" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="602" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="643" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="684" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="725" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="766" y="464" width="38" height="42" rx="4" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="807" y="464" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="826" y="492" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="848" y="464" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="867" y="492" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="889" y="464" width="38" height="42" rx="4" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="908" y="492" font-size="19" fill="#176B52" text-anchor="middle" font-weight="600">T0</text>
+<rect x="930" y="464" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="949" y="492" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="971" y="464" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="990" y="492" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<rect x="1012" y="464" width="38" height="42" rx="4" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="1031" y="492" font-size="19" fill="#246B96" text-anchor="middle" font-weight="600">T1</text>
+<text x="350" y="351" font-size="21" fill="#566A63" text-anchor="start" font-weight="400">T0 等待 12 周期，到 t=15 继续</text>
+<text x="621" y="543" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">两者都在等 → 留下发射空档</text>
+<line x1="192" y1="561" x2="1060" y2="561" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="211" y1="556" x2="211" y2="566" stroke="#566A63" stroke-width="1.5"/>
+<text x="211" y="591" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">0</text>
+<line x1="334" y1="556" x2="334" y2="566" stroke="#566A63" stroke-width="1.5"/>
+<text x="334" y="591" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<line x1="457" y1="556" x2="457" y2="566" stroke="#566A63" stroke-width="1.5"/>
+<text x="457" y="591" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">6</text>
+<line x1="826" y1="556" x2="826" y2="566" stroke="#566A63" stroke-width="1.5"/>
+<text x="826" y="591" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">15</text>
+<line x1="949" y1="556" x2="949" y2="566" stroke="#566A63" stroke-width="1.5"/>
+<text x="949" y="591" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">18</text>
+<line x1="1031" y1="556" x2="1031" y2="566" stroke="#566A63" stroke-width="1.5"/>
+<text x="1031" y="591" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">20</text>
+<text x="46" y="591" font-size="21" fill="#566A63" text-anchor="start" font-weight="400">发射时刻 t</text>
+<line x1="32" y1="621" x2="1088" y2="621" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="650" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">教学模型：每份工作算 3 周期、等 12 周期；每周期最多发射 1 条。两份上下文仍不足以填满空档。</text>
+</g></svg>

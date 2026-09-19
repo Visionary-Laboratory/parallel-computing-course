@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="650" viewBox="0 0 1120 650" role="img" aria-labelledby="title desc">
+<title id="title">35 个元素：前 4 组装满，最后一组只剩 3 个</title><desc id="desc">35个独立元素按8通道分为5组。前四组依次处理下标0到7、8到15、16到23和24到31，全部有效。最后一组只有通道0到2处理下标32、33、34，另外五条通道没有数据，掩码为11100000，不能访问下标35到39。有效元素35个，对应40个通道位置，比例87.5%，不代表速度或硬件利用率实测。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">35 个元素：前 4 组装满，最后一组只剩 3 个</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">每组 8 条 SIMD 通道；数字是数组下标，合法范围为 0–34。</text>
+<text x="325" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 0</text>
+<text x="414" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 1</text>
+<text x="503" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 2</text>
+<text x="592" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 3</text>
+<text x="681" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 4</text>
+<text x="770" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 5</text>
+<text x="859" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 6</text>
+<text x="948" y="139" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">lane 7</text>
+<text x="71" y="191" font-size="24" fill="#566A63" text-anchor="start" font-weight="600">组 0</text>
+<rect x="285" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="325.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="374" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="414.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="463" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="503.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="552" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="592.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="641" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="681.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="730" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="770.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<rect x="819" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="859.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">6</text>
+<rect x="908" y="159" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.0" y="191.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">7</text>
+<text x="71" y="258" font-size="24" fill="#566A63" text-anchor="start" font-weight="600">组 1</text>
+<rect x="285" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="325.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">8</text>
+<rect x="374" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="414.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">9</text>
+<rect x="463" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="503.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<rect x="552" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="592.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<rect x="641" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="681.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">12</text>
+<rect x="730" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="770.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">13</text>
+<rect x="819" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="859.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">14</text>
+<rect x="908" y="226" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.0" y="258.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">15</text>
+<text x="71" y="325" font-size="24" fill="#566A63" text-anchor="start" font-weight="600">组 2</text>
+<rect x="285" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="325.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">16</text>
+<rect x="374" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="414.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">17</text>
+<rect x="463" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="503.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">18</text>
+<rect x="552" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="592.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">19</text>
+<rect x="641" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="681.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<rect x="730" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="770.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">21</text>
+<rect x="819" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="859.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">22</text>
+<rect x="908" y="293" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.0" y="325.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">23</text>
+<text x="71" y="392" font-size="24" fill="#566A63" text-anchor="start" font-weight="600">组 3</text>
+<rect x="285" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="325.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">24</text>
+<rect x="374" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="414.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">25</text>
+<rect x="463" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="503.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">26</text>
+<rect x="552" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="592.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">27</text>
+<rect x="641" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="681.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">28</text>
+<rect x="730" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="770.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">29</text>
+<rect x="819" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="859.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<rect x="908" y="360" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.0" y="392.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">31</text>
+<text x="71" y="459" font-size="24" fill="#176B52" text-anchor="start" font-weight="600">组 4</text>
+<rect x="285" y="427" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="325.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">32</text>
+<rect x="374" y="427" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="414.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">33</text>
+<rect x="463" y="427" width="80" height="48" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="503.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">34</text>
+<rect x="552" y="427" width="80" height="48" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="592.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="641" y="427" width="80" height="48" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="681.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="730" y="427" width="80" height="48" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="770.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="819" y="427" width="80" height="48" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="859.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="908" y="427" width="80" height="48" rx="8" fill="url(#inactive)" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="948.0" y="459.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<rect x="71" y="516" width="978" height="72" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.0" y="545.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">最后一组的掩码：11100000</text>
+<text x="560.0" y="575.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">下标 35–39 没有合法元素，不发起这些位置的读写。</text>
+<line x1="32" y1="601" x2="1088" y2="601" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="630" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">绿色：处理真实元素。斜线：没有任务，关闭通道。这里没有分支差异，也没有任务提前结束。</text>
+</g></svg>

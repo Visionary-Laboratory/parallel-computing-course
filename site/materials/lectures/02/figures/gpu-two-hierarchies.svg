@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="610" viewBox="0 0 1120 610" role="img" aria-labelledby="title desc">
+<title id="title">工作怎样组织，硬件怎样承载</title><desc id="desc">软件组织为grid、block、warp、thread。硬件层次为GPU、SM、执行子分区和执行单元，四子分区仅以V100为例。block整体驻留在一个SM，多个block可驻留同一个SM。warp由子分区的调度器管理，一个block的warp可分布到多个子分区。线程与CUDA core不存在永久的一一对应。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">工作怎样组织，硬件怎样承载</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">纵向表示各自的层次；横向箭头表示映射，不是一一对应。</text>
+<text x="241" y="133" font-size="25" fill="#246B96" text-anchor="middle" font-weight="700">软件：定义工作与协作</text>
+<text x="879" y="133" font-size="25" fill="#176B52" text-anchor="middle" font-weight="700">硬件：保存状态并执行</text>
+<rect x="46" y="157" width="390" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="241.0" y="194.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">Grid · 一次启动的全部工作</text>
+<rect x="684" y="157" width="390" height="59" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="879.0" y="194.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">GPU · 整颗设备</text>
+<line x1="241" y1="218" x2="241" y2="239" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="879" y1="218" x2="879" y2="239" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="46" y="246" width="390" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="241.0" y="283.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">Block · 一组协作线程</text>
+<rect x="684" y="246" width="390" height="59" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="879.0" y="283.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">SM · 驻留与执行资源</text>
+<line x1="241" y1="307" x2="241" y2="328" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="879" y1="307" x2="879" y2="328" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="46" y="335" width="390" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="241.0" y="372.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">Warp · 块内的 32 线程分组</text>
+<rect x="684" y="335" width="390" height="59" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="879.0" y="372.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">子分区 · V100 每 SM 有 4 个</text>
+<line x1="241" y1="396" x2="241" y2="417" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="879" y1="396" x2="879" y2="417" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="46" y="424" width="390" height="59" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="241.0" y="461.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">Thread · 一个逻辑执行实例</text>
+<rect x="684" y="424" width="390" height="59" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="879.0" y="461.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">FP32 / INT32 / Tensor 等单元</text>
+<line x1="445" y1="275" x2="675" y2="275" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="560" y="262" font-size="21" fill="#936015" text-anchor="middle" font-weight="600">整体驻留到一个 SM</text>
+<line x1="445" y1="364" x2="675" y2="364" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="560" y="351" font-size="21" fill="#936015" text-anchor="middle" font-weight="600">交给其中的调度器</text>
+<text x="560" y="529" font-size="25" fill="#20372F" text-anchor="middle" font-weight="700">Block 不是子分区；Thread 也不是一个固定的 CUDA core。</text>
+<line x1="32" y1="561" x2="1088" y2="561" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="590" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">本图省略 cluster 等扩展；子分区数量与执行资源属于具体架构，不能当作 CUDA 软件层级。</text>
+</g></svg>

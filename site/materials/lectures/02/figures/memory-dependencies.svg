@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
+<title id="title">下一地址：等前次返回，还是现在就能算出？</title><desc id="desc">单条索引链从p=0开始，读next[0]返回5，才能确定下一次读next[5]；接着返回2，再读next[2]返回7，最后读next[7]返回1。数组a[0]、a[1]、a[2]、a[3]的地址可由已知基址和元素大小独立算出，不依赖前一次读取的值，因此有机会让多次读取重叠。四个框不代表同周期发射、四条线程或四笔DRAM事务。图中先不考虑预测下一跳，只比较地址依赖。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">下一地址：等前次返回，还是现在就能算出？</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">蓝框表示读取；上方箭头表示地址依赖，下方分叉表示地址可独立计算。</text>
+<text x="48" y="132" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">单条链：起初只知道 p=0，后继位置要读出来</text>
+<text x="159" y="170" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">第 1 次读取</text>
+<rect x="54" y="186" width="210" height="82" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="159.0" y="220.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">读 next[0]</text>
+<text x="159.0" y="250.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">返回 5</text>
+<line x1="273" y1="227" x2="309" y2="227" stroke="#936015" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="422" y="170" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">第 2 次读取</text>
+<rect x="317" y="186" width="210" height="82" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="422.0" y="220.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">读 next[5]</text>
+<text x="422.0" y="250.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">返回 2</text>
+<line x1="536" y1="227" x2="572" y2="227" stroke="#936015" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="685" y="170" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">第 3 次读取</text>
+<rect x="580" y="186" width="210" height="82" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="685.0" y="220.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">读 next[2]</text>
+<text x="685.0" y="250.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">返回 7</text>
+<line x1="799" y1="227" x2="835" y2="227" stroke="#936015" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="948" y="170" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">第 4 次读取</text>
+<rect x="843" y="186" width="210" height="82" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="948.0" y="220.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">读 next[7]</text>
+<text x="948.0" y="250.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">返回 1</text>
+<text x="54" y="305" font-size="23" fill="#936015" text-anchor="start" font-weight="600">例如：没有读到 5，就不知道下一次该读 next[5]。</text>
+<line x1="48" y1="330" x2="1072" y2="330" stroke="#CFDCD5" stroke-width="1"/>
+<text x="48" y="369" font-size="25" fill="#20372F" text-anchor="start" font-weight="700">数组：四个地址都能由基址和元素大小提前计算</text>
+<line x1="159" y1="396" x2="948" y2="396" stroke="#176B52" stroke-width="2"/>
+<line x1="159" y1="396" x2="159" y2="418" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="54" y="429" width="210" height="72" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="159.0" y="458.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">读 a[0]</text>
+<text x="159.0" y="488.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">地址已知</text>
+<line x1="422" y1="396" x2="422" y2="418" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="317" y="429" width="210" height="72" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="422.0" y="458.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">读 a[1]</text>
+<text x="422.0" y="488.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">地址已知</text>
+<line x1="685" y1="396" x2="685" y2="418" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="580" y="429" width="210" height="72" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="685.0" y="458.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">读 a[2]</text>
+<text x="685.0" y="488.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">地址已知</text>
+<line x1="948" y1="396" x2="948" y2="418" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="843" y="429" width="210" height="72" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="948.0" y="458.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">读 a[3]</text>
+<text x="948.0" y="488.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">地址已知</text>
+<text x="54" y="546" font-size="23" fill="#176B52" text-anchor="start" font-weight="600">可让多次读取重叠；不必等 a[0] 返回，才确定 a[1] 的地址。</text>
+<line x1="32" y1="571" x2="1088" y2="571" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="600" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">先不考虑预测下一跳；图只比较地址依赖，不表示真实周期、线程数或缓存行事务数。</text>
+</g></svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">SIMD：一条向量指令，同时处理 8 个元素</title><desc id="desc">SIMD：一条向量指令，同时处理 8 个元素。向量宽度为 8 的假想处理器；每个 lane 使用自己的操作数</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">SIMD：一条向量指令，同时处理 8 个元素</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">向量宽度为 8 的假想处理器；每个 lane 使用自己的操作数</text>
+<rect x="270" y="119" width="580" height="54" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="560.0" y="153.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">共享控制：y[lane] = x[lane] × x[lane]</text>
+<line x1="560" y1="174" x2="560" y2="205" stroke="#936015" stroke-width="2"/>
+<line x1="95" y1="205" x2="1047" y2="205" stroke="#936015" stroke-width="2"/>
+<line x1="95" y1="205" x2="95" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="95" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 0</text>
+<rect x="40" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="95.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 1</text>
+<line x1="95" y1="324" x2="95" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="40" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="95.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="95" y1="409" x2="95" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="40" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="95.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="231" y1="205" x2="231" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="231" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 1</text>
+<rect x="176" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="231.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 2</text>
+<line x1="231" y1="324" x2="231" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="176" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="231.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="231" y1="409" x2="231" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="176" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="231.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<line x1="367" y1="205" x2="367" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="367" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 2</text>
+<rect x="312" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="367.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 3</text>
+<line x1="367" y1="324" x2="367" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="312" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="367.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="367" y1="409" x2="367" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="312" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="367.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">9</text>
+<line x1="503" y1="205" x2="503" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="503" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 3</text>
+<rect x="448" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="503.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 4</text>
+<line x1="503" y1="324" x2="503" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="448" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="503.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="503" y1="409" x2="503" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="448" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="503.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">16</text>
+<line x1="639" y1="205" x2="639" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="639" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 4</text>
+<rect x="584" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="639.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 5</text>
+<line x1="639" y1="324" x2="639" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="584" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="639.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="639" y1="409" x2="639" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="584" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="639.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">25</text>
+<line x1="775" y1="205" x2="775" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="775" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 5</text>
+<rect x="720" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="775.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 6</text>
+<line x1="775" y1="324" x2="775" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="720" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="775.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="775" y1="409" x2="775" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="720" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="775.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">36</text>
+<line x1="911" y1="205" x2="911" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="911" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 6</text>
+<rect x="856" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="911.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 7</text>
+<line x1="911" y1="324" x2="911" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="856" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="911.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="911" y1="409" x2="911" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="856" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="911.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">49</text>
+<line x1="1047" y1="205" x2="1047" y2="224" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="1047" y="251" font-size="20" fill="#566A63" text-anchor="middle" font-weight="400">lane 7</text>
+<rect x="992" y="268" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="1047.0" y="300.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">x = 8</text>
+<line x1="1047" y1="324" x2="1047" y2="346" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="992" y="355" width="110" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1047.0" y="389.02" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">×</text>
+<line x1="1047" y1="409" x2="1047" y2="431" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="992" y="440" width="110" height="51" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="1047.0" y="474.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">64</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">共享的是指令控制，数据各自独立。8 个有效 lane 执行一次乘法，共计 8 次标量乘法。</text>
+</g></svg>
