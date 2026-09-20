@@ -267,12 +267,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-B1CsRAST.css",
-      "sha256": "4bfc5e4bb0db3a7767b408a2ec86aa415e02f0103c7dd59cf4e1027145419500"
+      "path": "site/assets/index-BWbeNBTf.js",
+      "sha256": "f65e5e6ac6a0b5be9781a718a1c721ea0c9f93ffdaa815f926db6dcb4fcf2209"
     },
     {
-      "path": "site/assets/index-BTSm_wlG.js",
-      "sha256": "809a0640c20583526eca52c9e30d4f742687741d312acb939ce1fd3fe015f917"
+      "path": "site/assets/index-p6B2dln9.css",
+      "sha256": "ccee033fbc114d5f8fcf88f7368264a3d9edcb2703ed68a55a980a7d9fd4f7e8"
     },
     {
       "path": "site/favicon.svg",
@@ -280,19 +280,19 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "50fea518361a379404ebfac563f9409bc0a12b2bc8a4d562d3e5c6b9fc6d7e43"
+      "sha256": "9551e522fe39b1f7ef71417dccecd6af72f30bb40b330e9ce482569315bbda1a"
     },
     {
       "path": "site/index.html",
-      "sha256": "97e483bf4a8b2040c9d958cd353767e21b5793d0b330912b68c1ed7eda07b0d2"
+      "sha256": "62141a2b965cc519b211a7b41f59e1a97a70f70f1f3ca6862b477177f607fd96"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "d9ce05d5994f5e3642737313eda93fde4765ca868cfeb20efb1b3bfa090fee95"
+      "sha256": "11cbae2cdf1f6d68466c0d69dd7605276ff2252536c9c836cc6d6ecb7332861d"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "736a39b604b8e055d52744462a1a556060a6945f0a867f58664c76b9cdcfd1a7"
+      "sha256": "eaacaf6602b47023646bf846165f3dd4d5e04aa6240a17f971d8b0adb4b410e6"
     },
     {
       "path": "site/materials/lectures/01/ascend-ai-core-architecture.png",
