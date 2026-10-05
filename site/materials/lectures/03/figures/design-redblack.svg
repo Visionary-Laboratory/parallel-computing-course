@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">红黑求温度：一色算完，再算另一色</title><desc id="desc">红黑求温度：一色算完，再算另一色。棋盘分组只决定更新次序，颜色不表示冷热；固定边界无需更新。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">红黑求温度：一色算完，再算另一色</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">棋盘分组只决定更新次序，颜色不表示冷热；固定边界无需更新。</text>
+<text x="74" y="141" font-size="25" fill="#20372F" text-anchor="start" font-weight="600">① 第一色：i+j 为偶数</text>
+<circle cx="109" cy="198" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="109" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="109" cy="198" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="197" cy="198" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="197" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="285" cy="198" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="285" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="285" cy="198" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="373" cy="198" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="373" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="109" cy="276" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="109" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="197" cy="276" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="197" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="197" cy="276" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="285" cy="276" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="285" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="373" cy="276" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="373" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="373" cy="276" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="109" cy="354" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="109" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="109" cy="354" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="197" cy="354" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="197" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="285" cy="354" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="285" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="285" cy="354" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="373" cy="354" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="373" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="109" cy="432" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="109" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="197" cy="432" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="197" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="197" cy="432" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<circle cx="285" cy="432" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="285" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="373" cy="432" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="373" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="373" cy="432" r="34" fill="none" stroke="#986542" stroke-width="2"/>
+<text x="74" y="485" font-size="24" fill="#566A63" text-anchor="start" font-weight="400">读第二色的旧估计</text>
+<text x="645" y="141" font-size="25" fill="#20372F" text-anchor="start" font-weight="600">② 第二色：i+j 为奇数</text>
+<circle cx="680" cy="198" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="680" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="768" cy="198" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="768" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="768" cy="198" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="856" cy="198" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="856" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="944" cy="198" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="944" y="206.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="944" cy="198" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="680" cy="276" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="680" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="680" cy="276" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="768" cy="276" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="768" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="856" cy="276" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="856" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="856" cy="276" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="944" cy="276" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="944" y="284.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="680" cy="354" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="680" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="768" cy="354" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="768" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="768" cy="354" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="856" cy="354" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="856" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="944" cy="354" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="944" y="362.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="944" cy="354" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="680" cy="432" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="680" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="680" cy="432" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="768" cy="432" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="768" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<circle cx="856" cy="432" r="28" fill="#edf3f8" stroke="#507494" stroke-width="2"/>
+<text x="856" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">②</text>
+<circle cx="856" cy="432" r="34" fill="none" stroke="#507494" stroke-width="2"/>
+<circle cx="944" cy="432" r="28" fill="#f7f0e9" stroke="#986542" stroke-width="2"/>
+<text x="944" y="440.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">①</text>
+<text x="645" y="485" font-size="24" fill="#566A63" text-anchor="start" font-weight="400">读第一色的新估计</text>
+<line x1="465" y1="300" x2="614" y2="300" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="540" y="264" font-size="21" fill="#936015" text-anchor="middle" font-weight="400">等第一色</text>
+<text x="540" y="289" font-size="21" fill="#936015" text-anchor="middle" font-weight="400">全部完成</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">外圈圈出当前更新的 8 点；第二色全完成，才算一轮。本模型最终稳态相同，沿途估计不同。</text>
+</g></svg>

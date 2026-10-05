@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">Halo 是邻居边界的副本，不是多分一份计算</title><desc id="desc">Halo 是邻居边界的副本，不是多分一份计算。两个相邻子域；五点更新只需要紧邻的一行数据，以下画出交界附近</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Halo 是邻居边界的副本，不是多分一份计算</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">两个相邻子域；五点更新只需要紧邻的一行数据，以下画出交界附近</text>
+<text x="97" y="143" font-size="25" fill="#176B52" text-anchor="start" font-weight="600">Worker T0</text>
+<text x="691" y="143" font-size="25" fill="#246B96" text-anchor="start" font-weight="600">Worker T1</text>
+<rect x="81" y="165" width="352" height="306" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="98" y="185" width="318" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="257.0" y="227.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">自有内部行</text>
+<rect x="98" y="280" width="318" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="257.0" y="322.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">自有边界 r</text>
+<rect x="98" y="375" width="318" height="69" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="257.0" y="417.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">halo：复制 r+1</text>
+<rect x="675" y="165" width="352" height="306" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<rect x="692" y="185" width="318" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="851.0" y="227.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">halo：复制 r</text>
+<rect x="692" y="280" width="318" height="69" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="851.0" y="322.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">自有边界 r+1</text>
+<rect x="692" y="375" width="318" height="69" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="851.0" y="417.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">自有内部行</text>
+<path d="M 434 312 H 533 V 218 H 665" fill="none" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="536" y="205" font-size="19" fill="#176B52" text-anchor="middle" font-weight="400">复制行 r</text>
+<path d="M 674 312 H 581 V 407 H 442" fill="none" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="553" y="446" font-size="19" fill="#246B96" text-anchor="middle" font-weight="400">复制行 r+1</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">每轮先取得所需版本，再计算依赖边界的点；副本的接收完成与自有数据的安全改写都要协调。</text>
+</g></svg>

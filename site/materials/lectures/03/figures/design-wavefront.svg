@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">波前：沿斜线分批求温度，保留逐行的结果</title><desc id="desc">波前：沿斜线分批求温度，保留逐行的结果。只画内部 4 × 4；格内是批次编号，不是温度。固定外圈随时可读。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">波前：沿斜线分批求温度，保留逐行的结果</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">只画内部 4 × 4；格内是批次编号，不是温度。固定外圈随时可读。</text>
+<rect x="75" y="140" width="69" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="109.5" y="183.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="145" y1="175" x2="156" y2="175" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="110" y1="210" x2="110" y2="221" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="157" y="140" width="69" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="191.5" y="183.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<line x1="227" y1="175" x2="238" y2="175" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="192" y1="210" x2="192" y2="221" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="239" y="140" width="69" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="273.5" y="183.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<line x1="309" y1="175" x2="320" y2="175" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="274" y1="210" x2="274" y2="221" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="321" y="140" width="69" height="69" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="355.5" y="183.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<line x1="356" y1="210" x2="356" y2="221" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="75" y="222" width="69" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="109.5" y="265.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<line x1="145" y1="257" x2="156" y2="257" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="110" y1="292" x2="110" y2="303" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="157" y="222" width="69" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="191.5" y="265.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<line x1="227" y1="257" x2="238" y2="257" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="192" y1="292" x2="192" y2="303" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="239" y="222" width="69" height="69" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="273.5" y="265.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<line x1="309" y1="257" x2="320" y2="257" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="274" y1="292" x2="274" y2="303" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="321" y="222" width="69" height="69" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="355.5" y="265.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<line x1="356" y1="292" x2="356" y2="303" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="75" y="304" width="69" height="69" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="109.5" y="347.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<line x1="145" y1="339" x2="156" y2="339" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="110" y1="374" x2="110" y2="385" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="157" y="304" width="69" height="69" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="191.5" y="347.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<line x1="227" y1="339" x2="238" y2="339" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="192" y1="374" x2="192" y2="385" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="239" y="304" width="69" height="69" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="273.5" y="347.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<line x1="309" y1="339" x2="320" y2="339" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<line x1="274" y1="374" x2="274" y2="385" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="321" y="304" width="69" height="69" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="355.5" y="347.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">6</text>
+<line x1="356" y1="374" x2="356" y2="385" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="75" y="386" width="69" height="69" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="109.5" y="429.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<line x1="145" y1="421" x2="156" y2="421" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="157" y="386" width="69" height="69" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="191.5" y="429.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<line x1="227" y1="421" x2="238" y2="421" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="239" y="386" width="69" height="69" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="273.5" y="429.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">6</text>
+<line x1="309" y1="421" x2="320" y2="421" stroke="#687680" stroke-width="1.7" marker-end="url(#arrow)"/>
+<rect x="321" y="386" width="69" height="69" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="355.5" y="429.68" font-size="27" fill="#20372F" text-anchor="middle" font-weight="600">7</text>
+<text x="457" y="148" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">上 / 左：先算完，读本轮新温度</text>
+<text x="457" y="184" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">下 / 右：还没算，读上一轮估计</text>
+<text x="457" y="220" font-size="23" fill="#176B52" text-anchor="start" font-weight="600">同批点不相邻，可以一起更新</text>
+<text x="501" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">1</text>
+<rect x="477" y="282" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="501.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="579" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">2</text>
+<rect x="555" y="282" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="579.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="555" y="321" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="579.0" y="342.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="657" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<rect x="633" y="282" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="657.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="633" y="321" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="657.0" y="342.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="633" y="360" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="657.0" y="381.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="735" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<rect x="711" y="282" width="48" height="32" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="735.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="711" y="321" width="48" height="32" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="735.0" y="342.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="711" y="360" width="48" height="32" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="735.0" y="381.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="711" y="399" width="48" height="32" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="735.0" y="420.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="813" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">5</text>
+<rect x="789" y="282" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="813.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="789" y="321" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="813.0" y="342.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="789" y="360" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="813.0" y="381.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="891" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">6</text>
+<rect x="867" y="282" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="891.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<rect x="867" y="321" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="891.0" y="342.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="969" y="263" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">7</text>
+<rect x="945" y="282" width="48" height="32" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="969.0" y="303.78" font-size="17" fill="#20372F" text-anchor="middle" font-weight="600">●</text>
+<text x="474" y="474" font-size="22" fill="#176B52" text-anchor="start" font-weight="600">第 1 → 7 批：1、2、3、4、3、2、1 个点</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">绿：本轮已完成；金：当前第 4 批；灰：尚未更新。箭头表示上 / 左必须先完成。</text>
+</g></svg>

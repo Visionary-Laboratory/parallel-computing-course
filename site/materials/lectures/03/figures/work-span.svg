@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">总工作 12，关键路径 9：增加 worker 也绕不过依赖</title><desc id="desc">总工作 12，关键路径 9：增加 worker 也绕不过依赖。节点数字是工作时间单位；红色标出准备 → 长分支 → 合并的关键路径。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">总工作 12，关键路径 9：增加 worker 也绕不过依赖</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">节点数字是工作时间单位；红色标出准备 → 长分支 → 合并的关键路径。</text>
+<rect x="62" y="237" width="205" height="92" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="164.5" y="291.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">准备 · 2</text>
+<rect x="449" y="135" width="216" height="82" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="557.0" y="184.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">短分支 · 3</text>
+<rect x="449" y="335" width="216" height="82" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="557.0" y="384.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">长分支 · 6</text>
+<rect x="850" y="237" width="210" height="92" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="955.0" y="291.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">合并 · 1</text>
+<line x1="274" y1="264" x2="440" y2="180" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="274" y1="300" x2="440" y2="378" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="674" y1="178" x2="841" y2="264" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="674" y1="376" x2="841" y2="300" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="558" y="477" font-size="26" fill="#20372F" text-anchor="middle" font-weight="700">W = 12；S = 9；T ≥ max(12/P, 9)</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">缩短非关键分支可以减少总工作，但不一定提前最终完成时间。</text>
+</g></svg>

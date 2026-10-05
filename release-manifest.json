@@ -3,9 +3,10 @@
     "course-overview",
     "01-introduction",
     "02-execution-models",
+    "03-parallel-design",
     "released-lecture-glossary"
   ],
-  "date": "2026-09-20",
+  "date": "2026-10-05",
   "lectures": [
     {
       "slug": "01-introduction",
@@ -16,11 +17,16 @@
       "slug": "02-execution-models",
       "slides": 71,
       "answers": 17
+    },
+    {
+      "slug": "03-parallel-design",
+      "slides": 59,
+      "answers": 6
     }
   ],
-  "slides": 146,
-  "answers": 44,
-  "glossaryTerms": 55,
+  "slides": 205,
+  "answers": 50,
+  "glossaryTerms": 62,
   "files": [
     {
       "path": "site/.nojekyll",
@@ -28,7 +34,7 @@
     },
     {
       "path": "site/404.html",
-      "sha256": "96f65256daeb629b2c4a507166ea1a63e90d5d71550235890c281518ec455a04"
+      "sha256": "9b4560dec1ae2669be270da627eb2b65bac91d0ef895844a4889b7e37403363a"
     },
     {
       "path": "site/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
@@ -267,12 +273,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-CTRwygbS.css",
-      "sha256": "a4045e36ec33243df5b6de634cf450e6da8a1d42bf85f8ed1860b201093f1ab8"
+      "path": "site/assets/index-BJMQVICX.js",
+      "sha256": "d796dab247efbd0f7a753c21fd9ff3a04c0f1536eaf36e41e4a893c8958fd86a"
     },
     {
-      "path": "site/assets/index-q5MvXTuW.js",
-      "sha256": "0c4ece61dd137b4c4f9be34db3013abbea8a1ff098734486d568f74a6ebae675"
+      "path": "site/assets/index-Bu-so1Q-.css",
+      "sha256": "7f6bce6b6783e5107851cf358638e241669576f93038007e6376fac9f556c4c0"
     },
     {
       "path": "site/favicon.svg",
@@ -280,19 +286,23 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "dde7048e5ba1334cae92e7a61b4d98485b55ce72ac5cdd537eb401245c49c091"
+      "sha256": "9d3fdc0a95e931660bf9ff6c8ff1d2af9da2b0fbf60b42ddfb67cd52694b7103"
     },
     {
       "path": "site/index.html",
-      "sha256": "f31de64b95cf7149baa1788b9fa5d1f49239b808b651be63a1a7c93209b0463c"
+      "sha256": "0768e0d8e007ecb034ac997b05aa5132ae51e4980e5556bb79c4f70390330e76"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "1486015bb8c570eb770f590f33a573a7aa5e7dbc1d6ca2e90615cd9c6a531809"
+      "sha256": "5fa68a9658412c40a0a117da122b4b16e1cbbcfdc386a1e9758fb996526989f1"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "e0d35b9bd023e128c5a98af55040cd63ed6f0199daae91a209f5ffa0f2fa4d18"
+      "sha256": "f8fe630053049902ffe4271bb6486d3c7977a411e86e84b8725be20ace4ae2c0"
+    },
+    {
+      "path": "site/lectures/03-parallel-design/index.html",
+      "sha256": "d423b031892bab1481cf3bd506c2adba171499dec3d5321acd7ae534a3649d22"
     },
     {
       "path": "site/materials/lectures/01/ascend-ai-core-architecture.png",
@@ -509,6 +519,118 @@
     {
       "path": "site/materials/lectures/02/hardware/zen3-simd-original.png",
       "sha256": "8097d301d565e9b66eab726e8666ba0605b5af64d62ecf41bae69a7147bc04a6"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/buffer-lifecycle.svg",
+      "sha256": "d386efa792bf0de2696859acbdad6011d2d10b4df752cf5f067440adefdc55e6"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-communication.svg",
+      "sha256": "be7621f5e455b46643b6c3381425ac86855d431a4308d9855e728574c4c31ad0"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-grid.svg",
+      "sha256": "97bd75862c599e86a19338c8fa81edd6d50fe327bb8c7b5505f1fea153995d50"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-halo.svg",
+      "sha256": "6c73b5a99ef633ba0e623f0ae611915453db9bd00f1780be3fbed56bc1b87a8c"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-long-first.svg",
+      "sha256": "b1eefdee87c5158ec3f93ff7f6f66b455118bb14473ff1bb2d09d7b91e1cd36d"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-numa.svg",
+      "sha256": "a92d7967ac35b4dff3b83c1f700c834df56187a3720895a60be4d5f9874a9c49"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-queue.svg",
+      "sha256": "e9f29e16f450ae5fdc3454d3031a048a10f112deaa3564f08175451959289b03"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-redblack.svg",
+      "sha256": "1628447d1ca7882e5dc482b8c5d37d40f11fbe2d53b663faeb9bb3ca1279f898"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-scan-blelloch.svg",
+      "sha256": "01413ef232e3c9f4cf08573a878d7d4e155f2910389e9c942ee8372325ea6d3f"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-scan-hierarchy.svg",
+      "sha256": "25c1f7ca2ad757019376376b68842ad861c4fe3f4d3ae44883fcab9ea9b2df7e"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-scan-hs.svg",
+      "sha256": "cac6cfbb1d79d9e019acdd9d91149708f2e6d40516233d74294a0e0eb539900c"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-scatter.svg",
+      "sha256": "2f75c109fef011d3379272c5f94af89b8cf2fda831ef1b42f3789916a97164a4"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-square.svg",
+      "sha256": "b4399ecf911756181495f22c57354d913e057be2b20827af89d3465bacad6318"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-stages.svg",
+      "sha256": "942886b9bd22512543843eb37121f2879d6cc1a550a0c17eb940ce36e2edac1b"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-steal-after.svg",
+      "sha256": "ad2ab700b37a5fb3fcc31042891da5593b6fe2dd4e87eb4778ea038560c06c0d"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-steal.svg",
+      "sha256": "3a368b321376f631b5b05da683f43a3c40b461c8a08216710debdc84400e6bb5"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/design-wavefront.svg",
+      "sha256": "2dd96615b46a1be2a34ce1f61bb2454d36ec4c5ce99e61bc7531d52d9b6e63de"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/gemm-ownership.svg",
+      "sha256": "ba6f2cc5b002bcb10b1ac3ed5df4ba6df9614bbcf51dce009cceca682dbd1d7d"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/halo-counting.svg",
+      "sha256": "0df0d462376a5e24074623457d8e4b4c5450c86c899fb9f0db876d69eacba0ce"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/heat-balance-check.svg",
+      "sha256": "27d976e59876e8e9ec56bf2aa85c4008380cff24bb745a8de67ad9d3d86a51ca"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/local-readiness.svg",
+      "sha256": "ff6cfba51bf4b6f2a15140088c0ec877b0aff00d76ab69cdf4e5d7a4be34a136"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/random-steal-target.svg",
+      "sha256": "8bf5a0cea6be33ac034fb6c2089decf0b71e82be4e7f2d5d7a816d3645d20c9a"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/read-write-neighbors.svg",
+      "sha256": "420cec715df6a986c0f504ead4da4f6b814c9f849b3019e4a835650c1e8f5872"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/strong-weak-scaling.svg",
+      "sha256": "ddd742b93ad4c50078c38e6aa8c067f898e0fc9014dd41231d78b27f3f0aa75e"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/token-roundtrip.svg",
+      "sha256": "9a0d7d0f34ed433af49292896762d41459cc45cc45d92af99d1592a8944f4067"
+    },
+    {
+      "path": "site/materials/lectures/03/figures/work-span.svg",
+      "sha256": "9ce319f5942c381d842f51ac1257b89af0199fd4c7c30acac4a11ed2b02e3fc1"
+    },
+    {
+      "path": "site/materials/lectures/03/halo-overlap.svg",
+      "sha256": "ae5cea0a1ba33d01b3baa39f6a875749bb212884985448a77069d9e215b7bac6"
+    },
+    {
+      "path": "site/materials/lectures/03/iteration-phases.svg",
+      "sha256": "cc5bc1e3bebc6320a172ef1cbe753c2ded33d5b2bbbc8e4c1a04c918d70799d6"
     }
   ]
 }

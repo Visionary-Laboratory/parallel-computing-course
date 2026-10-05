@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">长任务先启动，缩短最后独自收尾的时间</title><desc id="desc">长任务先启动，缩短最后独自收尾的时间。相同工作：15 个耗时 1 的短任务 + 1 个耗时 16 的长任务；4 个 worker</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">长任务先启动，缩短最后独自收尾的时间</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">相同工作：15 个耗时 1 的短任务 + 1 个耗时 16 的长任务；4 个 worker</text>
+<text x="43" y="131" font-size="23" fill="#20372F" text-anchor="start" font-weight="600">队列：短任务在前</text>
+<text x="49" y="174" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T0</text>
+<line x1="111" y1="181" x2="987" y2="181" stroke="#CFDCD5" stroke-width="1"/>
+<text x="49" y="205" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T1</text>
+<line x1="111" y1="212" x2="987" y2="212" stroke="#CFDCD5" stroke-width="1"/>
+<text x="49" y="236" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T2</text>
+<line x1="111" y1="243" x2="987" y2="243" stroke="#CFDCD5" stroke-width="1"/>
+<text x="49" y="267" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T3</text>
+<line x1="111" y1="274" x2="987" y2="274" stroke="#CFDCD5" stroke-width="1"/>
+<rect x="111" y="154" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="171.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="111" y="185" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="202.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="111" y="216" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="233.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="111" y="247" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="264.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="154" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="171.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="185" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="202.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="216" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="233.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="247" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="264.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="154" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="171.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="185" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="202.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="216" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="233.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="247" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="264.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="154" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.5" y="171.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="185" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.5" y="202.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="216" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.5" y="233.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="247" width="718" height="25" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="605.0" y="264.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">16</text>
+<line x1="966" y1="149" x2="966" y2="279" stroke="#B74836" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="1039" y="214" font-size="22" fill="#B74836" text-anchor="middle" font-weight="600">T = 19</text>
+<text x="43" y="308" font-size="23" fill="#20372F" text-anchor="start" font-weight="600">队列：长任务在前</text>
+<text x="49" y="351" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T0</text>
+<line x1="111" y1="358" x2="987" y2="358" stroke="#CFDCD5" stroke-width="1"/>
+<text x="49" y="382" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T1</text>
+<line x1="111" y1="389" x2="987" y2="389" stroke="#CFDCD5" stroke-width="1"/>
+<text x="49" y="413" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T2</text>
+<line x1="111" y1="420" x2="987" y2="420" stroke="#CFDCD5" stroke-width="1"/>
+<text x="49" y="444" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">T3</text>
+<line x1="111" y1="451" x2="987" y2="451" stroke="#CFDCD5" stroke-width="1"/>
+<rect x="111" y="331" width="718" height="25" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="470.0" y="348.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">16</text>
+<rect x="111" y="362" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="379.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="111" y="393" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="410.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="111" y="424" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="132.5" y="441.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="362" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="379.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="393" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="410.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="424" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="177.5" y="441.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="362" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="379.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="393" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="410.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="201" y="424" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="222.5" y="441.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="362" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.5" y="379.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="393" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.5" y="410.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="246" y="424" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="267.5" y="441.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="291" y="362" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="312.5" y="379.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="291" y="393" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="312.5" y="410.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="291" y="424" width="43" height="25" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="312.5" y="441.94" font-size="16" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="831" y1="326" x2="831" y2="456" stroke="#B74836" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="1039" y="391" font-size="22" fill="#B74836" text-anchor="middle" font-weight="600">T = 16</text>
+<text x="111" y="487" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">0</text>
+<text x="291" y="487" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<text x="471" y="487" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">8</text>
+<text x="651" y="487" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">12</text>
+<text x="831" y="487" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">16</text>
+<text x="966" y="487" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">19</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">忽略调度开销、任务不可拆分：下界 max(31/4, 16) = 16。两种顺序总工作都为 31。</text>
+</g></svg>

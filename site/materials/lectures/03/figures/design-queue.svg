@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">动态分配：谁空闲，谁领取下一份工作</title><desc id="desc">动态分配：谁空闲，谁领取下一份工作。任务长度不同；共享队列负责分配，worker 独立执行领取到的任务</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">动态分配：谁空闲，谁领取下一份工作</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">任务长度不同；共享队列负责分配，worker 独立执行领取到的任务</text>
+<text x="57" y="145" font-size="24" fill="#20372F" text-anchor="start" font-weight="600">等待队列</text>
+<rect x="215" y="120" width="85" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="257.5" y="152.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">2 单位</text>
+<rect x="311" y="120" width="145" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="383.5" y="152.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">8 单位</text>
+<rect x="467" y="120" width="85" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="509.5" y="152.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">1 单位</text>
+<rect x="563" y="120" width="85" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="605.5" y="152.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">3 单位</text>
+<rect x="659" y="120" width="200" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="759.0" y="152.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">12 单位</text>
+<path d="M 257 179 V 218 H 174 V 276" fill="none" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="354" y="231" font-size="22" fill="#936015" text-anchor="start" font-weight="400">取一项：需要同步与调度开销</text>
+<rect x="53" y="286" width="243" height="133" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="174.5" y="344.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Worker T0</text>
+<text x="174.5" y="374.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">刚空闲 → 领取</text>
+<rect x="326" y="286" width="243" height="133" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="447.5" y="344.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Worker T1</text>
+<text x="447.5" y="374.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">正在执行 · 5</text>
+<rect x="599" y="286" width="243" height="133" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="720.5" y="344.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Worker T2</text>
+<text x="720.5" y="374.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">正在执行 · 2</text>
+<rect x="872" y="286" width="243" height="133" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="993.5" y="344.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Worker T3</text>
+<text x="993.5" y="374.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">正在执行 · 9</text>
+<text x="564" y="473" font-size="25" fill="#176B52" text-anchor="middle" font-weight="600">划分过细：取任务的成本可能抵消负载均衡收益</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">任务条宽度提示工作量，不是时间轴；这一时刻只有 T0 发起领取。队列争用也可能成为瓶颈。</text>
+</g></svg>

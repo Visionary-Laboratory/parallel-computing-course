@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">分配方式不同，跨 worker 的边界也不同</title><desc id="desc">分配方式不同，跨 worker 的边界也不同。8 行数据交给 4 个 worker；每行读取相邻行，颜色与 T 编号一起表示所有权</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">分配方式不同，跨 worker 的边界也不同</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">8 行数据交给 4 个 worker；每行读取相邻行，颜色与 T 编号一起表示所有权</text>
+<text x="71" y="139" font-size="26" fill="#20372F" text-anchor="start" font-weight="600">连续分块</text>
+<rect x="128" y="159" width="250" height="29" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="253.0" y="179.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 0 行 · T0</text>
+<rect x="128" y="194" width="250" height="29" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="253.0" y="214.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 1 行 · T0</text>
+<path d="M 398 209 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="128" y="229" width="250" height="29" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="253.0" y="249.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 2 行 · T1</text>
+<rect x="128" y="264" width="250" height="29" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="253.0" y="284.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 3 行 · T1</text>
+<path d="M 398 279 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="128" y="299" width="250" height="29" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="253.0" y="319.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 4 行 · T2</text>
+<rect x="128" y="334" width="250" height="29" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="253.0" y="354.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 5 行 · T2</text>
+<path d="M 398 349 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="128" y="369" width="250" height="29" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="253.0" y="389.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 6 行 · T3</text>
+<rect x="128" y="404" width="250" height="29" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="253.0" y="424.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 7 行 · T3</text>
+<text x="71" y="477" font-size="24" fill="#B74836" text-anchor="start" font-weight="600">3 处跨 worker 邻接边界</text>
+<text x="625" y="139" font-size="26" fill="#20372F" text-anchor="start" font-weight="600">轮转分配</text>
+<rect x="682" y="159" width="250" height="29" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="807.0" y="179.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 0 行 · T0</text>
+<path d="M 952 174 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="194" width="250" height="29" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="807.0" y="214.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 1 行 · T1</text>
+<path d="M 952 209 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="229" width="250" height="29" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="807.0" y="249.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 2 行 · T2</text>
+<path d="M 952 244 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="264" width="250" height="29" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="807.0" y="284.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 3 行 · T3</text>
+<path d="M 952 279 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="299" width="250" height="29" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="807.0" y="319.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 4 行 · T0</text>
+<path d="M 952 314 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="334" width="250" height="29" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="807.0" y="354.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 5 行 · T1</text>
+<path d="M 952 349 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="369" width="250" height="29" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="807.0" y="389.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 6 行 · T2</text>
+<path d="M 952 384 h 26 v 35 h -26" fill="none" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="682" y="404" width="250" height="29" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="807.0" y="424.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">第 7 行 · T3</text>
+<text x="625" y="477" font-size="24" fill="#B74836" text-anchor="start" font-weight="600">7 处跨 worker 邻接边界</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">每个 worker 仍计算两行；右侧红箭头只标跨所有权边界。通信字节数还取决于每行宽度。</text>
+</g></svg>

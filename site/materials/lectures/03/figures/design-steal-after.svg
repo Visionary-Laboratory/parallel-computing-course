@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">窃取后：两个 worker 各自展开工作</title><desc id="desc">窃取后：两个 worker 各自展开工作。范围任务采用闭区间；队头是较旧工作，队尾是较新工作</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">窃取后：两个 worker 各自展开工作</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">范围任务采用闭区间；队头是较旧工作，队尾是较新工作</text>
+<rect x="73" y="124" width="430" height="335" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="101" y="162" font-size="26" fill="#20372F" text-anchor="start" font-weight="600">Worker T0</text>
+<text x="101" y="206" font-size="21" fill="#566A63" text-anchor="start" font-weight="400">本地 deque：队头 → 队尾</text>
+<rect x="103" y="226" width="174" height="58" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="190.0" y="263.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">[16,31]</text>
+<rect x="103" y="350" width="365" height="68" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="285.5" y="391.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">执行 [0,15]</text>
+<rect x="643" y="124" width="430" height="335" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="671" y="162" font-size="26" fill="#20372F" text-anchor="start" font-weight="600">Worker T1</text>
+<text x="671" y="206" font-size="21" fill="#566A63" text-anchor="start" font-weight="400">本地 deque：队头 → 队尾</text>
+<rect x="673" y="226" width="174" height="58" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="760.0" y="263.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">[48,63]</text>
+<rect x="673" y="350" width="365" height="68" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="855.5" y="391.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">执行 [32,47]</text>
+<text x="555" y="489" font-size="23" fill="#176B52" text-anchor="middle" font-weight="600">窃取来的 [32,63] 再拆成 [32,47] 与 [48,63]</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">所有者从队尾取工作，窃取者从队头取；图示一种 deque 调度策略，不偷取正在执行的任务。</text>
+</g></svg>

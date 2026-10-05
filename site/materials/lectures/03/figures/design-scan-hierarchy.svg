@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">分层 scan：局部结果，加上之前所有块的总和</title><desc id="desc">分层 scan：局部结果，加上之前所有块的总和。输入仍为 [1,0,0,1 | 0,1,1,0]；两个 block，每块 4 项，使用 exclusive scan</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">分层 scan：局部结果，加上之前所有块的总和</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">输入仍为 [1,0,0,1 | 0,1,1,0]；两个 block，每块 4 项，使用 exclusive scan</text>
+<text x="66" y="140" font-size="25" fill="#20372F" text-anchor="start" font-weight="600">Block 0</text>
+<rect x="66" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="107.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="157" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="198.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="248" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="289.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="339" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="380.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<text x="66" y="240" font-size="21" fill="#176B52" text-anchor="start" font-weight="400">① 块内前缀</text>
+<rect x="66" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="107.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="157" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="198.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="248" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="289.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="339" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="380.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="156" y="326" width="165" height="44" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="238.5" y="355.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">块和 = 2</text>
+<text x="636" y="140" font-size="25" fill="#20372F" text-anchor="start" font-weight="600">Block 1</text>
+<rect x="636" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="677.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="727" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="768.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="818" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="859.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="909" y="157" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="950.0" y="185.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="636" y="240" font-size="21" fill="#176B52" text-anchor="start" font-weight="400">① 块内前缀</text>
+<rect x="636" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="677.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="727" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="768.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="818" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="859.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="909" y="258" width="82" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="950.0" y="286.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="726" y="326" width="165" height="44" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="808.5" y="355.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">块和 = 2</text>
+<line x1="325" y1="350" x2="391" y2="350" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="723" y1="350" x2="713" y2="350" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="400" y="326" width="306" height="73" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="553.0" y="354.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">② scan 块和 [2,2]</text>
+<text x="553.0" y="384.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">得到块偏移 [0,2]</text>
+<text x="66" y="420" font-size="22" fill="#936015" text-anchor="start" font-weight="400">③ 每项加上偏移 0</text>
+<rect x="66" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="107.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="157" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="198.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="248" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="289.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="339" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="380.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<text x="636" y="420" font-size="22" fill="#936015" text-anchor="start" font-weight="400">③ 每项加上偏移 2</text>
+<rect x="636" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="677.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="727" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="768.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="818" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="859.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="909" y="440" width="82" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="950.0" y="468.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">只扫描“块总和”还不够：本地前缀也必须保留。更多块时，块和的 scan 可以继续递归分层。</text>
+</g></svg>

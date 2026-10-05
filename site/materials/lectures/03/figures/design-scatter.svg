@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">Gather 改变读取地址；scatter 改变写入地址</title><desc id="desc">Gather 改变读取地址；scatter 改变写入地址。同一组索引 [2,0,2,1]：重复读取合法，重复写入则需要定义如何合并</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Gather 改变读取地址；scatter 改变写入地址</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">同一组索引 [2,0,2,1]：重复读取合法，重复写入则需要定义如何合并</text>
+<text x="63" y="139" font-size="22" fill="#20372F" text-anchor="start" font-weight="600">Gather：out[i] = in[idx[i]]</text>
+<text x="106" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[0]</text>
+<rect x="63" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="106.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<text x="212" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[1]</text>
+<rect x="169" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="212.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<text x="318" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[2]</text>
+<rect x="275" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="318.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<text x="424" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[3]</text>
+<rect x="381" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="424.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">40</text>
+<line x1="318" y1="246" x2="106" y2="359" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="106" y1="246" x2="212" y2="359" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="318" y1="246" x2="318" y2="359" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="212" y1="246" x2="424" y2="359" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="63" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="106.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<text x="106" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[0]</text>
+<rect x="169" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="212.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<text x="212" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[1]</text>
+<rect x="275" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="318.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<text x="318" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[2]</text>
+<rect x="381" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="424.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<text x="424" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[3]</text>
+<text x="63" y="488" font-size="22" fill="#176B52" text-anchor="start" font-weight="400">in[2] 被两次读取，结果明确</text>
+<text x="628" y="139" font-size="22" fill="#20372F" text-anchor="start" font-weight="600">Scatter：out[idx[i]] = in[i]</text>
+<text x="671" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[0]</text>
+<rect x="628" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="671.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<text x="777" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[1]</text>
+<rect x="734" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="777.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<text x="883" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[2]</text>
+<rect x="840" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="883.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<text x="989" y="180" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">in[3]</text>
+<rect x="946" y="194" width="86" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="989.0" y="226.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">40</text>
+<line x1="671" y1="246" x2="883" y2="359" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="777" y1="246" x2="671" y2="359" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="883" y1="246" x2="883" y2="359" stroke="#B74836" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="989" y1="246" x2="777" y2="359" stroke="#246B96" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="628" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="671.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<text x="671" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[0]</text>
+<rect x="734" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="777.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">40</text>
+<text x="777" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[1]</text>
+<rect x="840" y="366" width="86" height="50" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="883.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">冲突</text>
+<text x="883" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[2]</text>
+<rect x="946" y="366" width="86" height="50" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="989.0" y="398.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">未写</text>
+<text x="989" y="447" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">out[3]</text>
+<text x="628" y="488" font-size="22" fill="#B74836" text-anchor="start" font-weight="400">out[2] 同时收到 10 和 30</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">线从数据来源指向去向。scatter 的冲突不能靠画箭头解决：需唯一目的地址或明确的原子归约。</text>
+</g></svg>

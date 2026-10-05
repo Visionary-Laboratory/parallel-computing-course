@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="605" viewBox="0 0 1120 605" role="img" aria-labelledby="title desc">
+<title id="title">Hillis–Steele：每轮把可见前缀扩大一倍</title><desc id="desc">Hillis–Steele：每轮把可见前缀扩大一倍。沿用稳定筛选的 8 项标志；每轮读取上一轮快照，避免同一轮覆盖尚需读取的值</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Hillis–Steele：每轮把可见前缀扩大一倍</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">沿用稳定筛选的 8 项标志；每轮读取上一轮快照，避免同一轮覆盖尚需读取的值</text>
+<text x="47" y="172" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">输入</text>
+<rect x="235" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="275.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="324" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="364.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="413" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="453.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="502" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="542.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="591" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="631.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="680" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="720.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="769" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="809.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="858" y="142" width="80" height="43" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="898.0" y="171.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<line x1="809" y1="188" x2="898" y2="228" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1017" y="225" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">+7 次</text>
+<text x="47" y="261" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">跨距 1</text>
+<rect x="235" y="231" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="275.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="324" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="364.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="413" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="453.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="502" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="542.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="591" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="631.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="680" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="720.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="769" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="809.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="858" y="231" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="898.0" y="260.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="720" y1="277" x2="898" y2="317" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1017" y="314" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">+6 次</text>
+<text x="47" y="350" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">跨距 2</text>
+<rect x="235" y="320" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="275.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="324" y="320" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="364.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="413" y="320" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="453.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="502" y="320" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="542.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="591" y="320" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="631.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="680" y="320" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="720.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="769" y="320" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="809.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="858" y="320" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="898.0" y="349.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<line x1="542" y1="366" x2="898" y2="406" stroke="#176B52" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1017" y="403" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">+4 次</text>
+<text x="47" y="439" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">跨距 4</text>
+<rect x="235" y="409" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="275.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="324" y="409" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="364.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="413" y="409" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="453.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="502" y="409" width="80" height="43" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="542.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="591" y="409" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="631.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="680" y="409" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="720.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="769" y="409" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="809.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="858" y="409" width="80" height="43" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="898.0" y="438.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="225" y="503" width="801" height="47" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="625.5" y="533.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">inclusive：1, 1, 1, 2, 2, 3, 4, 4　→ exclusive 右移补 0</text>
+<line x1="32" y1="556" x2="1088" y2="556" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="585" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">三轮分别做 7、6、4 次加法，共 17 次。箭头每轮突出一个读取关系，绿色格为本轮求和结果。</text>
+</g></svg>

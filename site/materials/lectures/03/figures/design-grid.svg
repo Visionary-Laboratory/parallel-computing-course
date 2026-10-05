@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc">
+<title id="title">金属板稳态温度：边界已知，内部怎样求？</title><desc id="desc">6×6含固定边界，内部4×4初始猜0°C。稳态内点等于上下左右四邻温度的平均；反复迭代接近同一个稳态。图右显示离散稳态温度，非真实加热过程的时间快照。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">金属板稳态温度：边界已知，内部怎样求？</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">均匀材料、等间距网格、无内部热源；左边 100°C，其余三边 0°C</text>
+<text x="56" y="141" font-size="24" fill="#176B52" text-anchor="start" font-weight="600">① 内部先猜 0°C</text>
+<text x="43" y="192" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">0</text>
+<text x="78" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">0</text>
+<rect x="56" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="78.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="103" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="125.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="150" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="172.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="197" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="219.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="244" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="266.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="291" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="313.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="43" y="239" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">1</text>
+<text x="125" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">1</text>
+<rect x="56" y="219" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="78.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="103" y="219" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="125.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="150" y="219" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="172.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="197" y="219" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="219.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="244" y="219" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="266.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="291" y="219" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="313.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="43" y="286" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">2</text>
+<text x="172" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">2</text>
+<rect x="56" y="266" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="78.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="103" y="266" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="125.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="150" y="266" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="172.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="197" y="266" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="219.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="244" y="266" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="266.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="291" y="266" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="313.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="43" y="333" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<text x="219" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<rect x="56" y="313" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="78.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="103" y="313" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="125.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="150" y="313" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="172.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="197" y="313" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="219.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="244" y="313" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="266.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="291" y="313" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="313.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="43" y="380" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<text x="266" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<rect x="56" y="360" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="78.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="103" y="360" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="125.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="150" y="360" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="172.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="197" y="360" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="219.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="244" y="360" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="266.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="291" y="360" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="313.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="43" y="427" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">5</text>
+<text x="313" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">5</text>
+<rect x="56" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="78.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="103" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="125.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="150" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="172.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="197" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="219.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="244" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="266.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="291" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="313.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="192" y="481" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">行 i 向下 · 列 j 向右 · 单位 °C</text>
+<text x="779" y="141" font-size="24" fill="#176B52" text-anchor="start" font-weight="600">③ 反复更新后的稳态</text>
+<text x="766" y="192" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">0</text>
+<text x="801" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">0</text>
+<rect x="779" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="801.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="826" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="848.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="873" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="895.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="920" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="942.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="967" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="989.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="1014" y="172" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="1036.0" y="200.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="766" y="239" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">1</text>
+<text x="848" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">1</text>
+<rect x="779" y="219" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="801.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="826" y="219" width="44" height="44" rx="8" fill="#f7d9b4" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="848.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">45.5</text>
+<rect x="873" y="219" width="44" height="44" rx="8" fill="#f5e8d7" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="895.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">22.3</text>
+<rect x="920" y="219" width="44" height="44" rx="8" fill="#f3f0e9" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="942.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">11.0</text>
+<rect x="967" y="219" width="44" height="44" rx="8" fill="#f3f4f3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="989.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">4.5</text>
+<rect x="1014" y="219" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="1036.0" y="247.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="766" y="286" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">2</text>
+<text x="895" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">2</text>
+<rect x="779" y="266" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="801.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="826" y="266" width="44" height="44" rx="8" fill="#f9cf9e" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="848.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">59.5</text>
+<rect x="873" y="266" width="44" height="44" rx="8" fill="#f6e1c7" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="895.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">33.0</text>
+<rect x="920" y="266" width="44" height="44" rx="8" fill="#f4ece0" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="942.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">17.0</text>
+<rect x="967" y="266" width="44" height="44" rx="8" fill="#f3f2ef" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="989.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">7.2</text>
+<rect x="1014" y="266" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="1036.0" y="294.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="766" y="333" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<text x="942" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">3</text>
+<rect x="779" y="313" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="801.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="826" y="313" width="44" height="44" rx="8" fill="#f9cf9e" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="848.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">59.5</text>
+<rect x="873" y="313" width="44" height="44" rx="8" fill="#f6e1c7" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="895.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">33.0</text>
+<rect x="920" y="313" width="44" height="44" rx="8" fill="#f4ece0" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="942.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">17.0</text>
+<rect x="967" y="313" width="44" height="44" rx="8" fill="#f3f2ef" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="989.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">7.2</text>
+<rect x="1014" y="313" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="1036.0" y="341.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="766" y="380" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<text x="989" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">4</text>
+<rect x="779" y="360" width="44" height="44" rx="8" fill="#feb45f" stroke="#687680" stroke-width="1.5"/>
+<text x="801.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">100</text>
+<rect x="826" y="360" width="44" height="44" rx="8" fill="#f7d9b4" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="848.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">45.5</text>
+<rect x="873" y="360" width="44" height="44" rx="8" fill="#f5e8d7" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="895.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">22.3</text>
+<rect x="920" y="360" width="44" height="44" rx="8" fill="#f3f0e9" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="942.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">11.0</text>
+<rect x="967" y="360" width="44" height="44" rx="8" fill="#f3f4f3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="989.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">4.5</text>
+<rect x="1014" y="360" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="1036.0" y="388.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="766" y="427" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">5</text>
+<text x="1036" y="163" font-size="15" fill="#566A63" text-anchor="middle" font-weight="400">5</text>
+<rect x="779" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="801.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="826" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="848.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="873" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="895.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="920" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="942.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="967" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="989.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="1014" y="407" width="44" height="44" rx="8" fill="#f2f7fa" stroke="#687680" stroke-width="1.5"/>
+<text x="1036.0" y="435.12" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="915" y="481" font-size="18" fill="#566A63" text-anchor="middle" font-weight="400">行 i 向下 · 列 j 向右 · 单位 °C</text>
+<text x="403" y="141" font-size="24" fill="#176B52" text-anchor="start" font-weight="600">② 用四邻改进估计</text>
+<rect x="522" y="197" width="72" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="558.0" y="228.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">上</text>
+<line x1="558" y1="249" x2="558" y2="263" stroke="#246B96" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="424" y="269" width="72" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="460.0" y="300.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">左</text>
+<line x1="501" y1="293" x2="515" y2="293" stroke="#246B96" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="620" y="269" width="72" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="656.0" y="300.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">右</text>
+<line x1="615" y1="293" x2="601" y2="293" stroke="#246B96" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="522" y="341" width="72" height="48" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="558.0" y="372.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">下</text>
+<line x1="558" y1="337" x2="558" y2="323" stroke="#246B96" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="520" y="267" width="76" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="558.0" y="300.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">中心</text>
+<text x="558" y="416" font-size="24" fill="#176B52" text-anchor="middle" font-weight="600">(上 + 下 + 左 + 右) / 4</text>
+<text x="558" y="452" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">热量流入 = 热量流出</text>
+<rect x="51" y="513" width="1018" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="560.0" y="551.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">边界保持不动；反复修正内点估计，直到每个内点都满足热量平衡。</text>
+<line x1="32" y1="591" x2="1088" y2="591" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="620" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">迭代次数不是物理时间。底色深浅表示温度；角点显示 0，不参与任何内点的四邻平均。</text>
+</g></svg>
