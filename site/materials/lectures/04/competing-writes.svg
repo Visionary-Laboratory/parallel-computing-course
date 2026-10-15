@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc"><title id="title">两个写请求，依次取得同一缓存行的写权限</title><desc id="desc">从共享只读开始，两个核心同时申请写权限。假设T0先获准，待T1失效确认后写1，再交接给T1写2。申请不等于获准。</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#527865"/></marker></defs><style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#254b38}.head{font-size:23px;font-weight:600}.body{font-size:21px}.small{font-size:19px}</style><rect width="1200" height="370" rx="16" fill="#f8faf7"/><text x="600" y="38" text-anchor="middle" class="head">时间向右推进：写权限不会同时交给两个核心</text>
+<rect x="20" y="65" width="270" height="248" rx="12" fill="white" stroke="#bacfc1"/><text x="155" y="102" text-anchor="middle" class="head">① 同时申请</text>
+<rect x="30" y="122" width="250" height="49" rx="8" fill="#e5f0e9"/><text x="155" y="154" text-anchor="middle" class="body">T0：想写 x=1</text>
+<rect x="30" y="184" width="250" height="49" rx="8" fill="#e9f1f7"/><text x="155" y="216" text-anchor="middle" class="body">T1：想写 x=2</text>
+<text x="155" y="265" text-anchor="middle" class="small">初始两者都是 S：x=0</text>
+<text x="155" y="292" text-anchor="middle" class="small">申请发出 ≠ 可以写</text>
+<path d="M293 188h20" stroke="#527865" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="317" y="65" width="270" height="248" rx="12" fill="white" stroke="#bacfc1"/><text x="452" y="102" text-anchor="middle" class="head">② 先处理 T0</text>
+<rect x="327" y="122" width="250" height="49" rx="8" fill="#e5f0e9"/><text x="452" y="154" text-anchor="middle" class="body">T0：等待交接完成</text>
+<rect x="327" y="184" width="250" height="49" rx="8" fill="#e9f1f7"/><text x="452" y="216" text-anchor="middle" class="body">T1：旧副本失效 → I</text>
+<text x="452" y="265" text-anchor="middle" class="small">假设硬件先处理 T0</text>
+<text x="452" y="292" text-anchor="middle" class="small">等待必要的失效确认</text>
+<path d="M590 188h20" stroke="#527865" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="614" y="65" width="270" height="248" rx="12" fill="white" stroke="#bacfc1"/><text x="749" y="102" text-anchor="middle" class="head">③ T0 获准写</text>
+<rect x="624" y="122" width="250" height="49" rx="8" fill="#e5f0e9"/><text x="749" y="154" text-anchor="middle" class="body">T0：M，写成 x=1</text>
+<rect x="624" y="184" width="250" height="49" rx="8" fill="#e9f1f7"/><text x="749" y="216" text-anchor="middle" class="body">T1：I，尚不能写</text>
+<text x="749" y="265" text-anchor="middle" class="small">此刻只有 T0 能写</text>
+<text x="749" y="292" text-anchor="middle" class="small">T1 的请求随后处理</text>
+<path d="M887 188h20" stroke="#527865" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="911" y="65" width="270" height="248" rx="12" fill="white" stroke="#bacfc1"/><text x="1046" y="102" text-anchor="middle" class="head">④ 再交给 T1</text>
+<rect x="921" y="122" width="250" height="49" rx="8" fill="#e5f0e9"/><text x="1046" y="154" text-anchor="middle" class="body">T0：撤销权限 → I</text>
+<rect x="921" y="184" width="250" height="49" rx="8" fill="#e9f1f7"/><text x="1046" y="216" text-anchor="middle" class="body">T1：M，写成 x=2</text>
+<text x="1046" y="265" text-anchor="middle" class="small">先交接最新数据与权限</text>
+<text x="1046" y="292" text-anchor="middle" class="small">再执行 T1 的写入</text>
+<text x="600" y="347" text-anchor="middle" class="body">正在等确认、等权限 → 属于交接中的“瞬态状态”</text></svg>

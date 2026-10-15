@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">锁耦合：相邻删除先被锁顺序协调起来</title><desc id="desc">锁耦合：相邻删除先被锁顺序协调起来。有序单向链表；T0 删除 11，T1 随后向前寻找并删除 10</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">锁耦合：相邻删除先被锁顺序协调起来</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">有序单向链表；T0 删除 11，T1 随后向前寻找并删除 10</text>
+<circle cx="112" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="112" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<circle cx="322" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="322" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<circle cx="532" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="532" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<circle cx="742" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="742" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<circle cx="952" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="952" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">18</text>
+<line x1="159" y1="248" x2="274" y2="248" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="369" y1="248" x2="484" y2="248" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="579" y1="248" x2="694" y2="248" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="789" y1="248" x2="904" y2="248" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="625" y="322" width="443" height="68" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="846.5" y="363.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">T0 持锁：10(prev)、11(cur)</text>
+<rect x="47" y="418" width="390" height="67" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="242.0" y="458.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">T1 持锁：3(prev)、5(cur)</text>
+<path d="M 437 451 H 532 V 301" fill="none" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="644" y="455" font-size="23" fill="#B74836" text-anchor="start" font-weight="400">T1 请求 10：等待 T0</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">摘除与回收是两个问题；所有遍历、删除与生命周期管理必须遵守同一协议，不能立即复用危险指针。</text>
+</g></svg>

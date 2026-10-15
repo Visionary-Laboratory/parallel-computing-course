@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="t d">
+<title id="t">写入之前：从共享只读到独占修改</title><desc id="d">四步流程：两个核心都有result为0的只读副本；核心0请求写权限；核心1使副本失效并确认；交接完成后核心0写42，核心1之后需重新请求才能读。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#527865"/></marker></defs>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#254b38}.title{font-size:25px;font-weight:600}.head{font-size:23px;font-weight:600}.body{font-size:20px}.small{font-size:18px}</style>
+<rect width="1200" height="390" rx="16" fill="#f8faf7"/>
+<text x="600" y="38" class="title" text-anchor="middle">先协调写权限，再修改数据</text>
+<g fill="white" stroke="#bacfc1"><rect x="20" y="65" width="270" height="260" rx="12"/><rect x="317" y="65" width="270" height="260" rx="12"/><rect x="614" y="65" width="270" height="260" rx="12"/><rect x="911" y="65" width="270" height="260" rx="12"/></g>
+<g text-anchor="middle">
+<text x="155" y="104" class="head">① 共享读取</text><text x="452" y="104" class="head">② 请求修改</text><text x="749" y="104" class="head">③ 失效并确认</text><text x="1046" y="104" class="head">④ 获准写入</text>
+<g fill="#e5f0e9"><rect x="36" y="128" width="238" height="57" rx="8"/><rect x="333" y="128" width="238" height="57" rx="8"/><rect x="630" y="128" width="238" height="57" rx="8"/><rect x="927" y="128" width="238" height="57" rx="8"/></g>
+<text x="155" y="164" class="body">核心 0：0，只读</text><text x="452" y="164" class="body">核心 0：申请写权限</text><text x="749" y="164" class="body">核心 0：等待确认</text><text x="1046" y="164" class="body">核心 0：写成 42</text>
+<g fill="#e9f1f7"><rect x="36" y="205" width="238" height="57" rx="8"/><rect x="333" y="205" width="238" height="57" rx="8"/></g><g fill="#f0efed"><rect x="630" y="205" width="238" height="57" rx="8"/><rect x="927" y="205" width="238" height="57" rx="8"/></g>
+<text x="155" y="241" class="body">核心 1：0，只读</text><text x="452" y="241" class="body">核心 1：收到失效请求</text><text x="749" y="241" class="body">核心 1：副本无效</text><text x="1046" y="241" class="body">核心 1：副本仍无效</text>
+<text x="155" y="299" class="small">两人都能读，不能直接改</text><text x="452" y="299" class="small">此时不能抢先写 42</text><text x="749" y="299" class="small">确认旧副本不再可用</text><text x="1046" y="299" class="small">主存此时仍可为 0</text>
+<text x="600" y="365" class="body">核心 1 再读时，需重新取得有效副本 → 下一页看“怎样读到 42”。</text>
+</g><g stroke="#527865" stroke-width="2" marker-end="url(#arrow)"><path d="M292 190H313"/><path d="M589 190H610"/><path d="M886 190H907"/></g></svg>

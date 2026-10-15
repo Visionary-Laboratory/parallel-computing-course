@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">Store buffer：发出了写，不代表对方已经看见</title><desc id="desc">Store buffer：发出了写，不代表对方已经看见。抽象硬件模型：允许后续读越过尚未对外可见的早先写；不是无同步 C++ 普通变量程序</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Store buffer：发出了写，不代表对方已经看见</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">抽象硬件模型：允许后续读越过尚未对外可见的早先写；不是无同步 C++ 普通变量程序</text>
+<rect x="67" y="128" width="338" height="60" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="236.0" y="166.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">T0：先写，后读</text>
+<rect x="67" y="219" width="338" height="65" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="236.0" y="259.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">缓冲中：x ← 1</text>
+<line x1="236" y1="191" x2="236" y2="211" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="67" y="363" width="338" height="60" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="236.0" y="401.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">读 y，得到 0</text>
+<path d="M 236 284 V 335" fill="none" stroke="#936015" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 5"/>
+<rect x="657" y="128" width="338" height="60" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="826.0" y="166.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">T1：先写，后读</text>
+<rect x="657" y="219" width="338" height="65" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="826.0" y="259.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">缓冲中：y ← 1</text>
+<line x1="826" y1="191" x2="826" y2="211" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="657" y="363" width="338" height="60" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="826.0" y="401.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">读 x，得到 0</text>
+<path d="M 826 284 V 335" fill="none" stroke="#936015" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 5"/>
+<rect x="443" y="300" width="232" height="67" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="559.0" y="341.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">内存：x=0, y=0</text>
+<line x1="443" y1="349" x2="408" y2="382" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="675" y1="349" x2="707" y2="359" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="320" y="318" font-size="18" fill="#936015" text-anchor="middle" font-weight="400">尚未传播</text>
+<text x="915" y="318" font-size="18" fill="#936015" text-anchor="middle" font-weight="400">尚未传播</text>
+<rect x="254" y="453" width="613" height="48" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="560.5" y="484.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">稍后缓冲排空：x = y = 1；两个已完成的读仍是 0</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">两个变量各自的写顺序仍可一致；跨变量的顺序约束更弱。这就是 coherence 与 consistency 的区别。</text>
+</g></svg>

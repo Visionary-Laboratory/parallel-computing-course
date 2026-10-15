@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">MESI 的 E：我独占这条干净的缓存行</title><desc id="desc">MESI 的 E：我独占这条干净的缓存行。E = Exclusive：只有我缓存了这一行，内容与内存一致；因此本地写可静默转 M</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">MESI 的 E：我独占这条干净的缓存行</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">E = Exclusive：只有我缓存了这一行，内容与内存一致；因此本地写可静默转 M</text>
+<circle cx="113" cy="193" r="34" fill="#EDF1F3" stroke="#687680" stroke-width="2"/>
+<text x="113" y="202.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">I</text>
+<line x1="153" y1="193" x2="354" y2="193" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="254" y="166" font-size="20" fill="#246B96" text-anchor="middle" font-weight="400">读；没有其他副本</text>
+<circle cx="401" cy="193" r="37" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="401" y="202.86" font-size="29" fill="#20372F" text-anchor="middle" font-weight="600">E</text>
+<line x1="446" y1="193" x2="840" y2="193" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="643" y="166" font-size="22" fill="#936015" text-anchor="middle" font-weight="400">本地写：无需额外取权限</text>
+<circle cx="887" cy="193" r="37" fill="#FFF1CE" stroke="#936015" stroke-width="2"/>
+<text x="887" y="202.86" font-size="29" fill="#20372F" text-anchor="middle" font-weight="600">M</text>
+<text x="985" y="200" font-size="21" fill="#936015" text-anchor="middle" font-weight="400">可独占写</text>
+<circle cx="113" cy="363" r="34" fill="#EDF1F3" stroke="#687680" stroke-width="2"/>
+<text x="113" y="372.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">I</text>
+<line x1="153" y1="363" x2="354" y2="363" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="254" y="336" font-size="20" fill="#246B96" text-anchor="middle" font-weight="400">读；已有其他副本</text>
+<circle cx="401" cy="363" r="37" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="401" y="372.86" font-size="29" fill="#20372F" text-anchor="middle" font-weight="600">S</text>
+<line x1="446" y1="363" x2="840" y2="363" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="643" y="336" font-size="22" fill="#936015" text-anchor="middle" font-weight="400">本地写：先使其他副本失效</text>
+<circle cx="887" cy="363" r="37" fill="#FFF1CE" stroke="#936015" stroke-width="2"/>
+<text x="887" y="372.86" font-size="29" fill="#20372F" text-anchor="middle" font-weight="600">M</text>
+<text x="985" y="370" font-size="21" fill="#936015" text-anchor="middle" font-weight="400">可独占写</text>
+<rect x="153" y="441" width="815" height="60" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="560.5" y="478.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">其他核写入 → 本地有效副本转 I；其他核读取 → E / M 可降为 S</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">只展示关键路径，不是完整状态机。M 在降级或失效前必须保证新值可被转交，E 则是干净副本。</text>
+</g></svg>

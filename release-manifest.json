@@ -4,9 +4,10 @@
     "01-introduction",
     "02-execution-models",
     "03-parallel-design",
+    "04-memory-synchronization",
     "released-lecture-glossary"
   ],
-  "date": "2026-10-05",
+  "date": "2026-10-16",
   "lectures": [
     {
       "slug": "01-introduction",
@@ -22,11 +23,16 @@
       "slug": "03-parallel-design",
       "slides": 59,
       "answers": 6
+    },
+    {
+      "slug": "04-memory-synchronization",
+      "slides": 52,
+      "answers": 12
     }
   ],
-  "slides": 205,
-  "answers": 50,
-  "glossaryTerms": 62,
+  "slides": 257,
+  "answers": 62,
+  "glossaryTerms": 75,
   "files": [
     {
       "path": "site/.nojekyll",
@@ -34,7 +40,7 @@
     },
     {
       "path": "site/404.html",
-      "sha256": "9b4560dec1ae2669be270da627eb2b65bac91d0ef895844a4889b7e37403363a"
+      "sha256": "1269d0db2bc2f972cbe6e1b6203489a03a63ce7fb8b5960025c8f9a854c1df91"
     },
     {
       "path": "site/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
@@ -273,12 +279,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-BJMQVICX.js",
-      "sha256": "d796dab247efbd0f7a753c21fd9ff3a04c0f1536eaf36e41e4a893c8958fd86a"
+      "path": "site/assets/index-CULFehRa.js",
+      "sha256": "b8486314c91d7ea2c4afbe52f57cef31b9d728ea71d3c5b6a67ea6dab460bc11"
     },
     {
-      "path": "site/assets/index-Bu-so1Q-.css",
-      "sha256": "7f6bce6b6783e5107851cf358638e241669576f93038007e6376fac9f556c4c0"
+      "path": "site/assets/index-CpHevxmm.css",
+      "sha256": "4254b0ef1ef065a9273ee91a2860f156c24e8dfcebc0432d2dd22d0167fc8385"
     },
     {
       "path": "site/favicon.svg",
@@ -286,23 +292,27 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "9d3fdc0a95e931660bf9ff6c8ff1d2af9da2b0fbf60b42ddfb67cd52694b7103"
+      "sha256": "4615ceec3c5c8b473b88fc89301e9b2266ff8d9ba516fd27cae1bd838da8cb6a"
     },
     {
       "path": "site/index.html",
-      "sha256": "0768e0d8e007ecb034ac997b05aa5132ae51e4980e5556bb79c4f70390330e76"
+      "sha256": "27ef06040021eb0c93ccc065d9a54ec87e424cd1dc6508c893c55f415c101b62"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "5fa68a9658412c40a0a117da122b4b16e1cbbcfdc386a1e9758fb996526989f1"
+      "sha256": "105ea2a4a16c85a9e2639776182968a7af9b8553b8f05e8bf9cf7a22702aac84"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "f8fe630053049902ffe4271bb6486d3c7977a411e86e84b8725be20ace4ae2c0"
+      "sha256": "cb68b93c7c999686d5d43f602a28c8e1d1bc28cfbb836719c467426feefbf407"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "d423b031892bab1481cf3bd506c2adba171499dec3d5321acd7ae534a3649d22"
+      "sha256": "94c654e17d2b929f0de2595e2405b39aa4e912be96cb0cc4dd70f6d78c502c6a"
+    },
+    {
+      "path": "site/lectures/04-memory-synchronization/index.html",
+      "sha256": "f9a564b68de2a0c92b027d18e069db79e697caf526f331cf9b95d24ee9197ef8"
     },
     {
       "path": "site/materials/lectures/01/ascend-ai-core-architecture.png",
@@ -631,6 +641,98 @@
     {
       "path": "site/materials/lectures/03/iteration-phases.svg",
       "sha256": "cc5bc1e3bebc6320a172ef1cbe753c2ded33d5b2bbbc8e4c1a04c918d70799d6"
+    },
+    {
+      "path": "site/materials/lectures/04/aba.svg",
+      "sha256": "bf371e26b445e04ea0b9c758c831948b770d18e1adfed4cecb0feaeb282e448b"
+    },
+    {
+      "path": "site/materials/lectures/04/block-wait-cycle.svg",
+      "sha256": "411f27b35118f8a3956c54a664c58f29abcb27149f9aabc75a5a4e11dda8dc75"
+    },
+    {
+      "path": "site/materials/lectures/04/competing-writes.svg",
+      "sha256": "54e45b67969880124172dd0f80673ca3ed47e569787711becae1c8fa574334f3"
+    },
+    {
+      "path": "site/materials/lectures/04/cuda-phases.svg",
+      "sha256": "8e2aee3e2e140e9b8271c744be67e938ffb39f7c1d8a1c03d13ea73f2478f4b7"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-buffer.svg",
+      "sha256": "2022c2e6711b069f1fb201d6ef406cdbc8dfb14e022d62e370bfba3d21b3e32f"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-list-after.svg",
+      "sha256": "a186d1ff5eaa95a26b6fbb7005d6ee83e795a5aadd0942713da37344cb00f945"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-list-before.svg",
+      "sha256": "3406aa2d73462e9f0a05a50e1ee1bd18914ef46462d590b3b8bcbd353a9f2ce3"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-mesi.svg",
+      "sha256": "6962f22bfcae13b07f222302f08c8371332baa4865e60d1fb4bf23a0f87f7407"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-sc.svg",
+      "sha256": "485de3ee8ff097dd1f6a3b3e156d2ea196a0e6ee601cf26db605b6972ab4f87e"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-tas.svg",
+      "sha256": "0a0d0cd4895bada543bfefff31ab8fba2b7ffbd5b7e7d43460824baa8b776e33"
+    },
+    {
+      "path": "site/materials/lectures/04/figures/sync-trace-two-core.svg",
+      "sha256": "421d1d652cc0c2f81f7f719106c9e68eccfadd15dda429a063dd18f7f2ea86d4"
+    },
+    {
+      "path": "site/materials/lectures/04/handoff-once.svg",
+      "sha256": "4c9112935bee15990a890f658a0b5399744febb8a4d8cf9999ecfe8b446d5f4c"
+    },
+    {
+      "path": "site/materials/lectures/04/handoff-reuse.svg",
+      "sha256": "b81cf56471a7f4bf9b26eff77adca356b131f5700777c2241f324bc8a33863e6"
+    },
+    {
+      "path": "site/materials/lectures/04/mcs-queue.svg",
+      "sha256": "7ddd4ad4a893cf9285f62c870f51c08b574cb7975fdb2ca1fbecfec7030660a9"
+    },
+    {
+      "path": "site/materials/lectures/04/result-handoff.svg",
+      "sha256": "d912cd2cfcf021e9f4462d0a91195521bfd1fd94f9bf860479cc9593f347a584"
+    },
+    {
+      "path": "site/materials/lectures/04/road-deadlock.svg",
+      "sha256": "96c757bf9fd42074e85ee5bf29c6f0cf1d947ccf3e813b0fd342499e21f00f5a"
+    },
+    {
+      "path": "site/materials/lectures/04/road-livelock.svg",
+      "sha256": "eff5373ba75baf0e36859721c9d0e89c8a785c66016dad331be55ee851e3302c"
+    },
+    {
+      "path": "site/materials/lectures/04/road-starvation.svg",
+      "sha256": "182c74591bcbf8e287597d4d2b5b86fdd4a95842bf8ac351f9560843c876a7b8"
+    },
+    {
+      "path": "site/materials/lectures/04/scope-locations.svg",
+      "sha256": "e10724923225ddbe24b14acd8a906bde0b8b41da0b747fe5cd295b121ce8427b"
+    },
+    {
+      "path": "site/materials/lectures/04/ticket-order.svg",
+      "sha256": "1ca14c585207541bc3323b63b55786f0d3883bc29b50c620d717b92afca30973"
+    },
+    {
+      "path": "site/materials/lectures/04/transfer-lock.svg",
+      "sha256": "eb8ccc820c15a4be923d33497dd7083fa8b2c246e5b81c307baa5dfcf94f20d2"
+    },
+    {
+      "path": "site/materials/lectures/04/write-permission.svg",
+      "sha256": "4f55ea982e5770254b03d5062f794dabc11731b96a99fedb4c1ba39bb0109cd5"
+    },
+    {
+      "path": "site/materials/lectures/04/writeback-handoff.svg",
+      "sha256": "1d19d06f4e0e868de934aeb0036b8d5fc2269b00af53e46c6d2c00c38981e8b1"
     }
   ]
 }

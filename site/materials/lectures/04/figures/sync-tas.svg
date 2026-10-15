@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">锁仍由 T0 持有，缓存行写权限却在来回跑</title><desc id="desc">锁仍由 T0 持有，缓存行写权限却在来回跑。失败的 exchange(true) 也是一次 RMW；读到 true 后，等待者没有取得软件锁</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">锁仍由 T0 持有，缓存行写权限却在来回跑</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">失败的 exchange(true) 也是一次 RMW；读到 true 后，等待者没有取得软件锁</text>
+<rect x="48" y="125" width="1020" height="57" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="558.0" y="161.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">软件锁：T0 持有临界区 ─────────────────→ T0 解锁</text>
+<text x="166" y="236" font-size="21" fill="#176B52" text-anchor="middle" font-weight="600">T0 加锁</text>
+<rect x="54" y="260" width="226" height="99" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="167.0" y="302.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">M 权限：T0</text>
+<text x="167.0" y="332.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">false → true</text>
+<line x1="283" y1="309" x2="320" y2="309" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="166" y="400" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">成功获得锁</text>
+<text x="436" y="236" font-size="21" fill="#B74836" text-anchor="middle" font-weight="600">T1 尝试，失败</text>
+<rect x="324" y="260" width="226" height="99" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="437.0" y="302.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">M 权限：T1</text>
+<text x="437.0" y="332.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">true → true</text>
+<line x1="553" y1="309" x2="590" y2="309" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="436" y="400" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">只得到写权限</text>
+<text x="706" y="236" font-size="21" fill="#B74836" text-anchor="middle" font-weight="600">T2 尝试，失败</text>
+<rect x="594" y="260" width="226" height="99" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="707.0" y="302.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">M 权限：T2</text>
+<text x="707.0" y="332.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">true → true</text>
+<line x1="823" y1="309" x2="860" y2="309" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="706" y="400" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">只得到写权限</text>
+<text x="976" y="236" font-size="21" fill="#176B52" text-anchor="middle" font-weight="600">T0 解锁</text>
+<rect x="864" y="260" width="226" height="99" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="977.0" y="302.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">M 权限：T0</text>
+<text x="977.0" y="332.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">true → false</text>
+<text x="976" y="400" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">释放软件锁</text>
+<text x="561" y="473" font-size="26" fill="#B74836" text-anchor="middle" font-weight="600">“谁能写这条缓存行” ≠ “谁获准进入临界区”</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">图示一次轮询窗口的 MSI 教学模型；实际原子实现因架构而异，不将请求次数直接换算为时间。</text>
+</g></svg>

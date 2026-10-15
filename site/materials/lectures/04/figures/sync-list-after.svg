@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">删除之后：连接改变，锁保护不断档</title><desc id="desc">删除之后：连接改变，锁保护不断档。有序单向链表；T0 删除 11，T1 随后向前寻找并删除 10</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">删除之后：连接改变，锁保护不断档</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">有序单向链表；T0 删除 11，T1 随后向前寻找并删除 10</text>
+<circle cx="112" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="112" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<circle cx="322" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="322" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<circle cx="532" cy="248" r="43" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="2"/>
+<text x="532" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<line x1="497" y1="216" x2="567" y2="280" stroke="#B74836" stroke-width="3"/>
+<circle cx="742" cy="248" r="43" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="2"/>
+<text x="742" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<line x1="707" y1="216" x2="777" y2="280" stroke="#B74836" stroke-width="3"/>
+<circle cx="952" cy="248" r="43" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="952" y="257.52" font-size="28" fill="#20372F" text-anchor="middle" font-weight="600">18</text>
+<line x1="158" y1="248" x2="273" y2="248" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M 322 201 V 158 H 952 V 201" fill="none" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="640" y="144" font-size="23" fill="#246B96" text-anchor="middle" font-weight="400">prev.next 改为 18</text>
+<text x="70" y="342" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">① T0 持有 10、11 的锁：10.next ← 18，摘除 11</text>
+<text x="70" y="391" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">② T0 释放 10 后，T1 才能锁住 10 并前进</text>
+<text x="70" y="440" font-size="23" fill="#20372F" text-anchor="start" font-weight="400">③ T1 持有 5、10 的锁：5.next ← 18，摘除 10</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">摘除与回收是两个问题；所有遍历、删除与生命周期管理必须遵守同一协议，不能立即复用危险指针。</text>
+</g></svg>

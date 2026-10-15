@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="310" viewBox="0 0 1120 310" role="img" aria-labelledby="t d">
+<title id="t">保存后退出，全部完成后汇总</title><desc id="d">第一步块0和1保存10和20后退出，释放位置；第二步块2获得空位，保存30后退出；第一项任务全部完成后，第三步启动汇总任务，10加20加30得到60。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#64776d"/></marker></defs>
+<style>text{font-family:Arial,"PingFang SC",sans-serif;fill:#20372f}.h{font-size:25px;font-weight:600}.b{font-size:23px}.s{font-size:20px}</style>
+<rect width="1120" height="310" rx="12" fill="#f8faf7"/>
+<g text-anchor="middle">
+<text x="365" y="38" class="b">第一次任务：各块算完就退出</text>
+<text x="940" y="38" class="b">第二次任务：汇总</text>
+<rect x="20" y="66" width="320" height="163" rx="12" fill="#e4f2eb"/>
+<text x="180" y="108" class="h">① 块0、1算完</text>
+<text x="180" y="151" class="b">保存 10、20</text>
+<text x="180" y="194" class="b">退出，释放位置</text>
+<rect x="390" y="66" width="320" height="163" rx="12" fill="#e4f2eb"/>
+<text x="550" y="108" class="h">② 块2获得空位</text>
+<text x="550" y="151" class="b">算出并保存 30</text>
+<text x="550" y="194" class="b">退出</text>
+<rect x="780" y="66" width="320" height="163" rx="12" fill="#e7f1f8"/>
+<text x="940" y="108" class="h">③ 再开始汇总</text>
+<text x="940" y="161" class="h">10 + 20 + 30 = 60</text>
+<text x="560" y="280" class="s">块退出会释放执行位置；保存到GPU全局内存的结果仍然保留。</text>
+</g>
+<path d="M346 148H382" stroke="#64776d" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M716 148H772" stroke="#64776d" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="745" y="249" text-anchor="middle" class="s">全部完成后</text>
+</svg>

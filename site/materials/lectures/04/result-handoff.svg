@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="480" viewBox="0 0 1100 480" role="img" aria-labelledby="title desc">
+<title id="title">同一个结果地址，两条缓存访问路径</title><desc id="desc">线程A在核心0，线程B在核心1，各有私有缓存，经互连访问共享主存。初始result为0。A准备写42，B需要读取结果。缓存是否已有副本未指定。</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#527865"/></marker></defs>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#254b38} .label{font-size:24px;font-weight:600}.small{font-size:20px}.line{fill:none;stroke:#527865;stroke-width:3;marker-end:url(#a)}</style>
+<rect width="1100" height="480" rx="16" fill="#f8faf7"/>
+<text x="550" y="38" text-anchor="middle" class="label">先看数据路径：共享地址，分别经过各自缓存</text>
+<rect x="70" y="66" width="390" height="88" rx="12" fill="#e5f0e9" stroke="#aac8b5"/><text x="265" y="100" text-anchor="middle" class="label">核心 0 · 线程 A</text><text x="265" y="133" text-anchor="middle" class="small">准备把 result 写成 42</text>
+<rect x="640" y="66" width="390" height="88" rx="12" fill="#e9f1f7" stroke="#aec9dd"/><text x="835" y="100" text-anchor="middle" class="label">核心 1 · 线程 B</text><text x="835" y="133" text-anchor="middle" class="small">需要读取 result 的结果</text>
+<path d="M265 154V187" class="line"/><path d="M835 154V187" class="line"/>
+<rect x="70" y="193" width="390" height="87" rx="12" fill="white" stroke="#aac8b5"/><text x="265" y="225" text-anchor="middle" class="label">核心 0 的私有缓存</text><text x="265" y="258" text-anchor="middle" class="small">可能保存部分内存数据的副本</text>
+<rect x="640" y="193" width="390" height="87" rx="12" fill="white" stroke="#aec9dd"/><text x="835" y="225" text-anchor="middle" class="label">核心 1 的私有缓存</text><text x="835" y="258" text-anchor="middle" class="small">可能保存部分内存数据的副本</text>
+<path d="M265 280V309H835V280" fill="none" stroke="#527865" stroke-width="3"/><text x="550" y="301" text-anchor="middle" class="small">互连：传递请求与数据</text>
+<path d="M550 309V350" class="line"/>
+<rect x="290" y="355" width="520" height="65" rx="12" fill="#fff1dd" stroke="#dfbb84"/><text x="550" y="395" text-anchor="middle" class="label">共享主存 DRAM · 初始 result = 0</text>
+<text x="550" y="457" text-anchor="middle" class="small">写入前的示意，省略完整缓存层级；两边的 result 指向同一个地址。</text>
+</svg>

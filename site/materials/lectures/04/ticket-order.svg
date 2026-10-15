@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="300" viewBox="0 0 1120 300" role="img" aria-labelledby="t"><title id="t">取号顺序为T0、T1、T2，服务号码依次从0到1到2</title><style>text{font-family:Arial,"PingFang SC",sans-serif;fill:#20372f}.h{font-size:24px;font-weight:600}.b{font-size:22px}</style><rect width="1120" height="300" rx="12" fill="#f8faf7"/><text x="560" y="38" text-anchor="middle" class="h">假设 T0、T1、T2 依次取到 0、1、2 号</text>
+<rect x="25" y="65" width="330" height="172" rx="10" fill="white" stroke="#bacfc1"/><text x="190" y="104" text-anchor="middle" class="h">now_serving = 0</text><text x="190" y="151" text-anchor="middle" class="b">T0：轮到我，进入临界区</text><text x="190" y="198" text-anchor="middle" class="b">1、2号等待</text>
+<text x="373" y="156" text-anchor="middle" class="h">→</text>
+<rect x="395" y="65" width="330" height="172" rx="10" fill="white" stroke="#bacfc1"/><text x="560" y="104" text-anchor="middle" class="h">now_serving = 1</text><text x="560" y="151" text-anchor="middle" class="b">T1：轮到我，进入临界区</text><text x="560" y="198" text-anchor="middle" class="b">0号已完成，2号等待</text>
+<text x="743" y="156" text-anchor="middle" class="h">→</text>
+<rect x="765" y="65" width="330" height="172" rx="10" fill="white" stroke="#bacfc1"/><text x="930" y="104" text-anchor="middle" class="h">now_serving = 2</text><text x="930" y="151" text-anchor="middle" class="b">T2：轮到我，进入临界区</text><text x="930" y="198" text-anchor="middle" class="b">0、1号已完成</text>
+<text x="560" y="278" text-anchor="middle" class="b">每次持锁者完成后，now_serving 加 1；等待者无需重新争抢号码。</text></svg>

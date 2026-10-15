@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="610" viewBox="0 0 1120 610" role="img" aria-labelledby="title desc">
+<title id="title">顺序一致性：用一条时间线解释这次交接</title><desc id="desc">顺序一致性：用一条时间线解释这次交接。初始 result = 0、ready = false；绿色是线程 A，蓝色是线程 B</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">顺序一致性：用一条时间线解释这次交接</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">初始 result = 0、ready = false；绿色是线程 A，蓝色是线程 B</text>
+<text x="50" y="126" font-size="22" fill="#20372F" text-anchor="start" font-weight="600">上面：每个线程自己的程序顺序</text>
+<text x="55" y="180" font-size="24" fill="#176B52" text-anchor="start" font-weight="600">A</text>
+<rect x="135" y="146" width="360" height="54" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="315.0" y="180.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">写 result = 42</text>
+<rect x="620" y="146" width="360" height="54" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="800.0" y="180.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">写 ready = true</text>
+<line x1="505" y1="173" x2="606" y2="173" stroke="#687680" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="55" y="256" font-size="24" fill="#246B96" text-anchor="start" font-weight="600">B</text>
+<rect x="135" y="222" width="360" height="54" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="315.0" y="256.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">读 ready，看到 true</text>
+<rect x="620" y="222" width="360" height="54" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="800.0" y="256.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">读 result，取得结果</text>
+<line x1="505" y1="249" x2="606" y2="249" stroke="#687680" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="50" y="324" font-size="22" fill="#20372F" text-anchor="start" font-weight="600">下面：把这四个操作排成一条统一顺序</text>
+<rect x="35" y="351" width="250" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="160.0" y="389.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">① A 写 result=42</text>
+<text x="160" y="448" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">结果已经写好</text>
+<line x1="288" y1="383" x2="305" y2="383" stroke="#687680" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="309" y="351" width="250" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="434.0" y="389.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">② A 写 ready=true</text>
+<text x="434" y="448" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">在①之后发通知</text>
+<line x1="562" y1="383" x2="579" y2="383" stroke="#687680" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="583" y="351" width="250" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="708.0" y="389.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">③ B 读 ready→true</text>
+<text x="708" y="448" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">读到②写入的通知</text>
+<line x1="836" y1="383" x2="853" y2="383" stroke="#687680" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="857" y="351" width="250" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="982.0" y="389.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">④ B 读 result→42</text>
+<text x="982" y="448" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">读到①写入的结果</text>
+<text x="560" y="497" font-size="22" fill="#20372F" text-anchor="middle" font-weight="400">A 的先后顺序保留：① → ②；B 的先后顺序保留：③ → ④</text>
+<text x="560" y="532" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">在这条顺序中，读操作取得前面最近一次对该变量写入的值。</text>
+<line x1="32" y1="561" x2="1088" y2="561" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="590" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">这是 SC 的顺序模型示意；不是无同步 C++ 代码，也不要求硬件内部一次只执行一条指令。</text>
+</g></svg>

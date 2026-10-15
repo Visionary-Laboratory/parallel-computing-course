@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390" role="img" aria-labelledby="t d">
+<title id="t">转账和查看余额都要使用同一把锁</title><desc id="d">左侧转账线程拿锁后执行A减20和B加20，随后解锁。右侧查看线程拿同一把锁，读取A和B并求和后解锁。两个保护区域不能同时执行，查看只能看到完整转账前或后的状态。</desc>
+<style>text{font-family:Arial,"PingFang SC",sans-serif;fill:#20372f}.h{font-size:25px;font-weight:600}.b{font-size:23px}.s{font-size:20px}</style>
+<rect width="1120" height="390" rx="12" fill="#f8faf7"/>
+<text x="560" y="39" text-anchor="middle" class="h">同一把锁：两个框里的操作不能同时执行</text>
+<rect x="45" y="66" width="480" height="252" rx="12" fill="#e4f2eb" stroke="#176b52" stroke-width="2"/>
+<rect x="595" y="66" width="480" height="252" rx="12" fill="#e7f1f8" stroke="#246b96" stroke-width="2"/>
+<g text-anchor="middle">
+<text x="285" y="105" class="h">转账线程</text><text x="835" y="105" class="h">查看线程</text>
+<text x="285" y="148" class="b">拿锁</text><text x="835" y="148" class="b">拿同一把锁（被占用就等待）</text>
+<text x="285" y="195" class="b">A 减20 → B 加20</text><text x="835" y="195" class="b">读取 A → 读取 B → 计算总额</text>
+<text x="285" y="239" class="s">两步都完成，才允许解锁</text><text x="835" y="239" class="s">两项都读取完，才允许解锁</text>
+<text x="285" y="284" class="b">解锁</text><text x="835" y="284" class="b">解锁</text>
+<text x="560" y="360" class="b">查看结果：(100,100) 或 (80,120)，不会看到只转了一半的 (80,100)。</text>
+</g></svg>

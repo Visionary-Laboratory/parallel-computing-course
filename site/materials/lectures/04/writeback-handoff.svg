@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500" role="img" aria-labelledby="title desc">
+<title id="title">主存仍为0，核心1怎样取得42？</title><desc id="desc">核心0缓存持有已修改的result等于42，主存仍为0。核心1读未命中后，经一致性协议向最新副本请求数据，核心0提供42并回写主存。读取完成后两边共享只读副本，主存更新为42。</desc>
+<defs><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#267451"/></marker><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#39799e"/></marker></defs>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#254b38}.head{font-size:24px;font-weight:600}.body{font-size:21px}.small{font-size:19px}</style>
+<rect width="1100" height="500" rx="16" fill="#f8faf7"/>
+<text x="550" y="38" text-anchor="middle" class="head">从写入到再次读取：主存先是 0，读请求完成后变为 42</text>
+<rect x="40" y="75" width="310" height="205" rx="14" fill="#e5f0e9" stroke="#aac8b5"/>
+<text x="195" y="112" text-anchor="middle" class="head">核心 0 · 线程 A</text><text x="195" y="147" text-anchor="middle" class="body">读取前：已写入 42</text>
+<rect x="65" y="169" width="260" height="86" rx="9" fill="white" stroke="#267451"/><text x="195" y="203" text-anchor="middle" class="head">缓存：result = 42</text><text x="195" y="234" text-anchor="middle" class="small">脏行 → 回写后共享只读</text>
+<rect x="750" y="75" width="310" height="205" rx="14" fill="#e9f1f7" stroke="#aec9dd"/>
+<text x="905" y="112" text-anchor="middle" class="head">核心 1 · 线程 B</text><text x="905" y="147" text-anchor="middle" class="body">读取 result，缓存未命中</text>
+<rect x="775" y="169" width="260" height="86" rx="9" fill="white" stroke="#39799e"/><text x="905" y="203" text-anchor="middle" class="head">经协议取得 42</text><text x="905" y="234" text-anchor="middle" class="small">取得共享只读副本</text>
+<text x="550" y="108" text-anchor="middle" class="body">① 请求读取最新数据</text><path d="M740 130H360" stroke="#39799e" stroke-width="3" marker-end="url(#blue)"/>
+<text x="550" y="188" text-anchor="middle" class="body">② 持有者提供 42</text><path d="M360 211H740" stroke="#267451" stroke-width="4" marker-end="url(#green)"/>
+<text x="550" y="260" text-anchor="middle" class="small">提供数据时，也回写主存</text>
+<path d="M195 280V328H905V280M550 328V360" fill="none" stroke="#267451" stroke-width="2" marker-end="url(#green)"/>
+<rect x="300" y="365" width="500" height="65" rx="12" fill="#fff1dd" stroke="#dfbb84"/><text x="550" y="406" text-anchor="middle" class="head">主存 DRAM：0 → 42（本次读时回写）</text>
+<text x="550" y="469" text-anchor="middle" class="small">统一采用后面动画的 MSI 教学模型：回写完成后，双方共享干净副本。</text>
+</svg>
