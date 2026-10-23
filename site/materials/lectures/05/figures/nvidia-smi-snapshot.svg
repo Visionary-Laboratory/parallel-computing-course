@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="386" viewBox="0 0 1120 386" role="img" aria-labelledby="title desc">
+<title id="title">RTX 5090 Laptop 实验环境的 nvidia-smi 输出</title><desc id="desc">2026年10月23日00时21分34秒采样。驱动591.91，CUDA支持13.1，显存880 MiB / 24463 MiB，58摄氏度，P2，46 W / 160 W，GPU利用率86%。完整原始文本另附链接。</desc>
+<rect width="1120" height="386" rx="12" fill="#f1f5f3"/>
+<text x="24" y="28" fill="#516559" font-size="14" font-family="Consolas, monospace">PS&gt; nvidia-smi</text>
+<text x="24" y="61" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">Fri Oct 23 00:21:34 2026       </text>
+<text x="24" y="87" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">+-----------------------------------------------------------------------------------------+</text>
+<text x="24" y="113" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">| NVIDIA-SMI 591.91                 Driver Version: 591.91         CUDA Version: 13.1     |</text>
+<text x="24" y="139" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">+-----------------------------------------+------------------------+----------------------+</text>
+<text x="24" y="165" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |</text>
+<text x="24" y="191" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |</text>
+<text x="24" y="217" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">|                                         |                        |               MIG M. |</text>
+<text x="24" y="243" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">|=========================================+========================+======================|</text>
+<text x="24" y="269" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">|   0  NVIDIA GeForce RTX 5090 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |</text>
+<text x="24" y="295" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">| N/A   58C    P2             46W /  160W |     880MiB /  24463MiB |     86%      Default |</text>
+<text x="24" y="321" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">|                                         |                        |                  N/A |</text>
+<text x="24" y="347" fill="#213d32" font-size="18" font-family="Consolas, Courier New, monospace" xml:space="preserve">+-----------------------------------------+------------------------+----------------------+</text>
+</svg>

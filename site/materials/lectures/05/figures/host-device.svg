@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">一次向量加法，跨越两种执行环境</title><desc id="desc">一次向量加法，跨越两种执行环境。箭头是数据依赖；Host 提交工作，Device 执行 kernel。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">一次向量加法，跨越两种执行环境</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">箭头是数据依赖；Host 提交工作，Device 执行 kernel。</text>
+<rect x="50" y="120" width="465" height="337" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="72" y="156" font-size="22" fill="#20372F" text-anchor="start" font-weight="700">HOST · CPU 与主机内存</text>
+<rect x="605" y="120" width="465" height="337" rx="8" fill="#E7F1F8" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="627" y="156" font-size="22" fill="#20372F" text-anchor="start" font-weight="700">DEVICE · GPU 与显存</text>
+<rect x="80" y="185" width="405" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="282.5" y="224.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">h_a, h_b：初始化输入</text>
+<rect x="635" y="185" width="405" height="64" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="837.5" y="224.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">d_a, d_b：设备输入</text>
+<line x1="491" y1="217" x2="629" y2="217" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="560" y="199" font-size="19" fill="#246B96" text-anchor="middle" font-weight="400">H2D</text>
+<rect x="635" y="282" width="405" height="64" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="837.5" y="321.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">add&lt;&lt;&lt;grid, block&gt;&gt;&gt;</text>
+<line x1="837" y1="251" x2="837" y2="278" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="837" y1="348" x2="837" y2="375" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="635" y="380" width="405" height="54" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="837.5" y="414.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">d_c：结果留在显存</text>
+<rect x="80" y="380" width="405" height="54" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="282.5" y="414.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">h_c：校验或交给 CPU</text>
+<line x1="629" y1="407" x2="491" y2="407" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="560" y="390" font-size="19" fill="#246B96" text-anchor="middle" font-weight="400">D2H</text>
+<text x="80" y="310" font-size="21" fill="#20372F" text-anchor="start" font-weight="400">CPU 可以继续提交后续工作</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">本图采用独立显存设备模型；指针传值不会自动搬运它所指向的数据。</text>
+</g></svg>

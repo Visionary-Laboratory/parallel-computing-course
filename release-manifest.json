@@ -5,9 +5,10 @@
     "02-execution-models",
     "03-parallel-design",
     "04-memory-synchronization",
+    "05-cuda-introduction",
     "released-lecture-glossary"
   ],
-  "date": "2026-10-16",
+  "date": "2026-10-23",
   "lectures": [
     {
       "slug": "01-introduction",
@@ -28,11 +29,16 @@
       "slug": "04-memory-synchronization",
       "slides": 52,
       "answers": 12
+    },
+    {
+      "slug": "05-cuda-introduction",
+      "slides": 52,
+      "answers": 3
     }
   ],
-  "slides": 257,
-  "answers": 62,
-  "glossaryTerms": 75,
+  "slides": 309,
+  "answers": 65,
+  "glossaryTerms": 76,
   "files": [
     {
       "path": "site/.nojekyll",
@@ -40,7 +46,7 @@
     },
     {
       "path": "site/404.html",
-      "sha256": "1269d0db2bc2f972cbe6e1b6203489a03a63ce7fb8b5960025c8f9a854c1df91"
+      "sha256": "fb55f54cbbdea44c4056d6737847dfc070df6d1ccf908fb2ac891066cdf57b51"
     },
     {
       "path": "site/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
@@ -279,12 +285,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-CULFehRa.js",
-      "sha256": "b8486314c91d7ea2c4afbe52f57cef31b9d728ea71d3c5b6a67ea6dab460bc11"
+      "path": "site/assets/index--Y6XZlin.js",
+      "sha256": "6ab6e79883e6f3e02dc661b149e7bee8e29fce228b88e3a8c03900213fe3c934"
     },
     {
-      "path": "site/assets/index-CpHevxmm.css",
-      "sha256": "4254b0ef1ef065a9273ee91a2860f156c24e8dfcebc0432d2dd22d0167fc8385"
+      "path": "site/assets/index-BiJHqHDp.css",
+      "sha256": "49612aa2af93a13d34063a1c335c6087de5f02c8d22b6d44d9426052590372c5"
     },
     {
       "path": "site/favicon.svg",
@@ -292,27 +298,63 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "4615ceec3c5c8b473b88fc89301e9b2266ff8d9ba516fd27cae1bd838da8cb6a"
+      "sha256": "0f44c0e4cd35ad955cd3e8ee5e366f8d89ebd74914a7bcbda2723af555a4eba3"
     },
     {
       "path": "site/index.html",
-      "sha256": "27ef06040021eb0c93ccc065d9a54ec87e424cd1dc6508c893c55f415c101b62"
+      "sha256": "e23fb3d1bd5cd4a0335c6aef79be11f05fa59c171c98805536e682bafd45bf5f"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "105ea2a4a16c85a9e2639776182968a7af9b8553b8f05e8bf9cf7a22702aac84"
+      "sha256": "35a2ee6bffde65a3c890c691e683546590ea982ecd72006f25e7b52db2b3d7bf"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "cb68b93c7c999686d5d43f602a28c8e1d1bc28cfbb836719c467426feefbf407"
+      "sha256": "ed502b8d44065277366ce97602a15d3be5318a3e3739d39f37c1b39a630f36a5"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "94c654e17d2b929f0de2595e2405b39aa4e912be96cb0cc4dd70f6d78c502c6a"
+      "sha256": "54f8f63cc834571f82bb1b93951eb51f0d3ace7443af6a222073d0b68c8a508d"
     },
     {
       "path": "site/lectures/04-memory-synchronization/index.html",
-      "sha256": "f9a564b68de2a0c92b027d18e069db79e697caf526f331cf9b95d24ee9197ef8"
+      "sha256": "681dd38923a3ed23f9cc09c515e0c33c915b5370b19181232b4addca1a3dab56"
+    },
+    {
+      "path": "site/lectures/05-cuda-introduction/index.html",
+      "sha256": "1c28e0a52955cc24d3bbc51e98c4f3e9b8dfdecf8456661af622e7252b2998b8"
+    },
+    {
+      "path": "site/materials/cuda/05_device_query.cu",
+      "sha256": "9f84770367bb2974ef46a8952c36dcdb019457187f1dd85b0d85b0fa85ecf33a"
+    },
+    {
+      "path": "site/materials/cuda/05_hello.cu",
+      "sha256": "30618a780855667dfb30bd5b589095d22c87c5177327baff8f4bb93da13d0f84"
+    },
+    {
+      "path": "site/materials/cuda/05_vector_add.cu",
+      "sha256": "cc5a06684a8c0da1f5e9d43b820eda4c7bab17fcedc2b4072dfc667f70a56b61"
+    },
+    {
+      "path": "site/materials/cuda/05_vector_add_demo.cu",
+      "sha256": "ae726c3a4514455e6c6ce5f8d1ee9b748e59027153b094aeaec2f57ba6ecffbf"
+    },
+    {
+      "path": "site/materials/cuda/common.cuh",
+      "sha256": "80f73084ad55dec158d55e22395346f0603e81b5c31f01502265bc7fb2fc46c3"
+    },
+    {
+      "path": "site/materials/cuda/lecture05-cuda.zip",
+      "sha256": "229f0438948af65eed5aa9a7d25c2dc9b6a2222f0c1882ebf282996e287f25ec"
+    },
+    {
+      "path": "site/materials/cuda/results/lecture05-rtx5090-laptop/results.csv",
+      "sha256": "65d8dd92b315fb578106c25e3ecc90443459c0391cc6baf4ac6765bbb139d5f9"
+    },
+    {
+      "path": "site/materials/cuda/results/lecture05-rtx5090-laptop/vector-add.txt",
+      "sha256": "e8090a087c36292133874b0c4b3ee5fed36e47aa2c9e7764929f98822cf776b5"
     },
     {
       "path": "site/materials/lectures/01/ascend-ai-core-architecture.png",
@@ -733,6 +775,34 @@
     {
       "path": "site/materials/lectures/04/writeback-handoff.svg",
       "sha256": "1d19d06f4e0e868de934aeb0036b8d5fc2269b00af53e46c6d2c00c38981e8b1"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/cuda-12-8-download.png",
+      "sha256": "12bc1552e1cfcca69dc403f2a543a3b09fa0dc34256e0e65eea2e9fe4f177cd9"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/host-device.svg",
+      "sha256": "90fc610bf1ba3ac00229ff210393786d90478422479ef5e39cc2b97fb214cf12"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/launch-ownership.svg",
+      "sha256": "7b0812af6dfae59e48ff46e05fbe98013fbcf5c66ea346b7161bbc51e00b0b08"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/local-vector-add.svg",
+      "sha256": "e01e34f43cbcbf37c7aa1e77a8b7045087df4dd63a6b393984967493d32bae22"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/matrix-indices.svg",
+      "sha256": "9e44836bf20d2528a0b4ab5299dcf08253d0955ee74e021fe5dedceebec2fd50"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/msvc-cpp-workload.png",
+      "sha256": "526cc0218af4effafbcef61b26548e7b1037bf71279ca837f8f629e84a340979"
+    },
+    {
+      "path": "site/materials/lectures/05/figures/nvidia-smi-snapshot.svg",
+      "sha256": "7c13fd612f940112517f7ad5b7d1f06a533b16eac7e57a4cafe413df91f34175"
     }
   ]
 }
