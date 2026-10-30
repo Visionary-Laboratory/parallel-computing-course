@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">访问范围、生命周期、物理位置：分开看</title><desc id="desc">访问范围、生命周期、物理位置：分开看。绿色是计算暂存，蓝色是数据存储；连线表示常见的数据通路。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">访问范围、生命周期、物理位置：分开看</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">绿色是计算暂存，蓝色是数据存储；连线表示常见的数据通路。</text>
+<rect x="45" y="118" width="490" height="245" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="65" y="150" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">Block 0（普通线程块）</text>
+<rect x="67" y="177" width="212" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="173.0" y="215.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Thread 0 寄存器</text>
+<rect x="301" y="177" width="212" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="407.0" y="215.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Thread 1 寄存器</text>
+<rect x="67" y="279" width="446" height="57" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="290.0" y="314.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Shared memory：本 block 协作</text>
+<line x1="173" y1="244" x2="173" y2="274" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="407" y1="244" x2="407" y2="274" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="583" y="118" width="490" height="245" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="603" y="150" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">Block 1（普通线程块）</text>
+<rect x="605" y="177" width="212" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="711.0" y="215.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Thread 0 寄存器</text>
+<rect x="839" y="177" width="212" height="63" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="945.0" y="215.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Thread 1 寄存器</text>
+<rect x="605" y="279" width="446" height="57" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="828.0" y="314.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">Shared memory：本 block 协作</text>
+<line x1="711" y1="244" x2="711" y2="274" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="945" y1="244" x2="945" y2="274" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="66" y="409" width="988" height="55" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="560.0" y="444.66" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">Global / Local 地址空间 → 缓存层次 → 显存</text>
+<line x1="290" y1="363" x2="290" y2="404" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="828" y1="363" x2="828" y2="404" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">Local 指线程私有的地址空间，不代表片上；global 访问也可能命中 L1 / L2。</text>
+</g></svg>

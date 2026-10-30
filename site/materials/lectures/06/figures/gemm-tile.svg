@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">两块输入，在片上生成一块输出</title><desc id="desc">两块输入，在片上生成一块输出。一个 B×B 输出 tile，沿 K 分段；每段共同加载 2B² 个元素，完成 2B³ 次浮点操作。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">两块输入，在片上生成一块输出</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">一个 B×B 输出 tile，沿 K 分段；每段共同加载 2B² 个元素，完成 2B³ 次浮点操作。</text>
+<rect x="52" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="76.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="104" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="128.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="156" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="180.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="208" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="232.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="52" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="76.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="104" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="128.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="156" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="180.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="208" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="232.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="52" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="76.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="104" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="128.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="156" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="180.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="208" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="232.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="52" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="76.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="104" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="128.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="156" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="180.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="208" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="232.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<text x="155" y="404" font-size="26" fill="#20372F" text-anchor="middle" font-weight="700">A：B×B</text>
+<rect x="436" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="460.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="488" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="512.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="540" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="564.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="592" y="152" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="616.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="436" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="460.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="488" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="512.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="540" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="564.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="592" y="204" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="616.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="436" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="460.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="488" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="512.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="540" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="564.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="592" y="256" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="616.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="436" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="460.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="488" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="512.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="540" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="564.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="592" y="308" width="49" height="49" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="616.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<text x="539" y="404" font-size="26" fill="#20372F" text-anchor="middle" font-weight="700">B：B×B</text>
+<rect x="820" y="152" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="844.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="872" y="152" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="896.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="924" y="152" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="976" y="152" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1000.5" y="183.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="820" y="204" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="844.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="872" y="204" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="896.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="924" y="204" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="976" y="204" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1000.5" y="235.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="820" y="256" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="844.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="872" y="256" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="896.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="924" y="256" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="976" y="256" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1000.5" y="287.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="820" y="308" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="844.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="872" y="308" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="896.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="924" y="308" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="948.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<rect x="976" y="308" width="49" height="49" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1000.5" y="339.3" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600"></text>
+<text x="923" y="404" font-size="26" fill="#20372F" text-anchor="middle" font-weight="700">C：B×B</text>
+<text x="347" y="274" font-size="42" fill="#20372F" text-anchor="middle" font-weight="400">×</text>
+<text x="731" y="274" font-size="26" fill="#20372F" text-anchor="middle" font-weight="400">累加 →</text>
+<text x="559" y="468" font-size="25" fill="#176B52" text-anchor="middle" font-weight="700">装入 → barrier → 寄存器累加 → barrier → 下一段 K</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">FP32 大 K 模型：输入流量口径的计算强度约 B/4 FLOP/B；输出写回、缓存与边界另计。</text>
+</g></svg>

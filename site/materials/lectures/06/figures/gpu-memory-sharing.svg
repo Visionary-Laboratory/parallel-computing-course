@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="550" viewBox="0 0 1240 550" role="img" aria-labelledby="title desc">
+<title id="title">Global 数据、L2 与 SM 内的 L1 和共享内存</title><desc id="desc">课程离散 GPU 的简化示意：global 数组存放于 GPU 芯片外的显存 DRAM，读取可以由片上的 L2 或 L1 缓存提供。多个 SM 共用 L2；每个 SM 内，L1 与 shared memory 划分同一块片上容量。线程按缓存策略访问 L1，显式读写 shared。下方两条等长色条说明 shared 划分增大时可用于 L1 的容量减少，不表示真实比例或逐字节动态调整。</desc>
+<defs>
+  <marker id="access-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#73867e"/></marker>
+  <marker id="shared-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#176b52"/></marker>
+</defs>
+<rect width="1240" height="550" rx="12" fill="#fff"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+  <rect x="20" y="18" width="870" height="386" rx="16" fill="#f8fbf9" stroke="#73867e" stroke-width="2"/>
+  <text x="44" y="51" font-size="27" font-weight="700">GPU 芯片（片上）</text>
+  <text x="973" y="51" font-size="23" fill="#566a63">本讲：离散 GPU</text>
+
+  <rect x="40" y="72" width="400" height="244" rx="12" fill="#fff" stroke="#bccfc3" stroke-width="2"/>
+  <text x="60" y="101" font-size="25" font-weight="700">SM 0</text>
+  <rect x="90" y="116" width="300" height="48" rx="8" fill="#f1f4f2" stroke="#bccfc3"/>
+  <text x="240" y="148" text-anchor="middle" font-size="24">执行线程 / 寄存器</text>
+  <path d="M155 168V188" fill="none" stroke="#73867e" stroke-width="2.5" marker-start="url(#access-arrow)" marker-end="url(#access-arrow)"/>
+  <path d="M325 168V188" fill="none" stroke="#176b52" stroke-width="2.5" marker-start="url(#shared-arrow)" marker-end="url(#shared-arrow)"/>
+  <rect x="70" y="194" width="170" height="76" fill="#e7f1f8"/>
+  <rect x="240" y="194" width="170" height="76" fill="#e4f2eb"/>
+  <rect x="70" y="194" width="340" height="76" rx="4" fill="none" stroke="#526f61" stroke-width="2.5"/>
+  <path d="M240 194V270" stroke="#526f61" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="155" y="225" text-anchor="middle" font-size="29" font-weight="700" fill="#246b96">L1</text>
+  <text x="155" y="253" text-anchor="middle" font-size="22">硬件自动缓存</text>
+  <text x="325" y="225" text-anchor="middle" font-size="29" font-weight="700" fill="#176b52">Shared</text>
+  <text x="325" y="253" text-anchor="middle" font-size="22">程序显式读写</text>
+  <text x="240" y="298" text-anchor="middle" font-size="22">二者共用一块片上容量</text>
+
+  <rect x="460" y="72" width="400" height="244" rx="12" fill="#fff" stroke="#bccfc3" stroke-width="2"/>
+  <text x="480" y="101" font-size="25" font-weight="700">SM 1 …</text>
+  <rect x="510" y="116" width="300" height="48" rx="8" fill="#f1f4f2" stroke="#bccfc3"/>
+  <text x="660" y="148" text-anchor="middle" font-size="24">执行线程 / 寄存器</text>
+  <path d="M575 168V188" fill="none" stroke="#73867e" stroke-width="2.5" marker-start="url(#access-arrow)" marker-end="url(#access-arrow)"/>
+  <path d="M745 168V188" fill="none" stroke="#176b52" stroke-width="2.5" marker-start="url(#shared-arrow)" marker-end="url(#shared-arrow)"/>
+  <rect x="490" y="194" width="170" height="76" fill="#e7f1f8"/>
+  <rect x="660" y="194" width="170" height="76" fill="#e4f2eb"/>
+  <rect x="490" y="194" width="340" height="76" rx="4" fill="none" stroke="#526f61" stroke-width="2.5"/>
+  <path d="M660 194V270" stroke="#526f61" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="575" y="225" text-anchor="middle" font-size="29" font-weight="700" fill="#246b96">L1</text>
+  <text x="575" y="253" text-anchor="middle" font-size="22">硬件自动缓存</text>
+  <text x="745" y="225" text-anchor="middle" font-size="29" font-weight="700" fill="#176b52">Shared</text>
+  <text x="745" y="253" text-anchor="middle" font-size="22">程序显式读写</text>
+  <text x="660" y="298" text-anchor="middle" font-size="22">每个 SM 各有一份</text>
+
+  <path d="M68 232H54V330H260V344" fill="none" stroke="#73867e" stroke-width="2.5" marker-start="url(#access-arrow)" marker-end="url(#access-arrow)"/>
+  <path d="M488 232H474V330H630V344" fill="none" stroke="#73867e" stroke-width="2.5" marker-start="url(#access-arrow)" marker-end="url(#access-arrow)"/>
+  <rect x="170" y="349" width="550" height="42" rx="8" fill="#edf0f8" stroke="#7e89a3" stroke-width="2"/>
+  <text x="445" y="378" text-anchor="middle" font-size="26" font-weight="700">L2 缓存 · 多个 SM 共用</text>
+
+  <rect x="958" y="224" width="260" height="143" rx="12" fill="#fcf2de" stroke="#b9914f" stroke-width="2"/>
+  <text x="1088" y="262" text-anchor="middle" font-size="29" font-weight="700">显存 DRAM</text>
+  <text x="1088" y="301" text-anchor="middle" font-size="24">存放 global 数组</text>
+  <text x="1088" y="339" text-anchor="middle" font-size="23" fill="#806436">GPU 芯片外</text>
+  <path d="M724 370H927V295H952" fill="none" stroke="#73867e" stroke-width="2.5" marker-start="url(#access-arrow)" marker-end="url(#access-arrow)"/>
+
+  <rect x="20" y="424" width="1198" height="108" rx="12" fill="#f7f9f8" stroke="#dae3dd"/>
+  <text x="44" y="457" font-size="24" font-weight="700">同一 SM 的容量划分（示意）</text>
+  <text x="734" y="457" font-size="24" fill="#566a63">总量不变，分界可调整</text>
+  <rect x="44" y="477" width="260" height="36" fill="#e7f1f8"/>
+  <rect x="304" y="477" width="140" height="36" fill="#e4f2eb"/>
+  <rect x="44" y="477" width="400" height="36" fill="none" stroke="#526f61" stroke-width="2"/>
+  <path d="M304 477V513" stroke="#526f61" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="174" y="503" text-anchor="middle" font-size="23" fill="#246b96">L1</text>
+  <text x="374" y="503" text-anchor="middle" font-size="23" fill="#176b52">Shared</text>
+  <text x="589" y="488" text-anchor="middle" font-size="22" fill="#176b52">Shared 划分增大</text>
+  <path d="M476 503H702" fill="none" stroke="#176b52" stroke-width="2.5" marker-end="url(#shared-arrow)"/>
+  <rect x="734" y="477" width="140" height="36" fill="#e7f1f8"/>
+  <rect x="874" y="477" width="260" height="36" fill="#e4f2eb"/>
+  <rect x="734" y="477" width="400" height="36" fill="none" stroke="#526f61" stroke-width="2"/>
+  <path d="M874 477V513" stroke="#526f61" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="804" y="503" text-anchor="middle" font-size="23" fill="#246b96">L1</text>
+  <text x="1004" y="503" text-anchor="middle" font-size="23" fill="#176b52">Shared</text>
+</g>
+</svg>

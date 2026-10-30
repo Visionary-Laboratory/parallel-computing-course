@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">算 8 个输出，需要 12 个输入：两端都是 halo</title><desc id="desc">算 8 个输出，需要 12 个输入：两端都是 halo。半径 R=2；本 block 输出 i=8…15；输入窗口为 i=6…17。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">算 8 个输出，需要 12 个输入：两端都是 halo</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">半径 R=2；本 block 输出 i=8…15；输入窗口为 i=6…17。</text>
+<text x="42" y="144" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">输入 x</text>
+<rect x="47" y="164" width="78" height="62" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="86.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">6</text>
+<rect x="133" y="164" width="78" height="62" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="172.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">7</text>
+<rect x="219" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="258.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">8</text>
+<rect x="305" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="344.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">9</text>
+<rect x="391" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="430.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<rect x="477" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="516.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<rect x="563" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="602.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">12</text>
+<rect x="649" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="688.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">13</text>
+<rect x="735" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="774.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">14</text>
+<rect x="821" y="164" width="78" height="62" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="860.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">15</text>
+<rect x="907" y="164" width="78" height="62" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="946.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">16</text>
+<rect x="993" y="164" width="78" height="62" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="1032.0" y="203.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">17</text>
+<text x="132" y="263" font-size="22" fill="#936015" text-anchor="middle" font-weight="400">左 halo</text>
+<text x="562" y="263" font-size="23" fill="#246B96" text-anchor="middle" font-weight="400">输出之间共享的输入窗口</text>
+<text x="993" y="263" font-size="22" fill="#936015" text-anchor="middle" font-weight="400">右 halo</text>
+<line x1="560" y1="282" x2="560" y2="325" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="218" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="257.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">8</text>
+<rect x="304" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="343.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">9</text>
+<rect x="390" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="429.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<rect x="476" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="515.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<rect x="562" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="601.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">12</text>
+<rect x="648" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="687.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">13</text>
+<rect x="734" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="773.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">14</text>
+<rect x="820" y="340" width="78" height="62" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="859.0" y="379.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">15</text>
+<text x="561" y="459" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">每个输出读连续 5 项；相邻窗口复用 4 项。</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">若窗口超出全局数组，按本例契约补零；分母始终为 5。</text>
+</g></svg>

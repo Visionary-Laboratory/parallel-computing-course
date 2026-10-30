@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">转置不是换一个下标那么简单</title><desc id="desc">转置不是换一个下标那么简单。A 为行主序 M×N，B 为行主序 N×M；一条 warp 希望两端都连续访问。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">转置不是换一个下标那么简单</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">A 为行主序 M×N，B 为行主序 N×M；一条 warp 希望两端都连续访问。</text>
+<rect x="58" y="148" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="84.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">00</text>
+<rect x="113" y="148" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="139.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">01</text>
+<rect x="168" y="148" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="194.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">02</text>
+<rect x="223" y="148" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="249.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">03</text>
+<rect x="58" y="203" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="84.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<rect x="113" y="203" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="139.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<rect x="168" y="203" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="194.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">12</text>
+<rect x="223" y="203" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="249.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">13</text>
+<rect x="58" y="258" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="84.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<rect x="113" y="258" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="139.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">21</text>
+<rect x="168" y="258" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="194.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">22</text>
+<rect x="223" y="258" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="249.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">23</text>
+<rect x="58" y="313" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="84.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<rect x="113" y="313" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="139.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">31</text>
+<rect x="168" y="313" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="194.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">32</text>
+<rect x="223" y="313" width="52" height="52" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="249.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">33</text>
+<text x="168" y="414" font-size="24" fill="#246B96" text-anchor="middle" font-weight="700">读 A 的一行</text>
+<rect x="409" y="164" width="293" height="205" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="555.5" y="230.34" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">Shared tile</text>
+<text x="555.5" y="260.34000000000003" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">先按行装入</text>
+<text x="555.5" y="290.34000000000003" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">同步</text>
+<text x="555.5" y="320.34000000000003" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">再换方向读取</text>
+<rect x="828" y="148" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="854.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">00</text>
+<rect x="883" y="148" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="909.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">10</text>
+<rect x="938" y="148" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="964.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">20</text>
+<rect x="993" y="148" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1019.0" y="180.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">30</text>
+<rect x="828" y="203" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="854.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">01</text>
+<rect x="883" y="203" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="909.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">11</text>
+<rect x="938" y="203" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="964.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">21</text>
+<rect x="993" y="203" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1019.0" y="235.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">31</text>
+<rect x="828" y="258" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="854.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">02</text>
+<rect x="883" y="258" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="909.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">12</text>
+<rect x="938" y="258" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="964.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">22</text>
+<rect x="993" y="258" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1019.0" y="290.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">32</text>
+<rect x="828" y="313" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="854.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">03</text>
+<rect x="883" y="313" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="909.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">13</text>
+<rect x="938" y="313" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="964.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">23</text>
+<rect x="993" y="313" width="52" height="52" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="1019.0" y="345.8" font-size="20" fill="#20372F" text-anchor="middle" font-weight="600">33</text>
+<text x="938" y="414" font-size="24" fill="#176B52" text-anchor="middle" font-weight="700">写 B 的一行</text>
+<line x1="283" y1="256" x2="401" y2="256" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="710" y1="256" x2="819" y2="256" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">tile 改变线程与数据的对应关系；块坐标与块内坐标都必须交换。</text>
+</g></svg>
