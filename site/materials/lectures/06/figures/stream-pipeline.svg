@@ -1,34 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
-<title id="title">流水线建立在独立缓冲区和明确依赖上</title><desc id="desc">流水线建立在独立缓冲区和明确依赖上。三个不同 chunk；蓝色 H2D，绿色 kernel，橙色 D2H；仅为允许重叠时的调度示意。</desc>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
-<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
-<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
-<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
-<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">流水线建立在独立缓冲区和明确依赖上</text>
-<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">三个不同 chunk；蓝色 H2D，绿色 kernel，橙色 D2H；仅为允许重叠时的调度示意。</text>
-<text x="48" y="172" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">stream 0</text>
-<rect x="223" y="137" width="139" height="61" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
-<text x="292.5" y="174.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">H2D</text>
-<rect x="372" y="137" width="139" height="61" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
-<text x="441.5" y="174.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">kernel</text>
-<rect x="521" y="137" width="139" height="61" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
-<text x="590.5" y="174.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">D2H</text>
-<text x="48" y="266" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">stream 1</text>
-<rect x="372" y="231" width="139" height="61" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
-<text x="441.5" y="268.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">H2D</text>
-<rect x="521" y="231" width="139" height="61" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
-<text x="590.5" y="268.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">kernel</text>
-<rect x="670" y="231" width="139" height="61" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
-<text x="739.5" y="268.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">D2H</text>
-<text x="48" y="360" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">stream 2</text>
-<rect x="521" y="325" width="139" height="61" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
-<text x="590.5" y="362.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">H2D</text>
-<rect x="670" y="325" width="139" height="61" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
-<text x="739.5" y="362.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">kernel</text>
-<rect x="819" y="325" width="139" height="61" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
-<text x="888.5" y="362.98" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">D2H</text>
-<line x1="222" y1="448" x2="1030" y2="448" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
-<text x="625" y="478" font-size="21" fill="#566A63" text-anchor="middle" font-weight="400">时间 →（块宽不代表实测耗时）</text>
-<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
-<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">可靠 H2D / D2H 异步重叠需 pinned 内存、独立 stream 与硬件支持；复用缓冲区前等待完成事件。</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="400" viewBox="0 0 1440 400" role="img" aria-labelledby="title desc">
+<title id="title">一条队列与三条队列处理相同三段数据</title><desc id="desc">上方一条stream顺序完成全部上传、计算、下载；下方三条stream分别处理A、B、C，可在计算A时上传B和C、计算B时下载A。所有复制互不重叠，图为可能安排而非实测时间线。</desc>
+<rect width="1440" height="400" rx="8" fill="#ffffff"/>
+<g font-family="Arial,Microsoft YaHei,sans-serif" fill="#20372f">
+<text x="25" y="32" font-size="25" font-weight="700">相同三段数据：A、B、C</text>
+<text x="725" y="32" font-size="23" font-weight="400">蓝：上传　绿：计算　橙：下载</text>
+<text x="25" y="96" font-size="25" font-weight="700">1条 stream</text>
+<rect x="220" y="66" width="88" height="44" rx="5" fill="#e7f1f8" stroke="#246b96"/>
+<text x="264.0" y="95" text-anchor="middle" font-size="22">上传A</text>
+<rect x="314" y="66" width="88" height="44" rx="5" fill="#e7f1f8" stroke="#246b96"/>
+<text x="358.0" y="95" text-anchor="middle" font-size="22">上传B</text>
+<rect x="408" y="66" width="88" height="44" rx="5" fill="#e7f1f8" stroke="#246b96"/>
+<text x="452.0" y="95" text-anchor="middle" font-size="22">上传C</text>
+<rect x="502" y="66" width="182" height="44" rx="5" fill="#e4f2eb" stroke="#176b52"/>
+<text x="593.0" y="95" text-anchor="middle" font-size="22">计算A</text>
+<rect x="690" y="66" width="182" height="44" rx="5" fill="#e4f2eb" stroke="#176b52"/>
+<text x="781.0" y="95" text-anchor="middle" font-size="22">计算B</text>
+<rect x="878" y="66" width="182" height="44" rx="5" fill="#e4f2eb" stroke="#176b52"/>
+<text x="969.0" y="95" text-anchor="middle" font-size="22">计算C</text>
+<rect x="1066" y="66" width="88" height="44" rx="5" fill="#fff1ce" stroke="#936015"/>
+<text x="1110.0" y="95" text-anchor="middle" font-size="22">下载A</text>
+<rect x="1160" y="66" width="88" height="44" rx="5" fill="#fff1ce" stroke="#936015"/>
+<text x="1204.0" y="95" text-anchor="middle" font-size="22">下载B</text>
+<rect x="1254" y="66" width="88" height="44" rx="5" fill="#fff1ce" stroke="#936015"/>
+<text x="1298.0" y="95" text-anchor="middle" font-size="22">下载C</text>
+<path d="M25 140H1395" stroke="#cadbd0"/>
+<text x="25" y="187" font-size="25" font-weight="700">3条 stream</text>
+<text x="42" y="210" font-size="21" font-weight="400">队列0 · 段A</text>
+<rect x="220" y="159" width="88" height="44" rx="5" fill="#e7f1f8" stroke="#246b96"/>
+<text x="264.0" y="188" text-anchor="middle" font-size="22">上传A</text>
+<rect x="314" y="159" width="182" height="44" rx="5" fill="#e4f2eb" stroke="#176b52"/>
+<text x="405.0" y="188" text-anchor="middle" font-size="22">计算A</text>
+<rect x="502" y="159" width="88" height="44" rx="5" fill="#fff1ce" stroke="#936015"/>
+<text x="546.0" y="188" text-anchor="middle" font-size="22">下载A</text>
+<text x="42" y="273" font-size="21" font-weight="400">队列1 · 段B</text>
+<rect x="314" y="222" width="88" height="44" rx="5" fill="#e7f1f8" stroke="#246b96"/>
+<text x="358.0" y="251" text-anchor="middle" font-size="22">上传B</text>
+<rect x="502" y="222" width="182" height="44" rx="5" fill="#e4f2eb" stroke="#176b52"/>
+<text x="593.0" y="251" text-anchor="middle" font-size="22">计算B</text>
+<rect x="690" y="222" width="88" height="44" rx="5" fill="#fff1ce" stroke="#936015"/>
+<text x="734.0" y="251" text-anchor="middle" font-size="22">下载B</text>
+<text x="42" y="336" font-size="21" font-weight="400">队列2 · 段C</text>
+<rect x="408" y="285" width="88" height="44" rx="5" fill="#e7f1f8" stroke="#246b96"/>
+<text x="452.0" y="314" text-anchor="middle" font-size="22">上传C</text>
+<rect x="690" y="285" width="182" height="44" rx="5" fill="#e4f2eb" stroke="#176b52"/>
+<text x="781.0" y="314" text-anchor="middle" font-size="22">计算C</text>
+<rect x="878" y="285" width="88" height="44" rx="5" fill="#fff1ce" stroke="#936015"/>
+<text x="922.0" y="314" text-anchor="middle" font-size="22">下载C</text>
+<path d="M220 352H1348l-12 -6m12 6l-12 6" fill="none" stroke="#6c8175" stroke-width="2"/>
+<text x="220" y="388" font-size="23" font-weight="400">时间 →　计算可以与另一段的传输重叠；块宽仅作示意，不是实测耗时。</text>
 </g></svg>
