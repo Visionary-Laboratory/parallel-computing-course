@@ -16,3 +16,20 @@ body.print-mode .site-header,body.print-mode .course-sidebar,body.print-mode .to
 /* Desktop presentation fits the complete teaching page above its controls. */
 body.present .site-header{display:none}body.present .workspace{padding-top:0}body.present .toolbar{top:0;min-height:55px}body.present #slides{zoom:var(--slide-scale,1)}body.present .lecture-slide{min-height:0}body.present .demo[data-demo=tiles] canvas{width:min(100%,300px);justify-self:center}body.present figure img{max-height:250px}body.present .reading-layout{padding-top:16px}
 @media print{body.present #slides{zoom:1}body.present figure img{max-height:68mm}}
+/* The page-by-page contents panel follows the published course's UI. */
+.reading-layout{grid-template-columns:minmax(0,1fr) 270px;gap:32px}
+.contents{top:166px;max-height:none;padding:0;border-left:0;overflow:visible}
+.lecture-page-nav{min-width:0}.lecture-page-nav-heading{color:#496b56;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 6px 12px}.lecture-page-nav-heading>strong{font-size:14px;font-weight:600}.lecture-page-nav-heading>span{font:12px ui-monospace,monospace;color:#6c8575}
+.toc-page-list{overscroll-behavior:contain;scrollbar-width:thin;max-height:calc(100dvh - 205px);margin:0;padding:0 5px 8px 0;list-style:none;position:relative;overflow:auto}
+.toc-page-list>li{border:1px solid transparent;border-radius:6px;margin:3px 0}.toc-page-list>li>a{color:#637c6b;display:grid;grid-template-columns:24px minmax(0,1fr) 14px;align-items:start;gap:7px;padding:10px 9px;font-size:13px;line-height:1.65;text-decoration:none}.toc-page-number{font:11px/1.95 ui-monospace,monospace;color:#8a9f90}.toc-page-list a>svg{color:#91a397;margin-top:4px;transform:rotate(-90deg)}.toc-page-list a>span>small{color:#8a9a8e;font-size:11px;display:block}.toc-page-list a:hover{color:var(--green);background:#f4f8f4;border-radius:5px}.toc-page-list a:focus-visible{outline:2px solid var(--green);outline-offset:-2px;border-radius:5px}.toc-page-list>li.is-current{background:#f0f6f1;border-color:#c1d5c7}.toc-page-list>li.is-current>a{color:#275c3c;font-weight:600}.toc-page-list>li.is-current>a>svg{color:#3c7450;transform:rotate(0)}.toc-page-idea{border-top:1px solid #dbe7de;padding:10px 12px 12px}.toc-page-idea>strong{color:#6d8e78;font-size:11px;font-weight:500}.toc-page-idea>p{color:#41624d;margin:5px 0 0;font-size:13px;line-height:1.8}.toc-entry[hidden],.toc-page-idea[hidden]{display:none!important}
+.mobile-contents-button{display:none;z-index:35;background:white;border:1px solid #bfd3c5;box-shadow:0 3px 14px #263f3017;border-radius:8px;padding:10px 14px;font-size:13px;color:#4d775d}
+#contents-dialog{width:min(540px,calc(100vw - 32px));max-height:85dvh;border:1px solid #cbdcd2;border-radius:12px;padding:20px 22px;color:var(--ink);box-shadow:0 20px 80px #122b3033}#contents-dialog::backdrop{background:#142c2455}.contents-dialog-header{display:flex;align-items:center;justify-content:space-between;color:#80988a;font-size:12px;margin-bottom:20px}.contents-dialog-header button{font-size:12px}#contents-dialog .toc-page-list{max-height:58dvh}#contents-dialog .toc-page-list>li>a{padding:12px;font-size:15px}#contents-dialog .toc-page-idea{padding:10px 14px 14px 43px}#contents-dialog .toc-page-idea>p{font-size:14px}
+@media(min-width:1101px){.contents{display:block}}
+@media(max-width:1300px) and (min-width:1101px){.reading-layout{grid-template-columns:minmax(0,1fr) 235px;gap:24px}}
+@media(max-width:1100px){.reading-layout{display:block}.contents{display:none}.mobile-contents-button{display:block;position:fixed;bottom:18px;right:18px}}
+body.present .mobile-contents-button{display:block;position:fixed;bottom:18px;right:18px;padding:7px 12px}
+@media(max-width:800px){body.present .mobile-contents-button{bottom:82px;font-size:11px}}
+body.print-mode .mobile-contents-button{display:none}
+@media print{.contents,.mobile-contents-button,#contents-dialog{display:none!important}}
+/* The sticky-header offset is supplied by html scroll-padding, once. */
+.lecture-slide{scroll-margin-top:0}

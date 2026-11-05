@@ -373,6 +373,578 @@ if (inside) image[pixel] = C + T * background;</code></pre>
 <p>本页链接指向原论文与官方项目。复现时记录提交号、运行配置、场景、相机和阈值；不要把不同版本的性能数字直接混在一起。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目：视频、场景与效果对照</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/train.py" target="_blank" rel="noreferrer">官方实现：train.py</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div>
     </section></div>
 <footer class="chapter-footer">课程原创讲解与图示 · 3DGS 方法：Kerbl 等（2023）<br><a href="https://arxiv.org/html/2308.04079v1">原论文</a> · <a href="../../">返回课程概览</a></footer></main>
-<aside class="contents" aria-label="本讲内容"><h2>本讲内容</h2><a href="#novel-view" data-target="novel-view">从照片到新视角</a><a href="#point-to-splat" data-target="point-to-splat">用高斯表示场景</a><a href="#camera-coordinates" data-target="camera-coordinates">从三维到屏幕</a><a href="#evaluate-alpha" data-target="evaluate-alpha">从覆盖到颜色</a><a href="#naive-cost" data-target="naive-cost">把工作组织成 Tile</a><a href="#block-mapping" data-target="block-mapping">GPU 怎样执行</a><a href="#training-loop" data-target="training-loop">场景怎样学出来</a><a href="#cost-model" data-target="cost-model">性能、质量与总结</a><details><summary>逐页目录</summary><a href="#novel-view" class="toc-page" data-target="novel-view"><span>01</span>拍过的照片，怎样变成没有拍过的视角？</a><a href="#train-vs-render" class="toc-page" data-target="train-vs-render"><span>02</span>先分清两件事：学习场景与渲染场景</a><a href="#route" class="toc-page" data-target="route"><span>03</span>沿一帧图像，串起前面学过的并行思想</a><a href="#point-to-splat" class="toc-page" data-target="point-to-splat"><span>04</span>一个点的位置，还不足以覆盖一块表面</a><a href="#gaussian-falloff" class="toc-page" data-target="gaussian-falloff"><span>05</span>从一维开始：距离怎样改变贡献？</a><a href="#ellipse" class="toc-page" data-target="ellipse"><span>06</span>二维高斯：拉长、旋转，改变覆盖形状</a><a href="#gaussian-record" class="toc-page" data-target="gaussian-record"><span>07</span>一个三维高斯，需要保存哪些参数？</a><a href="#covariance" class="toc-page" data-target="covariance"><span>08</span>把尺度与旋转组合成协方差</a><a href="#opacity" class="toc-page" data-target="opacity"><span>09</span>不透明度与高斯权重，是两个不同的量</a><a href="#appearance" class="toc-page" data-target="appearance"><span>10</span>为什么颜色可以随观察方向变化？</a><a href="#camera-coordinates" class="toc-page" data-target="camera-coordinates"><span>11</span>先把中心变换到相机坐标系</a><a href="#perspective" class="toc-page" data-target="perspective"><span>12</span>透视投影：越远，屏幕位移越小</a><a href="#project-shape" class="toc-page" data-target="project-shape"><span>13</span>投影一个高斯，不能只投影中心</a><a href="#project-covariance" class="toc-page" data-target="project-covariance"><span>14</span>用局部变化率把三维形状带到屏幕</a><a href="#jacobian" class="toc-page deep" data-target="jacobian"><span>深入 01</span>深入：透视雅可比的每一项从哪里来？</a><a href="#finite-footprint" class="toc-page" data-target="finite-footprint"><span>15</span>无限的高斯，有限的候选区域</a><a href="#preprocess" class="toc-page" data-target="preprocess"><span>16</span>每高斯预处理：先做一次，供后面反复使用</a><a href="#evaluate-alpha" class="toc-page" data-target="evaluate-alpha"><span>17</span>先算一个高斯在一个像素上的贡献</a><a href="#transmittance" class="toc-page" data-target="transmittance"><span>18</span>前面的覆盖，决定后面还能贡献多少</a><a href="#blend-demo" class="toc-page" data-target="blend-demo"><span>19</span>追踪一个像素：红、绿、蓝怎样叠加？</a><a href="#order-matters" class="toc-page" data-target="order-matters"><span>20</span>交换深度顺序，为什么颜色变了？</a><a href="#blend-code" class="toc-page" data-target="blend-code"><span>21</span>把像素合成写成一段短循环</a><a href="#exercise-blend" class="toc-page" data-target="exercise-blend"><span>22</span>随堂填空 ①：只补两行，保持前后关系</a><a href="#composite-scan" class="toc-page deep" data-target="composite-scan"><span>深入 02</span>深入：像素内的合成能否使用 Scan？</a><a href="#naive-cost" class="toc-page" data-target="naive-cost"><span>23</span>最直接的方法，为什么会做太多无用工作？</a><a href="#pixel-ownership" class="toc-page" data-target="pixel-ownership"><span>24</span>选择输出所有者：每个像素交给一个线程</a><a href="#tile-demo" class="toc-page" data-target="tile-demo"><span>25</span>把屏幕分成 Tile，共用一份候选列表</a><a href="#toy-records" class="toc-page" data-target="toy-records"><span>26</span>贯穿算例：四个高斯产生多少条引用？</a><a href="#scan-offsets" class="toc-page" data-target="scan-offsets"><span>27</span>数量不一样，先用前缀和分配写出位置</a><a href="#exercise-offset" class="toc-page" data-target="exercise-offset"><span>28</span>随堂填空 ②：给每个高斯一段独占空间</a><a href="#emit-pairs" class="toc-page" data-target="emit-pairs"><span>29</span>并行写出：从每高斯列表变成一串记录</a><a href="#sort-pairs" class="toc-page" data-target="sort-pairs"><span>30</span>一次排序，先按 Tile，再按深度</a><a href="#tile-ranges" class="toc-page" data-target="tile-ranges"><span>31</span>找到每个 Tile 的起止位置，交给渲染器</a><a href="#sort-key" class="toc-page deep" data-target="sort-key"><span>深入 03</span>深入：64 位排序 Key 包含什么？</a><a href="#block-mapping" class="toc-page" data-target="block-mapping"><span>32</span>一个 Tile 一个 Block，一个像素一个线程</a><a href="#shared-load" class="toc-page" data-target="shared-load"><span>33</span>同一份高斯参数，让整个 Block 共用</a><a href="#batch-lifetime" class="toc-page" data-target="batch-lifetime"><span>34</span>一块 Shared，分批复用：两道交接不能少</a><a href="#render-pseudocode" class="toc-page" data-target="render-pseudocode"><span>35</span>把分工、复用与顺序放进同一个循环</a><a href="#pixel-done" class="toc-page" data-target="pixel-done"><span>36</span>像素结束，不等于线程可以提前 return</a><a href="#exercise-sync" class="toc-page" data-target="exercise-sync"><span>37</span>随堂填空 ③：把同步放在所有参与者都会经过的位置</a><a href="#uneven-work" class="toc-page" data-target="uneven-work"><span>38</span>相同的线程数，不代表相同的工作量</a><a href="#implementation-map" class="toc-page" data-target="implementation-map"><span>39</span>回到源码：我们现在能读懂哪几段？</a><a href="#termination-error" class="toc-page deep" data-target="termination-error"><span>深入 04</span>深入：提前结束，牺牲了多少颜色贡献？</a><a href="#threshold-order" class="toc-page deep" data-target="threshold-order"><span>深入 05</span>深入：教学循环与官方阈值次序有什么差别？</a><a href="#training-loop" class="toc-page" data-target="training-loop"><span>40</span>渲染器怎样成为一个可学习的模型？</a><a href="#gradient-path" class="toc-page" data-target="gradient-path"><span>41</span>像素误差，沿哪条链回到高斯参数？</a><a href="#backward-scatter" class="toc-page" data-target="backward-scatter"><span>42</span>前向一个像素一个所有者，反向却会汇到同一高斯</a><a href="#density-control" class="toc-page" data-target="density-control"><span>43</span>只有移动参数还不够：还要增加、拆分与删除</a><a href="#learned-scene" class="toc-page" data-target="learned-scene"><span>44</span>训练完成，查看一帧时哪些东西还在变化？</a><a href="#backward-memory" class="toc-page deep" data-target="backward-memory"><span>深入 06</span>深入：为什么不保存每个像素的完整历史？</a><a href="#cost-model" class="toc-page" data-target="cost-model"><span>45</span>不要只数高斯：三个规模决定不同阶段</a><a href="#tile-tradeoff" class="toc-page" data-target="tile-tradeoff"><span>46</span>Tile 越小一定越快吗？</a><a href="#measure" class="toc-page" data-target="measure"><span>47</span>怎样设计一组能回答问题的性能实验？</a><a href="#limits" class="toc-page" data-target="limits"><span>48</span>哪些近似与限制，会在图像中暴露？</a><a href="#summary" class="toc-page" data-target="summary"><span>49</span>把整帧放回一起：表示、组织与执行</a><a href="#memory-budget" class="toc-page deep" data-target="memory-budget"><span>深入 07</span>深入：估算参数与引用缓冲区</a><a href="#reading" class="toc-page deep" data-target="reading"><span>深入 08</span>深入：从原始论文到实现的阅读顺序</a></details></aside></div></div>
+<aside class="contents" aria-label="本讲内容"><nav class="lecture-page-nav" aria-label="本讲逐页目录"><div class="lecture-page-nav-heading"><strong>本讲内容</strong><span class="toc-position">1 / 49</span></div><ol class="toc-page-list"><li class="toc-entry is-current" data-slide="novel-view" data-deep="false">
+          <a href="#novel-view" data-target="novel-view" aria-expanded="true" aria-controls="desktop-idea-novel-view" aria-current="location">
+            <span class="toc-page-number">01</span><span>拍过的照片，怎样变成没有拍过的视角？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-novel-view"><strong>本页要点</strong><p>本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。</p></div>
+        </li><li class="toc-entry" data-slide="train-vs-render" data-deep="false">
+          <a href="#train-vs-render" data-target="train-vs-render" aria-expanded="false" aria-controls="desktop-idea-train-vs-render">
+            <span class="toc-page-number">02</span><span>先分清两件事：学习场景与渲染场景</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-train-vs-render" hidden><strong>本页要点</strong><p>原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。</p></div>
+        </li><li class="toc-entry" data-slide="route" data-deep="false">
+          <a href="#route" data-target="route" aria-expanded="false" aria-controls="desktop-idea-route">
+            <span class="toc-page-number">03</span><span>沿一帧图像，串起前面学过的并行思想</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-route" hidden><strong>本页要点</strong><p>一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</p></div>
+        </li><li class="toc-entry" data-slide="point-to-splat" data-deep="false">
+          <a href="#point-to-splat" data-target="point-to-splat" aria-expanded="false" aria-controls="desktop-idea-point-to-splat">
+            <span class="toc-page-number">04</span><span>一个点的位置，还不足以覆盖一块表面</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-point-to-splat" hidden><strong>本页要点</strong><p>一个点只告诉我们“在哪里”。为它增加空间尺度与方向，就能描述一个有范围的局部贡献：中心附近强，离中心越远越弱。</p></div>
+        </li><li class="toc-entry" data-slide="gaussian-falloff" data-deep="false">
+          <a href="#gaussian-falloff" data-target="gaussian-falloff" aria-expanded="false" aria-controls="desktop-idea-gaussian-falloff">
+            <span class="toc-page-number">05</span><span>从一维开始：距离怎样改变贡献？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-gaussian-falloff" hidden><strong>本页要点</strong><p>数学上高斯没有有限边界；程序为了节省计算，需要选定有限的处理范围。</p></div>
+        </li><li class="toc-entry" data-slide="ellipse" data-deep="false">
+          <a href="#ellipse" data-target="ellipse" aria-expanded="false" aria-controls="desktop-idea-ellipse">
+            <span class="toc-page-number">06</span><span>二维高斯：拉长、旋转，改变覆盖形状</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-ellipse" hidden><strong>本页要点</strong><p>两个方向尺度相同，等值线是圆；尺度不同，就是椭圆。旋转只改变方向，不改变两个主轴尺度。</p></div>
+        </li><li class="toc-entry" data-slide="gaussian-record" data-deep="false">
+          <a href="#gaussian-record" data-target="gaussian-record" aria-expanded="false" aria-controls="desktop-idea-gaussian-record">
+            <span class="toc-page-number">07</span><span>一个三维高斯，需要保存哪些参数？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-gaussian-record" hidden><strong>本页要点</strong><p>高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。</p></div>
+        </li><li class="toc-entry" data-slide="covariance" data-deep="false">
+          <a href="#covariance" data-target="covariance" aria-expanded="false" aria-controls="desktop-idea-covariance">
+            <span class="toc-page-number">08</span><span>把尺度与旋转组合成协方差</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-covariance" hidden><strong>本页要点</strong><p>先沿局部坐标轴缩放，再旋转到世界坐标系。这里 s 是标准差尺度，因此协方差中出现 s²。R 来自归一化旋转四元数。</p></div>
+        </li><li class="toc-entry" data-slide="opacity" data-deep="false">
+          <a href="#opacity" data-target="opacity" aria-expanded="false" aria-controls="desktop-idea-opacity">
+            <span class="toc-page-number">09</span><span>不透明度与高斯权重，是两个不同的量</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-opacity" hidden><strong>本页要点</strong><p>这些 alpha 不需要在所有高斯之间归一化到总和为 1。后面的透射率会决定前后遮挡的权重。</p></div>
+        </li><li class="toc-entry" data-slide="appearance" data-deep="false">
+          <a href="#appearance" data-target="appearance" aria-expanded="false" aria-controls="desktop-idea-appearance">
+            <span class="toc-page-number">10</span><span>为什么颜色可以随观察方向变化？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-appearance" hidden><strong>本页要点</strong><p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p></div>
+        </li><li class="toc-entry" data-slide="camera-coordinates" data-deep="false">
+          <a href="#camera-coordinates" data-target="camera-coordinates" aria-expanded="false" aria-controls="desktop-idea-camera-coordinates">
+            <span class="toc-page-number">11</span><span>先把中心变换到相机坐标系</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-camera-coordinates" hidden><strong>本页要点</strong><p>相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</p></div>
+        </li><li class="toc-entry" data-slide="perspective" data-deep="false">
+          <a href="#perspective" data-target="perspective" aria-expanded="false" aria-controls="desktop-idea-perspective">
+            <span class="toc-page-number">12</span><span>透视投影：越远，屏幕位移越小</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-perspective" hidden><strong>本页要点</strong><p>fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：</p></div>
+        </li><li class="toc-entry" data-slide="project-shape" data-deep="false">
+          <a href="#project-shape" data-target="project-shape" aria-expanded="false" aria-controls="desktop-idea-project-shape">
+            <span class="toc-page-number">13</span><span>投影一个高斯，不能只投影中心</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-project-shape" hidden><strong>本页要点</strong><p>“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。</p></div>
+        </li><li class="toc-entry" data-slide="project-covariance" data-deep="false">
+          <a href="#project-covariance" data-target="project-covariance" aria-expanded="false" aria-controls="desktop-idea-project-covariance">
+            <span class="toc-page-number">14</span><span>用局部变化率把三维形状带到屏幕</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-project-covariance" hidden><strong>本页要点</strong><p>J 是 2×3 的投影雅可比矩阵：相机坐标改变一点，屏幕坐标改变多少。矩阵尺寸检查：2×3 · 3×3 · 3×2 → 2×2。</p></div>
+        </li><li class="toc-entry" data-slide="jacobian" data-deep="true" hidden>
+          <a href="#jacobian" data-target="jacobian" aria-expanded="false" aria-controls="desktop-idea-jacobian">
+            <span class="toc-page-number">15</span><span>深入：透视雅可比的每一项从哪里来？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-jacobian" hidden><strong>本页要点</strong><p>这个例子有明确的中心与各向同性假设；不能据此把任意旋转椭球都简化成同一个屏幕圆。</p></div>
+        </li><li class="toc-entry" data-slide="finite-footprint" data-deep="false">
+          <a href="#finite-footprint" data-target="finite-footprint" aria-expanded="false" aria-controls="desktop-idea-finite-footprint">
+            <span class="toc-page-number">16</span><span>无限的高斯，有限的候选区域</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-finite-footprint" hidden><strong>本页要点</strong><p>课程算例会直接给定整数中心、半径与深度，用于练习分组；这些值不声称来自某个真实训练场景。</p></div>
+        </li><li class="toc-entry" data-slide="preprocess" data-deep="false">
+          <a href="#preprocess" data-target="preprocess" aria-expanded="false" aria-controls="desktop-idea-preprocess">
+            <span class="toc-page-number">17</span><span>每高斯预处理：先做一次，供后面反复使用</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-preprocess" hidden><strong>本页要点</strong><p>并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。</p></div>
+        </li><li class="toc-entry" data-slide="evaluate-alpha" data-deep="false">
+          <a href="#evaluate-alpha" data-target="evaluate-alpha" aria-expanded="false" aria-controls="desktop-idea-evaluate-alpha">
+            <span class="toc-page-number">18</span><span>先算一个高斯在一个像素上的贡献</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-evaluate-alpha" hidden><strong>本页要点</strong><p>二维对称矩阵只需保存三个独立元素。交叉项带有系数 2；展开表达式时漏掉它，会改变旋转椭圆的形状。</p></div>
+        </li><li class="toc-entry" data-slide="transmittance" data-deep="false">
+          <a href="#transmittance" data-target="transmittance" aria-expanded="false" aria-controls="desktop-idea-transmittance">
+            <span class="toc-page-number">19</span><span>前面的覆盖，决定后面还能贡献多少</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-transmittance" hidden><strong>本页要点</strong><p>T 必须先用于本次颜色贡献，再更新给下一个高斯。颜色为 RGB 向量，T 与 α 是标量。</p></div>
+        </li><li class="toc-entry" data-slide="blend-demo" data-deep="false">
+          <a href="#blend-demo" data-target="blend-demo" aria-expanded="false" aria-controls="desktop-idea-blend-demo">
+            <span class="toc-page-number">20</span><span>追踪一个像素：红、绿、蓝怎样叠加？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-blend-demo" hidden><strong>本页要点</strong><p>多个高斯共同影响一个像素，但它们的贡献权重不是简单平均。</p></div>
+        </li><li class="toc-entry" data-slide="order-matters" data-deep="false">
+          <a href="#order-matters" data-target="order-matters" aria-expanded="false" aria-controls="desktop-idea-order-matters">
+            <span class="toc-page-number">21</span><span>交换深度顺序，为什么颜色变了？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-order-matters" hidden><strong>本页要点</strong><p>给每个高斯启动线程并 atomicAdd 颜色，并不能自动得到正确的透明合成。原子加解决写竞争，不解决深度语义。</p></div>
+        </li><li class="toc-entry" data-slide="blend-code" data-deep="false">
+          <a href="#blend-code" data-target="blend-code" aria-expanded="false" aria-controls="desktop-idea-blend-code">
+            <span class="toc-page-number">22</span><span>把像素合成写成一段短循环</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-blend-code" hidden><strong>本页要点</strong><p>不同像素可以同时执行自己的循环；同一像素在这个实现中沿排序列表依次更新 C 与 T。输入已经排序是这段代码的前提。</p></div>
+        </li><li class="toc-entry" data-slide="exercise-blend" data-deep="false">
+          <a href="#exercise-blend" data-target="exercise-blend" aria-expanded="false" aria-controls="desktop-idea-exercise-blend">
+            <span class="toc-page-number">23</span><span>随堂填空 ①：只补两行，保持前后关系</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-exercise-blend" hidden><strong>本页要点</strong><p>约 2 分钟。初始 C=0、T=1；红色 α=0.5 在前，蓝色 α=0.5 在后，黑色背景。</p></div>
+        </li><li class="toc-entry" data-slide="composite-scan" data-deep="true" hidden>
+          <a href="#composite-scan" data-target="composite-scan" aria-expanded="false" aria-controls="desktop-idea-composite-scan">
+            <span class="toc-page-number">24</span><span>深入：像素内的合成能否使用 Scan？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-composite-scan" hidden><strong>本页要点</strong><p>“这份实现里有顺序循环”不等于“数学上绝对无法并行”。</p></div>
+        </li><li class="toc-entry" data-slide="naive-cost" data-deep="false">
+          <a href="#naive-cost" data-target="naive-cost" aria-expanded="false" aria-controls="desktop-idea-naive-cost">
+            <span class="toc-page-number">25</span><span>最直接的方法，为什么会做太多无用工作？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-naive-cost" hidden><strong>本页要点</strong><p>第一步优化不是把同样多的检查发给更多线程，而是让每个像素只访问附近的候选高斯。</p></div>
+        </li><li class="toc-entry" data-slide="pixel-ownership" data-deep="false">
+          <a href="#pixel-ownership" data-target="pixel-ownership" aria-expanded="false" aria-controls="desktop-idea-pixel-ownership">
+            <span class="toc-page-number">26</span><span>选择输出所有者：每个像素交给一个线程</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-pixel-ownership" hidden><strong>本页要点</strong><p>输出所有权解决前向颜色写冲突；候选列表解决“去哪里读”的问题。</p></div>
+        </li><li class="toc-entry" data-slide="tile-demo" data-deep="false">
+          <a href="#tile-demo" data-target="tile-demo" aria-expanded="false" aria-controls="desktop-idea-tile-demo">
+            <span class="toc-page-number">27</span><span>把屏幕分成 Tile，共用一份候选列表</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-tile-demo" hidden><strong>本页要点</strong><p>基线采用 16×16 Tile；这是具体实现选择，不是 3DGS 数学定义的一部分。</p></div>
+        </li><li class="toc-entry" data-slide="toy-records" data-deep="false">
+          <a href="#toy-records" data-target="toy-records" aria-expanded="false" aria-controls="desktop-idea-toy-records">
+            <span class="toc-page-number">28</span><span>贯穿算例：四个高斯产生多少条引用？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-toy-records" hidden><strong>本页要点</strong><p>四个高斯，十一条 Gaussian–Tile 引用。复制的是 ID / 排序记录，通常不需要为每条引用复制全部高斯参数。</p></div>
+        </li><li class="toc-entry" data-slide="scan-offsets" data-deep="false">
+          <a href="#scan-offsets" data-target="scan-offsets" aria-expanded="false" aria-controls="desktop-idea-scan-offsets">
+            <span class="toc-page-number">29</span><span>数量不一样，先用前缀和分配写出位置</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-scan-offsets" hidden><strong>本页要点</strong><p>offset 是独占前缀和，每个高斯提前知道自己专属的输出区域。即使 G₂ 最早执行，也只写 [6,10)，不会抢占 G₀ 的位置。</p></div>
+        </li><li class="toc-entry" data-slide="exercise-offset" data-deep="false">
+          <a href="#exercise-offset" data-target="exercise-offset" aria-expanded="false" aria-controls="desktop-idea-exercise-offset">
+            <span class="toc-page-number">30</span><span>随堂填空 ②：给每个高斯一段独占空间</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-exercise-offset" hidden><strong>本页要点</strong><p>约 2 分钟。换一组覆盖数量 count=[2,0,3,1]，含一个不可见高斯。</p></div>
+        </li><li class="toc-entry" data-slide="emit-pairs" data-deep="false">
+          <a href="#emit-pairs" data-target="emit-pairs" aria-expanded="false" aria-controls="desktop-idea-emit-pairs">
+            <span class="toc-page-number">31</span><span>并行写出：从每高斯列表变成一串记录</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-emit-pairs" hidden><strong>本页要点</strong><p>前缀和解决唯一写址；排序解决按 Tile 聚集与深度顺序。它们解决的是两个问题。</p></div>
+        </li><li class="toc-entry" data-slide="sort-pairs" data-deep="false">
+          <a href="#sort-pairs" data-target="sort-pairs" aria-expanded="false" aria-controls="desktop-idea-sort-pairs">
+            <span class="toc-page-number">32</span><span>一次排序，先按 Tile，再按深度</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-sort-pairs" hidden><strong>本页要点</strong><p>基线使用高斯中心深度共享组内顺序，未对每个像素重新精确求交排序，因此存在近似。</p></div>
+        </li><li class="toc-entry" data-slide="tile-ranges" data-deep="false">
+          <a href="#tile-ranges" data-target="tile-ranges" aria-expanded="false" aria-controls="desktop-idea-tile-ranges">
+            <span class="toc-page-number">33</span><span>找到每个 Tile 的起止位置，交给渲染器</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-tile-ranges" hidden><strong>本页要点</strong><p>阶段之间存在数据依赖。同一 CUDA stream 中按顺序提交这些操作即可建立执行顺序；无需在每一阶段都让 CPU 等待。</p></div>
+        </li><li class="toc-entry" data-slide="sort-key" data-deep="true" hidden>
+          <a href="#sort-key" data-target="sort-key" aria-expanded="false" aria-controls="desktop-idea-sort-key">
+            <span class="toc-page-number">34</span><span>深入：64 位排序 Key 包含什么？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-sort-key" hidden><strong>本页要点</strong><p>Tile ID 占高位，深度编码占低位。基线把通过可见性检查的正有限浮点深度按位解释为无符号整数；在这个范围内，位模式顺序与数值顺序一致。</p></div>
+        </li><li class="toc-entry" data-slide="block-mapping" data-deep="false">
+          <a href="#block-mapping" data-target="block-mapping" aria-expanded="false" aria-controls="desktop-idea-block-mapping">
+            <span class="toc-page-number">35</span><span>一个 Tile 一个 Block，一个像素一个线程</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-block-mapping" hidden><strong>本页要点</strong><p>每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。</p></div>
+        </li><li class="toc-entry" data-slide="shared-load" data-deep="false">
+          <a href="#shared-load" data-target="shared-load" aria-expanded="false" aria-controls="desktop-idea-shared-load">
+            <span class="toc-page-number">36</span><span>同一份高斯参数，让整个 Block 共用</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-shared-load" hidden><strong>本页要点</strong><p>减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。</p></div>
+        </li><li class="toc-entry" data-slide="batch-lifetime" data-deep="false">
+          <a href="#batch-lifetime" data-target="batch-lifetime" aria-expanded="false" aria-controls="desktop-idea-batch-lifetime">
+            <span class="toc-page-number">37</span><span>一块 Shared，分批复用：两道交接不能少</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-batch-lifetime" hidden><strong>本页要点</strong><p>把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。</p></div>
+        </li><li class="toc-entry" data-slide="render-pseudocode" data-deep="false">
+          <a href="#render-pseudocode" data-target="render-pseudocode" aria-expanded="false" aria-controls="desktop-idea-render-pseudocode">
+            <span class="toc-page-number">38</span><span>把分工、复用与顺序放进同一个循环</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-render-pseudocode" hidden><strong>本页要点</strong><p>这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。</p></div>
+        </li><li class="toc-entry" data-slide="pixel-done" data-deep="false">
+          <a href="#pixel-done" data-target="pixel-done" aria-expanded="false" aria-controls="desktop-idea-pixel-done">
+            <span class="toc-page-number">39</span><span>像素结束，不等于线程可以提前 return</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-pixel-done" hidden><strong>本页要点</strong><p>全块投票所有像素都 done 后，才能统一提前结束批次循环。</p></div>
+        </li><li class="toc-entry" data-slide="exercise-sync" data-deep="false">
+          <a href="#exercise-sync" data-target="exercise-sync" aria-expanded="false" aria-controls="desktop-idea-exercise-sync">
+            <span class="toc-page-number">40</span><span>随堂填空 ③：把同步放在所有参与者都会经过的位置</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-exercise-sync" hidden><strong>本页要点</strong><p>约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 if (done) return;。</p></div>
+        </li><li class="toc-entry" data-slide="uneven-work" data-deep="false">
+          <a href="#uneven-work" data-target="uneven-work" aria-expanded="false" aria-controls="desktop-idea-uneven-work">
+            <span class="toc-page-number">41</span><span>相同的线程数，不代表相同的工作量</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-uneven-work" hidden><strong>本页要点</strong><p>看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。</p></div>
+        </li><li class="toc-entry" data-slide="implementation-map" data-deep="false">
+          <a href="#implementation-map" data-target="implementation-map" aria-expanded="false" aria-controls="desktop-idea-implementation-map">
+            <span class="toc-page-number">42</span><span>回到源码：我们现在能读懂哪几段？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-implementation-map" hidden><strong>本页要点</strong><p>先沿“输入 → 输出数组 → 下一阶段读取者”看调用链，再进入每行索引。网页示例是独立的教学简化；官方 main 分支会变化，复现实验应记录所用提交版本。</p></div>
+        </li><li class="toc-entry" data-slide="termination-error" data-deep="true" hidden>
+          <a href="#termination-error" data-target="termination-error" aria-expanded="false" aria-controls="desktop-idea-termination-error">
+            <span class="toc-page-number">43</span><span>深入：提前结束，牺牲了多少颜色贡献？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-termination-error" hidden><strong>本页要点</strong><p>阈值是质量与工作量之间的选择，不能只比较 FPS 而忽略误差。</p></div>
+        </li><li class="toc-entry" data-slide="threshold-order" data-deep="true" hidden>
+          <a href="#threshold-order" data-target="threshold-order" aria-expanded="false" aria-controls="desktop-idea-threshold-order">
+            <span class="toc-page-number">44</span><span>深入：教学循环与官方阈值次序有什么差别？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-threshold-order" hidden><strong>本页要点</strong><p>学习结构时允许简化；比较实现时必须把简化条件写清楚。</p></div>
+        </li><li class="toc-entry" data-slide="training-loop" data-deep="false">
+          <a href="#training-loop" data-target="training-loop" aria-expanded="false" aria-controls="desktop-idea-training-loop">
+            <span class="toc-page-number">45</span><span>渲染器怎样成为一个可学习的模型？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-training-loop" hidden><strong>本页要点</strong><p>原始方法组合像素 L₁ 损失与结构相似性项。可先把 L 理解为“当前渲染与训练照片的差异”。选一个训练相机，计算一次损失，再把梯度传回高斯。</p></div>
+        </li><li class="toc-entry" data-slide="gradient-path" data-deep="false">
+          <a href="#gradient-path" data-target="gradient-path" aria-expanded="false" aria-controls="desktop-idea-gradient-path">
+            <span class="toc-page-number">46</span><span>像素误差，沿哪条链回到高斯参数？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-gradient-path" hidden><strong>本页要点</strong><p>可微渲染描述局部连续计算的梯度路径；整个带分支、排序和拓扑变化的过程不是处处光滑。</p></div>
+        </li><li class="toc-entry" data-slide="backward-scatter" data-deep="false">
+          <a href="#backward-scatter" data-target="backward-scatter" aria-expanded="false" aria-controls="desktop-idea-backward-scatter">
+            <span class="toc-page-number">47</span><span>前向一个像素一个所有者，反向却会汇到同一高斯</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-backward-scatter" hidden><strong>本页要点</strong><p>同一个算法，前向和反向的读写冲突结构可以不同。</p></div>
+        </li><li class="toc-entry" data-slide="density-control" data-deep="false">
+          <a href="#density-control" data-target="density-control" aria-expanded="false" aria-controls="desktop-idea-density-control">
+            <span class="toc-page-number">48</span><span>只有移动参数还不够：还要增加、拆分与删除</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-density-control" hidden><strong>本页要点</strong><p>高斯数增加可能改善质量，也可能增加显存、分组与渲染成本。数量与质量不是单调的一一对应。</p></div>
+        </li><li class="toc-entry" data-slide="learned-scene" data-deep="false">
+          <a href="#learned-scene" data-target="learned-scene" aria-expanded="false" aria-controls="desktop-idea-learned-scene">
+            <span class="toc-page-number">49</span><span>训练完成，查看一帧时哪些东西还在变化？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-learned-scene" hidden><strong>本页要点</strong><p>“显式表示”节省了某些查询计算，但并不意味着每帧只需把点画到屏幕上。</p></div>
+        </li><li class="toc-entry" data-slide="backward-memory" data-deep="true" hidden>
+          <a href="#backward-memory" data-target="backward-memory" aria-expanded="false" aria-controls="desktop-idea-backward-memory">
+            <span class="toc-page-number">50</span><span>深入：为什么不保存每个像素的完整历史？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-backward-memory" hidden><strong>本页要点</strong><p>这里体现“保存还是重算”的权衡。减少每像素历史存储，并不代表没有全局排序缓冲区或没有反向计算成本。</p></div>
+        </li><li class="toc-entry" data-slide="cost-model" data-deep="false">
+          <a href="#cost-model" data-target="cost-model" aria-expanded="false" aria-controls="desktop-idea-cost-model">
+            <span class="toc-page-number">51</span><span>不要只数高斯：三个规模决定不同阶段</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-cost-model" hidden><strong>本页要点</strong><p>这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。</p></div>
+        </li><li class="toc-entry" data-slide="tile-tradeoff" data-deep="false">
+          <a href="#tile-tradeoff" data-target="tile-tradeoff" aria-expanded="false" aria-controls="desktop-idea-tile-tradeoff">
+            <span class="toc-page-number">52</span><span>Tile 越小一定越快吗？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-tile-tradeoff" hidden><strong>本页要点</strong><p>在相同图像质量与正确性条件下测完整路径，再讨论某一个 kernel 的变化。</p></div>
+        </li><li class="toc-entry" data-slide="measure" data-deep="false">
+          <a href="#measure" data-target="measure" aria-expanded="false" aria-controls="desktop-idea-measure">
+            <span class="toc-page-number">53</span><span>怎样设计一组能回答问题的性能实验？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-measure" hidden><strong>本页要点</strong><p>本讲交互图运行于浏览器，只演示算法；没有把浏览器动画速度当成 CUDA benchmark，也没有虚构 GPU 实测数据。</p></div>
+        </li><li class="toc-entry" data-slide="limits" data-deep="false">
+          <a href="#limits" data-target="limits" aria-expanded="false" aria-controls="desktop-idea-limits">
+            <span class="toc-page-number">54</span><span>哪些近似与限制，会在图像中暴露？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-limits" hidden><strong>本页要点</strong><p>本讲讲的是原始 3DGS 思路及其基线并行结构。后续研究可以改进排序、抗锯齿、压缩与训练，但应先弄清改动解决的是哪一种误差或成本。</p></div>
+        </li><li class="toc-entry" data-slide="summary" data-deep="false">
+          <a href="#summary" data-target="summary" aria-expanded="false" aria-controls="desktop-idea-summary">
+            <span class="toc-page-number">55</span><span>把整帧放回一起：表示、组织与执行</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-summary" hidden><strong>本页要点</strong><p>最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</p></div>
+        </li><li class="toc-entry" data-slide="memory-budget" data-deep="true" hidden>
+          <a href="#memory-budget" data-target="memory-budget" aria-expanded="false" aria-controls="desktop-idea-memory-budget">
+            <span class="toc-page-number">56</span><span>深入：估算参数与引用缓冲区<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-memory-budget" hidden><strong>本页要点</strong><p>实际内存由实现的数据类型、布局与库决定；本页是账目模型，不是某块 GPU 上的实测占用。</p></div>
+        </li><li class="toc-entry" data-slide="reading" data-deep="true" hidden>
+          <a href="#reading" data-target="reading" aria-expanded="false" aria-controls="desktop-idea-reading">
+            <span class="toc-page-number">57</span><span>深入：从原始论文到实现的阅读顺序<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="desktop-idea-reading" hidden><strong>本页要点</strong><p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p></div>
+        </li></ol></nav></aside></div></div>
+<button id="contents-open" class="mobile-contents-button" aria-haspopup="dialog" aria-controls="contents-dialog">▦ 本讲内容</button>
+<dialog id="contents-dialog" aria-label="本讲内容"><div class="contents-dialog-header"><span>逐页浏览讲义</span><button id="contents-close" aria-label="关闭本讲内容">关闭 ×</button></div><nav class="lecture-page-nav" aria-label="本讲逐页目录"><div class="lecture-page-nav-heading"><strong>本讲内容</strong><span class="toc-position">1 / 49</span></div><ol class="toc-page-list"><li class="toc-entry is-current" data-slide="novel-view" data-deep="false">
+          <a href="#novel-view" data-target="novel-view" aria-expanded="true" aria-controls="mobile-idea-novel-view" aria-current="location">
+            <span class="toc-page-number">01</span><span>拍过的照片，怎样变成没有拍过的视角？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-novel-view"><strong>本页要点</strong><p>本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。</p></div>
+        </li><li class="toc-entry" data-slide="train-vs-render" data-deep="false">
+          <a href="#train-vs-render" data-target="train-vs-render" aria-expanded="false" aria-controls="mobile-idea-train-vs-render">
+            <span class="toc-page-number">02</span><span>先分清两件事：学习场景与渲染场景</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-train-vs-render" hidden><strong>本页要点</strong><p>原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。</p></div>
+        </li><li class="toc-entry" data-slide="route" data-deep="false">
+          <a href="#route" data-target="route" aria-expanded="false" aria-controls="mobile-idea-route">
+            <span class="toc-page-number">03</span><span>沿一帧图像，串起前面学过的并行思想</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-route" hidden><strong>本页要点</strong><p>一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</p></div>
+        </li><li class="toc-entry" data-slide="point-to-splat" data-deep="false">
+          <a href="#point-to-splat" data-target="point-to-splat" aria-expanded="false" aria-controls="mobile-idea-point-to-splat">
+            <span class="toc-page-number">04</span><span>一个点的位置，还不足以覆盖一块表面</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-point-to-splat" hidden><strong>本页要点</strong><p>一个点只告诉我们“在哪里”。为它增加空间尺度与方向，就能描述一个有范围的局部贡献：中心附近强，离中心越远越弱。</p></div>
+        </li><li class="toc-entry" data-slide="gaussian-falloff" data-deep="false">
+          <a href="#gaussian-falloff" data-target="gaussian-falloff" aria-expanded="false" aria-controls="mobile-idea-gaussian-falloff">
+            <span class="toc-page-number">05</span><span>从一维开始：距离怎样改变贡献？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-gaussian-falloff" hidden><strong>本页要点</strong><p>数学上高斯没有有限边界；程序为了节省计算，需要选定有限的处理范围。</p></div>
+        </li><li class="toc-entry" data-slide="ellipse" data-deep="false">
+          <a href="#ellipse" data-target="ellipse" aria-expanded="false" aria-controls="mobile-idea-ellipse">
+            <span class="toc-page-number">06</span><span>二维高斯：拉长、旋转，改变覆盖形状</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-ellipse" hidden><strong>本页要点</strong><p>两个方向尺度相同，等值线是圆；尺度不同，就是椭圆。旋转只改变方向，不改变两个主轴尺度。</p></div>
+        </li><li class="toc-entry" data-slide="gaussian-record" data-deep="false">
+          <a href="#gaussian-record" data-target="gaussian-record" aria-expanded="false" aria-controls="mobile-idea-gaussian-record">
+            <span class="toc-page-number">07</span><span>一个三维高斯，需要保存哪些参数？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-gaussian-record" hidden><strong>本页要点</strong><p>高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。</p></div>
+        </li><li class="toc-entry" data-slide="covariance" data-deep="false">
+          <a href="#covariance" data-target="covariance" aria-expanded="false" aria-controls="mobile-idea-covariance">
+            <span class="toc-page-number">08</span><span>把尺度与旋转组合成协方差</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-covariance" hidden><strong>本页要点</strong><p>先沿局部坐标轴缩放，再旋转到世界坐标系。这里 s 是标准差尺度，因此协方差中出现 s²。R 来自归一化旋转四元数。</p></div>
+        </li><li class="toc-entry" data-slide="opacity" data-deep="false">
+          <a href="#opacity" data-target="opacity" aria-expanded="false" aria-controls="mobile-idea-opacity">
+            <span class="toc-page-number">09</span><span>不透明度与高斯权重，是两个不同的量</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-opacity" hidden><strong>本页要点</strong><p>这些 alpha 不需要在所有高斯之间归一化到总和为 1。后面的透射率会决定前后遮挡的权重。</p></div>
+        </li><li class="toc-entry" data-slide="appearance" data-deep="false">
+          <a href="#appearance" data-target="appearance" aria-expanded="false" aria-controls="mobile-idea-appearance">
+            <span class="toc-page-number">10</span><span>为什么颜色可以随观察方向变化？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-appearance" hidden><strong>本页要点</strong><p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p></div>
+        </li><li class="toc-entry" data-slide="camera-coordinates" data-deep="false">
+          <a href="#camera-coordinates" data-target="camera-coordinates" aria-expanded="false" aria-controls="mobile-idea-camera-coordinates">
+            <span class="toc-page-number">11</span><span>先把中心变换到相机坐标系</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-camera-coordinates" hidden><strong>本页要点</strong><p>相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</p></div>
+        </li><li class="toc-entry" data-slide="perspective" data-deep="false">
+          <a href="#perspective" data-target="perspective" aria-expanded="false" aria-controls="mobile-idea-perspective">
+            <span class="toc-page-number">12</span><span>透视投影：越远，屏幕位移越小</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-perspective" hidden><strong>本页要点</strong><p>fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：</p></div>
+        </li><li class="toc-entry" data-slide="project-shape" data-deep="false">
+          <a href="#project-shape" data-target="project-shape" aria-expanded="false" aria-controls="mobile-idea-project-shape">
+            <span class="toc-page-number">13</span><span>投影一个高斯，不能只投影中心</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-project-shape" hidden><strong>本页要点</strong><p>“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。</p></div>
+        </li><li class="toc-entry" data-slide="project-covariance" data-deep="false">
+          <a href="#project-covariance" data-target="project-covariance" aria-expanded="false" aria-controls="mobile-idea-project-covariance">
+            <span class="toc-page-number">14</span><span>用局部变化率把三维形状带到屏幕</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-project-covariance" hidden><strong>本页要点</strong><p>J 是 2×3 的投影雅可比矩阵：相机坐标改变一点，屏幕坐标改变多少。矩阵尺寸检查：2×3 · 3×3 · 3×2 → 2×2。</p></div>
+        </li><li class="toc-entry" data-slide="jacobian" data-deep="true" hidden>
+          <a href="#jacobian" data-target="jacobian" aria-expanded="false" aria-controls="mobile-idea-jacobian">
+            <span class="toc-page-number">15</span><span>深入：透视雅可比的每一项从哪里来？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-jacobian" hidden><strong>本页要点</strong><p>这个例子有明确的中心与各向同性假设；不能据此把任意旋转椭球都简化成同一个屏幕圆。</p></div>
+        </li><li class="toc-entry" data-slide="finite-footprint" data-deep="false">
+          <a href="#finite-footprint" data-target="finite-footprint" aria-expanded="false" aria-controls="mobile-idea-finite-footprint">
+            <span class="toc-page-number">16</span><span>无限的高斯，有限的候选区域</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-finite-footprint" hidden><strong>本页要点</strong><p>课程算例会直接给定整数中心、半径与深度，用于练习分组；这些值不声称来自某个真实训练场景。</p></div>
+        </li><li class="toc-entry" data-slide="preprocess" data-deep="false">
+          <a href="#preprocess" data-target="preprocess" aria-expanded="false" aria-controls="mobile-idea-preprocess">
+            <span class="toc-page-number">17</span><span>每高斯预处理：先做一次，供后面反复使用</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-preprocess" hidden><strong>本页要点</strong><p>并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。</p></div>
+        </li><li class="toc-entry" data-slide="evaluate-alpha" data-deep="false">
+          <a href="#evaluate-alpha" data-target="evaluate-alpha" aria-expanded="false" aria-controls="mobile-idea-evaluate-alpha">
+            <span class="toc-page-number">18</span><span>先算一个高斯在一个像素上的贡献</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-evaluate-alpha" hidden><strong>本页要点</strong><p>二维对称矩阵只需保存三个独立元素。交叉项带有系数 2；展开表达式时漏掉它，会改变旋转椭圆的形状。</p></div>
+        </li><li class="toc-entry" data-slide="transmittance" data-deep="false">
+          <a href="#transmittance" data-target="transmittance" aria-expanded="false" aria-controls="mobile-idea-transmittance">
+            <span class="toc-page-number">19</span><span>前面的覆盖，决定后面还能贡献多少</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-transmittance" hidden><strong>本页要点</strong><p>T 必须先用于本次颜色贡献，再更新给下一个高斯。颜色为 RGB 向量，T 与 α 是标量。</p></div>
+        </li><li class="toc-entry" data-slide="blend-demo" data-deep="false">
+          <a href="#blend-demo" data-target="blend-demo" aria-expanded="false" aria-controls="mobile-idea-blend-demo">
+            <span class="toc-page-number">20</span><span>追踪一个像素：红、绿、蓝怎样叠加？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-blend-demo" hidden><strong>本页要点</strong><p>多个高斯共同影响一个像素，但它们的贡献权重不是简单平均。</p></div>
+        </li><li class="toc-entry" data-slide="order-matters" data-deep="false">
+          <a href="#order-matters" data-target="order-matters" aria-expanded="false" aria-controls="mobile-idea-order-matters">
+            <span class="toc-page-number">21</span><span>交换深度顺序，为什么颜色变了？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-order-matters" hidden><strong>本页要点</strong><p>给每个高斯启动线程并 atomicAdd 颜色，并不能自动得到正确的透明合成。原子加解决写竞争，不解决深度语义。</p></div>
+        </li><li class="toc-entry" data-slide="blend-code" data-deep="false">
+          <a href="#blend-code" data-target="blend-code" aria-expanded="false" aria-controls="mobile-idea-blend-code">
+            <span class="toc-page-number">22</span><span>把像素合成写成一段短循环</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-blend-code" hidden><strong>本页要点</strong><p>不同像素可以同时执行自己的循环；同一像素在这个实现中沿排序列表依次更新 C 与 T。输入已经排序是这段代码的前提。</p></div>
+        </li><li class="toc-entry" data-slide="exercise-blend" data-deep="false">
+          <a href="#exercise-blend" data-target="exercise-blend" aria-expanded="false" aria-controls="mobile-idea-exercise-blend">
+            <span class="toc-page-number">23</span><span>随堂填空 ①：只补两行，保持前后关系</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-exercise-blend" hidden><strong>本页要点</strong><p>约 2 分钟。初始 C=0、T=1；红色 α=0.5 在前，蓝色 α=0.5 在后，黑色背景。</p></div>
+        </li><li class="toc-entry" data-slide="composite-scan" data-deep="true" hidden>
+          <a href="#composite-scan" data-target="composite-scan" aria-expanded="false" aria-controls="mobile-idea-composite-scan">
+            <span class="toc-page-number">24</span><span>深入：像素内的合成能否使用 Scan？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-composite-scan" hidden><strong>本页要点</strong><p>“这份实现里有顺序循环”不等于“数学上绝对无法并行”。</p></div>
+        </li><li class="toc-entry" data-slide="naive-cost" data-deep="false">
+          <a href="#naive-cost" data-target="naive-cost" aria-expanded="false" aria-controls="mobile-idea-naive-cost">
+            <span class="toc-page-number">25</span><span>最直接的方法，为什么会做太多无用工作？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-naive-cost" hidden><strong>本页要点</strong><p>第一步优化不是把同样多的检查发给更多线程，而是让每个像素只访问附近的候选高斯。</p></div>
+        </li><li class="toc-entry" data-slide="pixel-ownership" data-deep="false">
+          <a href="#pixel-ownership" data-target="pixel-ownership" aria-expanded="false" aria-controls="mobile-idea-pixel-ownership">
+            <span class="toc-page-number">26</span><span>选择输出所有者：每个像素交给一个线程</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-pixel-ownership" hidden><strong>本页要点</strong><p>输出所有权解决前向颜色写冲突；候选列表解决“去哪里读”的问题。</p></div>
+        </li><li class="toc-entry" data-slide="tile-demo" data-deep="false">
+          <a href="#tile-demo" data-target="tile-demo" aria-expanded="false" aria-controls="mobile-idea-tile-demo">
+            <span class="toc-page-number">27</span><span>把屏幕分成 Tile，共用一份候选列表</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-tile-demo" hidden><strong>本页要点</strong><p>基线采用 16×16 Tile；这是具体实现选择，不是 3DGS 数学定义的一部分。</p></div>
+        </li><li class="toc-entry" data-slide="toy-records" data-deep="false">
+          <a href="#toy-records" data-target="toy-records" aria-expanded="false" aria-controls="mobile-idea-toy-records">
+            <span class="toc-page-number">28</span><span>贯穿算例：四个高斯产生多少条引用？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-toy-records" hidden><strong>本页要点</strong><p>四个高斯，十一条 Gaussian–Tile 引用。复制的是 ID / 排序记录，通常不需要为每条引用复制全部高斯参数。</p></div>
+        </li><li class="toc-entry" data-slide="scan-offsets" data-deep="false">
+          <a href="#scan-offsets" data-target="scan-offsets" aria-expanded="false" aria-controls="mobile-idea-scan-offsets">
+            <span class="toc-page-number">29</span><span>数量不一样，先用前缀和分配写出位置</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-scan-offsets" hidden><strong>本页要点</strong><p>offset 是独占前缀和，每个高斯提前知道自己专属的输出区域。即使 G₂ 最早执行，也只写 [6,10)，不会抢占 G₀ 的位置。</p></div>
+        </li><li class="toc-entry" data-slide="exercise-offset" data-deep="false">
+          <a href="#exercise-offset" data-target="exercise-offset" aria-expanded="false" aria-controls="mobile-idea-exercise-offset">
+            <span class="toc-page-number">30</span><span>随堂填空 ②：给每个高斯一段独占空间</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-exercise-offset" hidden><strong>本页要点</strong><p>约 2 分钟。换一组覆盖数量 count=[2,0,3,1]，含一个不可见高斯。</p></div>
+        </li><li class="toc-entry" data-slide="emit-pairs" data-deep="false">
+          <a href="#emit-pairs" data-target="emit-pairs" aria-expanded="false" aria-controls="mobile-idea-emit-pairs">
+            <span class="toc-page-number">31</span><span>并行写出：从每高斯列表变成一串记录</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-emit-pairs" hidden><strong>本页要点</strong><p>前缀和解决唯一写址；排序解决按 Tile 聚集与深度顺序。它们解决的是两个问题。</p></div>
+        </li><li class="toc-entry" data-slide="sort-pairs" data-deep="false">
+          <a href="#sort-pairs" data-target="sort-pairs" aria-expanded="false" aria-controls="mobile-idea-sort-pairs">
+            <span class="toc-page-number">32</span><span>一次排序，先按 Tile，再按深度</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-sort-pairs" hidden><strong>本页要点</strong><p>基线使用高斯中心深度共享组内顺序，未对每个像素重新精确求交排序，因此存在近似。</p></div>
+        </li><li class="toc-entry" data-slide="tile-ranges" data-deep="false">
+          <a href="#tile-ranges" data-target="tile-ranges" aria-expanded="false" aria-controls="mobile-idea-tile-ranges">
+            <span class="toc-page-number">33</span><span>找到每个 Tile 的起止位置，交给渲染器</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-tile-ranges" hidden><strong>本页要点</strong><p>阶段之间存在数据依赖。同一 CUDA stream 中按顺序提交这些操作即可建立执行顺序；无需在每一阶段都让 CPU 等待。</p></div>
+        </li><li class="toc-entry" data-slide="sort-key" data-deep="true" hidden>
+          <a href="#sort-key" data-target="sort-key" aria-expanded="false" aria-controls="mobile-idea-sort-key">
+            <span class="toc-page-number">34</span><span>深入：64 位排序 Key 包含什么？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-sort-key" hidden><strong>本页要点</strong><p>Tile ID 占高位，深度编码占低位。基线把通过可见性检查的正有限浮点深度按位解释为无符号整数；在这个范围内，位模式顺序与数值顺序一致。</p></div>
+        </li><li class="toc-entry" data-slide="block-mapping" data-deep="false">
+          <a href="#block-mapping" data-target="block-mapping" aria-expanded="false" aria-controls="mobile-idea-block-mapping">
+            <span class="toc-page-number">35</span><span>一个 Tile 一个 Block，一个像素一个线程</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-block-mapping" hidden><strong>本页要点</strong><p>每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。</p></div>
+        </li><li class="toc-entry" data-slide="shared-load" data-deep="false">
+          <a href="#shared-load" data-target="shared-load" aria-expanded="false" aria-controls="mobile-idea-shared-load">
+            <span class="toc-page-number">36</span><span>同一份高斯参数，让整个 Block 共用</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-shared-load" hidden><strong>本页要点</strong><p>减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。</p></div>
+        </li><li class="toc-entry" data-slide="batch-lifetime" data-deep="false">
+          <a href="#batch-lifetime" data-target="batch-lifetime" aria-expanded="false" aria-controls="mobile-idea-batch-lifetime">
+            <span class="toc-page-number">37</span><span>一块 Shared，分批复用：两道交接不能少</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-batch-lifetime" hidden><strong>本页要点</strong><p>把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。</p></div>
+        </li><li class="toc-entry" data-slide="render-pseudocode" data-deep="false">
+          <a href="#render-pseudocode" data-target="render-pseudocode" aria-expanded="false" aria-controls="mobile-idea-render-pseudocode">
+            <span class="toc-page-number">38</span><span>把分工、复用与顺序放进同一个循环</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-render-pseudocode" hidden><strong>本页要点</strong><p>这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。</p></div>
+        </li><li class="toc-entry" data-slide="pixel-done" data-deep="false">
+          <a href="#pixel-done" data-target="pixel-done" aria-expanded="false" aria-controls="mobile-idea-pixel-done">
+            <span class="toc-page-number">39</span><span>像素结束，不等于线程可以提前 return</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-pixel-done" hidden><strong>本页要点</strong><p>全块投票所有像素都 done 后，才能统一提前结束批次循环。</p></div>
+        </li><li class="toc-entry" data-slide="exercise-sync" data-deep="false">
+          <a href="#exercise-sync" data-target="exercise-sync" aria-expanded="false" aria-controls="mobile-idea-exercise-sync">
+            <span class="toc-page-number">40</span><span>随堂填空 ③：把同步放在所有参与者都会经过的位置</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-exercise-sync" hidden><strong>本页要点</strong><p>约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 if (done) return;。</p></div>
+        </li><li class="toc-entry" data-slide="uneven-work" data-deep="false">
+          <a href="#uneven-work" data-target="uneven-work" aria-expanded="false" aria-controls="mobile-idea-uneven-work">
+            <span class="toc-page-number">41</span><span>相同的线程数，不代表相同的工作量</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-uneven-work" hidden><strong>本页要点</strong><p>看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。</p></div>
+        </li><li class="toc-entry" data-slide="implementation-map" data-deep="false">
+          <a href="#implementation-map" data-target="implementation-map" aria-expanded="false" aria-controls="mobile-idea-implementation-map">
+            <span class="toc-page-number">42</span><span>回到源码：我们现在能读懂哪几段？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-implementation-map" hidden><strong>本页要点</strong><p>先沿“输入 → 输出数组 → 下一阶段读取者”看调用链，再进入每行索引。网页示例是独立的教学简化；官方 main 分支会变化，复现实验应记录所用提交版本。</p></div>
+        </li><li class="toc-entry" data-slide="termination-error" data-deep="true" hidden>
+          <a href="#termination-error" data-target="termination-error" aria-expanded="false" aria-controls="mobile-idea-termination-error">
+            <span class="toc-page-number">43</span><span>深入：提前结束，牺牲了多少颜色贡献？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-termination-error" hidden><strong>本页要点</strong><p>阈值是质量与工作量之间的选择，不能只比较 FPS 而忽略误差。</p></div>
+        </li><li class="toc-entry" data-slide="threshold-order" data-deep="true" hidden>
+          <a href="#threshold-order" data-target="threshold-order" aria-expanded="false" aria-controls="mobile-idea-threshold-order">
+            <span class="toc-page-number">44</span><span>深入：教学循环与官方阈值次序有什么差别？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-threshold-order" hidden><strong>本页要点</strong><p>学习结构时允许简化；比较实现时必须把简化条件写清楚。</p></div>
+        </li><li class="toc-entry" data-slide="training-loop" data-deep="false">
+          <a href="#training-loop" data-target="training-loop" aria-expanded="false" aria-controls="mobile-idea-training-loop">
+            <span class="toc-page-number">45</span><span>渲染器怎样成为一个可学习的模型？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-training-loop" hidden><strong>本页要点</strong><p>原始方法组合像素 L₁ 损失与结构相似性项。可先把 L 理解为“当前渲染与训练照片的差异”。选一个训练相机，计算一次损失，再把梯度传回高斯。</p></div>
+        </li><li class="toc-entry" data-slide="gradient-path" data-deep="false">
+          <a href="#gradient-path" data-target="gradient-path" aria-expanded="false" aria-controls="mobile-idea-gradient-path">
+            <span class="toc-page-number">46</span><span>像素误差，沿哪条链回到高斯参数？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-gradient-path" hidden><strong>本页要点</strong><p>可微渲染描述局部连续计算的梯度路径；整个带分支、排序和拓扑变化的过程不是处处光滑。</p></div>
+        </li><li class="toc-entry" data-slide="backward-scatter" data-deep="false">
+          <a href="#backward-scatter" data-target="backward-scatter" aria-expanded="false" aria-controls="mobile-idea-backward-scatter">
+            <span class="toc-page-number">47</span><span>前向一个像素一个所有者，反向却会汇到同一高斯</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-backward-scatter" hidden><strong>本页要点</strong><p>同一个算法，前向和反向的读写冲突结构可以不同。</p></div>
+        </li><li class="toc-entry" data-slide="density-control" data-deep="false">
+          <a href="#density-control" data-target="density-control" aria-expanded="false" aria-controls="mobile-idea-density-control">
+            <span class="toc-page-number">48</span><span>只有移动参数还不够：还要增加、拆分与删除</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-density-control" hidden><strong>本页要点</strong><p>高斯数增加可能改善质量，也可能增加显存、分组与渲染成本。数量与质量不是单调的一一对应。</p></div>
+        </li><li class="toc-entry" data-slide="learned-scene" data-deep="false">
+          <a href="#learned-scene" data-target="learned-scene" aria-expanded="false" aria-controls="mobile-idea-learned-scene">
+            <span class="toc-page-number">49</span><span>训练完成，查看一帧时哪些东西还在变化？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-learned-scene" hidden><strong>本页要点</strong><p>“显式表示”节省了某些查询计算，但并不意味着每帧只需把点画到屏幕上。</p></div>
+        </li><li class="toc-entry" data-slide="backward-memory" data-deep="true" hidden>
+          <a href="#backward-memory" data-target="backward-memory" aria-expanded="false" aria-controls="mobile-idea-backward-memory">
+            <span class="toc-page-number">50</span><span>深入：为什么不保存每个像素的完整历史？<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-backward-memory" hidden><strong>本页要点</strong><p>这里体现“保存还是重算”的权衡。减少每像素历史存储，并不代表没有全局排序缓冲区或没有反向计算成本。</p></div>
+        </li><li class="toc-entry" data-slide="cost-model" data-deep="false">
+          <a href="#cost-model" data-target="cost-model" aria-expanded="false" aria-controls="mobile-idea-cost-model">
+            <span class="toc-page-number">51</span><span>不要只数高斯：三个规模决定不同阶段</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-cost-model" hidden><strong>本页要点</strong><p>这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。</p></div>
+        </li><li class="toc-entry" data-slide="tile-tradeoff" data-deep="false">
+          <a href="#tile-tradeoff" data-target="tile-tradeoff" aria-expanded="false" aria-controls="mobile-idea-tile-tradeoff">
+            <span class="toc-page-number">52</span><span>Tile 越小一定越快吗？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-tile-tradeoff" hidden><strong>本页要点</strong><p>在相同图像质量与正确性条件下测完整路径，再讨论某一个 kernel 的变化。</p></div>
+        </li><li class="toc-entry" data-slide="measure" data-deep="false">
+          <a href="#measure" data-target="measure" aria-expanded="false" aria-controls="mobile-idea-measure">
+            <span class="toc-page-number">53</span><span>怎样设计一组能回答问题的性能实验？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-measure" hidden><strong>本页要点</strong><p>本讲交互图运行于浏览器，只演示算法；没有把浏览器动画速度当成 CUDA benchmark，也没有虚构 GPU 实测数据。</p></div>
+        </li><li class="toc-entry" data-slide="limits" data-deep="false">
+          <a href="#limits" data-target="limits" aria-expanded="false" aria-controls="mobile-idea-limits">
+            <span class="toc-page-number">54</span><span>哪些近似与限制，会在图像中暴露？</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-limits" hidden><strong>本页要点</strong><p>本讲讲的是原始 3DGS 思路及其基线并行结构。后续研究可以改进排序、抗锯齿、压缩与训练，但应先弄清改动解决的是哪一种误差或成本。</p></div>
+        </li><li class="toc-entry" data-slide="summary" data-deep="false">
+          <a href="#summary" data-target="summary" aria-expanded="false" aria-controls="mobile-idea-summary">
+            <span class="toc-page-number">55</span><span>把整帧放回一起：表示、组织与执行</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-summary" hidden><strong>本页要点</strong><p>最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</p></div>
+        </li><li class="toc-entry" data-slide="memory-budget" data-deep="true" hidden>
+          <a href="#memory-budget" data-target="memory-budget" aria-expanded="false" aria-controls="mobile-idea-memory-budget">
+            <span class="toc-page-number">56</span><span>深入：估算参数与引用缓冲区<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-memory-budget" hidden><strong>本页要点</strong><p>实际内存由实现的数据类型、布局与库决定；本页是账目模型，不是某块 GPU 上的实测占用。</p></div>
+        </li><li class="toc-entry" data-slide="reading" data-deep="true" hidden>
+          <a href="#reading" data-target="reading" aria-expanded="false" aria-controls="mobile-idea-reading">
+            <span class="toc-page-number">57</span><span>深入：从原始论文到实现的阅读顺序<small>深入阅读</small></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a><div class="toc-page-idea" id="mobile-idea-reading" hidden><strong>本页要点</strong><p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p></div>
+        </li></ol></nav></dialog>
 <nav class="presentation-controls" aria-label="翻页控制"><button id="prev" aria-label="上一页">← 上一页</button><label>跳至 <select id="page-select" aria-label="选择讲义页"></select></label><output id="progress" aria-live="polite">1 / 49</output><button id="next">下一步 →</button><button id="fullscreen" aria-label="切换全屏">全屏</button></nav>
 <div id="status" class="sr-only" aria-live="polite"></div></body></html>

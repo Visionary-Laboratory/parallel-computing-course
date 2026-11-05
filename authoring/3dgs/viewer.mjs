@@ -9,6 +9,39 @@ const visible=()=>slides.filter(s=>deep||!s.classList.contains('deep'));
 if(slides.some(s=>s.id===hashId()&&s.classList.contains('deep')))deep=true;
 const initial=visible().findIndex(s=>s.id===hashId()); if(initial>=0)index=initial;
 
+function updateContents(keepInView=true){
+  const list=visible(), current=list[index];
+  $$('.toc-position').forEach(el=>el.textContent=`${index+1} / ${list.length}`);
+  $$('.toc-entry').forEach(row=>{
+    const at=list.findIndex(s=>s.id===row.dataset.slide),active=current?.id===row.dataset.slide;
+    row.hidden=at<0;row.classList.toggle('is-current',active);
+    const link=$('a',row),idea=$('.toc-page-idea',row);
+    link.setAttribute('aria-expanded',String(active));
+    if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');
+    $('.toc-page-number',row).textContent=String(at+1).padStart(2,'0');
+    idea.hidden=!active;
+  });
+  if(keepInView)$$('.toc-page-list').forEach(nav=>{
+    if(!nav.clientHeight)return;
+    const active=$('.is-current',nav);if(!active)return;
+    const nr=nav.getBoundingClientRect(),ar=active.getBoundingClientRect();
+    if(ar.top<nr.top)nav.scrollTop+=ar.top-nr.top-6;
+    else if(ar.bottom>nr.bottom)nav.scrollTop+=ar.bottom-nr.bottom+6;
+  });
+}
+function trackReadingPosition(){
+  if(mode!=='read')return;
+  const list=visible(),line=Math.max($('.toolbar').getBoundingClientRect().bottom+24,Math.min(220,innerHeight*.25));
+  let active=0;
+  for(let i=0;i<list.length;i++){if(list[i].getBoundingClientRect().top<=line)active=i;else break;}
+  if(active!==index){index=active;updateContents();}
+}
+let scrollQueued=false;
+window.addEventListener('scroll',()=>{
+  if(scrollQueued)return;scrollQueued=true;
+  requestAnimationFrame(()=>{scrollQueued=false;trackReadingPosition();});
+},{passive:true});
+
 function updateURL(s) {
   const url=new URL(location.href);
   if(mode==='read')url.searchParams.delete('mode');else url.searchParams.set('mode',mode);
@@ -46,6 +79,7 @@ function render(focus=false) {
   if(mode==='print'){
     $$('.answer').forEach(d=>{d.open=$('#print-answers').checked;});
   }
+  updateContents();
   fitSlide();
 }
 function setMode(next) {
@@ -67,13 +101,19 @@ $('#depth').addEventListener('click',()=>{
   index=Math.max(0,at);render();updateURL(mode==='present'?visible()[index]:null);
 });
 $$('a[data-target],.slide-label a').forEach(a=>a.addEventListener('click',e=>{
+  if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
   const id=a.dataset.target||a.hash.slice(1),target=document.getElementById(id);if(!target)return;
+  e.preventDefault();
   if(target.classList.contains('deep')&&!deep)deep=true;
+  if($('#contents-dialog').open)$('#contents-dialog').close();
   index=visible().indexOf(target);render();
-  if(mode==='present'){e.preventDefault();render(true);}else updateURL(target);
+  if(mode==='present')render(true);else {updateURL(target);target.scrollIntoView({behavior:'smooth',block:'start'});}
 }));
 window.addEventListener('hashchange',()=>{const target=slides.find(s=>s.id===hashId());if(!target)return;if(target.classList.contains('deep'))deep=true;index=visible().indexOf(target);render();});
 $('#menu').addEventListener('click',()=>{const open=body.classList.toggle('menu-open');$('#menu').setAttribute('aria-expanded',String(open));});
+$('#contents-open').addEventListener('click',()=>{$('#contents-dialog').showModal();updateContents();});
+$('#contents-close').addEventListener('click',()=>$('#contents-dialog').close());
+$('#contents-dialog').addEventListener('click',e=>{if(e.target===$('#contents-dialog'))$('#contents-dialog').close();});
 async function fullScreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{$('#status').textContent='当前浏览器未允许全屏，可继续使用演示模式。';}}
 $('#fullscreen').addEventListener('click',fullScreen);
 document.addEventListener('keydown',e=>{
@@ -90,7 +130,7 @@ $('#print-answers').addEventListener('change',()=>{
 });
 $('#print-now').addEventListener('click',()=>window.print());
 $$('.answer').forEach(d=>d.addEventListener('toggle',()=>{if(mode==='present'){$('#next').disabled=index===visible().length-1&&!$('details.answer:not([open])',visible()[index]);fitSlide();}}));
-window.addEventListener('resize',fitSlide);
+window.addEventListener('resize',()=>{fitSlide();trackReadingPosition();});
 $$('img').forEach(img=>img.addEventListener('load',fitSlide));
 
 const fmt=n=>n.toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
