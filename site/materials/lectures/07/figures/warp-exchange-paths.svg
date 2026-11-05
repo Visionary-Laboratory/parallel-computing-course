@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+<title id="title">八项归约首轮配对，以及shared与shuffle的取值路径</title><desc id="desc">缩小模型中lane0到7分别持有1到8。第一轮把前后两半配对，距离d为8除以2等于4：lane0从0加4得到伙伴编号4，伙伴持有数值5；其余配对为1取5、2取6、3取7。接下来只跟踪lane4到lane0的数据流。lane4持有5，lane0持有1。shared方式先写s[4]，同步后lane0读取5；shuffle方式直接取得伙伴寄存器中的5。两种方式都由lane0自己做1+5得到6，shuffle只取值，不执行加法。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="440" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<text x="32" y="27" font-size="25" fill="#20372f" font-weight="600" text-anchor="start">8 项缩小模型：先把前 4 项与后 4 项配对，距离 d = 8 / 2 = 4</text>
+<rect x="32" y="42" width="138" height="62" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="101" y="67" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">lane 0</text>
+<text x="101" y="94" font-size="24" fill="#326a91" font-weight="600" text-anchor="middle">v = 1</text>
+<rect x="186" y="42" width="138" height="62" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="255" y="67" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">lane 1</text>
+<text x="255" y="94" font-size="24" fill="#5b6c65" font-weight="600" text-anchor="middle">v = 2</text>
+<rect x="340" y="42" width="138" height="62" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="409" y="67" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">lane 2</text>
+<text x="409" y="94" font-size="24" fill="#5b6c65" font-weight="600" text-anchor="middle">v = 3</text>
+<rect x="494" y="42" width="138" height="62" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="563" y="67" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">lane 3</text>
+<text x="563" y="94" font-size="24" fill="#5b6c65" font-weight="600" text-anchor="middle">v = 4</text>
+<rect x="648" y="42" width="138" height="62" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="717" y="67" font-size="21" fill="#176b52" font-weight="400" text-anchor="middle">lane 4</text>
+<text x="717" y="94" font-size="24" fill="#176b52" font-weight="600" text-anchor="middle">v = 5</text>
+<rect x="802" y="42" width="138" height="62" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="871" y="67" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">lane 5</text>
+<text x="871" y="94" font-size="24" fill="#5b6c65" font-weight="600" text-anchor="middle">v = 6</text>
+<rect x="956" y="42" width="138" height="62" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1025" y="67" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">lane 6</text>
+<text x="1025" y="94" font-size="24" fill="#5b6c65" font-weight="600" text-anchor="middle">v = 7</text>
+<rect x="1110" y="42" width="138" height="62" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1179" y="67" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">lane 7</text>
+<text x="1179" y="94" font-size="24" fill="#5b6c65" font-weight="600" text-anchor="middle">v = 8</text>
+<text x="640" y="133" font-size="23" fill="#5b6c65" font-weight="400" text-anchor="middle">配对：0 ← 4，1 ← 5，2 ← 6，3 ← 7（这里的数字是 lane 编号）</text>
+<text x="32" y="175" font-size="25" fill="#20372f" font-weight="600" text-anchor="start">shared 路径：先写共享数组，再由伙伴读取</text>
+<rect x="32" y="194" width="245" height="72" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="154" y="223" font-size="22" fill="#176b52" font-weight="400" text-anchor="middle">lane 4 · 寄存器</text>
+<text x="154" y="253" font-size="26" fill="#176b52" font-weight="600" text-anchor="middle">v = 5</text>
+<rect x="983" y="194" width="265" height="72" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1115" y="223" font-size="22" fill="#326a91" font-weight="400" text-anchor="middle">lane 0 得到伙伴值 5</text>
+<text x="1115" y="253" font-size="25" fill="#326a91" font-weight="600" text-anchor="middle">自己做 1 + 5 = 6</text>
+<rect x="32" y="330" width="245" height="72" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="154" y="359" font-size="22" fill="#176b52" font-weight="400" text-anchor="middle">lane 4 · 寄存器</text>
+<text x="154" y="389" font-size="26" fill="#176b52" font-weight="600" text-anchor="middle">v = 5</text>
+<rect x="983" y="330" width="265" height="72" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1115" y="359" font-size="22" fill="#326a91" font-weight="400" text-anchor="middle">lane 0 得到伙伴值 5</text>
+<text x="1115" y="389" font-size="25" fill="#326a91" font-weight="600" text-anchor="middle">自己做 1 + 5 = 6</text>
+<rect x="488" y="194" width="280" height="72" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="628" y="223" font-size="22" fill="#176b52" font-weight="400" text-anchor="middle">共享数组 s</text>
+<text x="628" y="253" font-size="26" fill="#176b52" font-weight="600" text-anchor="middle">s[4] = 5</text>
+<path d="M284 230 L480 230" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="382" y="214" font-size="22" fill="#5b6c65" font-weight="400" text-anchor="middle">写入</text>
+<path d="M776 230 L975 230" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="875" y="214" font-size="22" fill="#5b6c65" font-weight="400" text-anchor="middle">同步后读取</text>
+<text x="32" y="311" font-size="25" fill="#20372f" font-weight="600" text-anchor="start">shuffle 路径：在同一个 warp 内传递寄存器值</text>
+<path d="M284 366 L975 366" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="630" y="350" font-size="23" fill="#5b6c65" font-weight="400" text-anchor="middle">取得伙伴值，无需借助 shared</text>
+<text x="640" y="432" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">下面两条路径只跟踪 lane 4 → lane 0；shuffle 只传值，加法由线程自己执行。</text>
+</g></svg>

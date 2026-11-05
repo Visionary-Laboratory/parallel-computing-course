@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">跨 block 的 scan：局部前缀还差一个块偏移</title><desc id="desc">跨 block 的 scan：局部前缀还差一个块偏移。独占前缀：输出位置 i 保存输入中 i 之前所有元素之和。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">跨 block 的 scan：局部前缀还差一个块偏移</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">独占前缀：输出位置 i 保存输入中 i 之前所有元素之和。</text>
+<text x="43" y="153" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">块 0</text>
+<rect x="131" y="123" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="155.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="184" y="123" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="208.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="237" y="123" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="261.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="290" y="123" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="314.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<line x1="352" y1="146" x2="396" y2="146" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="407" y="123" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="431.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="460" y="123" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="484.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="513" y="123" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="537.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="566" y="123" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="590.0" y="151.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<text x="647" y="153" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">total = 6</text>
+<rect x="793" y="123" width="263" height="51" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="924.5" y="155.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">每项加 offset 0</text>
+<text x="43" y="266" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">块 1</text>
+<rect x="131" y="236" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="155.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="184" y="236" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="208.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="237" y="236" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="261.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="290" y="236" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="314.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="352" y1="259" x2="396" y2="259" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="407" y="236" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="431.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="460" y="236" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="484.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="513" y="236" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="537.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">4</text>
+<rect x="566" y="236" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="590.0" y="264.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<text x="647" y="266" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">total = 6</text>
+<rect x="793" y="236" width="263" height="51" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="924.5" y="268.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">每项加 offset 6</text>
+<text x="43" y="379" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">块 2</text>
+<rect x="131" y="349" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="155.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="184" y="349" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="208.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<rect x="237" y="349" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="261.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="290" y="349" width="48" height="42" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="314.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<line x1="352" y1="372" x2="396" y2="372" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="407" y="349" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="431.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="460" y="349" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="484.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="513" y="349" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="537.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="566" y="349" width="48" height="42" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="590.0" y="377.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<text x="647" y="379" font-size="22" fill="#20372F" text-anchor="start" font-weight="400">total = 6</text>
+<rect x="793" y="349" width="263" height="51" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="924.5" y="381.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">每项加 offset 12</text>
+<text x="553" y="475" font-size="25" fill="#176B52" text-anchor="middle" font-weight="700">块总和 [6, 6, 6] 的独占 scan → [0, 6, 12]</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">局部 scan → 对块总和递归 scan → 加块偏移；中间数组保持在设备上。</text>
+</g></svg>

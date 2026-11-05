@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">把通信限制在最小的必要范围</title><desc id="desc">把通信限制在最小的必要范围。每个层级先合并局部贡献，再将少量结果交给下一层。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">把通信限制在最小的必要范围</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">每个层级先合并局部贡献，再将少量结果交给下一层。</text>
+<rect x="50.0" y="180" width="225.0" height="100" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="162.5" y="222.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">线程寄存器</text>
+<text x="162.5" y="252.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">多项局部累加</text>
+<line x1="281.0" y1="230" x2="309.0" y2="230" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="315.0" y="180" width="225.0" height="100" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="427.5" y="222.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">warp shuffle</text>
+<text x="427.5" y="252.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">32 → 1</text>
+<line x1="546.0" y1="230" x2="574.0" y2="230" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="580.0" y="180" width="225.0" height="100" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="692.5" y="222.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">shared + barrier</text>
+<text x="692.5" y="252.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">多 warp → 1</text>
+<line x1="811.0" y1="230" x2="839.0" y2="230" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="845.0" y="180" width="225.0" height="100" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="957.5" y="222.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">下一次 launch</text>
+<text x="957.5" y="252.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">多 block → 1</text>
+<text x="559" y="361" font-size="27" fill="#176B52" text-anchor="middle" font-weight="700">输入 N 项 → block 部分和 G 项 → 最终 1 项</text>
+<text x="559" y="413" font-size="22" fill="#566A63" text-anchor="middle" font-weight="400">只有 block 的最终结果进入部分和数组；阶段依赖由 stream 保证。</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">浮点树改变结合顺序；本讲以数值误差条件验收，不承诺与串行累加逐位一致。</text>
+</g></svg>

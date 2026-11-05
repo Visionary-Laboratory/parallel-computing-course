@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="340" viewBox="0 0 1280 340" role="img" aria-labelledby="title desc">
+<title id="title">SM内shuffle的寄存器数据路径（功能示意）</title><desc id="desc">同一个warp内，lane4提供源寄存器v等于5；SHFL指令控制数据选择与传递，根据lane0加距离4得到源编号4，将值5复制到lane0的目标寄存器peer。随后lane0另做加法v等于1加5得到6。这是功能数据流示意，不是具体GPU的物理布线。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="340" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<rect x="16" y="10" width="1248" height="316" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="40" y="45" font-size="25" fill="#20372f" font-weight="600" text-anchor="start">SM 内 · 同一个 warp（功能示意，仅跟踪 lane 4 → lane 0）</text>
+<rect x="40" y="84" width="238" height="82" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="159" y="116" font-size="22" fill="#176b52" font-weight="400" text-anchor="middle">lane 4 · 源寄存器</text>
+<text x="159" y="150" font-size="28" fill="#176b52" font-weight="600" text-anchor="middle">v = 5</text>
+<rect x="448" y="74" width="350" height="102" rx="8" fill="#fff6e7" stroke="#d6b67e" stroke-width="1.5"/>
+<text x="623" y="105" font-size="25" fill="#20372f" font-weight="600" text-anchor="middle">跨 lane 数据选择 / 传递</text>
+<text x="623" y="135" font-size="22" fill="#5b6c65" font-weight="400" text-anchor="middle">源编号 = 接收 lane + d</text>
+<text x="623" y="162" font-size="23" fill="#20372f" font-weight="600" text-anchor="middle">lane 0：0 + 4 = 4</text>
+<rect x="968" y="84" width="272" height="82" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1104" y="116" font-size="22" fill="#326a91" font-weight="400" text-anchor="middle">lane 0 · 目标寄存器</text>
+<text x="1104" y="150" font-size="28" fill="#326a91" font-weight="600" text-anchor="middle">peer = 5</text>
+<path d="M284 125 L438 125" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="360" y="109" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">取源值</text>
+<path d="M807 125 L958 125" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="882" y="109" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">写回目标</text>
+<path d="M1104 174 L1104 210" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="968" y="218" width="272" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1104" y="249" font-size="22" fill="#326a91" font-weight="400" text-anchor="middle">lane 0 随后执行加法</text>
+<text x="1104" y="283" font-size="26" fill="#326a91" font-weight="600" text-anchor="middle">v = 1 + 5 = 6</text>
+<text x="40" y="240" font-size="26" fill="#20372f" font-weight="600" text-anchor="start">SHFL 指令：控制“选谁的值，送给谁”</text>
+<text x="40" y="281" font-size="24" fill="#5b6c65" font-weight="400" text-anchor="start">这次寄存器交换无需 shared、L1、L2 或显存中转。</text>
+</g></svg>

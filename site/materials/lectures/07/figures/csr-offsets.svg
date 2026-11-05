@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">长度 → 前缀和 → 互不重叠的输出区间</title><desc id="desc">长度 → 前缀和 → 互不重叠的输出区间。CSR：row_ptr[i+1]−row_ptr[i] 就是第 i 行的长度，末项是总容量。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">长度 → 前缀和 → 互不重叠的输出区间</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">CSR：row_ptr[i+1]−row_ptr[i] 就是第 i 行的长度，末项是总容量。</text>
+<text x="48" y="156" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">行长度</text>
+<rect x="300" y="120" width="130" height="57" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="365.0" y="155.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="455" y="120" width="130" height="57" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="520.0" y="155.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="610" y="120" width="130" height="57" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="675.0" y="155.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<rect x="765" y="120" width="130" height="57" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="830.0" y="155.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<text x="48" y="257" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">row_ptr</text>
+<rect x="300" y="220" width="130" height="57" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="365.0" y="255.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="455" y="220" width="130" height="57" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="520.0" y="255.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="610" y="220" width="130" height="57" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="675.0" y="255.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<rect x="765" y="220" width="130" height="57" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="830.0" y="255.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">5</text>
+<rect x="920" y="220" width="130" height="57" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="985.0" y="255.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">6</text>
+<text x="48" y="390" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">输出槽</text>
+<rect x="300" y="353" width="113" height="66" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="356.5" y="393.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">行 0</text>
+<rect x="423" y="353" width="113" height="66" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="479.5" y="393.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">行 0</text>
+<rect x="546" y="353" width="113" height="66" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="602.5" y="393.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">行 2</text>
+<rect x="669" y="353" width="113" height="66" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="725.5" y="393.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">行 2</text>
+<rect x="792" y="353" width="113" height="66" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="848.5" y="393.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">行 2</text>
+<rect x="915" y="353" width="113" height="66" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="971.5" y="393.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">行 3</text>
+<text x="560" y="468" font-size="23" fill="#566A63" text-anchor="middle" font-weight="400">行 1 是空行：[2,2)；它没有输出槽，但仍有自己的边界。</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">两次邻居遍历必须使用同一输入版本与判据，才能让计数和实际填入长度一致。</text>
+</g></svg>

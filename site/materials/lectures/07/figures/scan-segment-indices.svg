@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="210" viewBox="0 0 1280 210" role="img" aria-labelledby="title desc">
+<title id="title">Scan 段与数组下标：d=2、t=1</title><desc id="desc">八项数组按每段四项分成两段。线程0负责下标0到3，线程1负责下标4到7。线程1的起点是1乘4等于4，左半段末端l为5，右端r为7；两个半段的总量保存在5和7。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="210" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<rect x="24" y="8" width="600" height="150" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="324" y="38" font-size="25" fill="#20372f" font-weight="600" text-anchor="middle">线程 t = 0 · 每段 2d = 4 项</text>
+<rect x="40" y="54" width="124" height="65" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="102" y="82" font-size="25" fill="#5b6c65" font-weight="600" text-anchor="middle">s[0]</text>
+<text x="102" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">保留原值</text>
+<rect x="188" y="54" width="124" height="65" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="250" y="82" font-size="25" fill="#176b52" font-weight="600" text-anchor="middle">s[1]</text>
+<text x="250" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">左段总量</text>
+<rect x="336" y="54" width="124" height="65" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="398" y="82" font-size="25" fill="#5b6c65" font-weight="600" text-anchor="middle">s[2]</text>
+<text x="398" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">保留原值</text>
+<rect x="484" y="54" width="124" height="65" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="546" y="82" font-size="25" fill="#176b52" font-weight="600" text-anchor="middle">s[3]</text>
+<text x="546" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">右段总量</text>
+<text x="176" y="145" font-size="22" fill="#20372f" font-weight="400" text-anchor="middle">左半段：0、1</text>
+<text x="472" y="145" font-size="22" fill="#20372f" font-weight="400" text-anchor="middle">右半段：2、3</text>
+<rect x="652" y="8" width="600" height="150" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="952" y="38" font-size="25" fill="#20372f" font-weight="600" text-anchor="middle">线程 t = 1 · 每段 2d = 4 项</text>
+<rect x="668" y="54" width="124" height="65" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="730" y="82" font-size="25" fill="#5b6c65" font-weight="600" text-anchor="middle">s[4]</text>
+<text x="730" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">保留原值</text>
+<rect x="816" y="54" width="124" height="65" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="878" y="82" font-size="25" fill="#176b52" font-weight="600" text-anchor="middle">s[5]</text>
+<text x="878" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">左段总量</text>
+<rect x="964" y="54" width="124" height="65" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1026" y="82" font-size="25" fill="#5b6c65" font-weight="600" text-anchor="middle">s[6]</text>
+<text x="1026" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">保留原值</text>
+<rect x="1112" y="54" width="124" height="65" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1174" y="82" font-size="25" fill="#176b52" font-weight="600" text-anchor="middle">s[7]</text>
+<text x="1174" y="109" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">右段总量</text>
+<text x="804" y="145" font-size="22" fill="#20372f" font-weight="400" text-anchor="middle">左半段：4、5</text>
+<text x="1100" y="145" font-size="22" fill="#20372f" font-weight="400" text-anchor="middle">右半段：6、7</text>
+<text x="640" y="198" font-size="25" fill="#326a91" font-weight="600" text-anchor="middle">看线程 1：起点 = 1×4 = 4；r = (1+1)×4−1 = 7；l = r−d = 7−2 = 5</text>
+</g></svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="310" viewBox="0 0 1280 310" role="img" aria-labelledby="title desc">
+<title id="title">先算第一项与第五项左边的和</title><desc id="desc">输入3、1、0、2、4、0、1、1，分为左右两组各四项。第一项3左边没有数，答案0；第五项4左边的四项为3、1、0、2，答案为6。因此左组从0开始累计，右组从6开始累计。图中下标从0开始，第五项的下标是4。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="310" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<rect x="24" y="8" width="600" height="142" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="324" y="40" font-size="26" fill="#20372f" font-weight="600" text-anchor="middle">左组：第1～4项</text>
+<rect x="47" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="99" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">3</text>
+<text x="99" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 0</text>
+<rect x="197" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="249" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">1</text>
+<text x="249" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 1</text>
+<rect x="347" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="399" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">0</text>
+<text x="399" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 2</text>
+<rect x="497" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="549" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">2</text>
+<text x="549" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 3</text>
+<rect x="656" y="8" width="600" height="142" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="956" y="40" font-size="26" fill="#20372f" font-weight="600" text-anchor="middle">右组：第5～8项</text>
+<rect x="679" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="731" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">4</text>
+<text x="731" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 4</text>
+<rect x="829" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="881" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">0</text>
+<text x="881" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 5</text>
+<rect x="979" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1031" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">1</text>
+<text x="1031" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 6</text>
+<rect x="1129" y="54" width="104" height="52" rx="8" fill="white" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1181" y="89" font-size="32" fill="#20372f" font-weight="600" text-anchor="middle">1</text>
+<text x="1181" y="134" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">下标 7</text>
+<path d="M324 155 V168 H956 V205" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="640" y="197" font-size="22" fill="#326a91" font-weight="400" text-anchor="middle">右组开始前，要先累计左边4项</text>
+<rect x="24" y="214" width="600" height="82" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="324" y="245" font-size="25" fill="#20372f" font-weight="400" text-anchor="middle">第1项3：左边没有数</text>
+<text x="324" y="281" font-size="29" fill="#176b52" font-weight="600" text-anchor="middle">答案 = 0</text>
+<rect x="656" y="214" width="600" height="82" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="956" y="245" font-size="25" fill="#20372f" font-weight="400" text-anchor="middle">第5项4：左边是3、1、0、2</text>
+<text x="956" y="281" font-size="29" fill="#326a91" font-weight="600" text-anchor="middle">答案 = 3+1+0+2 = 6</text>
+</g></svg>

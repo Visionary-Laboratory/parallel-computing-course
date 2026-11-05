@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">位图变地址：数清本 lane 之前有几位被保留</title><desc id="desc">位图变地址：数清本 lane 之前有几位被保留。缩小为 8 lane 的示意；CUDA 实际 ballot 产生 32 位位图。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">位图变地址：数清本 lane 之前有几位被保留</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">缩小为 8 lane 的示意；CUDA 实际 ballot 产生 32 位位图。</text>
+<text x="249" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 0</text>
+<rect x="205" y="162" width="87" height="58" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="248.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="248" y1="229" x2="248" y2="282" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="205" y="293" width="87" height="60" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="248.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<text x="354" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 1</text>
+<rect x="310" y="162" width="87" height="58" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="353.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="310" y="293" width="87" height="60" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="353.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="459" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 2</text>
+<rect x="415" y="162" width="87" height="58" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="458.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="458" y1="229" x2="458" y2="282" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="415" y="293" width="87" height="60" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="458.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<text x="564" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 3</text>
+<rect x="520" y="162" width="87" height="58" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="563.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="563" y1="229" x2="563" y2="282" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="520" y="293" width="87" height="60" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="563.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<text x="669" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 4</text>
+<rect x="625" y="162" width="87" height="58" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="668.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="625" y="293" width="87" height="60" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="668.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="774" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 5</text>
+<rect x="730" y="162" width="87" height="58" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="773.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="730" y="293" width="87" height="60" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="773.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="879" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 6</text>
+<rect x="835" y="162" width="87" height="58" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="878.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="878" y1="229" x2="878" y2="282" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="835" y="293" width="87" height="60" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="878.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<text x="984" y="143" font-size="19" fill="#566A63" text-anchor="middle" font-weight="400">lane 7</text>
+<rect x="940" y="162" width="87" height="58" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="983.5" y="199.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<rect x="940" y="293" width="87" height="60" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="983.5" y="331.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">—</text>
+<text x="49" y="197" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">keep</text>
+<text x="49" y="330" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">局部 rank</text>
+<text x="560" y="437" font-size="23" fill="#20372F" text-anchor="middle" font-weight="700">保留 lane 0、2、3、6 → 写 base+0、base+1、base+2、base+3</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">warp 内顺序保持；不同 warp 原子预留区间的次序不保证全局稳定性。</text>
+</g></svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="350" viewBox="0 0 1280 350" role="img" aria-labelledby="title desc">
+<title id="title">四项 exclusive scan 的上扫与下扫</title><desc id="desc">左图从输入3、1、0、2向上求段总量4、2和总和6。保存总和后，把右图根前缀设0。右图左段继承0，右段加上左段总量4；继续向下得到四个exclusive前缀0、3、4、4。本图是逻辑树，不是shared数组的物理下标布局。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="350" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<text x="310" y="30" font-size="26" fill="#20372f" font-weight="600" text-anchor="middle">上扫：从下往上求各段总量</text>
+<text x="950" y="30" font-size="26" fill="#20372f" font-weight="600" text-anchor="middle">下扫：传递“本段之前的和”</text>
+<path d="M130 255 L190 205" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M250 255 L190 205" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M370 255 L430 205" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M490 255 L430 205" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M190 155 L310 115" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M430 155 L310 115" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M950 115 L830 155" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M950 115 L1070 155" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M830 205 L770 255" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M830 205 L890 255" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1070 205 L1010 255" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1070 205 L1130 255" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M353 90 L907 90" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="630" y="75" font-size="22" fill="#5b6c65" font-weight="400" text-anchor="middle">保存 total = 6，再把根设为 0</text>
+<rect x="270" y="65" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="310" y="99" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">6</text>
+<rect x="150" y="155" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="190" y="189" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">4</text>
+<rect x="390" y="155" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="430" y="189" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">2</text>
+<rect x="90" y="255" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="130" y="289" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">3</text>
+<rect x="210" y="255" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="250" y="289" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">1</text>
+<rect x="330" y="255" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="370" y="289" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">0</text>
+<rect x="450" y="255" width="80" height="50" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="490" y="289" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">2</text>
+<rect x="910" y="65" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="950" y="99" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">0</text>
+<rect x="790" y="155" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="830" y="189" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">0</text>
+<rect x="1030" y="155" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1070" y="189" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">4</text>
+<rect x="730" y="255" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="770" y="289" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">0</text>
+<rect x="850" y="255" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="890" y="289" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">3</text>
+<rect x="970" y="255" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1010" y="289" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">4</text>
+<rect x="1090" y="255" width="80" height="50" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1130" y="289" font-size="27" fill="#326a91" font-weight="600" text-anchor="middle">4</text>
+<text x="1055" y="131" font-size="19" fill="#326a91" font-weight="400" text-anchor="middle">+ 左段总量 4</text>
+<text x="895" y="227" font-size="20" fill="#326a91" font-weight="400" text-anchor="middle">+ 3</text>
+<text x="1135" y="227" font-size="20" fill="#326a91" font-weight="400" text-anchor="middle">+ 0</text>
+<text x="310" y="340" font-size="24" fill="#20372f" font-weight="400" text-anchor="middle">输入 x = [3, 1, 0, 2]</text>
+<text x="950" y="340" font-size="24" fill="#326a91" font-weight="600" text-anchor="middle">输出 out = [0, 3, 4, 4]</text>
+</g></svg>

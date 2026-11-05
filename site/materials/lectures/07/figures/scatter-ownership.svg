@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">Scatter 能否直接写，取决于目标是否唯一</title><desc id="desc">Scatter 能否直接写，取决于目标是否唯一。同样是 out[index[i]] = value[i]，索引性质决定它是不是一个有竞争的程序。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Scatter 能否直接写，取决于目标是否唯一</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">同样是 out[index[i]] = value[i]，索引性质决定它是不是一个有竞争的程序。</text>
+<text x="272" y="142" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">一一映射：直接写</text>
+<circle cx="105" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="105" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<line x1="105" y1="233" x2="105" y2="311" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="62" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="106.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[0]</text>
+<circle cx="205" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="205" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="205" y1="233" x2="305" y2="311" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="162" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="206.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[1]</text>
+<circle cx="305" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="305" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<line x1="305" y1="233" x2="205" y2="311" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="262" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="306.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[2]</text>
+<circle cx="405" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="405" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<line x1="405" y1="233" x2="405" y2="311" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="362" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="406.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[3]</text>
+<text x="825" y="142" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">重复索引：必须定义合并</text>
+<circle cx="658" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="658" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">0</text>
+<line x1="658" y1="233" x2="658" y2="311" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="615" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="659.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[0]</text>
+<circle cx="758" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="758" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">1</text>
+<line x1="758" y1="233" x2="658" y2="311" stroke="#B74836" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="715" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="759.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[1]</text>
+<circle cx="858" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="858" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">2</text>
+<line x1="858" y1="233" x2="858" y2="311" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="815" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="859.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[2]</text>
+<circle cx="958" cy="205" r="23" fill="#E7F1F8" stroke="#246B96" stroke-width="2"/>
+<text x="958" y="211.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">3</text>
+<line x1="958" y1="233" x2="958" y2="311" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="915" y="326" width="88" height="53" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="959.0" y="358.62" font-size="18" fill="#20372F" text-anchor="middle" font-weight="600">out[3]</text>
+<text x="555" y="456" font-size="24" fill="#176B52" text-anchor="middle" font-weight="700">求和 → atomicAdd / 分段归约；稳定输出 → 先计算独占写位置</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">对冲突位置普通写入没有“最后一个输入获胜”的保证；若要求该语义，必须显式组织顺序。</text>
+</g></svg>

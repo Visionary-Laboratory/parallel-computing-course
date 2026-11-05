@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="310" viewBox="0 0 1280 310" role="img" aria-labelledby="title desc">
+<title id="title">扫描块总和：输入长度逐层缩小</title><desc id="desc">1048576项先由4096个block处理，4096个块总和再由16个block处理，16个总和只需一个block，此时停止拆分。最小层输出16个偏移，补齐中间层后输出4096个偏移，再补齐原数组。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="310" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<rect x="16" y="40" width="384" height="143" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="208" y="73" font-size="29" fill="#20372f" font-weight="600" text-anchor="middle">扫描 1,048,576 项</text>
+<text x="208" y="115" font-size="24" fill="#20372f" font-weight="400" text-anchor="middle">4,096 个 block × 256线程</text>
+<text x="208" y="155" font-size="22" fill="#5b6c65" font-weight="400" text-anchor="middle">产生 4,096 个块总和</text>
+<rect x="448" y="40" width="384" height="143" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="640" y="73" font-size="29" fill="#20372f" font-weight="600" text-anchor="middle">扫描 4,096 项</text>
+<text x="640" y="115" font-size="24" fill="#20372f" font-weight="400" text-anchor="middle">16 个 block × 256线程</text>
+<text x="640" y="155" font-size="22" fill="#5b6c65" font-weight="400" text-anchor="middle">产生 16 个块总和</text>
+<rect x="880" y="40" width="384" height="143" rx="8" fill="#edf2fa" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1072" y="73" font-size="29" fill="#20372f" font-weight="600" text-anchor="middle">扫描 16 项</text>
+<text x="1072" y="115" font-size="24" fill="#20372f" font-weight="400" text-anchor="middle">1 个 block × 256线程</text>
+<text x="1072" y="155" font-size="22" fill="#326a91" font-weight="400" text-anchor="middle">一块即可完成，停止拆分</text>
+<path d="M403 109 L445 109" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M835 109 L877 109" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="640" y="28" font-size="24" fill="#5b6c65" font-weight="400" text-anchor="middle">向右：把块总和当成更短的新输入</text>
+<path d="M1072 197 L1072 230" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1065 230 L652 230" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="855" y="217" font-size="23" fill="#326a91" font-weight="400" text-anchor="middle">16个偏移</text>
+<path d="M632 230 L219 230" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="425" y="217" font-size="23" fill="#326a91" font-weight="400" text-anchor="middle">4096个偏移</text>
+<text x="640" y="283" font-size="25" fill="#326a91" font-weight="600" text-anchor="middle">向左：用下一层算出的偏移，补齐这一层的所有输出</text>
+</g></svg>

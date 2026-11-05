@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+<title id="title">两个 block 从输入生成两个部分和</title><desc id="desc">输入为1到16，两个block各有4线程。线程按步长8读取并私有累加；block0的local为10、12、14、16，block1为18、20、22、24。每块写入各自shared数组，块内同步并归约为52和84，分别写入显存partial。下一次kernel再汇总为136。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5b6c65"/></marker></defs>
+<rect width="1280" height="440" fill="white"/>
+<g font-family="Arial, Microsoft YaHei, PingFang SC, sans-serif" fill="#20372f">
+<text x="88" y="96" font-size="23" fill="#20372f" font-weight="600" text-anchor="middle">① 各线程累加</text>
+<text x="88" y="128" font-size="21" fill="#5b6c65" font-weight="400" text-anchor="middle">local：私有</text>
+<text x="88" y="210" font-size="23" fill="#20372f" font-weight="600" text-anchor="middle">② 写入 s[]</text>
+<text x="88" y="242" font-size="19" fill="#5b6c65" font-weight="400" text-anchor="middle">shared：每块一份</text>
+<text x="88" y="354" font-size="23" fill="#20372f" font-weight="600" text-anchor="middle">③ 写 partial</text>
+<text x="88" y="384" font-size="20" fill="#5b6c65" font-weight="400" text-anchor="middle">显存：每块一项</text>
+<rect x="190" y="10" width="520" height="300" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="450" y="42" font-size="25" fill="#20372f" font-weight="600" text-anchor="middle">block 0 · 4 个线程</text>
+<rect x="201" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="258" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 0</text>
+<text x="258" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">1+9=10</text>
+<path d="M258 149 L258 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="201" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="258" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[0]</text>
+<text x="258" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">10</text>
+<rect x="329" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="386" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 1</text>
+<text x="386" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">2+10=12</text>
+<path d="M386 149 L386 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="329" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="386" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[1]</text>
+<text x="386" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">12</text>
+<rect x="457" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="514" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 2</text>
+<text x="514" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">3+11=14</text>
+<path d="M514 149 L514 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="457" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="514" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[2]</text>
+<text x="514" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">14</text>
+<rect x="585" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="642" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 3</text>
+<text x="642" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">4+12=16</text>
+<path d="M642 149 L642 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="585" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="642" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[3]</text>
+<text x="642" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">16</text>
+<text x="450" y="287" font-size="23" fill="#20372f" font-weight="600" text-anchor="middle">同步后在本块内合并 → s[0] = 52</text>
+<path d="M450 311 L450 337" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="190" y="345" width="520" height="48" rx="8" fill="#fff6e7" stroke="#d6b67e" stroke-width="1.5"/>
+<text x="450" y="377" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">partial[0] = 52</text>
+<rect x="735" y="10" width="520" height="300" rx="8" fill="#f7faf8" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="995" y="42" font-size="25" fill="#20372f" font-weight="600" text-anchor="middle">block 1 · 4 个线程</text>
+<rect x="746" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="803" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 0</text>
+<text x="803" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">5+13=18</text>
+<path d="M803 149 L803 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="746" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="803" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[0]</text>
+<text x="803" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">18</text>
+<rect x="874" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="931" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 1</text>
+<text x="931" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">6+14=20</text>
+<path d="M931 149 L931 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="874" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="931" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[1]</text>
+<text x="931" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">20</text>
+<rect x="1002" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1059" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 2</text>
+<text x="1059" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">7+15=22</text>
+<path d="M1059 149 L1059 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1002" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1059" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[2]</text>
+<text x="1059" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">22</text>
+<rect x="1130" y="62" width="114" height="80" rx="8" fill="#edf2fa" stroke="#c6d4e3" stroke-width="1.5"/>
+<text x="1187" y="90" font-size="21" fill="#326a91" font-weight="400" text-anchor="middle">t = 3</text>
+<text x="1187" y="124" font-size="22" fill="#20372f" font-weight="600" text-anchor="middle">8+16=24</text>
+<path d="M1187 149 L1187 181" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1130" y="190" width="114" height="58" rx="8" fill="#eaf4ee" stroke="#b7cfc0" stroke-width="1.5"/>
+<text x="1187" y="214" font-size="18" fill="#5b6c65" font-weight="400" text-anchor="middle">s[3]</text>
+<text x="1187" y="240" font-size="24" fill="#176b52" font-weight="700" text-anchor="middle">24</text>
+<text x="995" y="287" font-size="23" fill="#20372f" font-weight="600" text-anchor="middle">同步后在本块内合并 → s[0] = 84</text>
+<path d="M995 311 L995 337" fill="none" stroke="#5b6c65" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="735" y="345" width="520" height="48" rx="8" fill="#fff6e7" stroke="#d6b67e" stroke-width="1.5"/>
+<text x="995" y="377" font-size="27" fill="#20372f" font-weight="600" text-anchor="middle">partial[1] = 84</text>
+<text x="720" y="429" font-size="23" fill="#5b6c65" font-weight="400" text-anchor="middle">本次 kernel 得到两个部分和；下一次 kernel 再合并：52 + 84 = 136</text>
+</g></svg>
