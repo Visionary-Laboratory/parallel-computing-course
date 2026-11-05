@@ -39,7 +39,7 @@
       "id": "novel-view",
       "topic": "task",
       "title": "拍过的照片，怎样变成没有拍过的视角？",
-      "html": "<p>围着一个静态场景拍摄多张照片。现在移动一台虚拟相机，希望得到这个新位置应当看到的图像。这叫<strong>新视角合成</strong>。相机移动后，遮挡、物体的投影位置与外观都会改变。</p>\n<figure><img src=\"../../materials/lectures/3dgs/scene.svg\" width=\"800\" height=\"300\" alt=\"同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。\" loading=\"lazy\"><figcaption>同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。</figcaption></figure>\n<p>3D Gaussian Splatting（3DGS）用一组可优化的三维高斯描述场景，再把它们投影、合成为图像。先到<a href=\"https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/\" target=\"_blank\" rel=\"noreferrer\">原论文项目页</a>观察真实场景视频，再带着“每一帧如何算出来”回到本讲。</p>\n<div class=\"takeaway\">本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。</div>",
+      "html": "<p>围着一个静态场景拍摄多张照片。现在移动一台虚拟相机，希望得到这个新位置应当看到的图像。这叫<strong>新视角合成</strong>。相机移动后，遮挡、物体的投影位置与外观都会改变。</p>\n<figure><a href=\"../../materials/lectures/3dgs/scene.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/scene.svg\" width=\"800\" height=\"300\" alt=\"同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。\" loading=\"lazy\"></a><figcaption>同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。</figcaption></figure>\n<p>3D Gaussian Splatting（3DGS）用一组可优化的三维高斯描述场景，再把它们投影、合成为图像。先到<a href=\"https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/\" target=\"_blank\" rel=\"noreferrer\">原论文项目页</a>观察真实场景视频，再带着“每一帧如何算出来”回到本讲。</p>\n<div class=\"takeaway\">本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。</div>",
       "refs": [
         "project",
         "paper"
@@ -60,7 +60,7 @@
       "id": "route",
       "topic": "task",
       "title": "沿一帧图像，串起前面学过的并行思想",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。\" loading=\"lazy\"><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">已有知识</th><th scope=\"col\">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>\n<div class=\"takeaway\">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。\" loading=\"lazy\"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">已有知识</th><th scope=\"col\">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>\n<div class=\"takeaway\">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div>",
       "refs": [],
       "deep": false
     },
@@ -68,7 +68,7 @@
       "id": "point-to-splat",
       "topic": "representation",
       "title": "一个点的位置，还不足以覆盖一块表面",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/point-splat.svg\" width=\"800\" height=\"285\" alt=\"左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。\" loading=\"lazy\"><figcaption>左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。</figcaption></figure>\n<p>一个点只告诉我们“在哪里”。为它增加空间尺度与方向，就能描述一个有范围的局部贡献：中心附近强，离中心越远越弱。</p>\n<p>图中的椭圆或椭球是等值线 / 等值面。高斯并不是边界坚硬的小球，也不是固定大小的方形像素。多个高斯可以重叠，共同描述同一片区域。</p>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/point-splat.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/point-splat.svg\" width=\"800\" height=\"285\" alt=\"左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。\" loading=\"lazy\"></a><figcaption>左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。</figcaption></figure>\n<p>一个点只告诉我们“在哪里”。为它增加空间尺度与方向，就能描述一个有范围的局部贡献：中心附近强，离中心越远越弱。</p>\n<p>图中的椭圆或椭球是等值线 / 等值面。高斯并不是边界坚硬的小球，也不是固定大小的方形像素。多个高斯可以重叠，共同描述同一片区域。</p>",
       "refs": [
         "paper"
       ],
@@ -137,7 +137,7 @@
       "id": "camera-coordinates",
       "topic": "projection",
       "title": "先把中心变换到相机坐标系",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/camera.svg\" width=\"800\" height=\"265\" alt=\"世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。\" loading=\"lazy\"><figcaption>世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。</figcaption></figure>\n<div class=\"equation\" role=\"math\">μ_c = R_c μ_w + t_c</div>\n<p>世界坐标描述场景中的固定位置；相机坐标描述相对当前相机的位置。用 Z_c 表示沿相机前向的深度。相机动了，同一高斯的相机坐标与排序深度就可能改变。</p>\n<div class=\"takeaway\">相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/camera.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/camera.svg\" width=\"800\" height=\"265\" alt=\"世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。\" loading=\"lazy\"></a><figcaption>世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。</figcaption></figure>\n<div class=\"equation\" role=\"math\">μ_c = R_c μ_w + t_c</div>\n<p>世界坐标描述场景中的固定位置；相机坐标描述相对当前相机的位置。用 Z_c 表示沿相机前向的深度。相机动了，同一高斯的相机坐标与排序深度就可能改变。</p>\n<div class=\"takeaway\">相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</div>",
       "refs": [],
       "deep": false
     },
@@ -153,7 +153,7 @@
       "id": "project-shape",
       "topic": "projection",
       "title": "投影一个高斯，不能只投影中心",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/projection.svg\" width=\"800\" height=\"310\" alt=\"同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。\" loading=\"lazy\"><figcaption>同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。</figcaption></figure>\n<p>如果所有中心都画成固定半径的圆，就丢掉了三维尺度、旋转与透视变化。除了中心 μ₂D，还需要得到屏幕上的二维协方差 Σ₂D。</p>\n<p>透视包含除法，是非线性映射。原始方法在高斯中心附近做局部线性近似，用这个小范围内的“变化率”来传播形状。</p>\n<div class=\"takeaway\">“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/projection.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/projection.svg\" width=\"800\" height=\"310\" alt=\"同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。\" loading=\"lazy\"></a><figcaption>同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。</figcaption></figure>\n<p>如果所有中心都画成固定半径的圆，就丢掉了三维尺度、旋转与透视变化。除了中心 μ₂D，还需要得到屏幕上的二维协方差 Σ₂D。</p>\n<p>透视包含除法，是非线性映射。原始方法在高斯中心附近做局部线性近似，用这个小范围内的“变化率”来传播形状。</p>\n<div class=\"takeaway\">“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。</div>",
       "refs": [
         "paper"
       ],
@@ -241,7 +241,7 @@
       "id": "blend-code",
       "topic": "compositing",
       "title": "把像素合成写成一段短循环",
-      "html": "<pre><code>// 教学伪代码：list 已按前到后排序；无阈值近似\nColor C = {0, 0, 0};\nfloat T = 1;\nfor (int id : list) {\n    float alpha = opacity[id] * gaussian_weight(id, pixel);\n    C += T * alpha * color[id];\n    T *= 1 - alpha;\n}\nimage[pixel] = C + T * background;</code></pre>\n<p>不同像素可以同时执行自己的循环；同一像素在这个实现中沿排序列表依次更新 C 与 T。输入已经排序是这段代码的前提。</p>",
+      "html": "<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// 教学伪代码：list 已按前到后排序；无阈值近似\nColor C = {0, 0, 0};\nfloat T = 1;\nfor (int id : list) {\n    float alpha = opacity[id] * gaussian_weight(id, pixel);\n    C += T * alpha * color[id];\n    T *= 1 - alpha;\n}\nimage[pixel] = C + T * background;</code></pre></div>\n<p>不同像素可以同时执行自己的循环；同一像素在这个实现中沿排序列表依次更新 C 与 T。输入已经排序是这段代码的前提。</p>",
       "refs": [],
       "deep": false
     },
@@ -249,7 +249,7 @@
       "id": "exercise-blend",
       "topic": "compositing",
       "title": "随堂填空 ①：只补两行，保持前后关系",
-      "html": "<p>约 2 分钟。初始 C=0、T=1；红色 α=0.5 在前，蓝色 α=0.5 在后，黑色背景。</p>\n<pre><code>for (Gaussian g : front_to_back) {\n    float a = alpha_at(g, pixel);\n    C += __________;\n    T  = __________;\n}</code></pre>\n<p>补全表达式，并给出最终 RGB 与 T。若先更新 T 再计算 C，会发生什么？</p>\n<details class=\"answer\"><summary>查看参考答案</summary><div><p><code>C += T * a * g.color;</code>，<code>T = T * (1-a);</code>。结果 RGB=(0.5,0,0.25)，T=0.25。先更新 T 会把当前高斯也当成其自身前方的遮挡，低估本次贡献。</p></div></details>",
+      "html": "<p>约 2 分钟。初始 C=0、T=1；红色 α=0.5 在前，蓝色 α=0.5 在后，黑色背景。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>for (Gaussian g : front_to_back) {\n    float a = alpha_at(g, pixel);\n    C += __________;\n    T  = __________;\n}</code></pre></div>\n<p>补全表达式，并给出最终 RGB 与 T。若先更新 T 再计算 C，会发生什么？</p>\n<details class=\"answer\"><summary>显示参考答案</summary><div><h3 class=\"answer-print-title\">参考答案</h3><p><code>C += T * a * g.color;</code>，<code>T = T * (1-a);</code>。结果 RGB=(0.5,0,0.25)，T=0.25。先更新 T 会把当前高斯也当成其自身前方的遮挡，低估本次贡献。</p></div></details>",
       "refs": [],
       "deep": false
     },
@@ -265,7 +265,7 @@
       "id": "naive-cost",
       "topic": "tiles",
       "title": "最直接的方法，为什么会做太多无用工作？",
-      "html": "<pre><code>parallel_for pixel in image:\n    for gaussian in all_gaussians_in_depth_order:\n        evaluate_and_blend(pixel, gaussian)</code></pre>\n<p>设有 P 个像素、N 个高斯，最直接的候选检查量为 P×N。1920×1080 像素与 100 万个高斯，对应约 2.07×10¹² 对组合；其中很多在屏幕上相距很远。</p>\n<div class=\"takeaway\">第一步优化不是把同样多的检查发给更多线程，而是让每个像素只访问附近的候选高斯。</div>",
+      "html": "<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>parallel_for pixel in image:\n    for gaussian in all_gaussians_in_depth_order:\n        evaluate_and_blend(pixel, gaussian)</code></pre></div>\n<p>设有 P 个像素、N 个高斯，最直接的候选检查量为 P×N。1920×1080 像素与 100 万个高斯，对应约 2.07×10¹² 对组合；其中很多在屏幕上相距很远。</p>\n<div class=\"takeaway\">第一步优化不是把同样多的检查发给更多线程，而是让每个像素只访问附近的候选高斯。</div>",
       "refs": [],
       "deep": false
     },
@@ -312,7 +312,7 @@
       "id": "exercise-offset",
       "topic": "tiles",
       "title": "随堂填空 ②：给每个高斯一段独占空间",
-      "html": "<p>约 2 分钟。换一组覆盖数量 <code>count=[2,0,3,1]</code>，含一个不可见高斯。</p>\n<pre><code>offset = [0, __, __, __]\ntotal  = __\nparallel_for g in gaussians:\n    for j in range(count[g]):\n        output[__________] = pair(g, its_tiles[g][j])</code></pre>\n<p>哪两个高斯可以具有相同的 offset？为什么不会产生写冲突？</p>\n<details class=\"answer\"><summary>查看参考答案</summary><div><p>offset=[0,2,2,5]，total=6，写入地址为 <code>offset[g]+j</code>。G₁ 和 G₂ 起点同为 2，但 G₁ 的数量为零，不执行写入；G₂ 写 [2,5)。</p></div></details>",
+      "html": "<p>约 2 分钟。换一组覆盖数量 <code>count=[2,0,3,1]</code>，含一个不可见高斯。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>offset = [0, __, __, __]\ntotal  = __\nparallel_for g in gaussians:\n    for j in range(count[g]):\n        output[__________] = pair(g, its_tiles[g][j])</code></pre></div>\n<p>哪两个高斯可以具有相同的 offset？为什么不会产生写冲突？</p>\n<details class=\"answer\"><summary>显示参考答案</summary><div><h3 class=\"answer-print-title\">参考答案</h3><p>offset=[0,2,2,5]，total=6，写入地址为 <code>offset[g]+j</code>。G₁ 和 G₂ 起点同为 2，但 G₁ 的数量为零，不执行写入；G₂ 写 [2,5)。</p></div></details>",
       "refs": [],
       "deep": false
     },
@@ -341,7 +341,7 @@
       "id": "tile-ranges",
       "topic": "tiles",
       "title": "找到每个 Tile 的起止位置，交给渲染器",
-      "html": "<div class=\"equation\" role=\"math\">sorted IDs = [G₀, G₀,G₁, G₀, G₀,G₂,G₁, G₂, G₂, G₂, G₃]</div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">Tile</th><th scope=\"col\">范围 [begin,end)</th><th scope=\"col\">列表长度</th></tr></thead><tbody><tr><td>0</td><td>[0,1)</td><td>1</td></tr><tr><td>1</td><td>[1,3)</td><td>2</td></tr><tr><td>4</td><td>[3,4)</td><td>1</td></tr><tr><td>5</td><td>[4,7)</td><td>3</td></tr><tr><td>15</td><td>[10,11)</td><td>1</td></tr></tbody></table></div>\n<p>比较相邻排序记录的 Tile ID，边界处写出范围。没有记录的 Tile 保持空范围，渲染时输出背景。</p>\n<figure><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。\" loading=\"lazy\"><figcaption>投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。</figcaption></figure>\n<div class=\"takeaway\">阶段之间存在数据依赖。同一 CUDA stream 中按顺序提交这些操作即可建立执行顺序；无需在每一阶段都让 CPU 等待。</div>",
+      "html": "<div class=\"equation\" role=\"math\">sorted IDs = [G₀, G₀,G₁, G₀, G₀,G₂,G₁, G₂, G₂, G₂, G₃]</div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">Tile</th><th scope=\"col\">范围 [begin,end)</th><th scope=\"col\">列表长度</th></tr></thead><tbody><tr><td>0</td><td>[0,1)</td><td>1</td></tr><tr><td>1</td><td>[1,3)</td><td>2</td></tr><tr><td>4</td><td>[3,4)</td><td>1</td></tr><tr><td>5</td><td>[4,7)</td><td>3</td></tr><tr><td>15</td><td>[10,11)</td><td>1</td></tr></tbody></table></div>\n<p>比较相邻排序记录的 Tile ID，边界处写出范围。没有记录的 Tile 保持空范围，渲染时输出背景。</p>\n<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。\" loading=\"lazy\"></a><figcaption>投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。</figcaption></figure>\n<div class=\"takeaway\">阶段之间存在数据依赖。同一 CUDA stream 中按顺序提交这些操作即可建立执行顺序；无需在每一阶段都让 CPU 等待。</div>",
       "refs": [
         "pipeline"
       ],
@@ -361,7 +361,7 @@
       "id": "block-mapping",
       "topic": "execution",
       "title": "一个 Tile 一个 Block，一个像素一个线程",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/ownership.svg\" width=\"800\" height=\"340\" alt=\"64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。\" loading=\"lazy\"><figcaption>64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。</figcaption></figure>\n<pre><code>// 本讲采用 x 对应列、y 对应行\nint x = blockIdx.x * 16 + threadIdx.x;\nint y = blockIdx.y * 16 + threadIdx.y;\nbool inside = x &lt; width &amp;&amp; y &lt; height;</code></pre>\n<p>每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。</p>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/ownership.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/ownership.svg\" width=\"800\" height=\"340\" alt=\"64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。\" loading=\"lazy\"></a><figcaption>64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。</figcaption></figure>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// 本讲采用 x 对应列、y 对应行\nint x = blockIdx.x * 16 + threadIdx.x;\nint y = blockIdx.y * 16 + threadIdx.y;\nbool inside = x &lt; width &amp;&amp; y &lt; height;</code></pre></div>\n<p>每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。</p>",
       "refs": [
         "forward"
       ],
@@ -371,7 +371,7 @@
       "id": "shared-load",
       "topic": "execution",
       "title": "同一份高斯参数，让整个 Block 共用",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/shared.svg\" width=\"800\" height=\"345\" alt=\"线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。\" loading=\"lazy\"><figcaption>线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。</figcaption></figure>\n<p>设一批 B 个候选，Tile 有 256 个像素。若每个像素独立重复获取参数，会产生很多重复读取请求。合作加载后，多个像素从 shared 读取同一批屏幕中心、形状与不透明度。</p>\n<p>本讲伪代码把 RGB 也放入 shared 以便展示。官方基线对部分几何参数使用 shared，颜色访问方式应具体看源码。</p>\n<div class=\"takeaway\">减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/shared.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/shared.svg\" width=\"800\" height=\"345\" alt=\"线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。\" loading=\"lazy\"></a><figcaption>线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。</figcaption></figure>\n<p>设一批 B 个候选，Tile 有 256 个像素。若每个像素独立重复获取参数，会产生很多重复读取请求。合作加载后，多个像素从 shared 读取同一批屏幕中心、形状与不透明度。</p>\n<p>本讲伪代码把 RGB 也放入 shared 以便展示。官方基线对部分几何参数使用 shared，颜色访问方式应具体看源码。</p>\n<div class=\"takeaway\">减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。</div>",
       "refs": [
         "forward"
       ],
@@ -381,7 +381,7 @@
       "id": "batch-lifetime",
       "topic": "execution",
       "title": "一块 Shared，分批复用：两道交接不能少",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/barriers.svg\" width=\"800\" height=\"235\" alt=\"批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。\" loading=\"lazy\"><figcaption>批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。</figcaption></figure>\n<p><strong>装入后同步：</strong>确保其他线程写的数据可以读取。<strong>覆盖前同步：</strong>确保旧数据已被所有仍需读取的线程使用完。</p>\n<p>第二道同步可以与下一轮开始处的集体操作合并，但不能凭空消失。同步必须沿一致的 Block 控制流执行。</p>\n<div class=\"takeaway\">把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/barriers.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/barriers.svg\" width=\"800\" height=\"235\" alt=\"批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。\" loading=\"lazy\"></a><figcaption>批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。</figcaption></figure>\n<p><strong>装入后同步：</strong>确保其他线程写的数据可以读取。<strong>覆盖前同步：</strong>确保旧数据已被所有仍需读取的线程使用完。</p>\n<p>第二道同步可以与下一轮开始处的集体操作合并，但不能凭空消失。同步必须沿一致的 Block 控制流执行。</p>\n<div class=\"takeaway\">把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。</div>",
       "refs": [],
       "deep": false
     },
@@ -389,7 +389,7 @@
       "id": "render-pseudocode",
       "topic": "execution",
       "title": "把分工、复用与顺序放进同一个循环",
-      "html": "<pre><code>// 教学伪代码；所有线程执行外层循环和 barrier\nbool done = !inside;\nC = 0; T = 1;\nfor (batch in tile_sorted_list) {\n    if (block_all(done)) break; // 全块投票，统一退出\n    load_batch_cooperatively(shared, batch); // done 线程也参加\n    block_barrier();\n    if (!done) {\n        for (g in valid_entries(shared)) {\n            a = alpha_at(g, pixel);\n            C += T * a * g.color;\n            T *= (1 - a);\n            if (T &lt; epsilon) { done = true; break; }\n        }\n    }\n    block_barrier(); // 等大家读完，才可覆盖 shared\n}\nif (inside) image[pixel] = C + T * background;</code></pre>\n<p>这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。</p>",
+      "html": "<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// 教学伪代码；所有线程执行外层循环和 barrier\nbool done = !inside;\nC = 0; T = 1;\nfor (batch in tile_sorted_list) {\n    if (block_all(done)) break; // 全块投票，统一退出\n    load_batch_cooperatively(shared, batch); // done 线程也参加\n    block_barrier();\n    if (!done) {\n        for (g in valid_entries(shared)) {\n            a = alpha_at(g, pixel);\n            C += T * a * g.color;\n            T *= (1 - a);\n            if (T &lt; epsilon) { done = true; break; }\n        }\n    }\n    block_barrier(); // 等大家读完，才可覆盖 shared\n}\nif (inside) image[pixel] = C + T * background;</code></pre></div>\n<p>这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。</p>",
       "refs": [
         "forward"
       ],
@@ -409,7 +409,7 @@
       "id": "exercise-sync",
       "topic": "execution",
       "title": "随堂填空 ③：把同步放在所有参与者都会经过的位置",
-      "html": "<p>约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 <code>if (done) return;</code>。</p>\n<pre><code>for (batch in batches) {\n    load_batch_cooperatively(shared, batch);\n    __________;              // 开始读之前\n    if (!done) blend_pixel(shared);\n    __________;              // 下一轮覆盖之前\n}</code></pre>\n<details class=\"answer\"><summary>查看参考答案</summary><div><p>两处都需要 Block 级 barrier（CUDA 中可用 <code>__syncthreads()</code>），并放在 <code>if (!done)</code> 外。这里不能让 done 线程自行 return：它还可能承担后续批次的加载，其他线程也依赖一致的协作协议。统一的全块退出需另行设计。</p></div></details>",
+      "html": "<p>约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 <code>if (done) return;</code>。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>for (batch in batches) {\n    load_batch_cooperatively(shared, batch);\n    __________;              // 开始读之前\n    if (!done) blend_pixel(shared);\n    __________;              // 下一轮覆盖之前\n}</code></pre></div>\n<details class=\"answer\"><summary>显示参考答案</summary><div><h3 class=\"answer-print-title\">参考答案</h3><p>两处都需要 Block 级 barrier（CUDA 中可用 <code>__syncthreads()</code>），并放在 <code>if (!done)</code> 外。这里不能让 done 线程自行 return：它还可能承担后续批次的加载，其他线程也依赖一致的协作协议。统一的全块退出需另行设计。</p></div></details>",
       "refs": [],
       "deep": false
     },
@@ -417,7 +417,7 @@
       "id": "uneven-work",
       "topic": "execution",
       "title": "相同的线程数，不代表相同的工作量",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/imbalance.svg\" width=\"800\" height=\"330\" alt=\"不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。\" loading=\"lazy\"><figcaption>不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。</figcaption></figure>\n<p>空背景 Tile 很快结束，复杂边缘可能覆盖很多高斯。即使同一 Tile 内，一些像素早已不透明，另一些仍在处理后方内容。</p>\n<p>Warp 内的分支让部分 lane 不再做合成，但这些线程仍可能参加加载和同步。整块何时结束，还取决于未完成的像素。</p>\n<div class=\"takeaway\">看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/imbalance.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/imbalance.svg\" width=\"800\" height=\"330\" alt=\"不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。\" loading=\"lazy\"></a><figcaption>不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。</figcaption></figure>\n<p>空背景 Tile 很快结束，复杂边缘可能覆盖很多高斯。即使同一 Tile 内，一些像素早已不透明，另一些仍在处理后方内容。</p>\n<p>Warp 内的分支让部分 lane 不再做合成，但这些线程仍可能参加加载和同步。整块何时结束，还取决于未完成的像素。</p>\n<div class=\"takeaway\">看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。</div>",
       "refs": [],
       "deep": false
     },
@@ -454,7 +454,7 @@
       "id": "training-loop",
       "topic": "learning",
       "title": "渲染器怎样成为一个可学习的模型？",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/training.svg\" width=\"800\" height=\"225\" alt=\"选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。\" loading=\"lazy\"><figcaption>选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。</figcaption></figure>\n<div class=\"equation\" role=\"math\">L = (1 − λ)L₁ + λ(1 − SSIM)</div>\n<p>原始方法组合像素 L₁ 损失与结构相似性项。可先把 L 理解为“当前渲染与训练照片的差异”。选一个训练相机，计算一次损失，再把梯度传回高斯。</p>\n<p>要评估新视角能力，应另外使用未参加训练的相机图像；记住训练照片不等于学会所有新视角。</p>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/training.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/training.svg\" width=\"800\" height=\"225\" alt=\"选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。\" loading=\"lazy\"></a><figcaption>选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。</figcaption></figure>\n<div class=\"equation\" role=\"math\">L = (1 − λ)L₁ + λ(1 − SSIM)</div>\n<p>原始方法组合像素 L₁ 损失与结构相似性项。可先把 L 理解为“当前渲染与训练照片的差异”。选一个训练相机，计算一次损失，再把梯度传回高斯。</p>\n<p>要评估新视角能力，应另外使用未参加训练的相机图像；记住训练照片不等于学会所有新视角。</p>",
       "refs": [
         "paper",
         "training"
@@ -476,7 +476,7 @@
       "id": "backward-scatter",
       "topic": "learning",
       "title": "前向一个像素一个所有者，反向却会汇到同一高斯",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/gradients.svg\" width=\"800\" height=\"340\" alt=\"前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。\" loading=\"lazy\"><figcaption>前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。</figcaption></figure>\n<p>一个高斯覆盖多个像素甚至多个 Tile。每个像素算出的梯度都是总梯度的一部分，需要归约到同一个高斯参数上。</p>\n<p>基线反向 kernel 使用原子加来汇集一些参数梯度。这里的相加具有归约意义，与前向不允许乱序的透明颜色合成是不同问题。浮点归约次序仍可能影响末位舍入。</p>\n<div class=\"takeaway\">同一个算法，前向和反向的读写冲突结构可以不同。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/gradients.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/gradients.svg\" width=\"800\" height=\"340\" alt=\"前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。\" loading=\"lazy\"></a><figcaption>前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。</figcaption></figure>\n<p>一个高斯覆盖多个像素甚至多个 Tile。每个像素算出的梯度都是总梯度的一部分，需要归约到同一个高斯参数上。</p>\n<p>基线反向 kernel 使用原子加来汇集一些参数梯度。这里的相加具有归约意义，与前向不允许乱序的透明颜色合成是不同问题。浮点归约次序仍可能影响末位舍入。</p>\n<div class=\"takeaway\">同一个算法，前向和反向的读写冲突结构可以不同。</div>",
       "refs": [
         "backward"
       ],
@@ -486,7 +486,7 @@
       "id": "density-control",
       "topic": "learning",
       "title": "只有移动参数还不够：还要增加、拆分与删除",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/density.svg\" width=\"800\" height=\"235\" alt=\"克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。\" loading=\"lazy\"><figcaption>克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。</figcaption></figure>\n<p>如果某一区域的表示不足，仅微调现有高斯可能不够。原始方法结合视空间位置梯度统计与尺度，决定哪些高斯适合克隆或拆分，并移除不透明度过低等不需要的基元。</p>\n<p>这些是周期性的自适应密度控制操作，不是在每次普通梯度更新中把数组长度连续地“求导出来”。</p>\n<div class=\"takeaway\">高斯数增加可能改善质量，也可能增加显存、分组与渲染成本。数量与质量不是单调的一一对应。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/density.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/density.svg\" width=\"800\" height=\"235\" alt=\"克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。\" loading=\"lazy\"></a><figcaption>克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。</figcaption></figure>\n<p>如果某一区域的表示不足，仅微调现有高斯可能不够。原始方法结合视空间位置梯度统计与尺度，决定哪些高斯适合克隆或拆分，并移除不透明度过低等不需要的基元。</p>\n<p>这些是周期性的自适应密度控制操作，不是在每次普通梯度更新中把数组长度连续地“求导出来”。</p>\n<div class=\"takeaway\">高斯数增加可能改善质量，也可能增加显存、分组与渲染成本。数量与质量不是单调的一一对应。</div>",
       "refs": [
         "paper",
         "model"
@@ -550,7 +550,7 @@
       "id": "summary",
       "topic": "performance",
       "title": "把整帧放回一起：表示、组织与执行",
-      "html": "<figure><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。\" loading=\"lazy\"><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">应该能够解释</th><th scope=\"col\">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、局部 alpha、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>引用膨胀、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>\n<div class=\"takeaway\">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。\" loading=\"lazy\"></a><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">应该能够解释</th><th scope=\"col\">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、局部 alpha、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>引用膨胀、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>\n<div class=\"takeaway\">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>",
       "refs": [],
       "deep": false
     },

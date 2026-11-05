@@ -29,11 +29,11 @@ def note(text): return '<div class="takeaway">' + text + '</div>'
 def eq(text): return '<div class="equation" role="math">' + text + '</div>'
 def table(head, rows):
     return '<div class="table-scroll"><table><thead><tr>' + ''.join('<th scope="col">'+c+'</th>' for c in head) + '</tr></thead><tbody>' + ''.join('<tr>'+''.join('<td>'+str(c)+'</td>' for c in row)+'</tr>' for row in rows) + '</tbody></table></div>'
-def code(text): return '<pre><code>' + escape(text.strip()) + '</code></pre>'
+def code(text): return '<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>' + escape(text.strip()) + '</code></pre></div>'
 FIGURE_HEIGHTS = dict(scene=300, pipeline=195, **{'point-splat':285}, camera=265, projection=310, ownership=340, shared=345, barriers=235, imbalance=330, training=225, gradients=340, density=235)
-def fig(name, caption): return f'<figure><img src="../../materials/lectures/3dgs/{name}.svg" width="800" height="{FIGURE_HEIGHTS[name]}" alt="{escape(caption, quote=True)}" loading="lazy"><figcaption>{caption}</figcaption></figure>'
+def fig(name, caption): return f'<figure><a href="../../materials/lectures/3dgs/{name}.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/{name}.svg" width="800" height="{FIGURE_HEIGHTS[name]}" alt="{escape(caption, quote=True)}" loading="lazy"></a><figcaption>{caption}</figcaption></figure>'
 def demo(name, caption): return f'<div class="demo" data-demo="{name}"></div><p class="caption">{caption}</p>'
-def answer(text): return '<details class="answer"><summary>查看参考答案</summary><div>'+text+'</div></details>'
+def answer(text): return '<details class="answer"><summary>显示参考答案</summary><div><h3 class="answer-print-title">参考答案</h3>'+text+'</div></details>'
 def add(id, topic, title, *body, refs=(), deep=False):
     SLIDES.append(dict(id=id, topic=topic, title=title, html='\n'.join(body), refs=list(refs), deep=deep))
 

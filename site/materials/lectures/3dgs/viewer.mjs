@@ -1,14 +1,29 @@
 import {GAUSSIANS, tilePipeline, composite, gaussian2D} from './model.mjs';
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const body=document.body, slides=$$('.lecture-slide'), params=new URLSearchParams(location.search);
-let mode=['present','print'].includes(params.get('mode'))?params.get('mode'):'read';
-let deep=params.get('deep')==='1', index=0;
-const hashId=()=>{try{return decodeURIComponent(location.hash.slice(1));}catch{return '';}};
+const body=document.body, slides=$$('.lecture-slide');
+let mode='read',deep=false,index=0;
 const visible=()=>slides.filter(s=>deep||!s.classList.contains('deep'));
-if(slides.some(s=>s.id===hashId()&&s.classList.contains('deep')))deep=true;
-const initial=visible().findIndex(s=>s.id===hashId()); if(initial>=0)index=initial;
-
+const hashId=()=>{try{return decodeURIComponent(location.hash.slice(1));}catch{return '';}};
+function readLocation(){
+  const p=new URLSearchParams(location.search),m=p.get('mode');
+  mode=m==='slides'||m==='present'?'present':m==='print'?'print':'read';
+  deep=mode==='print'||p.get('path')==='all'||p.get('deep')==='1';
+  const id=p.get('topic')||hashId(),target=slides.find(s=>s.id===id);
+  if(target?.classList.contains('deep'))deep=true;
+  index=Math.max(0,visible().indexOf(target));
+}
+readLocation();
+const initialId=visible()[index].id;
+function updateURL(s,push=false){
+  if(mode==='print')return;
+  const url=new URL(location.href);
+  ['mode','topic','path','deep','answers'].forEach(key=>url.searchParams.delete(key));
+  if(mode==='present'){url.searchParams.set('mode','slides');url.searchParams.set('topic',s.id);url.hash='';}
+  else if(s)url.hash=s.id;
+  if(deep)url.searchParams.set('path','all');
+  if(url.href!==location.href)history[push?'pushState':'replaceState'](null,'',url);
+}
 function updateContents(keepInView=true){
   const list=visible(), current=list[index];
   $$('.toc-position').forEach(el=>el.textContent=`${index+1} / ${list.length}`);
@@ -16,6 +31,7 @@ function updateContents(keepInView=true){
     const at=list.findIndex(s=>s.id===row.dataset.slide),active=current?.id===row.dataset.slide;
     row.hidden=at<0;row.classList.toggle('is-current',active);
     const link=$('a',row),idea=$('.toc-page-idea',row);
+    link.href=mode==='present'?`?mode=slides&topic=${row.dataset.slide}${deep?'&path=all':''}`:`#${row.dataset.slide}`;
     link.setAttribute('aria-expanded',String(active));
     if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');
     $('.toc-page-number',row).textContent=String(at+1).padStart(2,'0');
@@ -31,107 +47,145 @@ function updateContents(keepInView=true){
 }
 function trackReadingPosition(){
   if(mode!=='read')return;
-  const list=visible(),line=Math.max($('.toolbar').getBoundingClientRect().bottom+24,Math.min(220,innerHeight*.25));
+  const list=visible(),line=Math.min(220,Math.max(110,innerHeight*.25));
   let active=0;
   for(let i=0;i<list.length;i++){if(list[i].getBoundingClientRect().top<=line)active=i;else break;}
-  if(active!==index){index=active;updateContents();}
+  if(active!==index){index=active;updateContents();if(list[index].getBoundingClientRect().top<=line)updateURL(list[index]);}
 }
 let scrollQueued=false;
 window.addEventListener('scroll',()=>{
   if(scrollQueued)return;scrollQueued=true;
   requestAnimationFrame(()=>{scrollQueued=false;trackReadingPosition();});
 },{passive:true});
-
-function updateURL(s) {
-  const url=new URL(location.href);
-  if(mode==='read')url.searchParams.delete('mode');else url.searchParams.set('mode',mode);
-  if(deep)url.searchParams.set('deep','1');else url.searchParams.delete('deep');
-  if(s)url.hash=s.id;
-  history.replaceState(null,'',url);
+function syncAnswers(){
+  $$('.answer').forEach(d=>$('summary',d).textContent=d.open?'收起参考答案':'显示参考答案');
+  const current=visible()[index];
+  $('#prev').disabled=index===0&&!$('.answer[open]',current);
+  $('#next').disabled=index===visible().length-1&&!$('.answer:not([open])',current);
 }
-function fitSlide(){
-  body.style.removeProperty('--slide-scale');
-  if(mode!=='present'||window.innerWidth<900)return;
-  const slide=visible()[index];
-  const available=window.innerHeight-$('.toolbar').getBoundingClientRect().height-$('.presentation-controls').getBoundingClientRect().height-32;
-  const natural=slide.getBoundingClientRect().height;
-  if(natural>available)body.style.setProperty('--slide-scale',String(Math.max(.45,available/natural)));
-}
-function render(focus=false) {
+function render(focus=false){
   const list=visible();index=Math.max(0,Math.min(index,list.length-1));
-  body.classList.toggle('hide-deep',!deep);
-  body.classList.toggle('present',mode==='present');
-  body.classList.toggle('print-mode',mode==='print');
-  $('#read').setAttribute('aria-pressed',String(mode==='read'));
-  $('#present').setAttribute('aria-pressed',String(mode==='present'));
+  body.classList.toggle('hide-deep',!deep);body.classList.toggle('present',mode==='present');body.classList.toggle('print-mode',mode==='print');
+  for(const id of ['read','present']){const selected=mode===id;$('#'+id).setAttribute('aria-selected',String(selected));$('#'+id).tabIndex=selected?0:-1;}
+  $('#lecture-panel').setAttribute('aria-labelledby',mode==='present'?'present':'read');
   $('#depth').setAttribute('aria-pressed',String(deep));
-  $('#depth').textContent=deep?'收起深入阅读 8 页':'展开深入阅读 8 页';
-  slides.forEach(s=>s.classList.toggle('current',s===list[index]));
+  $('#depth').textContent=deep?'全部内容 · 切回主线':'主线 · 展开深入阅读 8 页';
+  slides.forEach(s=>{
+    const n=list.indexOf(s);s.classList.toggle('current',s===list[index]);
+    $('.page-number',s).textContent=String(n+1).padStart(2,'0');
+    $('.slide-page-count',s).textContent=`${String(n+1).padStart(2,'0')} / ${list.length}`;
+    $('.start-page',s).setAttribute('aria-label',`从第 ${n+1} 页开始浏览`);
+  });
+  $('#reading-count').textContent=`${list.length} 页`;
   $('#progress').value=`${index+1} / ${list.length}`;
-  $('#prev').disabled=index===0;
-  $('#next').disabled=index===list.length-1&&!$('details.answer:not([open])',list[index]);
-  $('#page-select').replaceChildren(...list.map((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=s.dataset.label+' · '+$('h2',s).textContent;o.selected=i===index;return o;}));
-  $('#export').href=`?mode=print${deep?'&deep=1':''}`;
-  if(mode==='present'){
-    updateURL(list[index]);
-    if(focus){window.scrollTo(0,0);list[index].focus({preventScroll:true});}
-  }
-  if(mode==='print'){
-    $$('.answer').forEach(d=>{d.open=$('#print-answers').checked;});
-  }
-  updateContents();
-  fitSlide();
+  $('#slide-progress').max=list.length;$('#slide-progress').value=index+1;
+  $('#slide-status').textContent=`第 ${index+1} 页 · ${$('h2',list[index]).textContent}`;
+  if(mode==='present'&&focus){$('.slide-body',list[index]).scrollTop=0;list[index].focus({preventScroll:true});}
+  if(mode==='print')$$('.answer').forEach(d=>d.open=$('#print-answers').checked);
+  syncAnswers();updateContents();
 }
-function setMode(next) {
-  const active=mode==='read'?slides.find(s=>s.getBoundingClientRect().bottom>155&&!s.matches('.hide-deep .deep')):visible()[index];
-  if(active){const i=visible().indexOf(active);if(i>=0)index=i;}
-  mode=next;render(true);updateURL(visible()[index]);
+function goTo(at,focus=true){
+  index=Math.max(0,Math.min(at,visible().length-1));
+  if(mode==='present')$$('.answer',visible()[index]).forEach(d=>d.open=false);
+  render(focus);updateURL(visible()[index]);
+}
+function setMode(next){
+  if(next===mode)return;
+  mode=next;body.classList.remove('menu-open');$('#menu').setAttribute('aria-expanded','false');
+  if(next==='read'){setFocused(false);if(document.fullscreenElement)document.exitFullscreen();}
+  render(true);updateURL(visible()[index],true);
   if(next==='read')visible()[index].scrollIntoView({behavior:'instant',block:'start'});
+  else window.scrollTo({top:0,behavior:'instant'});
 }
-function next(){const a=$('details.answer:not([open])',visible()[index]);if(a){a.open=true;render();return;}if(index<visible().length-1){index++;render(true);}}
-function prev(){if(index>0){index--;render(true);}}
+function next(){
+  const a=$('.answer:not([open])',visible()[index]);
+  if(a){a.open=true;syncAnswers();a.scrollIntoView({block:'nearest',behavior:'smooth'});return;}
+  if(index<visible().length-1)goTo(index+1);
+}
+function prev(){
+  const a=$$('.answer[open]',visible()[index]).at(-1);
+  if(a){a.open=false;syncAnswers();return;}
+  if(index>0)goTo(index-1);
+}
 $('#read').addEventListener('click',()=>setMode('read'));
 $('#present').addEventListener('click',()=>setMode('present'));
+$('.mode-switch').addEventListener('keydown',e=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+  e.preventDefault();const id=e.key==='Home'?'read':e.key==='End'?'present':e.target.id==='read'?'present':'read';
+  setMode(id);$('#'+id).focus();
+});
+$('#browse').addEventListener('click',()=>{index=0;setMode('present');});
+$$('[data-start]').forEach(b=>b.addEventListener('click',()=>{index=visible().findIndex(s=>s.id===b.dataset.start);setMode('present');}));
 $('#prev').addEventListener('click',prev);$('#next').addEventListener('click',next);
-$('#page-select').addEventListener('change',e=>{index=Number(e.target.value);render(true);});
 $('#depth').addEventListener('click',()=>{
-  const current=visible()[index];deep=!deep;
-  const list=visible();let at=list.indexOf(current);
+  const current=visible()[index];deep=!deep;const list=visible();let at=list.indexOf(current);
   if(at<0){const abs=slides.indexOf(current);at=list.filter(s=>slides.indexOf(s)<abs).length-1;}
-  index=Math.max(0,at);render();updateURL(mode==='present'?visible()[index]:null);
+  index=Math.max(0,at);render();updateURL(list[index]);
+  if(mode==='read')list[index].scrollIntoView({behavior:'instant',block:'start'});
 });
 $$('a[data-target],.slide-label a').forEach(a=>a.addEventListener('click',e=>{
   if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-  const id=a.dataset.target||a.hash.slice(1),target=document.getElementById(id);if(!target)return;
-  e.preventDefault();
-  if(target.classList.contains('deep')&&!deep)deep=true;
+  const target=document.getElementById(a.dataset.target||a.hash.slice(1));if(!target)return;
+  e.preventDefault();if(target.classList.contains('deep'))deep=true;
   if($('#contents-dialog').open)$('#contents-dialog').close();
-  index=visible().indexOf(target);render();
-  if(mode==='present')render(true);else {updateURL(target);target.scrollIntoView({behavior:'smooth',block:'start'});}
+  goTo(visible().indexOf(target),mode==='present');
+  if(mode==='read')target.scrollIntoView({behavior:'instant',block:'start'});
 }));
-window.addEventListener('hashchange',()=>{const target=slides.find(s=>s.id===hashId());if(!target)return;if(target.classList.contains('deep'))deep=true;index=visible().indexOf(target);render();});
+function restoreLocation(){readLocation();render();if(mode==='read')visible()[index].scrollIntoView({behavior:'instant',block:'start'});}
+window.addEventListener('popstate',restoreLocation);window.addEventListener('hashchange',restoreLocation);
 $('#menu').addEventListener('click',()=>{const open=body.classList.toggle('menu-open');$('#menu').setAttribute('aria-expanded',String(open));});
-$('#contents-open').addEventListener('click',()=>{$('#contents-dialog').showModal();updateContents();});
+function openContents(){$('#contents-dialog').showModal();updateContents();$('.is-current a',$('#contents-dialog')).focus({preventScroll:true});}
+for(const id of ['contents-open','presentation-contents','page-picker'])$('#'+id).addEventListener('click',openContents);
 $('#contents-close').addEventListener('click',()=>$('#contents-dialog').close());
 $('#contents-dialog').addEventListener('click',e=>{if(e.target===$('#contents-dialog'))$('#contents-dialog').close();});
-async function fullScreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{$('#status').textContent='当前浏览器未允许全屏，可继续使用演示模式。';}}
+function setFocused(on){
+  body.classList.toggle('focused',on);
+  $('#fullscreen').setAttribute('aria-label',on?'退出全屏演示':'全屏演示');
+  if(on)window.scrollTo({top:0,behavior:'instant'});
+}
+async function fullScreen(){
+  if(body.classList.contains('focused')){setFocused(false);if(document.fullscreenElement)await document.exitFullscreen();return;}
+  setFocused(true);
+  try{await document.documentElement.requestFullscreen();}
+  catch{$('#status').textContent='已进入专注演示。浏览器未允许系统全屏，按 F 或 Escape 返回。';}
+}
 $('#fullscreen').addEventListener('click',fullScreen);
+document.addEventListener('fullscreenchange',()=>{
+  setFocused(!!document.fullscreenElement);
+});
 document.addEventListener('keydown',e=>{
-  if(e.target.closest('input,select,textarea,button,a,summary,[contenteditable]'))return;
-  if(mode==='present'&&e.key==='ArrowRight'){e.preventDefault();next();}
-  if(mode==='present'&&e.key==='ArrowLeft'){e.preventDefault();prev();}
-  if(mode==='present'&&e.key.toLowerCase()==='f'){e.preventDefault();fullScreen();}
-  if(e.key==='Escape'){body.classList.remove('menu-open');$('#menu').setAttribute('aria-expanded','false');}
+  if($('#contents-dialog').open||e.altKey||e.metaKey||e.ctrlKey||e.target.closest('input,select,textarea,[role="tab"],[contenteditable]'))return;
+  if(e.target.closest('button,a,summary')&&[' ','Enter'].includes(e.key))return;
+  if(e.key==='Escape'&&body.classList.contains('menu-open')){body.classList.remove('menu-open');$('#menu').setAttribute('aria-expanded','false');return;}
+  if(mode!=='present')return;
+  if(['ArrowRight','PageDown',' ','ArrowLeft','PageUp','Home','End','Escape','f','F'].includes(e.key))e.preventDefault();
+  if(['ArrowRight','PageDown',' '].includes(e.key))e.shiftKey?prev():next();
+  if(['ArrowLeft','PageUp'].includes(e.key))prev();
+  if(e.key==='Home')goTo(0);if(e.key==='End')goTo(visible().length-1);
+  if(e.key.toLowerCase()==='f')fullScreen();
+  if(e.key==='Escape'){if(body.classList.contains('focused'))fullScreen();else setMode('read');}
 });
-$('#print-answers').checked=params.get('answers')==='1';
+$('#print-answers').checked=new URLSearchParams(location.search).get('answers')==='1';
 $('#print-answers').addEventListener('change',()=>{
-  $$('.answer').forEach(d=>{d.open=$('#print-answers').checked;});
-  const url=new URL(location.href);url.searchParams.set('answers',$('#print-answers').checked?'1':'0');history.replaceState(null,'',url);
+  $$('.answer').forEach(d=>d.open=$('#print-answers').checked);
+  const url=new URL(location.href);url.searchParams.set('answers',$('#print-answers').checked?'1':'0');history.replaceState(null,'',url);syncAnswers();
 });
-$('#print-now').addEventListener('click',()=>window.print());
-$$('.answer').forEach(d=>d.addEventListener('toggle',()=>{if(mode==='present'){$('#next').disabled=index===visible().length-1&&!$('details.answer:not([open])',visible()[index]);fitSlide();}}));
-window.addEventListener('resize',()=>{fitSlide();trackReadingPosition();});
-$$('img').forEach(img=>img.addEventListener('load',fitSlide));
+$('#print-now').addEventListener('click',()=>{ $('#print-status').textContent='请在打印窗口中选择“另存为 PDF”，使用 A4，并关闭页眉和页脚。';window.print();});
+$$('.answer').forEach(d=>d.addEventListener('toggle',syncAnswers));
+$$('.copy-code').forEach(b=>b.addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText($('code',b.closest('.code-block')).textContent);b.textContent='已复制';}
+  catch{b.textContent='复制失败，请手动选择';}
+  setTimeout(()=>b.textContent='复制代码',2000);
+}));
+window.addEventListener('resize',trackReadingPosition);
+async function preparePrint(){
+  const images=$$('img');images.forEach(img=>img.loading='eager');
+  await Promise.allSettled([document.fonts.ready,...images.map(img=>img.decode())]);
+  const failed=images.filter(img=>!img.naturalWidth).length;
+  $('#print-now').disabled=failed>0;
+  $('#print-now').textContent='打印 / 保存为 PDF';
+  $('#print-status').textContent=failed?`${failed} 张图片未加载，请刷新页面后重试。`:'';
+}
 
 const fmt=n=>n.toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
 function ellipseDemo(el){
@@ -191,4 +245,5 @@ function tilesDemo(el){
 }
 $$('[data-demo]').forEach(el=>({ellipse:ellipseDemo,blend:blendDemo,tiles:tilesDemo}[el.dataset.demo]?.(el)));
 render();
-if(mode==='read'&&initial>=0)requestAnimationFrame(()=>visible()[index].scrollIntoView({behavior:'instant'}));
+if(mode==='print')preparePrint();
+if(mode==='read'&&(location.hash||new URLSearchParams(location.search).has('topic')))requestAnimationFrame(()=>document.getElementById(initialId).scrollIntoView({behavior:'instant'}));

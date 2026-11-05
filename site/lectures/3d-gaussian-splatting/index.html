@@ -4,137 +4,202 @@
 <link rel="icon" href="../../favicon.svg"><link rel="stylesheet" href="../../materials/lectures/3dgs/viewer.css">
 <script type="module" src="../../materials/lectures/3dgs/viewer.mjs"></script></head>
 <body class="hide-deep"><a class="skip" href="#main-content">跳转到正文</a>
-<header class="site-header"><a class="brand" href="../../"><span class="brand-mark">▦</span><span>并行计算与算子编程<small>PARALLEL COMPUTING &amp; OPERATOR PROGRAMMING</small></span></a><nav><a href="../../">课程讲义</a><a href="../../glossary/">术语索引</a><span class="institution">人工智能学院</span></nav></header>
-<aside class="course-sidebar" id="course-menu" aria-label="课程目录"><div class="sidebar-title">课程讲义 <span>已公开 6 讲</span></div><a href="../../">课程概览</a><a href="../../glossary/">术语索引</a><div class="nav-label">已公开讲义</div><a href="../01-introduction/"><span>01</span>并行基础与性能模型</a><a href="../02-execution-models/"><span>02</span>并行硬件与执行模型</a><a href="../03-parallel-design/"><span>03</span>并行程序设计思想</a><a href="../04-memory-synchronization/"><span>04</span>缓存一致性与同步实现</a><a href="../05-cuda-introduction/"><span>05</span>CUDA 编程入门</a><a href="../06-memory-hierarchy/"><span>06</span>CUDA 内存层次</a><div class="nav-label">算子案例 · 本地草稿</div><a class="active" href="./" aria-current="page"><span>GS</span>3D Gaussian Splatting</a><p class="sidebar-note">从表示到算法<br>从数据到并行执行</p></aside>
-<div class="workspace"><div class="toolbar"><div class="location"><button id="menu" aria-expanded="false" aria-controls="course-menu" aria-label="切换课程目录">☰</button><span>CASE STUDY <b>3DGS</b></span></div><div class="tools"><button id="depth" aria-pressed="false">展开深入阅读 8 页</button><a id="export" href="?mode=print" target="_blank" rel="noopener">导出 / 打印</a><div class="mode-switch" role="group" aria-label="讲义显示模式"><button id="read" aria-pressed="true">阅读</button><button id="present" aria-pressed="false">演示</button></div></div></div>
-<div class="print-tools"><strong>本讲打印预览</strong><label><input id="print-answers" type="checkbox">包含参考答案</label><button id="print-now">打印 / 保存为 PDF</button><a href="./">返回阅读</a></div>
-<div class="reading-layout"><main id="main-content"><header class="lecture-title"><div class="eyebrow">算子案例 <span>本地草稿</span></div><h1>3D Gaussian Splatting：从三维表示到 GPU 并行渲染</h1><p>沿着一帧图像，理解高斯表示、透明合成、工作分组与 CUDA 协作。</p><div class="metadata">2026-11-04 <span>·</span> 49 页主线 <span>·</span> 8 页深入阅读 <span>·</span> 约 135 分钟</div></header>
+<header class="site-header"><a class="brand" href="../../"><span class="brand-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 10h18M10 3v18"/></svg></span><span>并行计算与算子编程<small>PARALLEL COMPUTING &amp; OPERATOR PROGRAMMING</small></span></a><nav aria-label="网站导航"><a href="../../">课程讲义</a><a href="../../glossary/">术语索引</a><span class="institution">人工智能学院</span></nav></header>
+<aside class="course-sidebar" id="course-menu" aria-label="课程目录"><div class="sidebar-title">课程讲义 <span>已公开 6 讲</span></div><a href="../../"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1v15"/></svg> 课程概览</a><a href="../../glossary/">术语索引</a><div class="nav-label">第一部分 <b>理解并行计算</b></div><a href="../01-introduction/"><span>01</span>并行基础与性能模型<i>●</i></a><a href="../02-execution-models/"><span>02</span>并行硬件与执行模型<i>●</i></a><a href="../03-parallel-design/"><span>03</span>并行程序设计思想<i>●</i></a><a href="../04-memory-synchronization/"><span>04</span>缓存一致性与同步实现<i>●</i></a><div class="nav-label">第二部分 <b>走进 CUDA 编程</b></div><a href="../05-cuda-introduction/"><span>05</span>CUDA 编程入门<i>●</i></a><a href="../06-memory-hierarchy/"><span>06</span>CUDA 内存层次<i>●</i></a><a class="resources-link" href="../../#resources">参考资料 ↗</a><div class="nav-label">算子案例 · 本地草稿</div><a class="active" href="./" aria-current="page"><span>GS</span>3D Gaussian Splatting</a><p class="sidebar-note">公开课程讲义 <span>第一至六讲</span></p></aside>
+<div class="workspace"><div class="breadcrumb"><div><a href="../../">课程讲义</a><span>›</span><span>3D Gaussian Splatting</span></div><span>从阅读到课堂</span></div><div class="toolbar"><div class="location"><button id="menu" aria-expanded="false" aria-controls="course-menu" aria-label="切换课程目录">☰</button><span>CASE STUDY 3DGS</span><span>算子案例</span></div><div class="tools"><a id="export" href="?mode=print" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z"/></svg> 导出本讲 PDF</a><button id="depth" aria-pressed="false">主线 · 展开深入阅读 8 页</button><div class="mode-switch" role="tablist" aria-label="讲义显示模式"><button id="read" role="tab" aria-selected="true" aria-controls="lecture-panel"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1v15"/></svg> 阅读</button><button id="present" role="tab" aria-selected="false" aria-controls="lecture-panel" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 演示</button></div><button id="fullscreen" aria-label="全屏演示" title="全屏演示（F）"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div></div>
+<div class="print-tools"><a href="./">← 返回本讲</a><div><label><input id="print-answers" type="checkbox">包含参考答案</label><button id="print-now" disabled>正在准备图文…</button></div><p>导出本讲全部 57 个主题。选择“另存为 PDF”，建议 A4 纸张、关闭页眉和页脚；交互示例保留静态图文。</p><p id="print-status" role="status"></p></div>
+<div id="lecture-panel" role="tabpanel" aria-labelledby="read"><div class="reading-layout"><main id="main-content"><header class="lecture-title"><div class="eyebrow">算子案例 <span>本地草稿</span></div><h1>3D Gaussian Splatting：从三维表示到 GPU 并行渲染</h1><p>沿着一帧图像，理解高斯表示、透明合成、工作分组与 CUDA 协作。</p><div class="metadata">2026-11-04<br><span id="reading-count">49 页</span> · <button id="browse">逐页浏览 →</button><span class="duration"> · 约 135 分钟</span></div></header>
 <section class="learning-overview"><h2>学完这一讲，你能</h2><ul><li>从高斯参数解释屏幕足迹与前后遮挡</li><li>用计数、Scan 与排序组织 Tile 候选</li><li>追踪 Block 内的装入、同步、合成与结束</li><li>从引用数、像素工作量与质量解释性能取舍</li></ul></section>
 <nav class="topic-overview" aria-label="本讲主题"><a href="#novel-view" data-target="novel-view">从照片到新视角</a><a href="#point-to-splat" data-target="point-to-splat">用高斯表示场景</a><a href="#camera-coordinates" data-target="camera-coordinates">从三维到屏幕</a><a href="#evaluate-alpha" data-target="evaluate-alpha">从覆盖到颜色</a><a href="#naive-cost" data-target="naive-cost">把工作组织成 Tile</a><a href="#block-mapping" data-target="block-mapping">GPU 怎样执行</a><a href="#training-loop" data-target="training-loop">场景怎样学出来</a><a href="#cost-model" data-target="cost-model">性能、质量与总结</a></nav>
 <noscript><p class="takeaway">当前为静态阅读。启用 JavaScript 后可使用演示、交互图示和深入阅读切换。</p><style>.hide-deep .deep{display:block!important}</style></noscript>
-<div id="slides"><section class="lecture-slide" id="novel-view" data-topic="task" data-label="01" tabindex="-1">
-      <div class="slide-label"><span>01 · 从照片到新视角</span><a href="#novel-view" aria-label="链接到：拍过的照片，怎样变成没有拍过的视角？">主题链接 ↗</a></div>
-      <h2>拍过的照片，怎样变成没有拍过的视角？</h2><p>围着一个静态场景拍摄多张照片。现在移动一台虚拟相机，希望得到这个新位置应当看到的图像。这叫<strong>新视角合成</strong>。相机移动后，遮挡、物体的投影位置与外观都会改变。</p>
-<figure><img src="../../materials/lectures/3dgs/scene.svg" width="800" height="300" alt="同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。" loading="lazy"><figcaption>同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。</figcaption></figure>
+<nav class="print-index" aria-label="PDF 主题目录"><h2>本讲目录</h2><ol><li><a href="#novel-view">拍过的照片，怎样变成没有拍过的视角？</a></li><li><a href="#train-vs-render">先分清两件事：学习场景与渲染场景</a></li><li><a href="#route">沿一帧图像，串起前面学过的并行思想</a></li><li><a href="#point-to-splat">一个点的位置，还不足以覆盖一块表面</a></li><li><a href="#gaussian-falloff">从一维开始：距离怎样改变贡献？</a></li><li><a href="#ellipse">二维高斯：拉长、旋转，改变覆盖形状</a></li><li><a href="#gaussian-record">一个三维高斯，需要保存哪些参数？</a></li><li><a href="#covariance">把尺度与旋转组合成协方差</a></li><li><a href="#opacity">不透明度与高斯权重，是两个不同的量</a></li><li><a href="#appearance">为什么颜色可以随观察方向变化？</a></li><li><a href="#camera-coordinates">先把中心变换到相机坐标系</a></li><li><a href="#perspective">透视投影：越远，屏幕位移越小</a></li><li><a href="#project-shape">投影一个高斯，不能只投影中心</a></li><li><a href="#project-covariance">用局部变化率把三维形状带到屏幕</a></li><li><a href="#jacobian">深入：透视雅可比的每一项从哪里来？</a></li><li><a href="#finite-footprint">无限的高斯，有限的候选区域</a></li><li><a href="#preprocess">每高斯预处理：先做一次，供后面反复使用</a></li><li><a href="#evaluate-alpha">先算一个高斯在一个像素上的贡献</a></li><li><a href="#transmittance">前面的覆盖，决定后面还能贡献多少</a></li><li><a href="#blend-demo">追踪一个像素：红、绿、蓝怎样叠加？</a></li><li><a href="#order-matters">交换深度顺序，为什么颜色变了？</a></li><li><a href="#blend-code">把像素合成写成一段短循环</a></li><li><a href="#exercise-blend">随堂填空 ①：只补两行，保持前后关系</a></li><li><a href="#composite-scan">深入：像素内的合成能否使用 Scan？</a></li><li><a href="#naive-cost">最直接的方法，为什么会做太多无用工作？</a></li><li><a href="#pixel-ownership">选择输出所有者：每个像素交给一个线程</a></li><li><a href="#tile-demo">把屏幕分成 Tile，共用一份候选列表</a></li><li><a href="#toy-records">贯穿算例：四个高斯产生多少条引用？</a></li><li><a href="#scan-offsets">数量不一样，先用前缀和分配写出位置</a></li><li><a href="#exercise-offset">随堂填空 ②：给每个高斯一段独占空间</a></li><li><a href="#emit-pairs">并行写出：从每高斯列表变成一串记录</a></li><li><a href="#sort-pairs">一次排序，先按 Tile，再按深度</a></li><li><a href="#tile-ranges">找到每个 Tile 的起止位置，交给渲染器</a></li><li><a href="#sort-key">深入：64 位排序 Key 包含什么？</a></li><li><a href="#block-mapping">一个 Tile 一个 Block，一个像素一个线程</a></li><li><a href="#shared-load">同一份高斯参数，让整个 Block 共用</a></li><li><a href="#batch-lifetime">一块 Shared，分批复用：两道交接不能少</a></li><li><a href="#render-pseudocode">把分工、复用与顺序放进同一个循环</a></li><li><a href="#pixel-done">像素结束，不等于线程可以提前 return</a></li><li><a href="#exercise-sync">随堂填空 ③：把同步放在所有参与者都会经过的位置</a></li><li><a href="#uneven-work">相同的线程数，不代表相同的工作量</a></li><li><a href="#implementation-map">回到源码：我们现在能读懂哪几段？</a></li><li><a href="#termination-error">深入：提前结束，牺牲了多少颜色贡献？</a></li><li><a href="#threshold-order">深入：教学循环与官方阈值次序有什么差别？</a></li><li><a href="#training-loop">渲染器怎样成为一个可学习的模型？</a></li><li><a href="#gradient-path">像素误差，沿哪条链回到高斯参数？</a></li><li><a href="#backward-scatter">前向一个像素一个所有者，反向却会汇到同一高斯</a></li><li><a href="#density-control">只有移动参数还不够：还要增加、拆分与删除</a></li><li><a href="#learned-scene">训练完成，查看一帧时哪些东西还在变化？</a></li><li><a href="#backward-memory">深入：为什么不保存每个像素的完整历史？</a></li><li><a href="#cost-model">不要只数高斯：三个规模决定不同阶段</a></li><li><a href="#tile-tradeoff">Tile 越小一定越快吗？</a></li><li><a href="#measure">怎样设计一组能回答问题的性能实验？</a></li><li><a href="#limits">哪些近似与限制，会在图像中暴露？</a></li><li><a href="#summary">把整帧放回一起：表示、组织与执行</a></li><li><a href="#memory-budget">深入：估算参数与引用缓冲区</a></li><li><a href="#reading">深入：从原始论文到实现的阅读顺序</a></li></ol></nav><div id="slides"><h2 class="topic-heading">从照片到新视角</h2><section class="lecture-slide" id="novel-view" data-topic="task" data-label="01" tabindex="-1">
+      <div class="slide-label"><a href="#novel-view" title="此主题的稳定链接"><span class="page-number">01</span> · 主题链接</a><button class="start-page" data-start="novel-view" aria-label="从01页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从照片到新视角</span></div>
+      <div class="print-page-label">01 / 57 · 从照片到新视角</div>
+      <div class="slide-body"><h2>拍过的照片，怎样变成没有拍过的视角？</h2><p>围着一个静态场景拍摄多张照片。现在移动一台虚拟相机，希望得到这个新位置应当看到的图像。这叫<strong>新视角合成</strong>。相机移动后，遮挡、物体的投影位置与外观都会改变。</p>
+<figure><a href="../../materials/lectures/3dgs/scene.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/scene.svg" width="800" height="300" alt="同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。" loading="lazy"></a><figcaption>同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。</figcaption></figure>
 <p>3D Gaussian Splatting（3DGS）用一组可优化的三维高斯描述场景，再把它们投影、合成为图像。先到<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目页</a>观察真实场景视频，再带着“每一帧如何算出来”回到本讲。</p>
-<div class="takeaway">本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。</div><div class="references">来源与延伸：<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目：视频、场景与效果对照</a> · <a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<div class="takeaway">本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。</div><div class="references">来源与延伸：<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目：视频、场景与效果对照</a> · <a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="train-vs-render" data-topic="task" data-label="02" tabindex="-1">
-      <div class="slide-label"><span>02 · 从照片到新视角</span><a href="#train-vs-render" aria-label="链接到：先分清两件事：学习场景与渲染场景">主题链接 ↗</a></div>
-      <h2>先分清两件事：学习场景与渲染场景</h2><div class="table-scroll"><table><thead><tr><th scope="col">过程</th><th scope="col">输入</th><th scope="col">输出 / 操作</th></tr></thead><tbody><tr><td>学习 / 训练</td><td>多视角照片、相机参数、初始点</td><td>反复渲染并与照片比较，更新高斯参数</td></tr><tr><td>渲染 / 推理</td><td>学好的高斯、一个目标相机</td><td>生成该相机的一帧图像</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#train-vs-render" title="此主题的稳定链接"><span class="page-number">02</span> · 主题链接</a><button class="start-page" data-start="train-vs-render" aria-label="从02页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从照片到新视角</span></div>
+      <div class="print-page-label">02 / 57 · 从照片到新视角</div>
+      <div class="slide-body"><h2>先分清两件事：学习场景与渲染场景</h2><div class="table-scroll"><table><thead><tr><th scope="col">过程</th><th scope="col">输入</th><th scope="col">输出 / 操作</th></tr></thead><tbody><tr><td>学习 / 训练</td><td>多视角照片、相机参数、初始点</td><td>反复渲染并与照片比较，更新高斯参数</td></tr><tr><td>渲染 / 推理</td><td>学好的高斯、一个目标相机</td><td>生成该相机的一帧图像</td></tr></tbody></table></div>
 <p>原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。</p>
-<p>先讲清<strong>固定参数时的一次前向渲染</strong>，再回到如何训练。移动虚拟相机需要重新投影和组织屏幕上的工作，通常不需要重新训练整个场景。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<p>先讲清<strong>固定参数时的一次前向渲染</strong>，再回到如何训练。移动虚拟相机需要重新投影和组织屏幕上的工作，通常不需要重新训练整个场景。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="route" data-topic="task" data-label="03" tabindex="-1">
-      <div class="slide-label"><span>03 · 从照片到新视角</span><a href="#route" aria-label="链接到：沿一帧图像，串起前面学过的并行思想">主题链接 ↗</a></div>
-      <h2>沿一帧图像，串起前面学过的并行思想</h2><figure><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。" loading="lazy"><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>
+      <div class="slide-label"><a href="#route" title="此主题的稳定链接"><span class="page-number">03</span> · 主题链接</a><button class="start-page" data-start="route" aria-label="从03页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从照片到新视角</span></div>
+      <div class="print-page-label">03 / 57 · 从照片到新视角</div>
+      <div class="slide-body"><h2>沿一帧图像，串起前面学过的并行思想</h2><figure><a href="../../materials/lectures/3dgs/pipeline.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。" loading="lazy"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>
 <div class="table-scroll"><table><thead><tr><th scope="col">已有知识</th><th scope="col">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>
-<div class="takeaway">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div>
-    </section><section class="lecture-slide" id="point-to-splat" data-topic="representation" data-label="04" tabindex="-1">
-      <div class="slide-label"><span>04 · 用高斯表示场景</span><a href="#point-to-splat" aria-label="链接到：一个点的位置，还不足以覆盖一块表面">主题链接 ↗</a></div>
-      <h2>一个点的位置，还不足以覆盖一块表面</h2><figure><img src="../../materials/lectures/3dgs/point-splat.svg" width="800" height="285" alt="左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。" loading="lazy"><figcaption>左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。</figcaption></figure>
+<div class="takeaway">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">用高斯表示场景</h2><section class="lecture-slide" id="point-to-splat" data-topic="representation" data-label="04" tabindex="-1">
+      <div class="slide-label"><a href="#point-to-splat" title="此主题的稳定链接"><span class="page-number">04</span> · 主题链接</a><button class="start-page" data-start="point-to-splat" aria-label="从04页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">04 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>一个点的位置，还不足以覆盖一块表面</h2><figure><a href="../../materials/lectures/3dgs/point-splat.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/point-splat.svg" width="800" height="285" alt="左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。" loading="lazy"></a><figcaption>左：只有中心的稀疏点；右：中心带有大小与方向，形成彼此重叠的柔和覆盖。</figcaption></figure>
 <p>一个点只告诉我们“在哪里”。为它增加空间尺度与方向，就能描述一个有范围的局部贡献：中心附近强，离中心越远越弱。</p>
-<p>图中的椭圆或椭球是等值线 / 等值面。高斯并不是边界坚硬的小球，也不是固定大小的方形像素。多个高斯可以重叠，共同描述同一片区域。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<p>图中的椭圆或椭球是等值线 / 等值面。高斯并不是边界坚硬的小球，也不是固定大小的方形像素。多个高斯可以重叠，共同描述同一片区域。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="gaussian-falloff" data-topic="representation" data-label="05" tabindex="-1">
-      <div class="slide-label"><span>05 · 用高斯表示场景</span><a href="#gaussian-falloff" aria-label="链接到：从一维开始：距离怎样改变贡献？">主题链接 ↗</a></div>
-      <h2>从一维开始：距离怎样改变贡献？</h2><div class="equation" role="math">g(x) = exp[−½ ((x − μ) / σ)²]</div>
+      <div class="slide-label"><a href="#gaussian-falloff" title="此主题的稳定链接"><span class="page-number">05</span> · 主题链接</a><button class="start-page" data-start="gaussian-falloff" aria-label="从05页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">05 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>从一维开始：距离怎样改变贡献？</h2><div class="equation" role="math">g(x) = exp[−½ ((x − μ) / σ)²]</div>
 <div class="table-scroll"><table><thead><tr><th scope="col">离中心的距离</th><th scope="col">0</th><th scope="col">σ</th><th scope="col">2σ</th><th scope="col">3σ</th></tr></thead><tbody><tr><td>相对权重</td><td>1.000</td><td>0.607</td><td>0.135</td><td>0.011</td></tr></tbody></table></div>
 <p><strong>μ</strong> 控制位置，<strong>σ &gt; 0</strong> 控制宽度。相同距离下，σ 越大，衰减越慢。这里使用峰值为 1 的未归一化高斯核，后续还要乘上可学习的不透明度。</p>
-<div class="takeaway">数学上高斯没有有限边界；程序为了节省计算，需要选定有限的处理范围。</div>
+<div class="takeaway">数学上高斯没有有限边界；程序为了节省计算，需要选定有限的处理范围。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="ellipse" data-topic="representation" data-label="06" tabindex="-1">
-      <div class="slide-label"><span>06 · 用高斯表示场景</span><a href="#ellipse" aria-label="链接到：二维高斯：拉长、旋转，改变覆盖形状">主题链接 ↗</a></div>
-      <h2>二维高斯：拉长、旋转，改变覆盖形状</h2><div class="demo" data-demo="ellipse"></div><p class="caption">调节两个尺度、角度和不透明度。图像按二维高斯公式计算；虚线为 2σ 等值线，图示不代表 GPU 性能。</p>
+      <div class="slide-label"><a href="#ellipse" title="此主题的稳定链接"><span class="page-number">06</span> · 主题链接</a><button class="start-page" data-start="ellipse" aria-label="从06页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">06 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>二维高斯：拉长、旋转，改变覆盖形状</h2><div class="demo" data-demo="ellipse"></div><p class="caption">调节两个尺度、角度和不透明度。图像按二维高斯公式计算；虚线为 2σ 等值线，图示不代表 GPU 性能。</p>
 <p>两个方向尺度相同，等值线是圆；尺度不同，就是椭圆。旋转只改变方向，不改变两个主轴尺度。</p>
 <div class="equation" role="math">g(p) = exp[−½ (p − μ)ᵀ Σ⁻¹ (p − μ)]</div>
-<p>Σ（协方差）把大小与方向放在同一个矩阵里。我们先用图理解它，再把同一思路搬到三维。</p>
+<p>Σ（协方差）把大小与方向放在同一个矩阵里。我们先用图理解它，再把同一思路搬到三维。</p></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="gaussian-record" data-topic="representation" data-label="07" tabindex="-1">
-      <div class="slide-label"><span>07 · 用高斯表示场景</span><a href="#gaussian-record" aria-label="链接到：一个三维高斯，需要保存哪些参数？">主题链接 ↗</a></div>
-      <h2>一个三维高斯，需要保存哪些参数？</h2><div class="table-scroll"><table><thead><tr><th scope="col">参数</th><th scope="col">含义</th><th scope="col">影响图像的方式</th></tr></thead><tbody><tr><td>中心 μ ∈ ℝ³</td><td>在场景中的位置</td><td>投影中心与深度</td></tr><tr><td>尺度 s ∈ ℝ³、旋转 q</td><td>三个方向的大小与姿态</td><td>投影足迹的形状</td></tr><tr><td>不透明度 o</td><td>贡献的强弱</td><td>局部 alpha 与遮挡</td></tr><tr><td>颜色参数 / SH 系数</td><td>随观察方向变化的外观</td><td>该相机下的 RGB</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#gaussian-record" title="此主题的稳定链接"><span class="page-number">07</span> · 主题链接</a><button class="start-page" data-start="gaussian-record" aria-label="从07页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">07 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>一个三维高斯，需要保存哪些参数？</h2><div class="table-scroll"><table><thead><tr><th scope="col">参数</th><th scope="col">含义</th><th scope="col">影响图像的方式</th></tr></thead><tbody><tr><td>中心 μ ∈ ℝ³</td><td>在场景中的位置</td><td>投影中心与深度</td></tr><tr><td>尺度 s ∈ ℝ³、旋转 q</td><td>三个方向的大小与姿态</td><td>投影足迹的形状</td></tr><tr><td>不透明度 o</td><td>贡献的强弱</td><td>局部 alpha 与遮挡</td></tr><tr><td>颜色参数 / SH 系数</td><td>随观察方向变化的外观</td><td>该相机下的 RGB</td></tr></tbody></table></div>
 <p>这是一份显式参数表。渲染时反复读取它；训练时更新它。高斯数量也可以随训练改变。</p>
-<div class="takeaway">高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div>
+<div class="takeaway">高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="covariance" data-topic="representation" data-label="08" tabindex="-1">
-      <div class="slide-label"><span>08 · 用高斯表示场景</span><a href="#covariance" aria-label="链接到：把尺度与旋转组合成协方差">主题链接 ↗</a></div>
-      <h2>把尺度与旋转组合成协方差</h2><div class="equation" role="math">S = diag(sₓ, sᵧ, s_z)　　Σ = R S Sᵀ Rᵀ</div>
+      <div class="slide-label"><a href="#covariance" title="此主题的稳定链接"><span class="page-number">08</span> · 主题链接</a><button class="start-page" data-start="covariance" aria-label="从08页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">08 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>把尺度与旋转组合成协方差</h2><div class="equation" role="math">S = diag(sₓ, sᵧ, s_z)　　Σ = R S Sᵀ Rᵀ</div>
 <p>先沿局部坐标轴缩放，再旋转到世界坐标系。这里 s 是标准差尺度，因此协方差中出现 s²。R 来自归一化旋转四元数。</p>
 <div class="table-scroll"><table><thead><tr><th scope="col">选择</th><th scope="col">结果</th></tr></thead><tbody><tr><td>sₓ = sᵧ = s_z</td><td>各向同性；旋转不改变形状</td></tr><tr><td>sₓ ≫ sᵧ ≈ s_z</td><td>沿一个方向拉长</td></tr><tr><td>两个尺度大、一个尺度小</td><td>薄片状局部覆盖</td></tr></tbody></table></div>
-<p>正尺度配合有效旋转使协方差保持正定。优化时可用 exp 将无约束变量转换为正尺度。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div>
+<p>正尺度配合有效旋转使协方差保持正定。优化时可用 exp 将无约束变量转换为正尺度。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="opacity" data-topic="representation" data-label="09" tabindex="-1">
-      <div class="slide-label"><span>09 · 用高斯表示场景</span><a href="#opacity" aria-label="链接到：不透明度与高斯权重，是两个不同的量">主题链接 ↗</a></div>
-      <h2>不透明度与高斯权重，是两个不同的量</h2><div class="equation" role="math">αᵢ(p) = oᵢ · gᵢ(p)</div>
+      <div class="slide-label"><a href="#opacity" title="此主题的稳定链接"><span class="page-number">09</span> · 主题链接</a><button class="start-page" data-start="opacity" aria-label="从09页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">09 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>不透明度与高斯权重，是两个不同的量</h2><div class="equation" role="math">αᵢ(p) = oᵢ · gᵢ(p)</div>
 <p>oᵢ 是这个高斯的参数；gᵢ(p) 随像素位置变化；αᵢ(p) 才是它在该像素上的局部 alpha。中心附近 α 较大，边缘较小。</p>
 <div class="table-scroll"><table><thead><tr><th scope="col">假设 o = 0.8</th><th scope="col">中心 g=1</th><th scope="col">较远处 g=0.25</th></tr></thead><tbody><tr><td>局部 alpha</td><td>0.8</td><td>0.2</td></tr></tbody></table></div>
-<div class="takeaway">这些 alpha 不需要在所有高斯之间归一化到总和为 1。后面的透射率会决定前后遮挡的权重。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<div class="takeaway">这些 alpha 不需要在所有高斯之间归一化到总和为 1。后面的透射率会决定前后遮挡的权重。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="appearance" data-topic="representation" data-label="10" tabindex="-1">
-      <div class="slide-label"><span>10 · 用高斯表示场景</span><a href="#appearance" aria-label="链接到：为什么颜色可以随观察方向变化？">主题链接 ↗</a></div>
-      <h2>为什么颜色可以随观察方向变化？</h2><p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p>
+      <div class="slide-label"><a href="#appearance" title="此主题的稳定链接"><span class="page-number">10</span> · 主题链接</a><button class="start-page" data-start="appearance" aria-label="从10页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
+      <div class="print-page-label">10 / 57 · 用高斯表示场景</div>
+      <div class="slide-body"><h2>为什么颜色可以随观察方向变化？</h2><p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p>
 <div class="equation" role="math">c(d) = Σₖ aₖ Yₖ(d)　（对 R、G、B 分别求值）</div>
 <p>d 是约定好的观察方向，Yₖ 是固定方向基函数，aₖ 是学习得到的系数。可以把它理解为“用几种已知的方向变化模式，组合出颜色”。</p>
-<p>课堂先固定各高斯的 RGB，便于手算与追踪渲染；真实实现可在每高斯预处理阶段求该视角下的颜色。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
-    </section><section class="lecture-slide" id="camera-coordinates" data-topic="projection" data-label="11" tabindex="-1">
-      <div class="slide-label"><span>11 · 从三维到屏幕</span><a href="#camera-coordinates" aria-label="链接到：先把中心变换到相机坐标系">主题链接 ↗</a></div>
-      <h2>先把中心变换到相机坐标系</h2><figure><img src="../../materials/lectures/3dgs/camera.svg" width="800" height="265" alt="世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。" loading="lazy"><figcaption>世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。</figcaption></figure>
+<p>课堂先固定各高斯的 RGB，便于手算与追踪渲染；真实实现可在每高斯预处理阶段求该视角下的颜色。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">从三维到屏幕</h2><section class="lecture-slide" id="camera-coordinates" data-topic="projection" data-label="11" tabindex="-1">
+      <div class="slide-label"><a href="#camera-coordinates" title="此主题的稳定链接"><span class="page-number">11</span> · 主题链接</a><button class="start-page" data-start="camera-coordinates" aria-label="从11页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">11 / 57 · 从三维到屏幕</div>
+      <div class="slide-body"><h2>先把中心变换到相机坐标系</h2><figure><a href="../../materials/lectures/3dgs/camera.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/camera.svg" width="800" height="265" alt="世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。" loading="lazy"></a><figcaption>世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。</figcaption></figure>
 <div class="equation" role="math">μ_c = R_c μ_w + t_c</div>
 <p>世界坐标描述场景中的固定位置；相机坐标描述相对当前相机的位置。用 Z_c 表示沿相机前向的深度。相机动了，同一高斯的相机坐标与排序深度就可能改变。</p>
-<div class="takeaway">相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</div>
+<div class="takeaway">相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="perspective" data-topic="projection" data-label="12" tabindex="-1">
-      <div class="slide-label"><span>12 · 从三维到屏幕</span><a href="#perspective" aria-label="链接到：透视投影：越远，屏幕位移越小">主题链接 ↗</a></div>
-      <h2>透视投影：越远，屏幕位移越小</h2><div class="equation" role="math">u = fₓ X_c / Z_c + cₓ　　v = fᵧ Y_c / Z_c + cᵧ</div>
+      <div class="slide-label"><a href="#perspective" title="此主题的稳定链接"><span class="page-number">12</span> · 主题链接</a><button class="start-page" data-start="perspective" aria-label="从12页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">12 / 57 · 从三维到屏幕</div>
+      <div class="slide-body"><h2>透视投影：越远，屏幕位移越小</h2><div class="equation" role="math">u = fₓ X_c / Z_c + cₓ　　v = fᵧ Y_c / Z_c + cᵧ</div>
 <p>fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：</p>
 <div class="table-scroll"><table><thead><tr><th scope="col">相机坐标 (X,Y,Z)</th><th scope="col">屏幕坐标 (u,v)</th></tr></thead><tbody><tr><td>(0, 0, 2)</td><td>(32, 32)</td></tr><tr><td>(0.2, 0, 2)</td><td>(42, 32)</td></tr><tr><td>(0.2, 0, 4)</td><td>(37, 32)</td></tr></tbody></table></div>
-<p>第二、三个中心的 X 相同，深度加倍后，偏离主点的距离减半。Z 接近零时除法不稳定，不能把所有输入都直接投影。</p>
+<p>第二、三个中心的 X 相同，深度加倍后，偏离主点的距离减半。Z 接近零时除法不稳定，不能把所有输入都直接投影。</p></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="project-shape" data-topic="projection" data-label="13" tabindex="-1">
-      <div class="slide-label"><span>13 · 从三维到屏幕</span><a href="#project-shape" aria-label="链接到：投影一个高斯，不能只投影中心">主题链接 ↗</a></div>
-      <h2>投影一个高斯，不能只投影中心</h2><figure><img src="../../materials/lectures/3dgs/projection.svg" width="800" height="310" alt="同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。" loading="lazy"><figcaption>同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。</figcaption></figure>
+      <div class="slide-label"><a href="#project-shape" title="此主题的稳定链接"><span class="page-number">13</span> · 主题链接</a><button class="start-page" data-start="project-shape" aria-label="从13页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">13 / 57 · 从三维到屏幕</div>
+      <div class="slide-body"><h2>投影一个高斯，不能只投影中心</h2><figure><a href="../../materials/lectures/3dgs/projection.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/projection.svg" width="800" height="310" alt="同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。" loading="lazy"></a><figcaption>同一个三维椭球从不同观察方向投影，屏幕足迹的大小与长轴方向都可能改变。</figcaption></figure>
 <p>如果所有中心都画成固定半径的圆，就丢掉了三维尺度、旋转与透视变化。除了中心 μ₂D，还需要得到屏幕上的二维协方差 Σ₂D。</p>
 <p>透视包含除法，是非线性映射。原始方法在高斯中心附近做局部线性近似，用这个小范围内的“变化率”来传播形状。</p>
-<div class="takeaway">“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<div class="takeaway">“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="project-covariance" data-topic="projection" data-label="14" tabindex="-1">
-      <div class="slide-label"><span>14 · 从三维到屏幕</span><a href="#project-covariance" aria-label="链接到：用局部变化率把三维形状带到屏幕">主题链接 ↗</a></div>
-      <h2>用局部变化率把三维形状带到屏幕</h2><div class="equation" role="math">Σ_c = R_c Σ R_cᵀ　　Σ₂D ≈ J Σ_c Jᵀ</div>
+      <div class="slide-label"><a href="#project-covariance" title="此主题的稳定链接"><span class="page-number">14</span> · 主题链接</a><button class="start-page" data-start="project-covariance" aria-label="从14页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">14 / 57 · 从三维到屏幕</div>
+      <div class="slide-body"><h2>用局部变化率把三维形状带到屏幕</h2><div class="equation" role="math">Σ_c = R_c Σ R_cᵀ　　Σ₂D ≈ J Σ_c Jᵀ</div>
 <p>J 是 2×3 的投影雅可比矩阵：相机坐标改变一点，屏幕坐标改变多少。矩阵尺寸检查：2×3 · 3×3 · 3×2 → 2×2。</p>
 <p>先记住数据流：<strong>三维协方差 → 相机方向下的协方差 → 屏幕二维协方差</strong>。课堂主线不要求手推每个偏导。</p>
-<p>得到 Σ₂D 后，计算它的逆矩阵 Q，用于对每个候选像素求高斯权重。数值稳定与屏幕空间滤波还需要实现中的额外处理。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+<p>得到 Σ₂D 后，计算它的逆矩阵 Q，用于对每个候选像素求高斯权重。数值稳定与屏幕空间滤波还需要实现中的额外处理。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="jacobian" data-topic="projection" data-label="深入 01" tabindex="-1">
-      <div class="slide-label"><span>深入 01 · 从三维到屏幕</span><a href="#jacobian" aria-label="链接到：深入：透视雅可比的每一项从哪里来？">主题链接 ↗</a></div>
-      <h2>深入：透视雅可比的每一项从哪里来？</h2><div class="equation" role="math">J = [ fₓ/Z　 0　 −fₓX/Z² ;　0　 fᵧ/Z　 −fᵧY/Z² ]</div>
+      <div class="slide-label"><a href="#jacobian" title="此主题的稳定链接"><span class="page-number">深入 01</span> · 主题链接</a><button class="start-page" data-start="jacobian" aria-label="从深入 01页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">15 / 57 · 从三维到屏幕 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：透视雅可比的每一项从哪里来？</h2><div class="equation" role="math">J = [ fₓ/Z　 0　 −fₓX/Z² ;　0　 fᵧ/Z　 −fᵧY/Z² ]</div>
 <p>对 u=fₓX/Z+cₓ 分别求 X、Y、Z 的偏导，得到第一行；v 的偏导给出第二行。靠近主轴时 X、Y 较小，深度扰动对屏幕位置的横向影响较弱。</p>
 <p>例如 X=Y=0，fₓ=fᵧ=f，三维各向同性 Σ=σ²I，则 Σ₂D=(fσ/Z)²I。深度加倍，屏幕标准差减半，协方差对角元变为四分之一。</p>
-<div class="takeaway">这个例子有明确的中心与各向同性假设；不能据此把任意旋转椭球都简化成同一个屏幕圆。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<div class="takeaway">这个例子有明确的中心与各向同性假设；不能据此把任意旋转椭球都简化成同一个屏幕圆。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="finite-footprint" data-topic="projection" data-label="15" tabindex="-1">
-      <div class="slide-label"><span>15 · 从三维到屏幕</span><a href="#finite-footprint" aria-label="链接到：无限的高斯，有限的候选区域">主题链接 ↗</a></div>
-      <h2>无限的高斯，有限的候选区域</h2><p>不能为一个高斯访问整张图像。实现用有限半径得到屏幕包围框，再裁剪到图像范围。基线代码根据二维协方差的最大特征值估计约 3σ 半径。</p>
+      <div class="slide-label"><a href="#finite-footprint" title="此主题的稳定链接"><span class="page-number">15</span> · 主题链接</a><button class="start-page" data-start="finite-footprint" aria-label="从15页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">16 / 57 · 从三维到屏幕</div>
+      <div class="slide-body"><h2>无限的高斯，有限的候选区域</h2><p>不能为一个高斯访问整张图像。实现用有限半径得到屏幕包围框，再裁剪到图像范围。基线代码根据二维协方差的最大特征值估计约 3σ 半径。</p>
 <div class="equation" role="math">r ≈ ceil(3 √λ_max(Σ₂D))</div>
 <p>包围框负责快速找<strong>候选 Tile</strong>；真正合成时仍要按椭圆公式计算每个像素的 alpha，并跳过很小的贡献。框内不等于有效贡献，框外也不是数学上严格为零。</p>
-<div class="takeaway">课程算例会直接给定整数中心、半径与深度，用于练习分组；这些值不声称来自某个真实训练场景。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+<div class="takeaway">课程算例会直接给定整数中心、半径与深度，用于练习分组；这些值不声称来自某个真实训练场景。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="preprocess" data-topic="projection" data-label="16" tabindex="-1">
-      <div class="slide-label"><span>16 · 从三维到屏幕</span><a href="#preprocess" aria-label="链接到：每高斯预处理：先做一次，供后面反复使用">主题链接 ↗</a></div>
-      <h2>每高斯预处理：先做一次，供后面反复使用</h2><div class="table-scroll"><table><thead><tr><th scope="col">输入 / 步骤</th><th scope="col">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#preprocess" title="此主题的稳定链接"><span class="page-number">16</span> · 主题链接</a><button class="start-page" data-start="preprocess" aria-label="从16页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
+      <div class="print-page-label">17 / 57 · 从三维到屏幕</div>
+      <div class="slide-body"><h2>每高斯预处理：先做一次，供后面反复使用</h2><div class="table-scroll"><table><thead><tr><th scope="col">输入 / 步骤</th><th scope="col">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>
 <p>不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条引用。</p>
-<div class="takeaway">并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
-    </section><section class="lecture-slide" id="evaluate-alpha" data-topic="compositing" data-label="17" tabindex="-1">
-      <div class="slide-label"><span>17 · 从覆盖到颜色</span><a href="#evaluate-alpha" aria-label="链接到：先算一个高斯在一个像素上的贡献">主题链接 ↗</a></div>
-      <h2>先算一个高斯在一个像素上的贡献</h2><div class="equation" role="math">δ = p − μ₂D　　Q = Σ₂D⁻¹</div>
+<div class="takeaway">并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">从覆盖到颜色</h2><section class="lecture-slide" id="evaluate-alpha" data-topic="compositing" data-label="17" tabindex="-1">
+      <div class="slide-label"><a href="#evaluate-alpha" title="此主题的稳定链接"><span class="page-number">17</span> · 主题链接</a><button class="start-page" data-start="evaluate-alpha" aria-label="从17页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">18 / 57 · 从覆盖到颜色</div>
+      <div class="slide-body"><h2>先算一个高斯在一个像素上的贡献</h2><div class="equation" role="math">δ = p − μ₂D　　Q = Σ₂D⁻¹</div>
 <div class="equation" role="math">α(p) = o exp[−½(Qₓₓδₓ² + 2Qₓᵧδₓδᵧ + Qᵧᵧδᵧ²)]</div>
 <p>二维对称矩阵只需保存三个独立元素。交叉项带有系数 2；展开表达式时漏掉它，会改变旋转椭圆的形状。</p>
-<p>先用一个像素与一个高斯理解“离中心有多远”，再讨论多个高斯怎样叠加。实现中的 alpha 上限和微小贡献阈值属于数值与质量折中。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+<p>先用一个像素与一个高斯理解“离中心有多远”，再讨论多个高斯怎样叠加。实现中的 alpha 上限和微小贡献阈值属于数值与质量折中。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="transmittance" data-topic="compositing" data-label="18" tabindex="-1">
-      <div class="slide-label"><span>18 · 从覆盖到颜色</span><a href="#transmittance" aria-label="链接到：前面的覆盖，决定后面还能贡献多少">主题链接 ↗</a></div>
-      <h2>前面的覆盖，决定后面还能贡献多少</h2><div class="equation" role="math">C = 0，T = 1；从前到后遍历：</div>
+      <div class="slide-label"><a href="#transmittance" title="此主题的稳定链接"><span class="page-number">18</span> · 主题链接</a><button class="start-page" data-start="transmittance" aria-label="从18页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">19 / 57 · 从覆盖到颜色</div>
+      <div class="slide-body"><h2>前面的覆盖，决定后面还能贡献多少</h2><div class="equation" role="math">C = 0，T = 1；从前到后遍历：</div>
 <div class="equation" role="math">C ← C + T αᵢ cᵢ　　T ← T(1 − αᵢ)</div>
 <p>C 是已累计颜色；T 是剩余透射率。最开始没有遮挡，T=1。每个高斯先用当前 T 加入颜色，再减少留给后方的比例。</p>
 <div class="equation" role="math">最终颜色 = C + T c_bg</div>
-<div class="takeaway">T 必须先用于本次颜色贡献，再更新给下一个高斯。颜色为 RGB 向量，T 与 α 是标量。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<div class="takeaway">T 必须先用于本次颜色贡献，再更新给下一个高斯。颜色为 RGB 向量，T 与 α 是标量。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="blend-demo" data-topic="compositing" data-label="19" tabindex="-1">
-      <div class="slide-label"><span>19 · 从覆盖到颜色</span><a href="#blend-demo" aria-label="链接到：追踪一个像素：红、绿、蓝怎样叠加？">主题链接 ↗</a></div>
-      <h2>追踪一个像素：红、绿、蓝怎样叠加？</h2><div class="demo" data-demo="blend"></div><p class="caption">教学算例直接给定该像素的局部 alpha：G₀=0.5、G₂=0.25、G₁=0.5。它们不是整幅图共享的常数。</p>
+      <div class="slide-label"><a href="#blend-demo" title="此主题的稳定链接"><span class="page-number">19</span> · 主题链接</a><button class="start-page" data-start="blend-demo" aria-label="从19页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">20 / 57 · 从覆盖到颜色</div>
+      <div class="slide-body"><h2>追踪一个像素：红、绿、蓝怎样叠加？</h2><div class="demo" data-demo="blend"></div><p class="caption">教学算例直接给定该像素的局部 alpha：G₀=0.5、G₂=0.25、G₁=0.5。它们不是整幅图共享的常数。</p>
 <p>黑色背景，从前向后为 G₀（红）→ G₂（绿）→ G₁（蓝）。逐步观察每个颜色分量和剩余 T。</p>
-<div class="takeaway">多个高斯共同影响一个像素，但它们的贡献权重不是简单平均。</div>
+<div class="takeaway">多个高斯共同影响一个像素，但它们的贡献权重不是简单平均。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="order-matters" data-topic="compositing" data-label="20" tabindex="-1">
-      <div class="slide-label"><span>20 · 从覆盖到颜色</span><a href="#order-matters" aria-label="链接到：交换深度顺序，为什么颜色变了？">主题链接 ↗</a></div>
-      <h2>交换深度顺序，为什么颜色变了？</h2><div class="table-scroll"><table><thead><tr><th scope="col">两个高斯，局部 α 都是 0.5</th><th scope="col">红色分量</th><th scope="col">蓝色分量</th><th scope="col">剩余 T</th></tr></thead><tbody><tr><td>红在前、蓝在后</td><td>0.5</td><td>0.25</td><td>0.25</td></tr><tr><td>蓝在前、红在后</td><td>0.25</td><td>0.5</td><td>0.25</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#order-matters" title="此主题的稳定链接"><span class="page-number">20</span> · 主题链接</a><button class="start-page" data-start="order-matters" aria-label="从20页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">21 / 57 · 从覆盖到颜色</div>
+      <div class="slide-body"><h2>交换深度顺序，为什么颜色变了？</h2><div class="table-scroll"><table><thead><tr><th scope="col">两个高斯，局部 α 都是 0.5</th><th scope="col">红色分量</th><th scope="col">蓝色分量</th><th scope="col">剩余 T</th></tr></thead><tbody><tr><td>红在前、蓝在后</td><td>0.5</td><td>0.25</td><td>0.25</td></tr><tr><td>蓝在前、红在后</td><td>0.25</td><td>0.5</td><td>0.25</td></tr></tbody></table></div>
 <p>剩余透射率相同，但颜色不同。普通颜色相加可以交换次序；有遮挡的 alpha 合成不能随意交换前后次序。</p>
-<div class="takeaway">给每个高斯启动线程并 atomicAdd 颜色，并不能自动得到正确的透明合成。原子加解决写竞争，不解决深度语义。</div>
+<div class="takeaway">给每个高斯启动线程并 atomicAdd 颜色，并不能自动得到正确的透明合成。原子加解决写竞争，不解决深度语义。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="blend-code" data-topic="compositing" data-label="21" tabindex="-1">
-      <div class="slide-label"><span>21 · 从覆盖到颜色</span><a href="#blend-code" aria-label="链接到：把像素合成写成一段短循环">主题链接 ↗</a></div>
-      <h2>把像素合成写成一段短循环</h2><pre><code>// 教学伪代码：list 已按前到后排序；无阈值近似
+      <div class="slide-label"><a href="#blend-code" title="此主题的稳定链接"><span class="page-number">21</span> · 主题链接</a><button class="start-page" data-start="blend-code" aria-label="从21页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">22 / 57 · 从覆盖到颜色</div>
+      <div class="slide-body"><h2>把像素合成写成一段短循环</h2><div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>// 教学伪代码：list 已按前到后排序；无阈值近似
 Color C = {0, 0, 0};
 float T = 1;
 for (int id : list) {
@@ -142,110 +207,158 @@ for (int id : list) {
     C += T * alpha * color[id];
     T *= 1 - alpha;
 }
-image[pixel] = C + T * background;</code></pre>
-<p>不同像素可以同时执行自己的循环；同一像素在这个实现中沿排序列表依次更新 C 与 T。输入已经排序是这段代码的前提。</p>
+image[pixel] = C + T * background;</code></pre></div>
+<p>不同像素可以同时执行自己的循环；同一像素在这个实现中沿排序列表依次更新 C 与 T。输入已经排序是这段代码的前提。</p></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="exercise-blend" data-topic="compositing" data-label="22" tabindex="-1">
-      <div class="slide-label"><span>22 · 从覆盖到颜色</span><a href="#exercise-blend" aria-label="链接到：随堂填空 ①：只补两行，保持前后关系">主题链接 ↗</a></div>
-      <h2>随堂填空 ①：只补两行，保持前后关系</h2><p>约 2 分钟。初始 C=0、T=1；红色 α=0.5 在前，蓝色 α=0.5 在后，黑色背景。</p>
-<pre><code>for (Gaussian g : front_to_back) {
+      <div class="slide-label"><a href="#exercise-blend" title="此主题的稳定链接"><span class="page-number">22</span> · 主题链接</a><button class="start-page" data-start="exercise-blend" aria-label="从22页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">23 / 57 · 从覆盖到颜色</div>
+      <div class="slide-body"><h2>随堂填空 ①：只补两行，保持前后关系</h2><p>约 2 分钟。初始 C=0、T=1；红色 α=0.5 在前，蓝色 α=0.5 在后，黑色背景。</p>
+<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>for (Gaussian g : front_to_back) {
     float a = alpha_at(g, pixel);
     C += __________;
     T  = __________;
-}</code></pre>
+}</code></pre></div>
 <p>补全表达式，并给出最终 RGB 与 T。若先更新 T 再计算 C，会发生什么？</p>
-<details class="answer"><summary>查看参考答案</summary><div><p><code>C += T * a * g.color;</code>，<code>T = T * (1-a);</code>。结果 RGB=(0.5,0,0.25)，T=0.25。先更新 T 会把当前高斯也当成其自身前方的遮挡，低估本次贡献。</p></div></details>
+<details class="answer"><summary>显示参考答案</summary><div><h3 class="answer-print-title">参考答案</h3><p><code>C += T * a * g.color;</code>，<code>T = T * (1-a);</code>。结果 RGB=(0.5,0,0.25)，T=0.25。先更新 T 会把当前高斯也当成其自身前方的遮挡，低估本次贡献。</p></div></details></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="composite-scan" data-topic="compositing" data-label="深入 02" tabindex="-1">
-      <div class="slide-label"><span>深入 02 · 从覆盖到颜色</span><a href="#composite-scan" aria-label="链接到：深入：像素内的合成能否使用 Scan？">主题链接 ↗</a></div>
-      <h2>深入：像素内的合成能否使用 Scan？</h2><div class="equation" role="math">(Cₐ,Tₐ) ⊗ (Cᵦ,Tᵦ) = (Cₐ + TₐCᵦ, TₐTᵦ)</div>
+      <div class="slide-label"><a href="#composite-scan" title="此主题的稳定链接"><span class="page-number">深入 02</span> · 主题链接</a><button class="start-page" data-start="composite-scan" aria-label="从深入 02页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>从覆盖到颜色</span></div>
+      <div class="print-page-label">24 / 57 · 从覆盖到颜色 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：像素内的合成能否使用 Scan？</h2><div class="equation" role="math">(Cₐ,Tₐ) ⊗ (Cᵦ,Tᵦ) = (Cₐ + TₐCᵦ, TₐTᵦ)</div>
 <p>把相邻、已保持深度顺序的片段表示为“局部颜色 + 透射率”，这个组合在精确算术下具有结合性，因此存在树形归约或扫描的可能。它不具有交换性，不能改变前后顺序。</p>
 <p>基线 Tile 渲染器选择每像素顺序遍历：像素间已有大量并行，还能自然利用提前结束。额外的像素内并行会带来中间状态、通信和调度成本。浮点运算重新分组也可能改变舍入。</p>
-<div class="takeaway">“这份实现里有顺序循环”不等于“数学上绝对无法并行”。</div>
-    </section><section class="lecture-slide" id="naive-cost" data-topic="tiles" data-label="23" tabindex="-1">
-      <div class="slide-label"><span>23 · 把工作组织成 Tile</span><a href="#naive-cost" aria-label="链接到：最直接的方法，为什么会做太多无用工作？">主题链接 ↗</a></div>
-      <h2>最直接的方法，为什么会做太多无用工作？</h2><pre><code>parallel_for pixel in image:
+<div class="takeaway">“这份实现里有顺序循环”不等于“数学上绝对无法并行”。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">把工作组织成 Tile</h2><section class="lecture-slide" id="naive-cost" data-topic="tiles" data-label="23" tabindex="-1">
+      <div class="slide-label"><a href="#naive-cost" title="此主题的稳定链接"><span class="page-number">23</span> · 主题链接</a><button class="start-page" data-start="naive-cost" aria-label="从23页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">25 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>最直接的方法，为什么会做太多无用工作？</h2><div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>parallel_for pixel in image:
     for gaussian in all_gaussians_in_depth_order:
-        evaluate_and_blend(pixel, gaussian)</code></pre>
+        evaluate_and_blend(pixel, gaussian)</code></pre></div>
 <p>设有 P 个像素、N 个高斯，最直接的候选检查量为 P×N。1920×1080 像素与 100 万个高斯，对应约 2.07×10¹² 对组合；其中很多在屏幕上相距很远。</p>
-<div class="takeaway">第一步优化不是把同样多的检查发给更多线程，而是让每个像素只访问附近的候选高斯。</div>
+<div class="takeaway">第一步优化不是把同样多的检查发给更多线程，而是让每个像素只访问附近的候选高斯。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="pixel-ownership" data-topic="tiles" data-label="24" tabindex="-1">
-      <div class="slide-label"><span>24 · 把工作组织成 Tile</span><a href="#pixel-ownership" aria-label="链接到：选择输出所有者：每个像素交给一个线程">主题链接 ↗</a></div>
-      <h2>选择输出所有者：每个像素交给一个线程</h2><div class="table-scroll"><table><thead><tr><th scope="col">方案</th><th scope="col">方便之处</th><th scope="col">还需要解决</th></tr></thead><tbody><tr><td>按高斯散射到像素</td><td>直接遍历自己的覆盖范围</td><td>多个高斯写同一像素，还要满足深度顺序</td></tr><tr><td>按像素聚集高斯</td><td>一个线程持有 C、T，唯一写出像素</td><td>怎样快速得到这个像素的候选列表？</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#pixel-ownership" title="此主题的稳定链接"><span class="page-number">24</span> · 主题链接</a><button class="start-page" data-start="pixel-ownership" aria-label="从24页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">26 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>选择输出所有者：每个像素交给一个线程</h2><div class="table-scroll"><table><thead><tr><th scope="col">方案</th><th scope="col">方便之处</th><th scope="col">还需要解决</th></tr></thead><tbody><tr><td>按高斯散射到像素</td><td>直接遍历自己的覆盖范围</td><td>多个高斯写同一像素，还要满足深度顺序</td></tr><tr><td>按像素聚集高斯</td><td>一个线程持有 C、T，唯一写出像素</td><td>怎样快速得到这个像素的候选列表？</td></tr></tbody></table></div>
 <p>基线选择后者。若为每个像素建立独立列表，管理与存储可能很贵。相邻像素的候选通常相似，于是让一小块屏幕共用一个列表。</p>
-<div class="takeaway">输出所有权解决前向颜色写冲突；候选列表解决“去哪里读”的问题。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+<div class="takeaway">输出所有权解决前向颜色写冲突；候选列表解决“去哪里读”的问题。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="tile-demo" data-topic="tiles" data-label="25" tabindex="-1">
-      <div class="slide-label"><span>25 · 把工作组织成 Tile</span><a href="#tile-demo" aria-label="链接到：把屏幕分成 Tile，共用一份候选列表">主题链接 ↗</a></div>
-      <h2>把屏幕分成 Tile，共用一份候选列表</h2><div class="demo" data-demo="tiles"></div><p class="caption">64×64 教学屏幕，16×16 像素一个 Tile，共 4×4 个 Tile。点击或用键盘选择 Tile，查看候选及深度顺序。虚线框是候选包围框。</p>
+      <div class="slide-label"><a href="#tile-demo" title="此主题的稳定链接"><span class="page-number">25</span> · 主题链接</a><button class="start-page" data-start="tile-demo" aria-label="从25页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">27 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>把屏幕分成 Tile，共用一份候选列表</h2><div class="demo" data-demo="tiles"></div><p class="caption">64×64 教学屏幕，16×16 像素一个 Tile，共 4×4 个 Tile。点击或用键盘选择 Tile，查看候选及深度顺序。虚线框是候选包围框。</p>
 <p>同一 Tile 的像素遍历相同的高斯 ID 列表，但各自计算到高斯中心的距离、alpha 和颜色。列表相同不代表每个像素都有相同贡献。</p>
-<div class="takeaway">基线采用 16×16 Tile；这是具体实现选择，不是 3DGS 数学定义的一部分。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+<div class="takeaway">基线采用 16×16 Tile；这是具体实现选择，不是 3DGS 数学定义的一部分。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="toy-records" data-topic="tiles" data-label="26" tabindex="-1">
-      <div class="slide-label"><span>26 · 把工作组织成 Tile</span><a href="#toy-records" aria-label="链接到：贯穿算例：四个高斯产生多少条引用？">主题链接 ↗</a></div>
-      <h2>贯穿算例：四个高斯产生多少条引用？</h2><div class="table-scroll"><table><thead><tr><th scope="col">高斯 / 颜色</th><th scope="col">中心 (u,v)</th><th scope="col">候选半径 r</th><th scope="col">深度 z</th><th scope="col">覆盖的 Tile ID</th></tr></thead><tbody><tr><td>G₀ / 红</td><td>(20,20)</td><td>8</td><td>2</td><td>0, 1, 4, 5</td></tr><tr><td>G₁ / 蓝</td><td>(26,12)</td><td>6</td><td>4</td><td>1, 5</td></tr><tr><td>G₂ / 绿</td><td>(30,26)</td><td>10</td><td>3</td><td>5, 6, 9, 10</td></tr><tr><td>G₃ / 黄</td><td>(54,54)</td><td>4</td><td>5</td><td>15</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#toy-records" title="此主题的稳定链接"><span class="page-number">26</span> · 主题链接</a><button class="start-page" data-start="toy-records" aria-label="从26页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">28 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>贯穿算例：四个高斯产生多少条引用？</h2><div class="table-scroll"><table><thead><tr><th scope="col">高斯 / 颜色</th><th scope="col">中心 (u,v)</th><th scope="col">候选半径 r</th><th scope="col">深度 z</th><th scope="col">覆盖的 Tile ID</th></tr></thead><tbody><tr><td>G₀ / 红</td><td>(20,20)</td><td>8</td><td>2</td><td>0, 1, 4, 5</td></tr><tr><td>G₁ / 蓝</td><td>(26,12)</td><td>6</td><td>4</td><td>1, 5</td></tr><tr><td>G₂ / 绿</td><td>(30,26)</td><td>10</td><td>3</td><td>5, 6, 9, 10</td></tr><tr><td>G₃ / 黄</td><td>(54,54)</td><td>4</td><td>5</td><td>15</td></tr></tbody></table></div>
 <p>Tile ID = tile_y×4 + tile_x，左上角为 0。这里用半开包围框 [u−r,u+r)×[v−r,v+r)，求重叠 Tile，并裁剪到屏幕。</p>
 <p>这是明确约定的教学边界规则；真实渲染器的像素取样与边界取整须以源码为准。后续步骤始终使用这张表。</p>
-<div class="takeaway">四个高斯，十一条 Gaussian–Tile 引用。复制的是 ID / 排序记录，通常不需要为每条引用复制全部高斯参数。</div>
+<div class="takeaway">四个高斯，十一条 Gaussian–Tile 引用。复制的是 ID / 排序记录，通常不需要为每条引用复制全部高斯参数。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="scan-offsets" data-topic="tiles" data-label="27" tabindex="-1">
-      <div class="slide-label"><span>27 · 把工作组织成 Tile</span><a href="#scan-offsets" aria-label="链接到：数量不一样，先用前缀和分配写出位置">主题链接 ↗</a></div>
-      <h2>数量不一样，先用前缀和分配写出位置</h2><div class="equation" role="math">count = [4, 2, 4, 1]　→　offset = [0, 4, 6, 10]</div>
+      <div class="slide-label"><a href="#scan-offsets" title="此主题的稳定链接"><span class="page-number">27</span> · 主题链接</a><button class="start-page" data-start="scan-offsets" aria-label="从27页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">29 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>数量不一样，先用前缀和分配写出位置</h2><div class="equation" role="math">count = [4, 2, 4, 1]　→　offset = [0, 4, 6, 10]</div>
 <div class="table-scroll"><table><thead><tr><th scope="col">高斯</th><th scope="col">写出区间（左闭右开）</th></tr></thead><tbody><tr><td>G₀</td><td>[0,4)</td></tr><tr><td>G₁</td><td>[4,6)</td></tr><tr><td>G₂</td><td>[6,10)</td></tr><tr><td>G₃</td><td>[10,11)</td></tr></tbody></table></div>
 <p>offset 是独占前缀和，每个高斯提前知道自己专属的输出区域。即使 G₂ 最早执行，也只写 [6,10)，不会抢占 G₀ 的位置。</p>
-<p>原代码使用包含式扫描，再读取前一项得到起点；与这里直接计算独占前缀和的教学表示等价。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
+<p>原代码使用包含式扫描，再读取前一项得到起点；与这里直接计算独占前缀和的教学表示等价。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="exercise-offset" data-topic="tiles" data-label="28" tabindex="-1">
-      <div class="slide-label"><span>28 · 把工作组织成 Tile</span><a href="#exercise-offset" aria-label="链接到：随堂填空 ②：给每个高斯一段独占空间">主题链接 ↗</a></div>
-      <h2>随堂填空 ②：给每个高斯一段独占空间</h2><p>约 2 分钟。换一组覆盖数量 <code>count=[2,0,3,1]</code>，含一个不可见高斯。</p>
-<pre><code>offset = [0, __, __, __]
+      <div class="slide-label"><a href="#exercise-offset" title="此主题的稳定链接"><span class="page-number">28</span> · 主题链接</a><button class="start-page" data-start="exercise-offset" aria-label="从28页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">30 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>随堂填空 ②：给每个高斯一段独占空间</h2><p>约 2 分钟。换一组覆盖数量 <code>count=[2,0,3,1]</code>，含一个不可见高斯。</p>
+<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>offset = [0, __, __, __]
 total  = __
 parallel_for g in gaussians:
     for j in range(count[g]):
-        output[__________] = pair(g, its_tiles[g][j])</code></pre>
+        output[__________] = pair(g, its_tiles[g][j])</code></pre></div>
 <p>哪两个高斯可以具有相同的 offset？为什么不会产生写冲突？</p>
-<details class="answer"><summary>查看参考答案</summary><div><p>offset=[0,2,2,5]，total=6，写入地址为 <code>offset[g]+j</code>。G₁ 和 G₂ 起点同为 2，但 G₁ 的数量为零，不执行写入；G₂ 写 [2,5)。</p></div></details>
+<details class="answer"><summary>显示参考答案</summary><div><h3 class="answer-print-title">参考答案</h3><p>offset=[0,2,2,5]，total=6，写入地址为 <code>offset[g]+j</code>。G₁ 和 G₂ 起点同为 2，但 G₁ 的数量为零，不执行写入；G₂ 写 [2,5)。</p></div></details></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="emit-pairs" data-topic="tiles" data-label="29" tabindex="-1">
-      <div class="slide-label"><span>29 · 把工作组织成 Tile</span><a href="#emit-pairs" aria-label="链接到：并行写出：从每高斯列表变成一串记录">主题链接 ↗</a></div>
-      <h2>并行写出：从每高斯列表变成一串记录</h2><div class="table-scroll"><table><thead><tr><th scope="col">输出位置</th><th scope="col">高斯</th><th scope="col">(Tile, depth)</th></tr></thead><tbody><tr><td>0–3</td><td>G₀</td><td>(0,2), (1,2), (4,2), (5,2)</td></tr><tr><td>4–5</td><td>G₁</td><td>(1,4), (5,4)</td></tr><tr><td>6–9</td><td>G₂</td><td>(5,3), (6,3), (9,3), (10,3)</td></tr><tr><td>10</td><td>G₃</td><td>(15,5)</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#emit-pairs" title="此主题的稳定链接"><span class="page-number">29</span> · 主题链接</a><button class="start-page" data-start="emit-pairs" aria-label="从29页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">31 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>并行写出：从每高斯列表变成一串记录</h2><div class="table-scroll"><table><thead><tr><th scope="col">输出位置</th><th scope="col">高斯</th><th scope="col">(Tile, depth)</th></tr></thead><tbody><tr><td>0–3</td><td>G₀</td><td>(0,2), (1,2), (4,2), (5,2)</td></tr><tr><td>4–5</td><td>G₁</td><td>(1,4), (5,4)</td></tr><tr><td>6–9</td><td>G₂</td><td>(5,3), (6,3), (9,3), (10,3)</td></tr><tr><td>10</td><td>G₃</td><td>(15,5)</td></tr></tbody></table></div>
 <p>现在记录按“从哪个高斯写出”放在一起。渲染时需要的却是“同一个 Tile 有哪些高斯，而且前后顺序是什么”。接下来必须重新组织顺序。</p>
-<div class="takeaway">前缀和解决唯一写址；排序解决按 Tile 聚集与深度顺序。它们解决的是两个问题。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
+<div class="takeaway">前缀和解决唯一写址；排序解决按 Tile 聚集与深度顺序。它们解决的是两个问题。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="sort-pairs" data-topic="tiles" data-label="30" tabindex="-1">
-      <div class="slide-label"><span>30 · 把工作组织成 Tile</span><a href="#sort-pairs" aria-label="链接到：一次排序，先按 Tile，再按深度">主题链接 ↗</a></div>
-      <h2>一次排序，先按 Tile，再按深度</h2><div class="table-scroll"><table><thead><tr><th scope="col">Tile</th><th scope="col">排序后高斯 ID</th><th scope="col">对应深度</th></tr></thead><tbody><tr><td>0</td><td>G₀</td><td>2</td></tr><tr><td>1</td><td>G₀, G₁</td><td>2,4</td></tr><tr><td>4</td><td>G₀</td><td>2</td></tr><tr><td>5</td><td>G₀, G₂, G₁</td><td>2,3,4</td></tr><tr><td>6</td><td>G₂</td><td>3</td></tr><tr><td>9</td><td>G₂</td><td>3</td></tr><tr><td>10</td><td>G₂</td><td>3</td></tr><tr><td>15</td><td>G₃</td><td>5</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#sort-pairs" title="此主题的稳定链接"><span class="page-number">30</span> · 主题链接</a><button class="start-page" data-start="sort-pairs" aria-label="从30页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">32 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>一次排序，先按 Tile，再按深度</h2><div class="table-scroll"><table><thead><tr><th scope="col">Tile</th><th scope="col">排序后高斯 ID</th><th scope="col">对应深度</th></tr></thead><tbody><tr><td>0</td><td>G₀</td><td>2</td></tr><tr><td>1</td><td>G₀, G₁</td><td>2,4</td></tr><tr><td>4</td><td>G₀</td><td>2</td></tr><tr><td>5</td><td>G₀, G₂, G₁</td><td>2,3,4</td></tr><tr><td>6</td><td>G₂</td><td>3</td></tr><tr><td>9</td><td>G₂</td><td>3</td></tr><tr><td>10</td><td>G₂</td><td>3</td></tr><tr><td>15</td><td>G₃</td><td>5</td></tr></tbody></table></div>
 <p>把 Tile ID 放在主关键字，把相机空间深度放在次关键字；GPU 排序将相同 Tile 的记录聚集起来，并在组内按前到后排列。</p>
 <p>Tile 5 最能说明问题：写出时 G₁ 在 G₂ 前，排序后 G₂ 必须移到 G₁ 前。</p>
-<div class="takeaway">基线使用高斯中心深度共享组内顺序，未对每个像素重新精确求交排序，因此存在近似。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
+<div class="takeaway">基线使用高斯中心深度共享组内顺序，未对每个像素重新精确求交排序，因此存在近似。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="tile-ranges" data-topic="tiles" data-label="31" tabindex="-1">
-      <div class="slide-label"><span>31 · 把工作组织成 Tile</span><a href="#tile-ranges" aria-label="链接到：找到每个 Tile 的起止位置，交给渲染器">主题链接 ↗</a></div>
-      <h2>找到每个 Tile 的起止位置，交给渲染器</h2><div class="equation" role="math">sorted IDs = [G₀, G₀,G₁, G₀, G₀,G₂,G₁, G₂, G₂, G₂, G₃]</div>
+      <div class="slide-label"><a href="#tile-ranges" title="此主题的稳定链接"><span class="page-number">31</span> · 主题链接</a><button class="start-page" data-start="tile-ranges" aria-label="从31页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">33 / 57 · 把工作组织成 Tile</div>
+      <div class="slide-body"><h2>找到每个 Tile 的起止位置，交给渲染器</h2><div class="equation" role="math">sorted IDs = [G₀, G₀,G₁, G₀, G₀,G₂,G₁, G₂, G₂, G₂, G₃]</div>
 <div class="table-scroll"><table><thead><tr><th scope="col">Tile</th><th scope="col">范围 [begin,end)</th><th scope="col">列表长度</th></tr></thead><tbody><tr><td>0</td><td>[0,1)</td><td>1</td></tr><tr><td>1</td><td>[1,3)</td><td>2</td></tr><tr><td>4</td><td>[3,4)</td><td>1</td></tr><tr><td>5</td><td>[4,7)</td><td>3</td></tr><tr><td>15</td><td>[10,11)</td><td>1</td></tr></tbody></table></div>
 <p>比较相邻排序记录的 Tile ID，边界处写出范围。没有记录的 Tile 保持空范围，渲染时输出背景。</p>
-<figure><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。" loading="lazy"><figcaption>投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。</figcaption></figure>
-<div class="takeaway">阶段之间存在数据依赖。同一 CUDA stream 中按顺序提交这些操作即可建立执行顺序；无需在每一阶段都让 CPU 等待。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
+<figure><a href="../../materials/lectures/3dgs/pipeline.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。" loading="lazy"></a><figcaption>投影后，依次计数、Scan、写记录、排序、找边界，再由各 Tile 读取自己的有序范围。</figcaption></figure>
+<div class="takeaway">阶段之间存在数据依赖。同一 CUDA stream 中按顺序提交这些操作即可建立执行顺序；无需在每一阶段都让 CPU 等待。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="sort-key" data-topic="tiles" data-label="深入 03" tabindex="-1">
-      <div class="slide-label"><span>深入 03 · 把工作组织成 Tile</span><a href="#sort-key" aria-label="链接到：深入：64 位排序 Key 包含什么？">主题链接 ↗</a></div>
-      <h2>深入：64 位排序 Key 包含什么？</h2><div class="equation" role="math">key = (uint64(tile_id) ≪ 32) | depth_bits</div>
+      <div class="slide-label"><a href="#sort-key" title="此主题的稳定链接"><span class="page-number">深入 03</span> · 主题链接</a><button class="start-page" data-start="sort-key" aria-label="从深入 03页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>把工作组织成 Tile</span></div>
+      <div class="print-page-label">34 / 57 · 把工作组织成 Tile · 深入阅读</div>
+      <div class="slide-body"><h2>深入：64 位排序 Key 包含什么？</h2><div class="equation" role="math">key = (uint64(tile_id) ≪ 32) | depth_bits</div>
 <p>Tile ID 占高位，深度编码占低位。基线把通过可见性检查的正有限浮点深度按位解释为无符号整数；在这个范围内，位模式顺序与数值顺序一致。</p>
 <p>不能直接把相同做法用于任意带负号浮点数、NaN 或不一致的深度约定。位打包不是把深度数值强制转换成整数。</p>
-<p>Radix sort 的内部并行原理不在本讲展开；我们关注输入记录数、键和值的大小、临时缓冲区及其整体成本。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
-    </section><section class="lecture-slide" id="block-mapping" data-topic="execution" data-label="32" tabindex="-1">
-      <div class="slide-label"><span>32 · GPU 怎样执行</span><a href="#block-mapping" aria-label="链接到：一个 Tile 一个 Block，一个像素一个线程">主题链接 ↗</a></div>
-      <h2>一个 Tile 一个 Block，一个像素一个线程</h2><figure><img src="../../materials/lectures/3dgs/ownership.svg" width="800" height="340" alt="64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。" loading="lazy"><figcaption>64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。</figcaption></figure>
-<pre><code>// 本讲采用 x 对应列、y 对应行
+<p>Radix sort 的内部并行原理不在本讲展开；我们关注输入记录数、键和值的大小、临时缓冲区及其整体成本。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">GPU 怎样执行</h2><section class="lecture-slide" id="block-mapping" data-topic="execution" data-label="32" tabindex="-1">
+      <div class="slide-label"><a href="#block-mapping" title="此主题的稳定链接"><span class="page-number">32</span> · 主题链接</a><button class="start-page" data-start="block-mapping" aria-label="从32页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">35 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>一个 Tile 一个 Block，一个像素一个线程</h2><figure><a href="../../materials/lectures/3dgs/ownership.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/ownership.svg" width="800" height="340" alt="64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。" loading="lazy"></a><figcaption>64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。</figcaption></figure>
+<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>// 本讲采用 x 对应列、y 对应行
 int x = blockIdx.x * 16 + threadIdx.x;
 int y = blockIdx.y * 16 + threadIdx.y;
-bool inside = x &lt; width &amp;&amp; y &lt; height;</code></pre>
-<p>每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+bool inside = x &lt; width &amp;&amp; y &lt; height;</code></pre></div>
+<p>每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="shared-load" data-topic="execution" data-label="33" tabindex="-1">
-      <div class="slide-label"><span>33 · GPU 怎样执行</span><a href="#shared-load" aria-label="链接到：同一份高斯参数，让整个 Block 共用">主题链接 ↗</a></div>
-      <h2>同一份高斯参数，让整个 Block 共用</h2><figure><img src="../../materials/lectures/3dgs/shared.svg" width="800" height="345" alt="线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。" loading="lazy"><figcaption>线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。</figcaption></figure>
+      <div class="slide-label"><a href="#shared-load" title="此主题的稳定链接"><span class="page-number">33</span> · 主题链接</a><button class="start-page" data-start="shared-load" aria-label="从33页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">36 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>同一份高斯参数，让整个 Block 共用</h2><figure><a href="../../materials/lectures/3dgs/shared.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/shared.svg" width="800" height="345" alt="线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。" loading="lazy"></a><figcaption>线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。</figcaption></figure>
 <p>设一批 B 个候选，Tile 有 256 个像素。若每个像素独立重复获取参数，会产生很多重复读取请求。合作加载后，多个像素从 shared 读取同一批屏幕中心、形状与不透明度。</p>
 <p>本讲伪代码把 RGB 也放入 shared 以便展示。官方基线对部分几何参数使用 shared，颜色访问方式应具体看源码。</p>
-<div class="takeaway">减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+<div class="takeaway">减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="batch-lifetime" data-topic="execution" data-label="34" tabindex="-1">
-      <div class="slide-label"><span>34 · GPU 怎样执行</span><a href="#batch-lifetime" aria-label="链接到：一块 Shared，分批复用：两道交接不能少">主题链接 ↗</a></div>
-      <h2>一块 Shared，分批复用：两道交接不能少</h2><figure><img src="../../materials/lectures/3dgs/barriers.svg" width="800" height="235" alt="批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。" loading="lazy"><figcaption>批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。</figcaption></figure>
+      <div class="slide-label"><a href="#batch-lifetime" title="此主题的稳定链接"><span class="page-number">34</span> · 主题链接</a><button class="start-page" data-start="batch-lifetime" aria-label="从34页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">37 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>一块 Shared，分批复用：两道交接不能少</h2><figure><a href="../../materials/lectures/3dgs/barriers.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/barriers.svg" width="800" height="235" alt="批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。" loading="lazy"></a><figcaption>批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。</figcaption></figure>
 <p><strong>装入后同步：</strong>确保其他线程写的数据可以读取。<strong>覆盖前同步：</strong>确保旧数据已被所有仍需读取的线程使用完。</p>
 <p>第二道同步可以与下一轮开始处的集体操作合并，但不能凭空消失。同步必须沿一致的 Block 控制流执行。</p>
-<div class="takeaway">把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。</div>
+<div class="takeaway">把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="render-pseudocode" data-topic="execution" data-label="35" tabindex="-1">
-      <div class="slide-label"><span>35 · GPU 怎样执行</span><a href="#render-pseudocode" aria-label="链接到：把分工、复用与顺序放进同一个循环">主题链接 ↗</a></div>
-      <h2>把分工、复用与顺序放进同一个循环</h2><pre><code>// 教学伪代码；所有线程执行外层循环和 barrier
+      <div class="slide-label"><a href="#render-pseudocode" title="此主题的稳定链接"><span class="page-number">35</span> · 主题链接</a><button class="start-page" data-start="render-pseudocode" aria-label="从35页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">38 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>把分工、复用与顺序放进同一个循环</h2><div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>// 教学伪代码；所有线程执行外层循环和 barrier
 bool done = !inside;
 C = 0; T = 1;
 for (batch in tile_sorted_list) {
@@ -262,117 +375,175 @@ for (batch in tile_sorted_list) {
     }
     block_barrier(); // 等大家读完，才可覆盖 shared
 }
-if (inside) image[pixel] = C + T * background;</code></pre>
-<p>这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+if (inside) image[pixel] = C + T * background;</code></pre></div>
+<p>这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="pixel-done" data-topic="execution" data-label="36" tabindex="-1">
-      <div class="slide-label"><span>36 · GPU 怎样执行</span><a href="#pixel-done" aria-label="链接到：像素结束，不等于线程可以提前 return">主题链接 ↗</a></div>
-      <h2>像素结束，不等于线程可以提前 return</h2><div class="table-scroll"><table><thead><tr><th scope="col">状态</th><th scope="col">是否继续合成</th><th scope="col">是否参与加载 / 同步</th></tr></thead><tbody><tr><td>有效像素，T 仍大</td><td>是</td><td>是</td></tr><tr><td>有效像素，T 已很小</td><td>否</td><td>是，直到全块统一结束</td></tr><tr><td>边缘 Tile 的越界线程</td><td>否</td><td>是，可能负责其他像素所需的数据</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#pixel-done" title="此主题的稳定链接"><span class="page-number">36</span> · 主题链接</a><button class="start-page" data-start="pixel-done" aria-label="从36页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">39 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>像素结束，不等于线程可以提前 return</h2><div class="table-scroll"><table><thead><tr><th scope="col">状态</th><th scope="col">是否继续合成</th><th scope="col">是否参与加载 / 同步</th></tr></thead><tbody><tr><td>有效像素，T 仍大</td><td>是</td><td>是</td></tr><tr><td>有效像素，T 已很小</td><td>否</td><td>是，直到全块统一结束</td></tr><tr><td>边缘 Tile 的越界线程</td><td>否</td><td>是，可能负责其他像素所需的数据</td></tr></tbody></table></div>
 <p>线程既是“一个像素的计算者”，又是“一个 Block 的搬运参与者”。前一个角色完成，并不代表后一个角色可以消失。</p>
-<div class="takeaway">全块投票所有像素都 done 后，才能统一提前结束批次循环。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
+<div class="takeaway">全块投票所有像素都 done 后，才能统一提前结束批次循环。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="exercise-sync" data-topic="execution" data-label="37" tabindex="-1">
-      <div class="slide-label"><span>37 · GPU 怎样执行</span><a href="#exercise-sync" aria-label="链接到：随堂填空 ③：把同步放在所有参与者都会经过的位置">主题链接 ↗</a></div>
-      <h2>随堂填空 ③：把同步放在所有参与者都会经过的位置</h2><p>约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 <code>if (done) return;</code>。</p>
-<pre><code>for (batch in batches) {
+      <div class="slide-label"><a href="#exercise-sync" title="此主题的稳定链接"><span class="page-number">37</span> · 主题链接</a><button class="start-page" data-start="exercise-sync" aria-label="从37页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">40 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>随堂填空 ③：把同步放在所有参与者都会经过的位置</h2><p>约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 <code>if (done) return;</code>。</p>
+<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>for (batch in batches) {
     load_batch_cooperatively(shared, batch);
     __________;              // 开始读之前
     if (!done) blend_pixel(shared);
     __________;              // 下一轮覆盖之前
-}</code></pre>
-<details class="answer"><summary>查看参考答案</summary><div><p>两处都需要 Block 级 barrier（CUDA 中可用 <code>__syncthreads()</code>），并放在 <code>if (!done)</code> 外。这里不能让 done 线程自行 return：它还可能承担后续批次的加载，其他线程也依赖一致的协作协议。统一的全块退出需另行设计。</p></div></details>
+}</code></pre></div>
+<details class="answer"><summary>显示参考答案</summary><div><h3 class="answer-print-title">参考答案</h3><p>两处都需要 Block 级 barrier（CUDA 中可用 <code>__syncthreads()</code>），并放在 <code>if (!done)</code> 外。这里不能让 done 线程自行 return：它还可能承担后续批次的加载，其他线程也依赖一致的协作协议。统一的全块退出需另行设计。</p></div></details></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="uneven-work" data-topic="execution" data-label="38" tabindex="-1">
-      <div class="slide-label"><span>38 · GPU 怎样执行</span><a href="#uneven-work" aria-label="链接到：相同的线程数，不代表相同的工作量">主题链接 ↗</a></div>
-      <h2>相同的线程数，不代表相同的工作量</h2><figure><img src="../../materials/lectures/3dgs/imbalance.svg" width="800" height="330" alt="不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。" loading="lazy"><figcaption>不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。</figcaption></figure>
+      <div class="slide-label"><a href="#uneven-work" title="此主题的稳定链接"><span class="page-number">38</span> · 主题链接</a><button class="start-page" data-start="uneven-work" aria-label="从38页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">41 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>相同的线程数，不代表相同的工作量</h2><figure><a href="../../materials/lectures/3dgs/imbalance.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/imbalance.svg" width="800" height="330" alt="不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。" loading="lazy"></a><figcaption>不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。</figcaption></figure>
 <p>空背景 Tile 很快结束，复杂边缘可能覆盖很多高斯。即使同一 Tile 内，一些像素早已不透明，另一些仍在处理后方内容。</p>
 <p>Warp 内的分支让部分 lane 不再做合成，但这些线程仍可能参加加载和同步。整块何时结束，还取决于未完成的像素。</p>
-<div class="takeaway">看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。</div>
+<div class="takeaway">看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="implementation-map" data-topic="execution" data-label="39" tabindex="-1">
-      <div class="slide-label"><span>39 · GPU 怎样执行</span><a href="#implementation-map" aria-label="链接到：回到源码：我们现在能读懂哪几段？">主题链接 ↗</a></div>
-      <h2>回到源码：我们现在能读懂哪几段？</h2><div class="table-scroll"><table><thead><tr><th scope="col">逻辑阶段</th><th scope="col">官方入口 / 关键名字</th><th scope="col">阅读时追踪的状态</th></tr></thead><tbody><tr><td>每高斯预处理</td><td>forward.cu / preprocessCUDA</td><td>屏幕中心、conic、radii、tiles_touched</td></tr><tr><td>前缀和与分组</td><td>rasterizer_impl.cu / forward</td><td>point_offsets、duplicateWithKeys、SortPairs</td></tr><tr><td>分段</td><td>identifyTileRanges</td><td>ranges[tile]</td></tr><tr><td>每 Tile 渲染</td><td>forward.cu / renderCUDA</td><td>point_list、shared、T、C、done</td></tr></tbody></table></div>
-<p>先沿“输入 → 输出数组 → 下一阶段读取者”看调用链，再进入每行索引。网页示例是独立的教学简化；官方 main 分支会变化，复现实验应记录所用提交版本。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div>
+      <div class="slide-label"><a href="#implementation-map" title="此主题的稳定链接"><span class="page-number">39</span> · 主题链接</a><button class="start-page" data-start="implementation-map" aria-label="从39页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">42 / 57 · GPU 怎样执行</div>
+      <div class="slide-body"><h2>回到源码：我们现在能读懂哪几段？</h2><div class="table-scroll"><table><thead><tr><th scope="col">逻辑阶段</th><th scope="col">官方入口 / 关键名字</th><th scope="col">阅读时追踪的状态</th></tr></thead><tbody><tr><td>每高斯预处理</td><td>forward.cu / preprocessCUDA</td><td>屏幕中心、conic、radii、tiles_touched</td></tr><tr><td>前缀和与分组</td><td>rasterizer_impl.cu / forward</td><td>point_offsets、duplicateWithKeys、SortPairs</td></tr><tr><td>分段</td><td>identifyTileRanges</td><td>ranges[tile]</td></tr><tr><td>每 Tile 渲染</td><td>forward.cu / renderCUDA</td><td>point_list、shared、T、C、done</td></tr></tbody></table></div>
+<p>先沿“输入 → 输出数组 → 下一阶段读取者”看调用链，再进入每行索引。网页示例是独立的教学简化；官方 main 分支会变化，复现实验应记录所用提交版本。</p><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="termination-error" data-topic="execution" data-label="深入 04" tabindex="-1">
-      <div class="slide-label"><span>深入 04 · GPU 怎样执行</span><a href="#termination-error" aria-label="链接到：深入：提前结束，牺牲了多少颜色贡献？">主题链接 ↗</a></div>
-      <h2>深入：提前结束，牺牲了多少颜色贡献？</h2><p>如果颜色与背景的每个通道都位于 [0,1]，当前剩余透射率为 T，那么后方所有内容对最终颜色的总权重不超过 T。用背景替代后方内容时，每通道误差上界可由 T 控制。</p>
+      <div class="slide-label"><a href="#termination-error" title="此主题的稳定链接"><span class="page-number">深入 04</span> · 主题链接</a><button class="start-page" data-start="termination-error" aria-label="从深入 04页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">43 / 57 · GPU 怎样执行 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：提前结束，牺牲了多少颜色贡献？</h2><p>如果颜色与背景的每个通道都位于 [0,1]，当前剩余透射率为 T，那么后方所有内容对最终颜色的总权重不超过 T。用背景替代后方内容时，每通道误差上界可由 T 控制。</p>
 <div class="equation" role="math">T &lt; ε　⇒　在上述有界颜色条件下，每通道剩余误差 ≤ ε</div>
 <p>这个推理只解释截断当前像素的尾部；它不包含排序近似、滤波、低 alpha 跳过或训练变化。HDR 或未裁剪颜色也需要不同的颜色上界。</p>
-<div class="takeaway">阈值是质量与工作量之间的选择，不能只比较 FPS 而忽略误差。</div>
+<div class="takeaway">阈值是质量与工作量之间的选择，不能只比较 FPS 而忽略误差。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="threshold-order" data-topic="execution" data-label="深入 05" tabindex="-1">
-      <div class="slide-label"><span>深入 05 · GPU 怎样执行</span><a href="#threshold-order" aria-label="链接到：深入：教学循环与官方阈值次序有什么差别？">主题链接 ↗</a></div>
-      <h2>深入：教学循环与官方阈值次序有什么差别？</h2><p>官方基线会对 alpha 设上限、跳过极小 alpha，并先计算候选 <code>test_T</code>。若它低于终止阈值，会标记 done 而不把该候选加入 C，也不把 test_T 写回 T。</p>
+      <div class="slide-label"><a href="#threshold-order" title="此主题的稳定链接"><span class="page-number">深入 05</span> · 主题链接</a><button class="start-page" data-start="threshold-order" aria-label="从深入 05页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>GPU 怎样执行</span></div>
+      <div class="print-page-label">44 / 57 · GPU 怎样执行 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：教学循环与官方阈值次序有什么差别？</h2><p>官方基线会对 alpha 设上限、跳过极小 alpha，并先计算候选 <code>test_T</code>。若它低于终止阈值，会标记 done 而不把该候选加入 C，也不把 test_T 写回 T。</p>
 <p>主线的伪代码选择“先合成，再检查 T”方便解释。二者共享线程协作结构，但阈值附近的数值行为不同。若做结果校验，应明确选择哪个规范，不能要求简化版本逐位等同官方实现。</p>
-<div class="takeaway">学习结构时允许简化；比较实现时必须把简化条件写清楚。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div>
-    </section><section class="lecture-slide" id="training-loop" data-topic="learning" data-label="40" tabindex="-1">
-      <div class="slide-label"><span>40 · 场景怎样学出来</span><a href="#training-loop" aria-label="链接到：渲染器怎样成为一个可学习的模型？">主题链接 ↗</a></div>
-      <h2>渲染器怎样成为一个可学习的模型？</h2><figure><img src="../../materials/lectures/3dgs/training.svg" width="800" height="225" alt="选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。" loading="lazy"><figcaption>选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。</figcaption></figure>
+<div class="takeaway">学习结构时允许简化；比较实现时必须把简化条件写清楚。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">场景怎样学出来</h2><section class="lecture-slide" id="training-loop" data-topic="learning" data-label="40" tabindex="-1">
+      <div class="slide-label"><a href="#training-loop" title="此主题的稳定链接"><span class="page-number">40</span> · 主题链接</a><button class="start-page" data-start="training-loop" aria-label="从40页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>场景怎样学出来</span></div>
+      <div class="print-page-label">45 / 57 · 场景怎样学出来</div>
+      <div class="slide-body"><h2>渲染器怎样成为一个可学习的模型？</h2><figure><a href="../../materials/lectures/3dgs/training.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/training.svg" width="800" height="225" alt="选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。" loading="lazy"></a><figcaption>选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。</figcaption></figure>
 <div class="equation" role="math">L = (1 − λ)L₁ + λ(1 − SSIM)</div>
 <p>原始方法组合像素 L₁ 损失与结构相似性项。可先把 L 理解为“当前渲染与训练照片的差异”。选一个训练相机，计算一次损失，再把梯度传回高斯。</p>
-<p>要评估新视角能力，应另外使用未参加训练的相机图像；记住训练照片不等于学会所有新视角。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/train.py" target="_blank" rel="noreferrer">官方实现：train.py</a></div>
+<p>要评估新视角能力，应另外使用未参加训练的相机图像；记住训练照片不等于学会所有新视角。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/train.py" target="_blank" rel="noreferrer">官方实现：train.py</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="gradient-path" data-topic="learning" data-label="41" tabindex="-1">
-      <div class="slide-label"><span>41 · 场景怎样学出来</span><a href="#gradient-path" aria-label="链接到：像素误差，沿哪条链回到高斯参数？">主题链接 ↗</a></div>
-      <h2>像素误差，沿哪条链回到高斯参数？</h2><div class="equation" role="math">损失 → 像素颜色 → alpha / 颜色 → 二维中心与形状 → 三维参数</div>
+      <div class="slide-label"><a href="#gradient-path" title="此主题的稳定链接"><span class="page-number">41</span> · 主题链接</a><button class="start-page" data-start="gradient-path" aria-label="从41页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>场景怎样学出来</span></div>
+      <div class="print-page-label">46 / 57 · 场景怎样学出来</div>
+      <div class="slide-body"><h2>像素误差，沿哪条链回到高斯参数？</h2><div class="equation" role="math">损失 → 像素颜色 → alpha / 颜色 → 二维中心与形状 → 三维参数</div>
 <p>颜色不对，可调整颜色系数；覆盖位置不对，可调整中心；足迹不合适，可调整尺度与旋转；遮挡强弱不对，可调整不透明度。它们通常共同影响损失，并非各自负责一种独立错误。</p>
 <p>反向计算复用前向的排序与 Tile 范围。渲染器并不对排序位置、整数 Tile 归属、增删高斯等离散决定做普通连续求导。</p>
-<div class="takeaway">可微渲染描述局部连续计算的梯度路径；整个带分支、排序和拓扑变化的过程不是处处光滑。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a></div>
+<div class="takeaway">可微渲染描述局部连续计算的梯度路径；整个带分支、排序和拓扑变化的过程不是处处光滑。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="backward-scatter" data-topic="learning" data-label="42" tabindex="-1">
-      <div class="slide-label"><span>42 · 场景怎样学出来</span><a href="#backward-scatter" aria-label="链接到：前向一个像素一个所有者，反向却会汇到同一高斯">主题链接 ↗</a></div>
-      <h2>前向一个像素一个所有者，反向却会汇到同一高斯</h2><figure><img src="../../materials/lectures/3dgs/gradients.svg" width="800" height="340" alt="前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。" loading="lazy"><figcaption>前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。</figcaption></figure>
+      <div class="slide-label"><a href="#backward-scatter" title="此主题的稳定链接"><span class="page-number">42</span> · 主题链接</a><button class="start-page" data-start="backward-scatter" aria-label="从42页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>场景怎样学出来</span></div>
+      <div class="print-page-label">47 / 57 · 场景怎样学出来</div>
+      <div class="slide-body"><h2>前向一个像素一个所有者，反向却会汇到同一高斯</h2><figure><a href="../../materials/lectures/3dgs/gradients.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/gradients.svg" width="800" height="340" alt="前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。" loading="lazy"></a><figcaption>前向：一个高斯影响多个像素；反向：多个像素的梯度贡献汇聚到同一高斯参数。</figcaption></figure>
 <p>一个高斯覆盖多个像素甚至多个 Tile。每个像素算出的梯度都是总梯度的一部分，需要归约到同一个高斯参数上。</p>
 <p>基线反向 kernel 使用原子加来汇集一些参数梯度。这里的相加具有归约意义，与前向不允许乱序的透明颜色合成是不同问题。浮点归约次序仍可能影响末位舍入。</p>
-<div class="takeaway">同一个算法，前向和反向的读写冲突结构可以不同。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a></div>
+<div class="takeaway">同一个算法，前向和反向的读写冲突结构可以不同。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="density-control" data-topic="learning" data-label="43" tabindex="-1">
-      <div class="slide-label"><span>43 · 场景怎样学出来</span><a href="#density-control" aria-label="链接到：只有移动参数还不够：还要增加、拆分与删除">主题链接 ↗</a></div>
-      <h2>只有移动参数还不够：还要增加、拆分与删除</h2><figure><img src="../../materials/lectures/3dgs/density.svg" width="800" height="235" alt="克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。" loading="lazy"><figcaption>克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。</figcaption></figure>
+      <div class="slide-label"><a href="#density-control" title="此主题的稳定链接"><span class="page-number">43</span> · 主题链接</a><button class="start-page" data-start="density-control" aria-label="从43页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>场景怎样学出来</span></div>
+      <div class="print-page-label">48 / 57 · 场景怎样学出来</div>
+      <div class="slide-body"><h2>只有移动参数还不够：还要增加、拆分与删除</h2><figure><a href="../../materials/lectures/3dgs/density.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/density.svg" width="800" height="235" alt="克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。" loading="lazy"></a><figcaption>克隆增加局部表示能力；拆分把大覆盖分成较小基元；剪枝移除贡献低或不合适的基元。</figcaption></figure>
 <p>如果某一区域的表示不足，仅微调现有高斯可能不够。原始方法结合视空间位置梯度统计与尺度，决定哪些高斯适合克隆或拆分，并移除不透明度过低等不需要的基元。</p>
 <p>这些是周期性的自适应密度控制操作，不是在每次普通梯度更新中把数组长度连续地“求导出来”。</p>
-<div class="takeaway">高斯数增加可能改善质量，也可能增加显存、分组与渲染成本。数量与质量不是单调的一一对应。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div>
+<div class="takeaway">高斯数增加可能改善质量，也可能增加显存、分组与渲染成本。数量与质量不是单调的一一对应。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="learned-scene" data-topic="learning" data-label="44" tabindex="-1">
-      <div class="slide-label"><span>44 · 场景怎样学出来</span><a href="#learned-scene" aria-label="链接到：训练完成，查看一帧时哪些东西还在变化？">主题链接 ↗</a></div>
-      <h2>训练完成，查看一帧时哪些东西还在变化？</h2><div class="table-scroll"><table><thead><tr><th scope="col">保持不变（固定场景推理）</th><th scope="col">随目标相机重新计算</th></tr></thead><tbody><tr><td>中心、尺度、旋转、不透明度、SH 系数</td><td>相机坐标、屏幕中心与足迹</td></tr><tr><td>高斯参数集合</td><td>视角相关颜色、可见性</td></tr><tr><td>无需计算训练损失或反向梯度</td><td>Tile 覆盖、排序、像素合成</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#learned-scene" title="此主题的稳定链接"><span class="page-number">44</span> · 主题链接</a><button class="start-page" data-start="learned-scene" aria-label="从44页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>场景怎样学出来</span></div>
+      <div class="print-page-label">49 / 57 · 场景怎样学出来</div>
+      <div class="slide-body"><h2>训练完成，查看一帧时哪些东西还在变化？</h2><div class="table-scroll"><table><thead><tr><th scope="col">保持不变（固定场景推理）</th><th scope="col">随目标相机重新计算</th></tr></thead><tbody><tr><td>中心、尺度、旋转、不透明度、SH 系数</td><td>相机坐标、屏幕中心与足迹</td></tr><tr><td>高斯参数集合</td><td>视角相关颜色、可见性</td></tr><tr><td>无需计算训练损失或反向梯度</td><td>Tile 覆盖、排序、像素合成</td></tr></tbody></table></div>
 <p>一份场景参数可以从多个相机位置渲染。相机运动后，前一帧的候选与深度关系不一定适用；本讲基线为新相机重新走前向流程。</p>
-<div class="takeaway">“显式表示”节省了某些查询计算，但并不意味着每帧只需把点画到屏幕上。</div>
+<div class="takeaway">“显式表示”节省了某些查询计算，但并不意味着每帧只需把点画到屏幕上。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="backward-memory" data-topic="learning" data-label="深入 06" tabindex="-1">
-      <div class="slide-label"><span>深入 06 · 场景怎样学出来</span><a href="#backward-memory" aria-label="链接到：深入：为什么不保存每个像素的完整历史？">主题链接 ↗</a></div>
-      <h2>深入：为什么不保存每个像素的完整历史？</h2><p>如果为每个像素保存所有贡献高斯与每一步 T，内存会随重叠深度增长。基线保存最终透射率、最后贡献位置等状态，反向重新遍历有序候选列表。</p>
+      <div class="slide-label"><a href="#backward-memory" title="此主题的稳定链接"><span class="page-number">深入 06</span> · 主题链接</a><button class="start-page" data-start="backward-memory" aria-label="从深入 06页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>场景怎样学出来</span></div>
+      <div class="print-page-label">50 / 57 · 场景怎样学出来 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：为什么不保存每个像素的完整历史？</h2><p>如果为每个像素保存所有贡献高斯与每一步 T，内存会随重叠深度增长。基线保存最终透射率、最后贡献位置等状态，反向重新遍历有序候选列表。</p>
 <div class="equation" role="math">T_before = T_after / (1 − α)　（对实际参与合成的项）</div>
 <p>反向从后向前恢复需要的系数，同时复用前向列表和批量加载。必须与前向的跳过、终止和 alpha 裁剪规则匹配。</p>
-<div class="takeaway">这里体现“保存还是重算”的权衡。减少每像素历史存储，并不代表没有全局排序缓冲区或没有反向计算成本。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a></div>
-    </section><section class="lecture-slide" id="cost-model" data-topic="performance" data-label="45" tabindex="-1">
-      <div class="slide-label"><span>45 · 性能、质量与总结</span><a href="#cost-model" aria-label="链接到：不要只数高斯：三个规模决定不同阶段">主题链接 ↗</a></div>
-      <h2>不要只数高斯：三个规模决定不同阶段</h2><div class="table-scroll"><table><thead><tr><th scope="col">规模</th><th scope="col">定义</th><th scope="col">主要影响</th></tr></thead><tbody><tr><td>N</td><td>高斯数量</td><td>预处理、参数存储</td></tr><tr><td>M = Σᵢ nᵢ</td><td>Gaussian–Tile 引用数量</td><td>写出、排序、范围与缓冲区</td></tr><tr><td>K = Σₚ kₚ</td><td>所有像素实际检查的候选总数</td><td>像素遍历与合成</td></tr></tbody></table></div>
+<div class="takeaway">这里体现“保存还是重算”的权衡。减少每像素历史存储，并不代表没有全局排序缓冲区或没有反向计算成本。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
+    </section><h2 class="topic-heading">性能、质量与总结</h2><section class="lecture-slide" id="cost-model" data-topic="performance" data-label="45" tabindex="-1">
+      <div class="slide-label"><a href="#cost-model" title="此主题的稳定链接"><span class="page-number">45</span> · 主题链接</a><button class="start-page" data-start="cost-model" aria-label="从45页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">51 / 57 · 性能、质量与总结</div>
+      <div class="slide-body"><h2>不要只数高斯：三个规模决定不同阶段</h2><div class="table-scroll"><table><thead><tr><th scope="col">规模</th><th scope="col">定义</th><th scope="col">主要影响</th></tr></thead><tbody><tr><td>N</td><td>高斯数量</td><td>预处理、参数存储</td></tr><tr><td>M = Σᵢ nᵢ</td><td>Gaussian–Tile 引用数量</td><td>写出、排序、范围与缓冲区</td></tr><tr><td>K = Σₚ kₚ</td><td>所有像素实际检查的候选总数</td><td>像素遍历与合成</td></tr></tbody></table></div>
 <p>同样 N 个高斯，屏幕足迹更大时 M 可能更多；覆盖重叠更深、较晚达到不透明时 K 可能更大。改变相机也会改变这些量。</p>
 <div class="equation" role="math">一帧时间 = 预处理 + 分组 / 排序 + 渲染 + 其他开销</div>
-<div class="takeaway">这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。</div>
+<div class="takeaway">这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="tile-tradeoff" data-topic="performance" data-label="46" tabindex="-1">
-      <div class="slide-label"><span>46 · 性能、质量与总结</span><a href="#tile-tradeoff" aria-label="链接到：Tile 越小一定越快吗？">主题链接 ↗</a></div>
-      <h2>Tile 越小一定越快吗？</h2><div class="table-scroll"><table><thead><tr><th scope="col">改变 Tile 大小</th><th scope="col">可能得到什么</th><th scope="col">可能付出什么</th></tr></thead><tbody><tr><td>较小 Tile</td><td>候选更精细，减少无关像素检查</td><td>引用 M 增加、Block 数与组织成本增加</td></tr><tr><td>较大 Tile</td><td>更多像素共用候选，可能减少引用</td><td>无效候选检查更多，块内差异与资源需求变化</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#tile-tradeoff" title="此主题的稳定链接"><span class="page-number">46</span> · 主题链接</a><button class="start-page" data-start="tile-tradeoff" aria-label="从46页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">52 / 57 · 性能、质量与总结</div>
+      <div class="slide-body"><h2>Tile 越小一定越快吗？</h2><div class="table-scroll"><table><thead><tr><th scope="col">改变 Tile 大小</th><th scope="col">可能得到什么</th><th scope="col">可能付出什么</th></tr></thead><tbody><tr><td>较小 Tile</td><td>候选更精细，减少无关像素检查</td><td>引用 M 增加、Block 数与组织成本增加</td></tr><tr><td>较大 Tile</td><td>更多像素共用候选，可能减少引用</td><td>无效候选检查更多，块内差异与资源需求变化</td></tr></tbody></table></div>
 <p>一个高斯覆盖范围固定时，用更细的 Tile 划分，往往会产生更多引用；但列表对每个像素更有针对性。效果还取决于场景、屏幕分辨率与 kernel 设计。</p>
-<div class="takeaway">在相同图像质量与正确性条件下测完整路径，再讨论某一个 kernel 的变化。</div>
+<div class="takeaway">在相同图像质量与正确性条件下测完整路径，再讨论某一个 kernel 的变化。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="measure" data-topic="performance" data-label="47" tabindex="-1">
-      <div class="slide-label"><span>47 · 性能、质量与总结</span><a href="#measure" aria-label="链接到：怎样设计一组能回答问题的性能实验？">主题链接 ↗</a></div>
-      <h2>怎样设计一组能回答问题的性能实验？</h2><div class="table-scroll"><table><thead><tr><th scope="col">控制项</th><th scope="col">记录项</th><th scope="col">比较目的</th></tr></thead><tbody><tr><td>固定场景、相机、分辨率与阈值</td><td>N、M、K 或候选分布；各阶段时间</td><td>定位成本落在哪里</td></tr><tr><td>只改变相机距离</td><td>足迹大小、引用数、帧时间</td><td>检验“点数相同，工作是否相同”</td></tr><tr><td>只改变提前结束阈值</td><td>帧时间、图像误差</td><td>量化质量与速度折中</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#measure" title="此主题的稳定链接"><span class="page-number">47</span> · 主题链接</a><button class="start-page" data-start="measure" aria-label="从47页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">53 / 57 · 性能、质量与总结</div>
+      <div class="slide-body"><h2>怎样设计一组能回答问题的性能实验？</h2><div class="table-scroll"><table><thead><tr><th scope="col">控制项</th><th scope="col">记录项</th><th scope="col">比较目的</th></tr></thead><tbody><tr><td>固定场景、相机、分辨率与阈值</td><td>N、M、K 或候选分布；各阶段时间</td><td>定位成本落在哪里</td></tr><tr><td>只改变相机距离</td><td>足迹大小、引用数、帧时间</td><td>检验“点数相同，工作是否相同”</td></tr><tr><td>只改变提前结束阈值</td><td>帧时间、图像误差</td><td>量化质量与速度折中</td></tr></tbody></table></div>
 <p>预热后测多帧，记录 GPU、实现版本与计时范围，区分渲染 kernel 时间和完整帧时间。GPU 事件用于相关设备区间；跨 CPU / GPU 的完整时间还需要保证完成后再读时钟。</p>
-<div class="takeaway">本讲交互图运行于浏览器，只演示算法；没有把浏览器动画速度当成 CUDA benchmark，也没有虚构 GPU 实测数据。</div>
+<div class="takeaway">本讲交互图运行于浏览器，只演示算法；没有把浏览器动画速度当成 CUDA benchmark，也没有虚构 GPU 实测数据。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="limits" data-topic="performance" data-label="48" tabindex="-1">
-      <div class="slide-label"><span>48 · 性能、质量与总结</span><a href="#limits" aria-label="链接到：哪些近似与限制，会在图像中暴露？">主题链接 ↗</a></div>
-      <h2>哪些近似与限制，会在图像中暴露？</h2><div class="table-scroll"><table><thead><tr><th scope="col">条件</th><th scope="col">需要注意的现象</th></tr></thead><tbody><tr><td>大足迹或复杂遮挡</td><td>共享中心深度排序与局部投影近似可能失准</td></tr><tr><td>训练视角覆盖不足</td><td>未观察区域的几何或外观可能不可靠</td></tr><tr><td>分辨率与观察距离改变</td><td>屏幕空间采样、滤波与细节可能变化</td></tr><tr><td>透明 / 反射外观复杂</td><td>拟合的外观不等于恢复了完整物理材质</td></tr></tbody></table></div>
-<p>本讲讲的是原始 3DGS 思路及其基线并行结构。后续研究可以改进排序、抗锯齿、压缩与训练，但应先弄清改动解决的是哪一种误差或成本。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div>
+      <div class="slide-label"><a href="#limits" title="此主题的稳定链接"><span class="page-number">48</span> · 主题链接</a><button class="start-page" data-start="limits" aria-label="从48页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">54 / 57 · 性能、质量与总结</div>
+      <div class="slide-body"><h2>哪些近似与限制，会在图像中暴露？</h2><div class="table-scroll"><table><thead><tr><th scope="col">条件</th><th scope="col">需要注意的现象</th></tr></thead><tbody><tr><td>大足迹或复杂遮挡</td><td>共享中心深度排序与局部投影近似可能失准</td></tr><tr><td>训练视角覆盖不足</td><td>未观察区域的几何或外观可能不可靠</td></tr><tr><td>分辨率与观察距离改变</td><td>屏幕空间采样、滤波与细节可能变化</td></tr><tr><td>透明 / 反射外观复杂</td><td>拟合的外观不等于恢复了完整物理材质</td></tr></tbody></table></div>
+<p>本讲讲的是原始 3DGS 思路及其基线并行结构。后续研究可以改进排序、抗锯齿、压缩与训练，但应先弄清改动解决的是哪一种误差或成本。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="summary" data-topic="performance" data-label="49" tabindex="-1">
-      <div class="slide-label"><span>49 · 性能、质量与总结</span><a href="#summary" aria-label="链接到：把整帧放回一起：表示、组织与执行">主题链接 ↗</a></div>
-      <h2>把整帧放回一起：表示、组织与执行</h2><figure><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。" loading="lazy"><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>
+      <div class="slide-label"><a href="#summary" title="此主题的稳定链接"><span class="page-number">49</span> · 主题链接</a><button class="start-page" data-start="summary" aria-label="从49页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">55 / 57 · 性能、质量与总结</div>
+      <div class="slide-body"><h2>把整帧放回一起：表示、组织与执行</h2><figure><a href="../../materials/lectures/3dgs/pipeline.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。" loading="lazy"></a><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>
 <div class="table-scroll"><table><thead><tr><th scope="col">应该能够解释</th><th scope="col">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、局部 alpha、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>引用膨胀、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>
-<div class="takeaway">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>
+<div class="takeaway">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="memory-budget" data-topic="performance" data-label="深入 07" tabindex="-1">
-      <div class="slide-label"><span>深入 07 · 性能、质量与总结</span><a href="#memory-budget" aria-label="链接到：深入：估算参数与引用缓冲区">主题链接 ↗</a></div>
-      <h2>深入：估算参数与引用缓冲区</h2><p>以一个教学布局估算：位置 3、尺度 3、四元数 4、不透明度 1、三阶 SH 的 RGB 系数 48，共 59 个 FP32，约 236 字节 / 高斯。100 万个高斯约 236 MB（十进制），不含对齐、梯度和优化器状态。</p>
+      <div class="slide-label"><a href="#memory-budget" title="此主题的稳定链接"><span class="page-number">深入 07</span> · 主题链接</a><button class="start-page" data-start="memory-budget" aria-label="从深入 07页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">56 / 57 · 性能、质量与总结 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：估算参数与引用缓冲区</h2><p>以一个教学布局估算：位置 3、尺度 3、四元数 4、不透明度 1、三阶 SH 的 RGB 系数 48，共 59 个 FP32，约 236 字节 / 高斯。100 万个高斯约 236 MB（十进制），不含对齐、梯度和优化器状态。</p>
 <div class="equation" role="math">引用的一份 key + ID：8 + 4 = 12 字节；M=1000 万 → 120 MB</div>
 <p>排序通常还需要输入 / 输出缓冲与临时工作区，不能把 12M 字节当作整个排序过程的峰值。训练还需要梯度、优化器状态、前向中间量等。</p>
-<div class="takeaway">实际内存由实现的数据类型、布局与库决定；本页是账目模型，不是某块 GPU 上的实测占用。</div>
+<div class="takeaway">实际内存由实现的数据类型、布局与库决定；本页是账目模型，不是某块 GPU 上的实测占用。</div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="reading" data-topic="performance" data-label="深入 08" tabindex="-1">
-      <div class="slide-label"><span>深入 08 · 性能、质量与总结</span><a href="#reading" aria-label="链接到：深入：从原始论文到实现的阅读顺序">主题链接 ↗</a></div>
-      <h2>深入：从原始论文到实现的阅读顺序</h2><div class="table-scroll"><table><thead><tr><th scope="col">想核对什么</th><th scope="col">优先阅读</th></tr></thead><tbody><tr><td>场景表示与投影</td><td>论文 §4；forward.cu 的协方差与投影计算</td></tr><tr><td>优化与密度控制</td><td>论文 §5；train.py、gaussian_model.py</td></tr><tr><td>排序与 Tile 并行</td><td>论文 §6 / 附录 C；rasterizer_impl.cu</td></tr><tr><td>像素遍历与反向状态</td><td>forward.cu / backward.cu</td></tr></tbody></table></div>
+      <div class="slide-label"><a href="#reading" title="此主题的稳定链接"><span class="page-number">深入 08</span> · 主题链接</a><button class="start-page" data-start="reading" aria-label="从深入 08页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
+      <div class="slide-topline"><span>并行计算与算子编程</span><span>性能、质量与总结</span></div>
+      <div class="print-page-label">57 / 57 · 性能、质量与总结 · 深入阅读</div>
+      <div class="slide-body"><h2>深入：从原始论文到实现的阅读顺序</h2><div class="table-scroll"><table><thead><tr><th scope="col">想核对什么</th><th scope="col">优先阅读</th></tr></thead><tbody><tr><td>场景表示与投影</td><td>论文 §4；forward.cu 的协方差与投影计算</td></tr><tr><td>优化与密度控制</td><td>论文 §5；train.py、gaussian_model.py</td></tr><tr><td>排序与 Tile 并行</td><td>论文 §6 / 附录 C；rasterizer_impl.cu</td></tr><tr><td>像素遍历与反向状态</td><td>forward.cu / backward.cu</td></tr></tbody></table></div>
 <p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p>
-<p>本页链接指向原论文与官方项目。复现时记录提交号、运行配置、场景、相机和阈值；不要把不同版本的性能数字直接混在一起。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目：视频、场景与效果对照</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/train.py" target="_blank" rel="noreferrer">官方实现：train.py</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div>
+<p>本页链接指向原论文与官方项目。复现时记录提交号、运行配置、场景、相机和阈值；不要把不同版本的性能数字直接混在一起。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目：视频、场景与效果对照</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/backward.cu" target="_blank" rel="noreferrer">官方实现：backward.cu</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/train.py" target="_blank" rel="noreferrer">官方实现：train.py</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
+      <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section></div>
-<footer class="chapter-footer">课程原创讲解与图示 · 3DGS 方法：Kerbl 等（2023）<br><a href="https://arxiv.org/html/2308.04079v1">原论文</a> · <a href="../../">返回课程概览</a></footer></main>
+<footer class="chapter-footer"><a href="../../">← 返回课程概览</a><p>并行计算与算子编程 <a href="../../glossary/">术语索引 ↗</a></p>课程原创讲解与图示 · 3DGS 方法：Kerbl 等（2023） · <a href="https://arxiv.org/html/2308.04079v1">原论文</a></footer></main>
 <aside class="contents" aria-label="本讲内容"><nav class="lecture-page-nav" aria-label="本讲逐页目录"><div class="lecture-page-nav-heading"><strong>本讲内容</strong><span class="toc-position">1 / 49</span></div><ol class="toc-page-list"><li class="toc-entry is-current" data-slide="novel-view" data-deep="false">
           <a href="#novel-view" data-target="novel-view" aria-expanded="true" aria-controls="desktop-idea-novel-view" aria-current="location">
             <span class="toc-page-number">01</span><span>拍过的照片，怎样变成没有拍过的视角？</span>
@@ -658,9 +829,10 @@ if (inside) image[pixel] = C + T * background;</code></pre>
             <span class="toc-page-number">57</span><span>深入：从原始论文到实现的阅读顺序<small>深入阅读</small></span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </a><div class="toc-page-idea" id="desktop-idea-reading" hidden><strong>本页要点</strong><p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p></div>
-        </li></ol></nav></aside></div></div>
+        </li></ol></nav></aside></div>
+<div class="presentation-footer"><progress id="slide-progress" aria-label="本讲浏览进度" value="1" max="49"></progress><div class="presentation-controls"><button id="presentation-contents" aria-label="打开页面目录" aria-haspopup="dialog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 10h18M10 3v18"/></svg></button><span class="keyboard-hint">← → 答案 / 翻页 · F 全屏</span><nav aria-label="演示翻页"><button id="prev" aria-label="上一页">←</button><button id="page-picker" aria-label="选择页码" aria-haspopup="dialog"><output id="progress">1 / 49</output></button><button id="next" aria-label="下一页">→</button></nav></div><p id="slide-status" role="status"></p></div></div></div>
 <button id="contents-open" class="mobile-contents-button" aria-haspopup="dialog" aria-controls="contents-dialog">▦ 本讲内容</button>
-<dialog id="contents-dialog" aria-label="本讲内容"><div class="contents-dialog-header"><span>逐页浏览讲义</span><button id="contents-close" aria-label="关闭本讲内容">关闭 ×</button></div><nav class="lecture-page-nav" aria-label="本讲逐页目录"><div class="lecture-page-nav-heading"><strong>本讲内容</strong><span class="toc-position">1 / 49</span></div><ol class="toc-page-list"><li class="toc-entry is-current" data-slide="novel-view" data-deep="false">
+<dialog id="contents-dialog" aria-label="本讲页面"><div class="contents-dialog-header"><h2>本讲页面</h2><button id="contents-close" aria-label="关闭本讲内容">关闭 ×</button></div><p class="dialog-description">按页查看标题与核心思想，当前页自动展开。</p><nav class="lecture-page-nav" aria-label="本讲逐页目录"><div class="lecture-page-nav-heading"><strong>本讲内容</strong><span class="toc-position">1 / 49</span></div><ol class="toc-page-list"><li class="toc-entry is-current" data-slide="novel-view" data-deep="false">
           <a href="#novel-view" data-target="novel-view" aria-expanded="true" aria-controls="mobile-idea-novel-view" aria-current="location">
             <span class="toc-page-number">01</span><span>拍过的照片，怎样变成没有拍过的视角？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
@@ -946,5 +1118,4 @@ if (inside) image[pixel] = C + T * background;</code></pre>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </a><div class="toc-page-idea" id="mobile-idea-reading" hidden><strong>本页要点</strong><p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p></div>
         </li></ol></nav></dialog>
-<nav class="presentation-controls" aria-label="翻页控制"><button id="prev" aria-label="上一页">← 上一页</button><label>跳至 <select id="page-select" aria-label="选择讲义页"></select></label><output id="progress" aria-live="polite">1 / 49</output><button id="next">下一步 →</button><button id="fullscreen" aria-label="切换全屏">全屏</button></nav>
 <div id="status" class="sr-only" aria-live="polite"></div></body></html>
