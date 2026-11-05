@@ -17,4 +17,10 @@ assert.deepEqual(composite([], [.2,.4,.6]).color,[.2,.4,.6]);
 near(gaussian2D(0,0,30,10,.4,.8),.8);
 near(gaussian2D(30,0,30,10),Math.exp(-.5));
 near(gaussian2D(0,30,30,10,Math.PI/2),Math.exp(-.5));
+// Chapter's worked alpha example: equal pixel distance, unequal axis widths.
+const alphaSamples=[[0,0],[2,0],[0,2]].map(([x,y])=>
+  Number(gaussian2D(x,y,2,1,0,.8).toFixed(4)));
+assert.deepEqual(alphaSamples,[.8,.4852,.1083]);
+// Turning the ellipse by a quarter turn must exchange the two off-center values.
+near(gaussian2D(2,0,2,1,Math.PI/2,.8),gaussian2D(0,2,2,1,0,.8));
 console.log('PASS: tile coverage, scan, sorting/ranges, compositing, empty cases, boundaries, and Gaussian rotation.');

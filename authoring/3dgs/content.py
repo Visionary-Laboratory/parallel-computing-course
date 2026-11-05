@@ -30,6 +30,7 @@ def eq(text): return '<div class="equation" role="math">' + text + '</div>'
 def table(head, rows):
     return '<div class="table-scroll"><table><thead><tr>' + ''.join('<th scope="col">'+c+'</th>' for c in head) + '</tr></thead><tbody>' + ''.join('<tr>'+''.join('<td>'+str(c)+'</td>' for c in row)+'</tr>' for row in rows) + '</tbody></table></div>'
 def code(text): return '<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>' + escape(text.strip()) + '</code></pre></div>'
+def columns(*items): return '<div class="teaching-columns">' + ''.join('<div>'+item+'</div>' for item in items) + '</div>'
 FIGURE_HEIGHTS = dict(scene=300, pipeline=195, **{'point-splat':285}, camera=265, projection=310, ownership=340, shared=345, barriers=235, imbalance=330, training=225, gradients=340, density=235)
 def fig(name, caption): return f'<figure><a href="../../materials/lectures/3dgs/{name}.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/{name}.svg" width="800" height="{FIGURE_HEIGHTS[name]}" alt="{escape(caption, quote=True)}" loading="lazy"></a><figcaption>{caption}</figcaption></figure>'
 def demo(name, caption): return f'<div class="demo" data-demo="{name}"></div><p class="caption">{caption}</p>'
@@ -68,8 +69,8 @@ add('gaussian-falloff', 'representation', '从一维开始：距离怎样改变�
 add('ellipse', 'representation', '二维高斯：拉长、旋转，改变覆盖形状',
     demo('ellipse', '调节两个尺度、角度和不透明度。图像按二维高斯公式计算；虚线为 2σ 等值线，图示不代表 GPU 性能。'),
     p('两个方向尺度相同，等值线是圆；尺度不同，就是椭圆。旋转只改变方向，不改变两个主轴尺度。'),
-    eq('g(p) = exp[−½ (p − μ)ᵀ Σ⁻¹ (p − μ)]'),
-    p('Σ（协方差）把大小与方向放在同一个矩阵里。我们先用图理解它，再把同一思路搬到三维。'))
+    p('先把两个尺度调成相同的值，再只增大主轴尺度，最后转动椭圆。观察：离中心同样远的两个点，沿长轴方向的贡献可以更大。'),
+    note('高斯关心的是“相对自身宽度走了多远”。Σ（协方差）把各方向的宽度与朝向记在一起；它不是给所有方向使用同一个半径。'))
 add('gaussian-record', 'representation', '一个三维高斯，需要保存哪些参数？',
     table(['参数','含义','影响图像的方式'], [
         ['中心 μ ∈ ℝ³','在场景中的位置','投影中心与深度'],
@@ -78,11 +79,11 @@ add('gaussian-record', 'representation', '一个三维高斯，需要保存哪�
         ['颜色参数 / SH 系数','随观察方向变化的外观','该相机下的 RGB']]),
     p('这是一份显式参数表。渲染时反复读取它；训练时更新它。高斯数量也可以随训练改变。'),
     note('高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。'), refs=('paper','model'))
-add('covariance', 'representation', '把尺度与旋转组合成协方差',
-    eq('S = diag(sₓ, sᵧ, s_z)　　Σ = R S Sᵀ Rᵀ'),
-    p('先沿局部坐标轴缩放，再旋转到世界坐标系。这里 s 是标准差尺度，因此协方差中出现 s²。R 来自归一化旋转四元数。'),
-    table(['选择','结果'], [['sₓ = sᵧ = s_z','各向同性；旋转不改变形状'],['sₓ ≫ sᵧ ≈ s_z','沿一个方向拉长'],['两个尺度大、一个尺度小','薄片状局部覆盖']]),
-    p('正尺度配合有效旋转使协方差保持正定。优化时可用 exp 将无约束变量转换为正尺度。'), refs=('paper','model'))
+add('covariance', 'representation', '协方差：把三个方向的宽度和朝向记下来',
+    p('先看与坐标轴对齐的高斯。若标准差尺度为 (2,1,1)，沿 x 方向比另外两个方向宽一倍；协方差对角线记的是尺度的平方。'),
+    eq('s = (2,1,1)　→　Σ = diag(4,1,1)　（尚未旋转）'),
+    table(['改变什么','形状怎样变化'], [['三个尺度相同','各方向一样宽；旋转不改变形状'],['只有一个尺度大','沿一个方向拉长'],['保持尺度，改变旋转','宽度不变，长轴换一个朝向']]),
+    note('三维中心负责位置，协方差负责形状。主线需要读懂这个分工；尺度与旋转怎样组成矩阵，留在深入阅读。'), refs=('paper','model'))
 add('opacity', 'representation', '不透明度与高斯权重，是两个不同的量',
     eq('αᵢ(p) = oᵢ · gᵢ(p)'),
     p('oᵢ 是这个高斯的参数；gᵢ(p) 随像素位置变化；αᵢ(p) 才是它在该像素上的局部 alpha。中心附近 α 较大，边缘较小。'),
@@ -90,9 +91,8 @@ add('opacity', 'representation', '不透明度与高斯权重，是两个不同�
     note('这些 alpha 不需要在所有高斯之间归一化到总和为 1。后面的透射率会决定前后遮挡的权重。'), refs=('paper',))
 add('appearance', 'representation', '为什么颜色可以随观察方向变化？',
     p('同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。'),
-    eq('c(d) = Σₖ aₖ Yₖ(d)　（对 R、G、B 分别求值）'),
-    p('d 是约定好的观察方向，Yₖ 是固定方向基函数，aₖ 是学习得到的系数。可以把它理解为“用几种已知的方向变化模式，组合出颜色”。'),
-    p('课堂先固定各高斯的 RGB，便于手算与追踪渲染；真实实现可在每高斯预处理阶段求该视角下的颜色。'), refs=('paper','forward'))
+    p('把 SH 系数理解成一份“方向 → RGB”的小型配方：相机换方向，系数不变，求出的 RGB 可以改变。它仍是同一个高斯，并没有重新训练。'),
+    note('对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。后面的手算直接给定 RGB；这里不展开球谐基函数。'), refs=('paper','forward'))
 
 add('camera-coordinates', 'projection', '先把中心变换到相机坐标系',
     fig('camera', '世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。'),
@@ -109,19 +109,26 @@ add('project-shape', 'projection', '投影一个高斯，不能只投影中心',
     p('如果所有中心都画成固定半径的圆，就丢掉了三维尺度、旋转与透视变化。除了中心 μ₂D，还需要得到屏幕上的二维协方差 Σ₂D。'),
     p('透视包含除法，是非线性映射。原始方法在高斯中心附近做局部线性近似，用这个小范围内的“变化率”来传播形状。'),
     note('“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。'), refs=('paper',))
-add('project-covariance', 'projection', '用局部变化率把三维形状带到屏幕',
-    eq('Σ_c = R_c Σ R_cᵀ　　Σ₂D ≈ J Σ_c Jᵀ'),
-    p('J 是 2×3 的投影雅可比矩阵：相机坐标改变一点，屏幕坐标改变多少。矩阵尺寸检查：2×3 · 3×3 · 3×2 → 2×2。'),
-    p('先记住数据流：<strong>三维协方差 → 相机方向下的协方差 → 屏幕二维协方差</strong>。课堂主线不要求手推每个偏导。'),
-    p('得到 Σ₂D 后，计算它的逆矩阵 Q，用于对每个候选像素求高斯权重。数值稳定与屏幕空间滤波还需要实现中的额外处理。'), refs=('paper','forward'))
+add('project-covariance', 'projection', '同一个高斯，移远后屏幕足迹怎样缩小？',
+    p('先取一个容易计算的局部近似：中心在相机主轴上，各方向一样宽，焦距 f=100 像素，三维标准差 σ=0.04，深度与 σ 使用相同长度单位。暂不加入屏幕滤波。'),
+    eq('屏幕标准差 ≈ fσ/Z'),
+    table(['深度 Z','屏幕标准差','二维协方差的对角值'], [['2','2 像素','4 像素²'],['4','1 像素','1 像素²']]),
+    p('移远一倍，屏幕宽度减半，方差变为四分之一。一般椭球还要考虑朝向，不能都套用这个圆形特例。'),
+    note('预处理输出二维形状 Σ₂D，再存下逆矩阵 Q=Σ₂D⁻¹，供像素计算相对距离。矩阵推导在深入阅读，主线追踪这份数据怎样被复用。'), refs=('paper','forward'))
 add('jacobian', 'projection', '深入：透视雅可比的每一项从哪里来？',
+    eq('S = diag(sₓ,sᵧ,s_z)，Σ = R S Sᵀ Rᵀ'),
+    p('正尺度与有效旋转 R 给出正定协方差。R 可由归一化四元数得到；训练时可用 exp 把无约束变量变为正尺度。'),
+    eq('Σ_c = R_c Σ R_cᵀ　　Σ₂D ≈ J Σ_c Jᵀ'),
+    p('相机旋转 R_c 先改变形状的观察方向；2×3 的雅可比 J 表示相机坐标改变一点时，屏幕坐标改变多少。结果是 2×2 的屏幕协方差。'),
     eq('J = [ fₓ/Z　 0　 −fₓX/Z² ;　0　 fᵧ/Z　 −fᵧY/Z² ]'),
     p('对 u=fₓX/Z+cₓ 分别求 X、Y、Z 的偏导，得到第一行；v 的偏导给出第二行。靠近主轴时 X、Y 较小，深度扰动对屏幕位置的横向影响较弱。'),
     p('例如 X=Y=0，fₓ=fᵧ=f，三维各向同性 Σ=σ²I，则 Σ₂D=(fσ/Z)²I。深度加倍，屏幕标准差减半，协方差对角元变为四分之一。'),
+    eq('g(p) = exp[−½ δᵀQδ]，δ=p−μ₂D，Q=Σ₂D⁻¹'),
+    p('二维对称 Q 只需保存 Qₓₓ、Qₓᵧ、Qᵧᵧ。展开二次型得到 Qₓₓδₓ²+2Qₓᵧδₓδᵧ+Qᵧᵧδᵧ²；交叉项不能漏掉系数 2。'),
     note('这个例子有明确的中心与各向同性假设；不能据此把任意旋转椭球都简化成同一个屏幕圆。'), deep=True, refs=('paper',))
 add('finite-footprint', 'projection', '无限的高斯，有限的候选区域',
-    p('不能为一个高斯访问整张图像。实现用有限半径得到屏幕包围框，再裁剪到图像范围。基线代码根据二维协方差的最大特征值估计约 3σ 半径。'),
-    eq('r ≈ ceil(3 √λ_max(Σ₂D))'),
+    p('不能为一个高斯访问整张图像。先沿屏幕椭圆最宽的方向取约 3 倍标准差，向上取整为候选半径，再用包围框找相交的 Tile，并裁剪到图像范围。'),
+    p('接上页未加屏幕滤波的圆形特例：屏幕标准差为 2 像素时，3σ 半径为 6 像素；变为 1 像素时，半径为 3 像素。实际实现还会加入滤波与数值保护，整数候选半径可能不同。'),
     p('包围框负责快速找<strong>候选 Tile</strong>；真正合成时仍要按椭圆公式计算每个像素的 alpha，并跳过很小的贡献。框内不等于有效贡献，框外也不是数学上严格为零。'),
     note('课程算例会直接给定整数中心、半径与深度，用于练习分组；这些值不声称来自某个真实训练场景。'), refs=('forward',))
 add('preprocess', 'projection', '每高斯预处理：先做一次，供后面反复使用',
@@ -129,11 +136,12 @@ add('preprocess', 'projection', '每高斯预处理：先做一次，供后面�
     p('不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条引用。'),
     note('并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。'), refs=('forward','pipeline'))
 
-add('evaluate-alpha', 'compositing', '先算一个高斯在一个像素上的贡献',
-    eq('δ = p − μ₂D　　Q = Σ₂D⁻¹'),
-    eq('α(p) = o exp[−½(Qₓₓδₓ² + 2Qₓᵧδₓδᵧ + Qᵧᵧδᵧ²)]'),
-    p('二维对称矩阵只需保存三个独立元素。交叉项带有系数 2；展开表达式时漏掉它，会改变旋转椭圆的形状。'),
-    p('先用一个像素与一个高斯理解“离中心有多远”，再讨论多个高斯怎样叠加。实现中的 alpha 上限和微小贡献阈值属于数值与质量折中。'), refs=('forward',))
+add('evaluate-alpha', 'compositing', '算一次局部 alpha：同样离中心 2 像素，为何不同？',
+    p('独立的二维算例：椭圆未旋转，横向标准差为 2 像素，纵向为 1 像素，不透明度 o=0.8。δ 是像素与中心的坐标差。'),
+    eq('d² = (δₓ/2)² + δᵧ²　　g=exp(−d²/2)　　α=0.8g'),
+    table(['相对位置 δ','按宽度缩放后的 d²','高斯权重 g','局部 α'], [['(0,0)','0','1','0.8'],['(2,0)','1','≈0.6065','≈0.4852'],['(0,2)','4','≈0.1353','≈0.1083']]),
+    p('沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。Q=diag(1/4,1) 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。'),
+    note('同一高斯、不同像素，alpha 不同。后面的红绿蓝手算直接给定某一个像素处的 alpha，以便把注意力放到前后合成。'), refs=('forward',))
 add('transmittance', 'compositing', '前面的覆盖，决定后面还能贡献多少',
     eq('C = 0，T = 1；从前到后遍历：'),
     eq('C ← C + T αᵢ cᵢ　　T ← T(1 − αᵢ)'),
@@ -242,67 +250,91 @@ add('sort-key', 'tiles', '深入：64 位排序 Key 包含什么？',
 
 add('block-mapping', 'execution', '一个 Tile 一个 Block，一个像素一个线程',
     fig('ownership', '64×64 屏幕对应 4×4 个 Block；每个 Block 的 16×16 个线程负责一个 Tile 的 256 个像素。'),
-    code('''// 本讲采用 x 对应列、y 对应行
+    code('''// 本讲采用 x 对应列、y 对应行，Block=(16,16)
+int t = threadIdx.y * 16 + threadIdx.x; // 块内编号 0..255
+int tile_id = blockIdx.y * gridDim.x + blockIdx.x;
 int x = blockIdx.x * 16 + threadIdx.x;
 int y = blockIdx.y * 16 + threadIdx.y;
 bool inside = x < width && y < height;'''),
-    p('每个线程在寄存器中维护自己的 C 与 T，最后写出自己的像素。不要把一个 Block 等同于一个 SM：Block 由硬件调度，多个 Block 可在资源允许时驻留于同一 SM。'), refs=('forward',))
-add('shared-load', 'execution', '同一份高斯参数，让整个 Block 共用',
-    fig('shared', '线程合作搬入一批高斯参数；同步后，同一 Tile 的不同像素读取这些参数，维护各自的 C 与 T。'),
-    p('设一批 B 个候选，Tile 有 256 个像素。若每个像素独立重复获取参数，会产生很多重复读取请求。合作加载后，多个像素从 shared 读取同一批屏幕中心、形状与不透明度。'),
-    p('本讲伪代码把 RGB 也放入 shared 以便展示。官方基线对部分几何参数使用 shared，颜色访问方式应具体看源码。'),
-    note('减少 global 读取请求，不等于显存流量或时间按同一倍数减少：缓存、shared 访问、同步与寄存器压力也参与总成本。'), refs=('forward',))
-add('batch-lifetime', 'execution', '一块 Shared，分批复用：两道交接不能少',
+    p('接着追 Tile 5：grid=(4,4)，所以它对应 blockIdx=(1,1)。threadIdx=(1,2) 的块内编号 t=33，负责像素 (x=17,y=18)，行主序地址为 18×64+17=1169。'),
+    note('每线程私有 C、T，最后唯一写出自己的像素；t 决定它合作加载时的分工。一个线程有两份职责，不能把“像素完成”直接当作“线程退出”。'), refs=('forward',))
+
+add('shared-load', 'execution', '追踪 Tile 5：谁把 G₀、G₂、G₁ 装入 Shared？',
+    p('Tile 5：begin=4、end=7，引用位置 4、5、6 对应 G₀、G₂、G₁。本批 base=4、valid=3，最多可装 256 条。'),
+    columns(code('''// t 是块内编号 0..255
+int valid = min(256, end - base);
+if (t < valid) {
+    int id = sorted_ids[base + t];
+    shared[t] = projected[id];
+}
+__syncthreads(); // 全部 256 线程参加'''),
+    table(['加载者','引用 → 高斯','写入槽'], [['t=0','4 → G₀','shared[0]'],['t=1','5 → G₂','shared[1]'],['t=2','6 → G₁','shared[2]'],['t=3…255','不加载','仍参加同步']])),
+    '<p class="caption">projected[id] 保存预处理后的屏幕中心、Q、不透明度与 RGB；这里搬运参数，不重复投影。</p>',
+    note('t=33 不加载，却依次读取三个槽，为像素 (17,18) 更新自己的 alpha、C、T。同步后的 256 个像素各算各的：加载分工与像素分工是两回事。'), refs=('forward',))
+
+add('batch-lifetime', 'execution', '换成 258 条候选：最后两条由谁加载？',
     fig('barriers', '批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。'),
-    p('<strong>装入后同步：</strong>确保其他线程写的数据可以读取。<strong>覆盖前同步：</strong>确保旧数据已被所有仍需读取的线程使用完。'),
-    p('第二道同步可以与下一轮开始处的集体操作合并，但不能凭空消失。同步必须沿一致的 Block 控制流执行。'),
-    note('把同步放进“只有这个像素还没结束”的分支，会破坏全块交接。'))
-add('render-pseudocode', 'execution', '把分工、复用与顺序放进同一个循环',
-    code('''// 教学伪代码；所有线程执行外层循环和 barrier
+    p('Tile 5 只有三条候选，一批就够。另设一个边界测试 Tile，范围为 [4,262)，共 258 条候选；假设第一批后仍有像素需要继续。'),
+    table(['批次','base / valid','负责加载的线程','消费者读取哪些槽'], [['第一批','4 / 256','t=0…255，读引用位置 4…259','j=0…255'],['第二批','260 / 2','t=0、1，读引用位置 260、261','只读 j=0、1']]),
+    p('<strong>装入后同步</strong>避免读到尚未写好的新数据；<strong>覆盖前同步</strong>避免快线程用第二批覆盖慢线程仍在读取的第一批。第二批的 shared[2…255] 无须清零，因为 valid=2 保证不再读取旧槽。'),
+    note('C、T 跨批次保留，base 只是推进有序候选的位置。批次边界不重新开始颜色合成，也不改变候选的深度顺序。'))
+
+add('render-pseudocode', 'execution', '把加载、顺序合成与两次交接接起来',
+    p('教学契约：Block=(16,16)，t、x、y 沿用前页，pixel=(x,y)；[begin,end) 来自 ranges[tile_id]，shared 有 256 个参数槽，epsilon 为统一终止阈值。alpha_at 用屏幕形状求该像素的局部 alpha，假设结果在 [0,1]。'),
+    code('''// 教学伪代码：保留 CUDA 的索引与块内同步，省略类型声明
 bool done = !inside;
 C = 0; T = 1;
-for (batch in tile_sorted_list) {
-    if (block_all(done)) break; // 全块投票，统一退出
-    load_batch_cooperatively(shared, batch); // done 线程也参加
-    block_barrier();
+for (int base = begin; base < end; base += 256) {
+    if (__syncthreads_count(done) == 256) break;
+    int valid = min(256, end - base);
+    if (t < valid)
+        shared[t] = projected[sorted_ids[base + t]];
+    __syncthreads();
     if (!done) {
-        for (g in valid_entries(shared)) {
+        for (int j = 0; j < valid; ++j) {
+            g = shared[j];
             a = alpha_at(g, pixel);
             C += T * a * g.color;
             T *= (1 - a);
             if (T < epsilon) { done = true; break; }
         }
     }
-    block_barrier(); // 等大家读完，才可覆盖 shared
+    __syncthreads(); // 所有线程读完后，下一批才可覆盖
 }
 if (inside) image[pixel] = C + T * background;'''),
-    p('这里在纳入当前项后检查 T，省略 alpha 裁剪与微小贡献跳过，目的是突出并行结构；它不是官方 kernel 的逐行复制，也不保证逐位相同的结果。'), refs=('forward',))
-add('pixel-done', 'execution', '像素结束，不等于线程可以提前 return',
-    table(['状态','是否继续合成','是否参与加载 / 同步'], [
-        ['有效像素，T 仍大','是','是'],['有效像素，T 已很小','否','是，直到全块统一结束'],['边缘 Tile 的越界线程','否','是，可能负责其他像素所需的数据']]),
-    p('线程既是“一个像素的计算者”，又是“一个 Block 的搬运参与者”。前一个角色完成，并不代表后一个角色可以消失。'),
-    note('全块投票所有像素都 done 后，才能统一提前结束批次循环。'), refs=('forward',))
+    p('__syncthreads_count(done) 是全块同步并统计 done 的人数，所有线程得到同一个计数。只有 256 人都结束才统一退出；空范围直接跳过循环，输出背景。'),
+    note('这是教学循环：纳入当前项后再检查 T，省略 alpha 裁剪与微小贡献跳过。官方基线在阈值附近的处理次序不同，也不把所有 RGB 都装入 shared；本讲不要求两者逐位相同。'), refs=('forward',))
+
+add('pixel-done', 'execution', '线程 1 的像素结束了，为什么还得加载第二批？',
+    p('继续 [4,262) 的边界测试。第一批后，t=1 的像素已达到终止阈值，但 t=33 的像素还没结束。全块 done 数小于 256，必须进入第二批。'),
+    table(['线程','第二批的加载职责','第二批的像素职责'], [['t=0','装入引用位置 260 → shared[0]','未 done 才继续合成'],['t=1，已 done','仍装入引用位置 261 → shared[1]','不再更新自己的 C、T'],['t=33，未 done','不加载；参加同步','依次消费 shared[0]、shared[1]']]),
+    p('若 t=1 自行 return，第二个槽就没有本轮的新数据，仍需它的像素会读错。即使某个线程当前没有加载任务，也不能擅自跳过仍在使用的全块投票与同步协议。'),
+    note('边缘 Tile 同理：以 18×18 图像为例，右下 Tile 只有 4 个有效像素，却仍有 256 个协作线程。inside 控制像素读写，t&lt;valid 控制候选加载，二者不能互相替代。'), refs=('forward',))
+
 add('exercise-sync', 'execution', '随堂填空 ③：把同步放在所有参与者都会经过的位置',
-    p('约 3 分钟。假设下面每一轮都要复用同一个 shared 缓冲区。补出两处操作，并说明是否允许 <code>if (done) return;</code>。'),
-    code('''for (batch in batches) {
-    load_batch_cooperatively(shared, batch);
+    p('约 3 分钟。所有线程执行同一组批次，shared 会被反复覆盖。补出两处操作；再用“t=1 已 done、t=33 未 done”的第二批说明为什么不能自行 return。'),
+    code('''for (int base = begin; base < end; base += 256) {
+    int valid = min(256, end - base);
+    if (t < valid)
+        shared[t] = projected[sorted_ids[base + t]];
     __________;              // 开始读之前
-    if (!done) blend_pixel(shared);
+    if (!done) blend_pixel(shared, valid); // 只消费有效槽
     __________;              // 下一轮覆盖之前
 }'''),
-    answer(p('两处都需要 Block 级 barrier（CUDA 中可用 <code>__syncthreads()</code>），并放在 <code>if (!done)</code> 外。这里不能让 done 线程自行 return：它还可能承担后续批次的加载，其他线程也依赖一致的协作协议。统一的全块退出需另行设计。')))
+    answer(p('两处都填 <code>__syncthreads()</code>，并放在 <code>if (!done)</code> 外。第一处交接新数据，第二处保护旧数据的读取。t=1 仍需装入引用位置 261，供 t=33 等未完成像素读取；done 只结束自己的合成，不能取消加载职责。全块统一提前退出需要前页的集体投票。')))
+
 add('uneven-work', 'execution', '相同的线程数，不代表相同的工作量',
     fig('imbalance', '不同 Tile 的候选数与各像素结束位置不同；少量繁忙 Tile 可能成为整帧尾部。'),
     p('空背景 Tile 很快结束，复杂边缘可能覆盖很多高斯。即使同一 Tile 内，一些像素早已不透明，另一些仍在处理后方内容。'),
     p('Warp 内的分支让部分 lane 不再做合成，但这些线程仍可能参加加载和同步。整块何时结束，还取决于未完成的像素。'),
     note('看平均候选数还不够：也要看分布、长尾和每个像素实际处理到的位置。'))
-add('implementation-map', 'execution', '回到源码：我们现在能读懂哪几段？',
-    table(['逻辑阶段','官方入口 / 关键名字','阅读时追踪的状态'], [
-        ['每高斯预处理','forward.cu / preprocessCUDA','屏幕中心、conic、radii、tiles_touched'],
-        ['前缀和与分组','rasterizer_impl.cu / forward','point_offsets、duplicateWithKeys、SortPairs'],
-        ['分段','identifyTileRanges','ranges[tile]'],
-        ['每 Tile 渲染','forward.cu / renderCUDA','point_list、shared、T、C、done']]),
-    p('先沿“输入 → 输出数组 → 下一阶段读取者”看调用链，再进入每行索引。网页示例是独立的教学简化；官方 main 分支会变化，复现实验应记录所用提交版本。'), refs=('forward','pipeline'))
+add('implementation-map', 'execution', 'Tile 5 的复用账：768 次参数读取怎样变成 3 次？',
+    p('回到只有三条候选的 Tile 5。假设 256 个像素都检查全部三条候选，没有提前结束。只数一个字段：每个候选的屏幕中心 x，一个 FP32。'),
+    table(['方案','global 字段读取次数','新增的 shared 字段访问'], [['每像素独立取参数','256×3=768','无'],['合作装入，再按像素读取','3','写 3 次；读 256×3=768 次']]),
+    eq('global 读取请求对应的字节：768×4=3072 → 3×4=12'),
+    p('像素仍需各自计算三次局部贡献；我们减少的是重复的 global 取参请求。代价是 shared 访问、容量和同步。对 256 槽、每槽 9 个 FP32 的教学记录（中心2、Q3、不透明度1、RGB3），shared 容量为 256×9×4=9216 字节，即 9 KiB。这里按分字段数组存储，不计额外缓冲区。'),
+    note('256 倍是这个单字段算例的源码读取次数比，不是 DRAM 流量比或加速比。缓存、广播、提前结束和执行资源都会改变实际收益。它与第六讲 GEMM 的“请求量账单”是同一种分析。'))
+
 add('termination-error', 'execution', '深入：提前结束，牺牲了多少颜色贡献？',
     p('如果颜色与背景的每个通道都位于 [0,1]，当前剩余透射率为 T，那么后方所有内容对最终颜色的总权重不超过 T。用背景替代后方内容时，每通道误差上界可由 T 控制。'),
     eq('T &lt; ε　⇒　在上述有界颜色条件下，每通道剩余误差 ≤ ε'),
@@ -315,8 +347,8 @@ add('threshold-order', 'execution', '深入：教学循环与官方阈值次序�
 
 add('training-loop', 'learning', '渲染器怎样成为一个可学习的模型？',
     fig('training', '选训练视角 → 渲染图像 → 与参考照片比较 → 反向传播 → 更新高斯参数，再次迭代。'),
-    eq('L = (1 − λ)L₁ + λ(1 − SSIM)'),
-    p('原始方法组合像素 L₁ 损失与结构相似性项。可先把 L 理解为“当前渲染与训练照片的差异”。选一个训练相机，计算一次损失，再把梯度传回高斯。'),
+    p('选一个训练相机，用刚才的前向流程渲染，再与同一相机的照片比较。损失把图像差异变成一个数；反向传播回答：每个参数稍微改变，会怎样影响这个差异？'),
+    p('例如投影位置偏了，中心参数可能收到调整信号；颜色偏暗，颜色参数可能收到调整信号。把全部贡献合起来，再由优化器更新参数，重复下一次渲染。'),
     p('要评估新视角能力，应另外使用未参加训练的相机图像；记住训练照片不等于学会所有新视角。'), refs=('paper','training'))
 add('gradient-path', 'learning', '像素误差，沿哪条链回到高斯参数？',
     eq('损失 → 像素颜色 → alpha / 颜色 → 二维中心与形状 → 三维参数'),
@@ -393,6 +425,8 @@ add('reading', 'performance', '深入：从原始论文到实现的阅读顺序'
         ['优化与密度控制','论文 §5；train.py、gaussian_model.py'],
         ['排序与 Tile 并行','论文 §6 / 附录 C；rasterizer_impl.cu'],
         ['像素遍历与反向状态','forward.cu / backward.cu']]),
+    p('源码入口对照：preprocessCUDA 产生屏幕参数；forward 中的扫描、duplicateWithKeys 与 SortPairs 组织引用；identifyTileRanges 找组边界；renderCUDA 读取列表并维护每像素 C、T。沿输出数组追到下一阶段读取者。'),
+    p('外观与训练补充：SH 用固定方向基函数的加权和求 RGB，c(d)=ΣₖaₖYₖ(d)；原始损失组合像素 L₁ 与结构项，L=(1−λ)L₁+λ(1−SSIM)。主线只要求理解它们分别提供当前视角颜色与训练误差信号。'),
     p('本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。'),
     p('本页链接指向原论文与官方项目。复现时记录提交号、运行配置、场景、相机和阈值；不要把不同版本的性能数字直接混在一起。'),
     deep=True, refs=tuple(SOURCES))
