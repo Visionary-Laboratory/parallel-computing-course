@@ -1,5 +1,7 @@
 # 并行计算与算子编程 · 公开课程网站
 
+> 本地开发分支 `codex/3dgs-chapter`：新增 3DGS 草稿，未发布。运行 `python3 preview.py`，访问 `http://127.0.0.1:4173/lectures/3d-gaussian-splatting/`。编辑、构建与课堂使用说明见 [authoring/3dgs/README.md](authoring/3dgs/README.md)。以下保留原发布仓库说明。
+
 本仓库发布课程概览、第一至第六讲和对应术语索引。讲义支持连续阅读、逐页演示、交互图示与答案揭示。
 
 网站：https://visionary-laboratory.github.io/parallel-computing-course/
