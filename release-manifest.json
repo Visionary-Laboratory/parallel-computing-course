@@ -39,7 +39,7 @@
     },
     {
       "slug": "06-memory-hierarchy",
-      "slides": 76,
+      "slides": 79,
       "answers": 0
     },
     {
@@ -48,7 +48,7 @@
       "answers": 0
     }
   ],
-  "slides": 469,
+  "slides": 472,
   "answers": 65,
   "glossaryTerms": 82,
   "files": [
@@ -301,8 +301,8 @@
       "sha256": "61d09ef9208200bfd5f4410aa5d8cd512a0a5fb2f23083660afe478053220268"
     },
     {
-      "path": "site/assets/index-gxL_sJGE.js",
-      "sha256": "79a4440798e83649efe5c3b51e6eef73073e6268b57003dc541b78ccf1eb6aa6"
+      "path": "site/assets/index-CmrHF29g.js",
+      "sha256": "549355ae592ba8767648613743831e6387e8c5eed82427e59d2ccc9d25d0cd8c"
     },
     {
       "path": "site/favicon.svg",
@@ -310,39 +310,39 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "c7197cdfcef648aaf4fc4702caf303950d374af833ac70ed5a1f73eee9e13801"
+      "sha256": "ea991b6d9fb0b9fb213e6b3a90e0fb113839a069ef7db479942b1a07a5c22f15"
     },
     {
       "path": "site/index.html",
-      "sha256": "094cfc3523396dd36ec4b3bbfbfdc6eab244c238c3300e476f5e4e1dc8f49665"
+      "sha256": "2276591377dbddb8a9c17c3fd467d77b41cca655830a7855b3caac4eec9468df"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "bbb3656ed1f5449f75f1215ebc2c793341eb1cf37c34a46e59a941f2ad9a31a4"
+      "sha256": "335d1947f312d89e5149bc537719e3f9a7f3c49b74be62c554bbfdffe44a465b"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "cec0665e11d01a8a46c94b5d7446ca7649605e63f93a7e0a2cefaa943682984b"
+      "sha256": "f4fb213400c461e732e57e1cb8ee99e15c009b5d2c0b6bd65f6ba46a07fcb604"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "d5e970465d2087ee3f8ce4efea6a2e624c3d2b5ca66d1722f47e9e88766d090c"
+      "sha256": "3b91fbd58fb37318062a64952315f9afc047d32f21bd8fba34b25af3bbba7d5d"
     },
     {
       "path": "site/lectures/04-memory-synchronization/index.html",
-      "sha256": "8b17521e556a934efdfefd5381c6fe4cd4e1c2f41010cdeaf2a9ad78e32f696c"
+      "sha256": "72da992a4570b2d9711f25027feb74cfc5fd5e2aa35fb5f2cce34c6054cacb9a"
     },
     {
       "path": "site/lectures/05-cuda-introduction/index.html",
-      "sha256": "b55f1499727efdc9c52703df8d9cd12dbfccd74e34d2a2e24ac19e659495bb05"
+      "sha256": "45dbd79b2e5ad5b7b8e6d345fc80e8a060e9c254a1bfc3b3fb622d185782458e"
     },
     {
       "path": "site/lectures/06-memory-hierarchy/index.html",
-      "sha256": "a6ca7496db265b19dfb61d3d77b0ac03bb03321686d3a9d5298adadb049fc81f"
+      "sha256": "ff3bf3a42563fec5c5897aa0e65ad77794af26de122f7a3f769efc62a906025a"
     },
     {
       "path": "site/lectures/07-parallel-primitives/index.html",
-      "sha256": "29fa4fc17328ae24a99dc15c89acf87ce3cfbce5e47f53839e20968d73fbdb7c"
+      "sha256": "ce1fb217c860e18bf9564ab4d193d7aa14e244b42b397b2021b358c796421091"
     },
     {
       "path": "site/materials/cuda/05_device_query.cu",
