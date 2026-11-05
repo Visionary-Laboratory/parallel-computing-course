@@ -76,6 +76,7 @@ function render(focus=false){
     $('.slide-page-count',s).textContent=`${String(n+1).padStart(2,'0')} / ${list.length}`;
     $('.start-page',s).setAttribute('aria-label',`从第 ${n+1} 页开始浏览`);
   });
+  $$('video').forEach(v=>{if(mode==='print'||(mode==='present'&&!v.closest('.lecture-slide').classList.contains('current')))v.pause();});
   $('#reading-count').textContent=`${list.length} 页`;
   $('#progress').value=`${index+1} / ${list.length}`;
   $('#slide-progress').max=list.length;$('#slide-progress').value=index+1;
@@ -154,7 +155,7 @@ document.addEventListener('fullscreenchange',()=>{
   setFocused(!!document.fullscreenElement);
 });
 document.addEventListener('keydown',e=>{
-  if($('#contents-dialog').open||e.altKey||e.metaKey||e.ctrlKey||e.target.closest('input,select,textarea,[role="tab"],[contenteditable]'))return;
+  if($('#contents-dialog').open||e.altKey||e.metaKey||e.ctrlKey||e.target.closest('input,select,textarea,video,[role="tab"],[contenteditable]'))return;
   if(e.target.closest('button,a,summary')&&[' ','Enter'].includes(e.key))return;
   if(e.key==='Escape'&&body.classList.contains('menu-open')){body.classList.remove('menu-open');$('#menu').setAttribute('aria-expanded','false');return;}
   if(mode!=='present')return;
@@ -178,6 +179,26 @@ $$('.copy-code').forEach(b=>b.addEventListener('click',async()=>{
   setTimeout(()=>b.textContent='复制代码',2000);
 }));
 window.addEventListener('resize',trackReadingPosition);
+
+// Original project videos play within the lecture; no third-party player scripts.
+$$('.scene-video').forEach(figure=>{
+  const video=$('video',figure), error=$('.scene-error',figure);
+  function loadScene(){error.hidden=true;video.src=video.dataset.src;video.load();}
+  if(mode!=='print')loadScene();
+  video.addEventListener('error',()=>{error.hidden=false;});
+  video.addEventListener('loadeddata',()=>{error.hidden=true;});
+  $('.scene-retry',figure).addEventListener('click',loadScene);
+  $$('[data-scene]',figure).forEach(button=>button.addEventListener('click',()=>{
+    video.pause();
+    video.dataset.src=`https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/content/videos/${button.dataset.scene}.mp4`;
+    video.setAttribute('aria-label',`${button.dataset.scene==='bicycle'?'Bicycle':'Garden'} 场景：原论文渲染视频`);
+    $$('[data-scene]',figure).forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+    loadScene();
+  }));
+  new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)video.pause();}).observe(video);
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)$$('video').forEach(v=>v.pause());});
+window.addEventListener('beforeprint',()=>$$('video').forEach(v=>v.pause()));
 async function preparePrint(){
   const images=$$('img');images.forEach(img=>img.loading='eager');
   await Promise.allSettled([document.fonts.ready,...images.map(img=>img.decode())]);

@@ -47,3 +47,9 @@ body.print-mode .site-header,body.print-mode .course-sidebar,body.print-mode .br
 .teaching-columns>div{min-width:0}
 @media(min-width:1100px){body.present .teaching-columns{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:start}body.present .teaching-columns .code-block,body.present .teaching-columns .table-scroll{margin:8px 0}body.present .teaching-columns :is(th,td){padding:9px 10px}}
 @media print{.teaching-columns{display:block!important}}
+/* In-page scene footage follows the course's embedded classroom-video pattern. */
+.scene-video{margin:12px 0;min-width:0}.scene-player{background:#17211d;border-radius:7px;overflow:hidden}.scene-player video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain}.scene-controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.scene-controls button{font-size:13px}.scene-controls button[aria-pressed=true]{background:#e7f1eb;border-color:#8daf99;color:#285f43}.scene-observe h3{font-size:18px;font-weight:600;margin:12px 0}.scene-error{font-size:13px;color:#8a492f;background:#fff5ee;padding:10px;border-radius:5px}.scene-error[hidden]{display:none}.scene-error button{margin-left:8px}.scene-print{display:none}
+@media(min-width:1100px){body.present .scene-intro{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px;align-items:start}body.present .scene-observe p{font-size:19px;margin:12px 0}body.present .scene-observe h3{font-size:21px}body.present .scene-video{margin:8px 0}}
+body.print-mode .scene-video{display:none}body.print-mode .scene-print{display:block}
+@media print{.scene-video{display:none!important}.scene-intro{display:block!important}.scene-print{display:block!important}}
+@media(min-width:1100px){body.present .scene-player{width:min(100%,calc(clamp(180px,100dvh - 490px,380px)*16/9));margin-inline:auto}body.present .scene-video figcaption{line-height:1.5}body.present .scene-controls{justify-content:center}}

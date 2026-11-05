@@ -39,10 +39,22 @@ def add(id, topic, title, *body, refs=(), deep=False):
     SLIDES.append(dict(id=id, topic=topic, title=title, html='\n'.join(body), refs=list(refs), deep=deep))
 
 add('novel-view', 'task', '拍过的照片，怎样变成没有拍过的视角？',
-    p('围着一个静态场景拍摄多张照片。现在移动一台虚拟相机，希望得到这个新位置应当看到的图像。这叫<strong>新视角合成</strong>。相机移动后，遮挡、物体的投影位置与外观都会改变。'),
-    fig('scene', '同一个场景，多个已知相机与一个待渲染的新相机；图为课程原创示意。'),
-    p('3D Gaussian Splatting（3DGS）用一组可优化的三维高斯描述场景，再把它们投影、合成为图像。先到<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文项目页</a>观察真实场景视频，再带着“每一帧如何算出来”回到本讲。'),
-    note('本讲目标：既能解释图像如何形成，也能指出计算交给谁、数据放在哪里、何时需要等待。'), refs=('project','paper'))
+    '''<div class="scene-intro"><figure class="scene-video">
+      <div class="scene-player"><video controls muted playsinline preload="metadata" aria-label="Bicycle 场景：原论文渲染视频" data-src="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/content/videos/bicycle.mp4"></video></div>
+      <div class="scene-controls" role="group" aria-label="选择真实场景">
+        <button type="button" data-scene="bicycle" aria-pressed="true">Bicycle · 自行车</button>
+        <button type="button" data-scene="garden" aria-pressed="false">Garden · 花园</button>
+      </div>
+      <div class="scene-error" hidden role="status">视频暂未加载成功，请检查网络后<button type="button" class="scene-retry">重新加载</button>。</div>
+      <figcaption>Kerbl 等，SIGGRAPH 2023 · <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文场景视频</a>。点击播放，可拖动进度条或全屏观看；视频需联网加载。</figcaption>
+    </figure><div class="scene-observe">
+      <p>从多张照片学习场景，再生成新相机位置的图像：<strong>新视角合成</strong>。</p>
+      <h3>观察相机移动时的两件事</h3>
+      <p><strong>视差：</strong>近处物体与远处背景的相对位置怎样变化？</p>
+      <p><strong>遮挡：</strong>哪些细节从物体后面露出来，又被挡住？</p>
+      <p>3DGS 用一组可优化的三维高斯描述场景。本讲追踪其中一帧：<strong>高斯怎样变成像素颜色，GPU 又怎样分工？</strong></p>
+    </div></div>''',
+    '<div class="scene-print">'+fig('scene', '视频阅读提示：观察相机移动时的视差与遮挡变化。此图为课程原创相机示意，并非视频截图。')+p('视频来源：<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023 项目页</a>。')+'</div>')
 add('train-vs-render', 'task', '先分清两件事：学习场景与渲染场景',
     table(['过程','输入','输出 / 操作'], [
         ['学习 / 训练','多视角照片、相机参数、初始点','反复渲染并与照片比较，更新高斯参数'],
