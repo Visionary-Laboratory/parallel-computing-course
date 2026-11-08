@@ -18,7 +18,7 @@ def walkthrough():
     </div>
     <section class="io-panel" id="io-photos" role="tabpanel" aria-labelledby="io-tab-photos">
       <h3>输入照片：同一个 Garden 场景，从不同位置拍摄</h3>
-      <div class="io-photo-strip">'''+''.join(f'<figure>{photo(i)}<figcaption>照片 {chr(65+i)} · {json.loads((MEDIA/"garden-colmap.json").read_text())["views"][i]["name"]}</figcaption></figure>' for i in range(3))+'''
+      <div class="io-photo-strip">'''+''.join(f'<figure>{photo(i)}<figcaption>照片 {chr(65+i)}</figcaption></figure>' for i in range(3))+'''
       </div>
       <p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。它们是<strong>训练时用来比较的真实图像</strong>，不是模型生成的结果。</p>
       <p class="io-caption">来自 Mip-NeRF 360 的 Garden 数据，经 Viser 示例分发。展示原始照片的缩小版本；完整重建包含 185 个拍摄视角。</p>

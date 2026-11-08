@@ -66,7 +66,7 @@ export function mountVisualIO(root){
   function chooseCamera(i){
     selected=i;const label=String.fromCharCode(65+i),v=data?.views[i],photo=$('.io-selected-photo',root);
     photo.src=new URL(`media/garden-${i}.jpg`,import.meta.url).href;photo.alt=`相机 ${label} 的真实输入照片`;
-    $('.io-camera-label',root).textContent=`相机 ${label} · ${v?.name||''}${eye?' · 左侧为该相机看到的稀疏点':' · 对应橙色视锥'}`;
+    $('.io-camera-label',root).textContent=`相机 ${label}${eye?' · 左侧为该相机看到的稀疏点':' · 对应橙色视锥'}`;
     $$('[data-camera]',root).forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));
     eyeButton.textContent=eye?'返回场景总览':`从相机 ${label} 看点云`;
     eyeButton.setAttribute('aria-pressed',String(eye));
