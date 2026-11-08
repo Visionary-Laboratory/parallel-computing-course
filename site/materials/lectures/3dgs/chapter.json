@@ -57,7 +57,7 @@
       "id": "route",
       "topic": "task",
       "title": "沿一帧图像，串起前面学过的并行思想",
-      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。\" loading=\"lazy\"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成引用 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">已有知识</th><th scope=\"col\">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>\n<div class=\"takeaway\">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。\" loading=\"lazy\"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">已有知识</th><th scope=\"col\">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>\n<div class=\"takeaway\">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div>",
       "refs": [],
       "deep": false
     },
@@ -191,7 +191,7 @@
       "id": "preprocess",
       "topic": "projection",
       "title": "每高斯预处理：先做一次，供后面反复使用",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">输入 / 步骤</th><th scope=\"col\">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>\n<p>不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条引用。</p>\n<div class=\"takeaway\">并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。</div>",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">输入 / 步骤</th><th scope=\"col\">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>\n<p>不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条配对记录。</p>\n<div class=\"takeaway\">并行单位会改变：现在是“每个高斯”，稍后变成“每个 Tile / 像素”。</div>",
       "refs": [
         "forward",
         "pipeline"
@@ -290,8 +290,8 @@
     {
       "id": "toy-records",
       "topic": "tiles",
-      "title": "贯穿算例：四个高斯产生多少条引用？",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">高斯 / 颜色</th><th scope=\"col\">中心 (u,v)</th><th scope=\"col\">候选半径 r</th><th scope=\"col\">深度 z</th><th scope=\"col\">覆盖的 Tile ID</th></tr></thead><tbody><tr><td>G₀ / 红</td><td>(20,20)</td><td>8</td><td>2</td><td>0, 1, 4, 5</td></tr><tr><td>G₁ / 蓝</td><td>(26,12)</td><td>6</td><td>4</td><td>1, 5</td></tr><tr><td>G₂ / 绿</td><td>(30,26)</td><td>10</td><td>3</td><td>5, 6, 9, 10</td></tr><tr><td>G₃ / 黄</td><td>(54,54)</td><td>4</td><td>5</td><td>15</td></tr></tbody></table></div>\n<p>Tile ID = tile_y×4 + tile_x，左上角为 0。这里用半开包围框 [u−r,u+r)×[v−r,v+r)，求重叠 Tile，并裁剪到屏幕。</p>\n<p>这是明确约定的教学边界规则；真实渲染器的像素取样与边界取整须以源码为准。后续步骤始终使用这张表。</p>\n<div class=\"takeaway\">四个高斯，十一条 Gaussian–Tile 引用。复制的是 ID / 排序记录，通常不需要为每条引用复制全部高斯参数。</div>",
+      "title": "贯穿算例：四个高斯产生多少条配对记录？",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">高斯 / 颜色</th><th scope=\"col\">中心 (u,v)</th><th scope=\"col\">候选半径 r</th><th scope=\"col\">深度 z</th><th scope=\"col\">覆盖的 Tile ID</th></tr></thead><tbody><tr><td>G₀ / 红</td><td>(20,20)</td><td>8</td><td>2</td><td>0, 1, 4, 5</td></tr><tr><td>G₁ / 蓝</td><td>(26,12)</td><td>6</td><td>4</td><td>1, 5</td></tr><tr><td>G₂ / 绿</td><td>(30,26)</td><td>10</td><td>3</td><td>5, 6, 9, 10</td></tr><tr><td>G₃ / 黄</td><td>(54,54)</td><td>4</td><td>5</td><td>15</td></tr></tbody></table></div>\n<p>Tile ID = tile_y×4 + tile_x，左上角为 0。这里用半开包围框 [u−r,u+r)×[v−r,v+r)，求重叠 Tile，并裁剪到屏幕。</p>\n<p>这是明确约定的教学边界规则；真实渲染器的像素取样与边界取整须以源码为准。后续步骤始终使用这张表。</p>\n<p>一个高斯的候选包围框与一个 Tile 相交，就生成一条高斯–Tile 配对记录。本例共 4+2+4+1=11 条；同一个高斯 ID 可以出现在多个 Tile 的列表中。</p>\n<div class=\"takeaway\">四个高斯，十一条高斯–Tile 配对记录。复制的是 ID / 排序记录，通常不需要为每条配对记录复制全部高斯参数。</div>",
       "refs": [],
       "deep": false
     },
@@ -368,7 +368,7 @@
       "id": "shared-load",
       "topic": "execution",
       "title": "追踪 Tile 5：谁把 G₀、G₂、G₁ 装入 Shared？",
-      "html": "<p>Tile 5：begin=4、end=7，引用位置 4、5、6 对应 G₀、G₂、G₁。本批 base=4、valid=3，最多可装 256 条。</p>\n<div class=\"teaching-columns\"><div><div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// t 是块内编号 0..255\nint valid = min(256, end - base);\nif (t &lt; valid) {\n    int id = sorted_ids[base + t];\n    shared[t] = projected[id];\n}\n__syncthreads(); // 全部 256 线程参加</code></pre></div></div><div><div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">加载者</th><th scope=\"col\">引用 → 高斯</th><th scope=\"col\">写入槽</th></tr></thead><tbody><tr><td>t=0</td><td>4 → G₀</td><td>shared[0]</td></tr><tr><td>t=1</td><td>5 → G₂</td><td>shared[1]</td></tr><tr><td>t=2</td><td>6 → G₁</td><td>shared[2]</td></tr><tr><td>t=3…255</td><td>不加载</td><td>仍参加同步</td></tr></tbody></table></div></div></div>\n<p class=\"caption\">projected[id] 保存预处理后的屏幕中心、Q、不透明度与 RGB；这里搬运参数，不重复投影。</p>\n<div class=\"takeaway\">t=33 不加载，却依次读取三个槽，为像素 (17,18) 更新自己的 alpha、C、T。同步后的 256 个像素各算各的：加载分工与像素分工是两回事。</div>",
+      "html": "<p>Tile 5：begin=4、end=7，记录下标 4、5、6 对应 G₀、G₂、G₁。本批 base=4、valid=3，最多可装 256 条。</p>\n<div class=\"teaching-columns\"><div><div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// t 是块内编号 0..255\nint valid = min(256, end - base);\nif (t &lt; valid) {\n    int id = sorted_ids[base + t];\n    shared[t] = projected[id];\n}\n__syncthreads(); // 全部 256 线程参加</code></pre></div></div><div><div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">加载者</th><th scope=\"col\">记录下标 → 高斯</th><th scope=\"col\">写入槽</th></tr></thead><tbody><tr><td>t=0</td><td>4 → G₀</td><td>shared[0]</td></tr><tr><td>t=1</td><td>5 → G₂</td><td>shared[1]</td></tr><tr><td>t=2</td><td>6 → G₁</td><td>shared[2]</td></tr><tr><td>t=3…255</td><td>不加载</td><td>仍参加同步</td></tr></tbody></table></div></div></div>\n<p class=\"caption\">projected[id] 保存预处理后的屏幕中心、Q、不透明度与 RGB；这里搬运参数，不重复投影。</p>\n<div class=\"takeaway\">t=33 不加载，却依次读取三个槽，为像素 (17,18) 更新自己的 alpha、C、T。同步后的 256 个像素各算各的：加载分工与像素分工是两回事。</div>",
       "refs": [
         "forward"
       ],
@@ -378,7 +378,7 @@
       "id": "batch-lifetime",
       "topic": "execution",
       "title": "换成 258 条候选：最后两条由谁加载？",
-      "html": "<figure><a href=\"../../materials/lectures/3dgs/barriers.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/barriers.svg\" width=\"800\" height=\"235\" alt=\"批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。\" loading=\"lazy\"></a><figcaption>批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。</figcaption></figure>\n<p>Tile 5 只有三条候选，一批就够。另设一个边界测试 Tile，范围为 [4,262)，共 258 条候选；假设第一批后仍有像素需要继续。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">批次</th><th scope=\"col\">base / valid</th><th scope=\"col\">负责加载的线程</th><th scope=\"col\">消费者读取哪些槽</th></tr></thead><tbody><tr><td>第一批</td><td>4 / 256</td><td>t=0…255，读引用位置 4…259</td><td>j=0…255</td></tr><tr><td>第二批</td><td>260 / 2</td><td>t=0、1，读引用位置 260、261</td><td>只读 j=0、1</td></tr></tbody></table></div>\n<p><strong>装入后同步</strong>避免读到尚未写好的新数据；<strong>覆盖前同步</strong>避免快线程用第二批覆盖慢线程仍在读取的第一批。第二批的 shared[2…255] 无须清零，因为 valid=2 保证不再读取旧槽。</p>\n<div class=\"takeaway\">C、T 跨批次保留，base 只是推进有序候选的位置。批次边界不重新开始颜色合成，也不改变候选的深度顺序。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/barriers.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/barriers.svg\" width=\"800\" height=\"235\" alt=\"批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。\" loading=\"lazy\"></a><figcaption>批次循环：所有参与者完成装入 → 同步 → 读取并合成 → 同步 → 下一批覆盖相同 shared 缓冲区。</figcaption></figure>\n<p>Tile 5 只有三条候选，一批就够。另设一个边界测试 Tile，范围为 [4,262)，共 258 条候选；假设第一批后仍有像素需要继续。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">批次</th><th scope=\"col\">base / valid</th><th scope=\"col\">负责加载的线程</th><th scope=\"col\">消费者读取哪些槽</th></tr></thead><tbody><tr><td>第一批</td><td>4 / 256</td><td>t=0…255，读记录下标 4…259</td><td>j=0…255</td></tr><tr><td>第二批</td><td>260 / 2</td><td>t=0、1，读记录下标 260、261</td><td>只读 j=0、1</td></tr></tbody></table></div>\n<p><strong>装入后同步</strong>避免读到尚未写好的新数据；<strong>覆盖前同步</strong>避免快线程用第二批覆盖慢线程仍在读取的第一批。第二批的 shared[2…255] 无须清零，因为 valid=2 保证不再读取旧槽。</p>\n<div class=\"takeaway\">C、T 跨批次保留，base 只是推进有序候选的位置。批次边界不重新开始颜色合成，也不改变候选的深度顺序。</div>",
       "refs": [],
       "deep": false
     },
@@ -396,7 +396,7 @@
       "id": "pixel-done",
       "topic": "execution",
       "title": "线程 1 的像素结束了，为什么还得加载第二批？",
-      "html": "<p>继续 [4,262) 的边界测试。第一批后，t=1 的像素已达到终止阈值，但 t=33 的像素还没结束。全块 done 数小于 256，必须进入第二批。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">线程</th><th scope=\"col\">第二批的加载职责</th><th scope=\"col\">第二批的像素职责</th></tr></thead><tbody><tr><td>t=0</td><td>装入引用位置 260 → shared[0]</td><td>未 done 才继续合成</td></tr><tr><td>t=1，已 done</td><td>仍装入引用位置 261 → shared[1]</td><td>不再更新自己的 C、T</td></tr><tr><td>t=33，未 done</td><td>不加载；参加同步</td><td>依次消费 shared[0]、shared[1]</td></tr></tbody></table></div>\n<p>若 t=1 自行 return，第二个槽就没有本轮的新数据，仍需它的像素会读错。即使某个线程当前没有加载任务，也不能擅自跳过仍在使用的全块投票与同步协议。</p>\n<div class=\"takeaway\">边缘 Tile 同理：以 18×18 图像为例，右下 Tile 只有 4 个有效像素，却仍有 256 个协作线程。inside 控制像素读写，t&lt;valid 控制候选加载，二者不能互相替代。</div>",
+      "html": "<p>继续 [4,262) 的边界测试。第一批后，t=1 的像素已达到终止阈值，但 t=33 的像素还没结束。全块 done 数小于 256，必须进入第二批。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">线程</th><th scope=\"col\">第二批的加载职责</th><th scope=\"col\">第二批的像素职责</th></tr></thead><tbody><tr><td>t=0</td><td>按记录下标 260 取参 → shared[0]</td><td>未 done 才继续合成</td></tr><tr><td>t=1，已 done</td><td>仍按记录下标 261 取参 → shared[1]</td><td>不再更新自己的 C、T</td></tr><tr><td>t=33，未 done</td><td>不加载；参加同步</td><td>依次消费 shared[0]、shared[1]</td></tr></tbody></table></div>\n<p>若 t=1 自行 return，第二个槽就没有本轮的新数据，仍需它的像素会读错。即使某个线程当前没有加载任务，也不能擅自跳过仍在使用的全块投票与同步协议。</p>\n<div class=\"takeaway\">边缘 Tile 同理：以 18×18 图像为例，右下 Tile 只有 4 个有效像素，却仍有 256 个协作线程。inside 控制像素读写，t&lt;valid 控制候选加载，二者不能互相替代。</div>",
       "refs": [
         "forward"
       ],
@@ -406,7 +406,7 @@
       "id": "exercise-sync",
       "topic": "execution",
       "title": "随堂填空 ③：把同步放在所有参与者都会经过的位置",
-      "html": "<p>约 3 分钟。所有线程执行同一组批次，shared 会被反复覆盖。补出两处操作；再用“t=1 已 done、t=33 未 done”的第二批说明为什么不能自行 return。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>for (int base = begin; base &lt; end; base += 256) {\n    int valid = min(256, end - base);\n    if (t &lt; valid)\n        shared[t] = projected[sorted_ids[base + t]];\n    __________;              // 开始读之前\n    if (!done) blend_pixel(shared, valid); // 只消费有效槽\n    __________;              // 下一轮覆盖之前\n}</code></pre></div>\n<details class=\"answer\"><summary>显示参考答案</summary><div><h3 class=\"answer-print-title\">参考答案</h3><p>两处都填 <code>__syncthreads()</code>，并放在 <code>if (!done)</code> 外。第一处交接新数据，第二处保护旧数据的读取。t=1 仍需装入引用位置 261，供 t=33 等未完成像素读取；done 只结束自己的合成，不能取消加载职责。全块统一提前退出需要前页的集体投票。</p></div></details>",
+      "html": "<p>约 3 分钟。所有线程执行同一组批次，shared 会被反复覆盖。补出两处操作；再用“t=1 已 done、t=33 未 done”的第二批说明为什么不能自行 return。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>for (int base = begin; base &lt; end; base += 256) {\n    int valid = min(256, end - base);\n    if (t &lt; valid)\n        shared[t] = projected[sorted_ids[base + t]];\n    __________;              // 开始读之前\n    if (!done) blend_pixel(shared, valid); // 只消费有效槽\n    __________;              // 下一轮覆盖之前\n}</code></pre></div>\n<details class=\"answer\"><summary>显示参考答案</summary><div><h3 class=\"answer-print-title\">参考答案</h3><p>两处都填 <code>__syncthreads()</code>，并放在 <code>if (!done)</code> 外。第一处交接新数据，第二处保护旧数据的读取。t=1 仍需按记录下标 261 加载参数，供 t=33 等未完成像素读取；done 只结束自己的合成，不能取消加载职责。全块统一提前退出需要前页的集体投票。</p></div></details>",
       "refs": [],
       "deep": false
     },
@@ -510,7 +510,7 @@
       "id": "cost-model",
       "topic": "performance",
       "title": "不要只数高斯：三个规模决定不同阶段",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">规模</th><th scope=\"col\">定义</th><th scope=\"col\">主要影响</th></tr></thead><tbody><tr><td>N</td><td>高斯数量</td><td>预处理、参数存储</td></tr><tr><td>M = Σᵢ nᵢ</td><td>Gaussian–Tile 引用数量</td><td>写出、排序、范围与缓冲区</td></tr><tr><td>K = Σₚ kₚ</td><td>所有像素实际检查的候选总数</td><td>像素遍历与合成</td></tr></tbody></table></div>\n<p>同样 N 个高斯，屏幕足迹更大时 M 可能更多；覆盖重叠更深、较晚达到不透明时 K 可能更大。改变相机也会改变这些量。</p>\n<div class=\"equation\" role=\"math\">一帧时间 = 预处理 + 分组 / 排序 + 渲染 + 其他开销</div>\n<div class=\"takeaway\">这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。</div>",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">规模</th><th scope=\"col\">定义</th><th scope=\"col\">主要影响</th></tr></thead><tbody><tr><td>N</td><td>高斯数量</td><td>预处理、参数存储</td></tr><tr><td>M = Σᵢ nᵢ</td><td>高斯–Tile 配对记录总数；nᵢ 为高斯 i 的候选 Tile 数</td><td>写出、排序、范围与缓冲区</td></tr><tr><td>K = Σₚ kₚ</td><td>所有像素实际检查的候选总数</td><td>像素遍历与合成</td></tr></tbody></table></div>\n<p>同样 N 个高斯，屏幕足迹更大时 M 可能更多；覆盖重叠更深、较晚达到不透明时 K 可能更大。改变相机也会改变这些量。</p>\n<div class=\"equation\" role=\"math\">一帧时间 = 预处理 + 分组 / 排序 + 渲染 + 其他开销</div>\n<div class=\"takeaway\">这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。</div>",
       "refs": [],
       "deep": false
     },
@@ -518,7 +518,7 @@
       "id": "tile-tradeoff",
       "topic": "performance",
       "title": "Tile 越小一定越快吗？",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">改变 Tile 大小</th><th scope=\"col\">可能得到什么</th><th scope=\"col\">可能付出什么</th></tr></thead><tbody><tr><td>较小 Tile</td><td>候选更精细，减少无关像素检查</td><td>引用 M 增加、Block 数与组织成本增加</td></tr><tr><td>较大 Tile</td><td>更多像素共用候选，可能减少引用</td><td>无效候选检查更多，块内差异与资源需求变化</td></tr></tbody></table></div>\n<p>一个高斯覆盖范围固定时，用更细的 Tile 划分，往往会产生更多引用；但列表对每个像素更有针对性。效果还取决于场景、屏幕分辨率与 kernel 设计。</p>\n<div class=\"takeaway\">在相同图像质量与正确性条件下测完整路径，再讨论某一个 kernel 的变化。</div>",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">改变 Tile 大小</th><th scope=\"col\">可能得到什么</th><th scope=\"col\">可能付出什么</th></tr></thead><tbody><tr><td>较小 Tile</td><td>候选更精细，减少无关像素检查</td><td>配对记录数 M 增加、Block 数与组织成本增加</td></tr><tr><td>较大 Tile</td><td>更多像素共用候选，可能减少配对记录</td><td>无效候选检查更多，块内差异与资源需求变化</td></tr></tbody></table></div>\n<p>一个高斯覆盖范围固定时，用更细的 Tile 划分，往往会产生更多配对记录；但列表对每个像素更有针对性。效果还取决于场景、屏幕分辨率与 kernel 设计。</p>\n<div class=\"takeaway\">在相同图像质量与正确性条件下测完整路径，再讨论某一个 kernel 的变化。</div>",
       "refs": [],
       "deep": false
     },
@@ -526,7 +526,7 @@
       "id": "measure",
       "topic": "performance",
       "title": "怎样设计一组能回答问题的性能实验？",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">控制项</th><th scope=\"col\">记录项</th><th scope=\"col\">比较目的</th></tr></thead><tbody><tr><td>固定场景、相机、分辨率与阈值</td><td>N、M、K 或候选分布；各阶段时间</td><td>定位成本落在哪里</td></tr><tr><td>只改变相机距离</td><td>足迹大小、引用数、帧时间</td><td>检验“点数相同，工作是否相同”</td></tr><tr><td>只改变提前结束阈值</td><td>帧时间、图像误差</td><td>量化质量与速度折中</td></tr></tbody></table></div>\n<p>预热后测多帧，记录 GPU、实现版本与计时范围，区分渲染 kernel 时间和完整帧时间。GPU 事件用于相关设备区间；跨 CPU / GPU 的完整时间还需要保证完成后再读时钟。</p>\n<div class=\"takeaway\">本讲交互图运行于浏览器，只演示算法；没有把浏览器动画速度当成 CUDA benchmark，也没有虚构 GPU 实测数据。</div>",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">控制项</th><th scope=\"col\">记录项</th><th scope=\"col\">比较目的</th></tr></thead><tbody><tr><td>固定场景、相机、分辨率与阈值</td><td>N、M、K 或候选分布；各阶段时间</td><td>定位成本落在哪里</td></tr><tr><td>只改变相机距离</td><td>足迹大小、配对记录数、帧时间</td><td>检验“点数相同，工作是否相同”</td></tr><tr><td>只改变提前结束阈值</td><td>帧时间、图像误差</td><td>量化质量与速度折中</td></tr></tbody></table></div>\n<p>预热后测多帧，记录 GPU、实现版本与计时范围，区分渲染 kernel 时间和完整帧时间。GPU 事件用于相关设备区间；跨 CPU / GPU 的完整时间还需要保证完成后再读时钟。</p>\n<div class=\"takeaway\">本讲交互图运行于浏览器，只演示算法；没有把浏览器动画速度当成 CUDA benchmark，也没有虚构 GPU 实测数据。</div>",
       "refs": [],
       "deep": false
     },
@@ -544,15 +544,15 @@
       "id": "summary",
       "topic": "performance",
       "title": "把整帧放回一起：表示、组织与执行",
-      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。\" loading=\"lazy\"></a><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">应该能够解释</th><th scope=\"col\">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、局部 alpha、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>引用膨胀、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>\n<div class=\"takeaway\">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。\" loading=\"lazy\"></a><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">应该能够解释</th><th scope=\"col\">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、局部 alpha、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>配对记录增多、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>\n<div class=\"takeaway\">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>",
       "refs": [],
       "deep": false
     },
     {
       "id": "memory-budget",
       "topic": "performance",
-      "title": "深入：估算参数与引用缓冲区",
-      "html": "<p>以一个教学布局估算：位置 3、尺度 3、四元数 4、不透明度 1、三阶 SH 的 RGB 系数 48，共 59 个 FP32，约 236 字节 / 高斯。100 万个高斯约 236 MB（十进制），不含对齐、梯度和优化器状态。</p>\n<div class=\"equation\" role=\"math\">引用的一份 key + ID：8 + 4 = 12 字节；M=1000 万 → 120 MB</div>\n<p>排序通常还需要输入 / 输出缓冲与临时工作区，不能把 12M 字节当作整个排序过程的峰值。训练还需要梯度、优化器状态、前向中间量等。</p>\n<div class=\"takeaway\">实际内存由实现的数据类型、布局与库决定；本页是账目模型，不是某块 GPU 上的实测占用。</div>",
+      "title": "深入：估算参数与配对记录缓冲区",
+      "html": "<p>以一个教学布局估算：位置 3、尺度 3、四元数 4、不透明度 1、三阶 SH 的 RGB 系数 48，共 59 个 FP32，约 236 字节 / 高斯。100 万个高斯约 236 MB（十进制），不含对齐、梯度和优化器状态。</p>\n<div class=\"equation\" role=\"math\">每条配对记录的 key + ID：8 + 4 = 12 字节；M=1000 万 → 120 MB</div>\n<p>排序通常还需要输入 / 输出缓冲与临时工作区，不能把 12M 字节当作整个排序过程的峰值。训练还需要梯度、优化器状态、前向中间量等。</p>\n<div class=\"takeaway\">实际内存由实现的数据类型、布局与库决定；本页是账目模型，不是某块 GPU 上的实测占用。</div>",
       "refs": [],
       "deep": true
     },
@@ -560,7 +560,7 @@
       "id": "reading",
       "topic": "performance",
       "title": "深入：从原始论文到实现的阅读顺序",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">想核对什么</th><th scope=\"col\">优先阅读</th></tr></thead><tbody><tr><td>场景表示与投影</td><td>论文 §4；forward.cu 的协方差与投影计算</td></tr><tr><td>优化与密度控制</td><td>论文 §5；train.py、gaussian_model.py</td></tr><tr><td>排序与 Tile 并行</td><td>论文 §6 / 附录 C；rasterizer_impl.cu</td></tr><tr><td>像素遍历与反向状态</td><td>forward.cu / backward.cu</td></tr></tbody></table></div>\n<p>源码入口对照：preprocessCUDA 产生屏幕参数；forward 中的扫描、duplicateWithKeys 与 SortPairs 组织引用；identifyTileRanges 找组边界；renderCUDA 读取列表并维护每像素 C、T。沿输出数组追到下一阶段读取者。</p>\n<p>外观与训练补充：SH 用固定方向基函数的加权和求 RGB，c(d)=ΣₖaₖYₖ(d)；原始损失组合像素 L₁ 与结构项，L=(1−λ)L₁+λ(1−SSIM)。主线只要求理解它们分别提供当前视角颜色与训练误差信号。</p>\n<p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p>\n<p>本页链接指向原论文与官方项目。复现时记录提交号、运行配置、场景、相机和阈值；不要把不同版本的性能数字直接混在一起。</p>",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">想核对什么</th><th scope=\"col\">优先阅读</th></tr></thead><tbody><tr><td>场景表示与投影</td><td>论文 §4；forward.cu 的协方差与投影计算</td></tr><tr><td>优化与密度控制</td><td>论文 §5；train.py、gaussian_model.py</td></tr><tr><td>排序与 Tile 并行</td><td>论文 §6 / 附录 C；rasterizer_impl.cu</td></tr><tr><td>像素遍历与反向状态</td><td>forward.cu / backward.cu</td></tr></tbody></table></div>\n<p>源码入口对照：preprocessCUDA 产生屏幕参数；forward 中的扫描、duplicateWithKeys 与 SortPairs 组织配对记录；identifyTileRanges 找组边界；renderCUDA 读取列表并维护每像素 C、T。沿输出数组追到下一阶段读取者。</p>\n<p>外观与训练补充：SH 用固定方向基函数的加权和求 RGB，c(d)=ΣₖaₖYₖ(d)；原始损失组合像素 L₁ 与结构项，L=(1−λ)L₁+λ(1−SSIM)。主线只要求理解它们分别提供当前视角颜色与训练误差信号。</p>\n<p>本讲图解与小型算例为课程原创。方法归属 Kerbl、Kopanas、Leimkühler 与 Drettakis（2023）。论文 HTML 标注 CC BY 4.0；官方代码具有自己的许可条款，本讲未复制或重新分发其实现。</p>\n<p>本页链接指向原论文与官方项目。复现时记录提交号、运行配置、场景、相机和阈值；不要把不同版本的性能数字直接混在一起。</p>",
       "refs": [
         "paper",
         "project",

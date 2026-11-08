@@ -258,7 +258,7 @@ function tilesDemo(el){
     ctx.strokeStyle='#bbcec1';ctx.lineWidth=1;for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(off+i*tile,off);ctx.lineTo(off+i*tile,408);ctx.stroke();ctx.beginPath();ctx.moveTo(off,off+i*tile);ctx.lineTo(408,off+i*tile);ctx.stroke();}
     ctx.font='12px sans-serif';ctx.fillStyle='#8a9d90';for(let i=0;i<16;i++)ctx.fillText(String(i),off+(i%4)*tile+6,off+Math.floor(i/4)*tile+16);
     const records=pipe.sorted.filter(p=>p.tile===selected),range=pipe.ranges[selected];
-    $('.demo-result',el).textContent=`Tile ${selected}\n候选数：${records.length}\n深度顺序：${records.length?records.map(p=>'G'+p.id+'(z='+p.depth+')').join(' → '):'空 → 背景'}\n范围：[${range.join(', ')})\n全图引用总数 M = ${pipe.total}`;
+    $('.demo-result',el).textContent=`Tile ${selected}\n候选数：${records.length}\n深度顺序：${records.length?records.map(p=>'G'+p.id+'(z='+p.depth+')').join(' → '):'空 → 背景'}\n范围：[${range.join(', ')})\n全图高斯–Tile 配对记录总数 M = ${pipe.total}`;
     $$('[data-tile]',el).forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.tile)===selected)));
   }
   $$('[data-tile]',el).forEach(b=>b.addEventListener('click',()=>{selected=Number(b.dataset.tile);draw();}));

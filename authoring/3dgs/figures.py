@@ -25,11 +25,11 @@ def build(destination):
         b+=box(x-48,y-30,100,64,label)+arrow(x+(55 if x<400 else -55),y,310 if x<400 else 530,150)
     b+=text(400,275,'固定场景 · 多个相机',17,MUTED,'middle'); figs['scene']=wrap(b)
     b=''
-    items=[('高斯参数','N 个基元'),('投影 / 计数','屏幕足迹'),('Scan / 写出','M 条引用'),('排序 / 分段','Tile 有序列表'),('并行渲染','P 个像素')]
+    items=[('高斯参数','N 个基元'),('投影 / 计数','屏幕足迹'),('Scan / 写出','M 条配对记录'),('排序 / 分段','Tile 有序列表'),('并行渲染','P 个像素')]
     for i,(title,sub) in enumerate(items):
         x=18+i*156; b+=box(x,44,140,80,title,sub)
         if i<4:b+=arrow(x+142,84,x+152,84)
-    b+=text(400,165,'并行单位：高斯 → 引用记录 → Tile / 像素',18,MUTED,'middle');figs['pipeline']=wrap(b,195)
+    b+=text(400,165,'并行单位：高斯 → 配对记录 → Tile / 像素',18,MUTED,'middle');figs['pipeline']=wrap(b,195)
     b=text(190,40,'只有位置',20,INK,'middle')+text(590,40,'大小、方向与柔和覆盖',20,INK,'middle')
     for j in range(3):
         for i in range(5):
