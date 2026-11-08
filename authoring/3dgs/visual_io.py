@@ -21,7 +21,7 @@ def walkthrough():
       <div class="io-photo-strip">'''+''.join(f'<figure>{photo(i)}<figcaption>照片 {chr(65+i)}</figcaption></figure>' for i in range(3))+'''
       </div>
       <p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。它们是<strong>训练时用来比较的真实图像</strong>，不是模型生成的结果。</p>
-      <p class="io-caption">来自 Mip-NeRF 360 的 Garden 数据，经 Viser 示例分发。展示原始照片的缩小版本；完整重建包含 185 个拍摄视角。</p>
+      <p class="io-caption">这里展示了其中三个拍摄视角；实际训练会使用更多视角的照片。</p>
     </section>
     <section class="io-panel" id="io-colmap" role="tabpanel" aria-labelledby="io-tab-colmap" hidden>
       <h3>COLMAP 的结果：把照片的拍摄位置和稀疏三维点放进同一空间</h3>
