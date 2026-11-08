@@ -49,12 +49,10 @@ add('novel-view', 'task', '拍过的照片，怎样变成没有拍过的视角�
       <figcaption>Kerbl 等，SIGGRAPH 2023 · <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文场景视频</a>。点击播放，可拖动进度条或全屏观看；视频需联网加载。</figcaption>
     </figure><div class="scene-observe">
       <p><strong>新视角合成</strong>是指根据已有视角的图像，生成场景在新相机位置和朝向下的图像的过程。</p>
-      <h3>观察相机移动时的两件事</h3>
-      <p><strong>视差：</strong>近处物体与远处背景的相对位置怎样变化？</p>
-      <p><strong>遮挡：</strong>哪些细节从物体后面露出来，又被挡住？</p>
-      <p>3DGS 用一组可优化的三维高斯描述场景。本讲追踪其中一帧：<strong>高斯怎样变成像素颜色，GPU 又怎样分工？</strong></p>
+      <p>视频中的场景保持不变，移动的是观察它的相机。随着相机移动，近处物体与远处背景的相对位置发生变化，一些原本被挡住的部分也会显露出来。</p>
+      <p>为了生成这些画面，3DGS 渲染器需要确定<strong>每个高斯投影到屏幕的什么位置</strong>，以及<strong>前后重叠的高斯如何共同决定像素颜色</strong>。接下来，我们沿着一帧图像解释这个过程，并说明 GPU 如何分工完成计算。</p>
     </div></div>''',
-    '<div class="scene-print">'+fig('scene', '视频阅读提示：观察相机移动时的视差与遮挡变化。此图为课程原创相机示意，并非视频截图。')+p('视频来源：<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023 项目页</a>。')+'</div>')
+    '<div class="scene-print">'+fig('scene', '同一个场景，从已知相机视角到待生成的新视角；后续课程解释高斯的屏幕投影与像素颜色合成。此图为课程原创相机示意，并非视频截图。')+p('视频来源：<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023 项目页</a>。')+'</div>')
 add('train-vs-render', 'task', '先分清两件事：学习场景与渲染场景',
     table(['过程','输入','输出 / 操作'], [
         ['学习 / 训练','多视角照片、相机参数、初始点','反复渲染并与照片比较，更新高斯参数'],
