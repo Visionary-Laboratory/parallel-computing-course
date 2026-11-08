@@ -33,9 +33,19 @@ export function mountVisualIO(root){
     });
   });
   $('[data-io-next]',root).addEventListener('click',()=>selectStage((stage+1)%4));
+  let representation='ellipsoids',printRepresentation='ellipsoids';
+  function showRepresentation(mode){
+    representation=mode;
+    $$('[data-representation]',root).forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.representation===mode)));
+    $$('[data-scene-image]',root).forEach((img,i)=>{
+      img.setAttribute('href',new URL(`media/garden-${mode}.png`,import.meta.url).href);
+      img.parentElement.setAttribute('aria-label',mode==='ellipsoids'?(i?'桌面局部放大，可分辨大小和方向不同的高斯椭球':'Garden 的桌子和花瓶由许多高斯椭球组成'):(i?'同一视角渲染结果的桌面局部放大':'同一视角下由高斯合成的 Garden 桌子与花瓶图像'));
+    });
+  }
+  $$('[data-representation]',root).forEach(b=>b.addEventListener('click',()=>showRepresentation(b.dataset.representation)));
   let printSelection=0,printEye=false;
-  window.addEventListener('beforeprint',()=>{printSelection=selected;printEye=eye;eye=false;chooseCamera(0);});
-  window.addEventListener('afterprint',()=>{eye=printEye;chooseCamera(printSelection);});
+  window.addEventListener('beforeprint',()=>{printSelection=selected;printEye=eye;eye=false;chooseCamera(0);printRepresentation=representation;showRepresentation('ellipsoids');});
+  window.addEventListener('afterprint',()=>{eye=printEye;chooseCamera(printSelection);showRepresentation(printRepresentation);});
   function orbitProject(p){
     const a=Number(orbit.value)*Math.PI/180,e=27*Math.PI/180,scale=420/(data.radius*1.05);
     const x=Math.cos(a)*p[0]+Math.sin(a)*p[2],z=-Math.sin(a)*p[0]+Math.cos(a)*p[2];

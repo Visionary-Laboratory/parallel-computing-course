@@ -8,6 +8,33 @@ BASE='../../materials/lectures/3dgs/media/'
 def photo(i):
     return f'<img src="{BASE}garden-{i}.jpg" alt="Garden 场景的输入照片 {chr(65+i)}，从另一个拍摄位置观察同一张桌子" loading="lazy">'
 
+def scene_frame(viewbox, label, switchable=False):
+    x,y,w,h=viewbox.split(); clip='io-crop-'+x
+    highlight='<rect x="390" y="475" width="265" height="190" fill="none" stroke="#ffc06b" stroke-width="3"/>' if x=='260' else ''
+    return f'<svg class="io-scene-frame" viewBox="{viewbox}" role="img" aria-label="{label}"><defs><clipPath id="{clip}"><rect x="{x}" y="{y}" width="{w}" height="{h}"/></clipPath></defs><image {"data-scene-image" if switchable else ""} href="{BASE}garden-ellipsoids.png" width="1316" height="848" clip-path="url(#{clip})"/>{highlight}</svg>'
+
+def camera_diagram():
+    # Spatial relationship schematic. Both images are from the same stationary
+    # camera in the official SIBR demo; the drawn camera pose is illustrative.
+    return f'''<svg class="io-camera-diagram" viewBox="0 0 1200 440" role="img" aria-label="左侧相机朝向右侧的 Garden 高斯椭球场景，视锥中的成像平面显示该视角合成的桌子和花瓶图像">
+    <defs><marker id="io-render-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L8 4.5L0 9" fill="#176653"/></marker></defs>
+    <g font-family="-apple-system,BlinkMacSystemFont,PingFang SC,Microsoft YaHei,sans-serif">
+    <path d="M100 350L690 50L1150 80L1150 360L690 330Z" fill="#edf4ef" fill-opacity=".65"/>
+    <g stroke="#9bb5a5" stroke-width="1.6" fill="none" stroke-dasharray="6 6"><path d="M100 350L690 50M100 350L1150 80M100 350L1150 360M100 350L690 330"/></g>
+    <path d="M690 50L720 24L1180 54L1180 334L1150 360M1150 80L1180 54" stroke="#b7cbbc" fill="none" stroke-width="2"/>
+    <g transform="matrix(1 .065217 0 1 690 50)"><svg width="460" height="280" viewBox="260 335 680 375" preserveAspectRatio="none"><image href="{BASE}garden-ellipsoids.png" width="1316" height="848"/></svg><rect width="460" height="280" fill="none" stroke="#61816d" stroke-width="2"/></g>
+    <g transform="matrix(1 .065217 0 1 424.5 185)"><svg width="253" height="154" viewBox="260 335 680 375" preserveAspectRatio="none"><image href="{BASE}garden-splats.png" width="1316" height="848"/></svg><rect width="253" height="154" fill="none" stroke="#176653" stroke-width="4"/></g>
+    <g fill="#284d3b" stroke="#284d3b" stroke-linejoin="round"><rect x="30" y="324" width="55" height="45" rx="6"/><path d="M85 335L105 325V365L85 355Z"/><path d="M54 369L40 395M64 369L80 395" fill="none" stroke-width="4"/></g>
+    <circle cx="100" cy="350" r="4" fill="#cf8a42"/>
+    <path d="M110 366L230 366" stroke="#61816d" stroke-width="2" marker-end="url(#io-render-arrow)"/>
+    <text x="120" y="396" font-size="18" fill="#61796b">观察方向</text>
+    <text x="25" y="297" font-size="23" fill="#253e2e">目标相机</text>
+    <text x="430" y="150" font-size="23" fill="#176653">成像平面：这一帧图像</text>
+    <text x="765" y="20" font-size="23" fill="#253e2e">三维场景：许多高斯椭球</text>
+    <path d="M975 380C900 425 650 425 555 375" fill="none" stroke="#176653" stroke-width="2.5" marker-end="url(#io-render-arrow)"/>
+    <text x="767" y="436" text-anchor="middle" font-size="20" fill="#176653">投影 → 排序 → 合成像素</text>
+    </g></svg>'''
+
 def walkthrough():
     return '''<div class="io-walkthrough" data-io>
     <div class="io-steps" role="tablist" aria-label="从训练输入到渲染输出">
@@ -40,21 +67,19 @@ def walkthrough():
       <p class="io-load-status" role="status"></p>
     </section>
     <section class="io-panel" id="io-gaussians" role="tabpanel" aria-labelledby="io-tab-gaussians" hidden>
-      <h3>训练输出：许多有位置、形状和外观的三维高斯</h3>
-      <div class="io-output-grid"><figure><img src="../../materials/lectures/3dgs/gaussian-anatomy.svg" alt="单个三维高斯的参数示意：中心决定位置，三个尺度与旋转决定椭球形状，颜色与不透明度影响贡献"><figcaption>课程示意：椭球表示一个等值面，方便看形状；高斯本身没有硬边界。</figcaption></figure>
-      <figure class="io-paper-figure"><img src="'''+BASE+'''gaussians-paper-fig3.png" alt="原论文图3：左侧为 Train 场景渲染图，中间为局部放大，右侧缩小高斯以显示其各向异性形状"><figcaption><strong>真实训练结果（原论文图 3）</strong>：左边是渲染图，中间是局部放大，右边缩小高斯以露出形状。这里用 Train 场景观察基元的形状。</figcaption></figure></div>
-      <p>“学好的高斯参数”就是把这些基元的位置、三个方向的尺度、朝向、不透明度和颜色参数保存下来。训练会调整它们，也会增加或删除高斯，<strong>不是简单地给每个初始点套上同样大小的球</strong>。</p>
+      <h3>还是这张桌子：许多高斯共同表示一个场景</h3>
+      <div class="io-representation-controls" role="group" aria-label="查看高斯组成与渲染结果"><button data-representation="ellipsoids" aria-pressed="true">看组成场景的椭球</button><button data-representation="splats" aria-pressed="false">看同一视角的渲染结果</button></div>
+      <div class="io-gaussian-scene"><figure>'''+scene_frame('260 335 680 375','Garden 的桌子和花瓶由许多高斯椭球组成',True)+'''<figcaption>场景中的桌子与花瓶 · 同一相机视角</figcaption></figure><figure>'''+scene_frame('390 475 265 190','桌面局部放大，可分辨大小和方向不同的高斯椭球',True)+'''<figcaption>桌面局部放大 · 对照形状与最终外观</figcaption></figure></div>
+      <p>桌面、花瓶和地面由<strong>许多大小、方向不同的高斯共同表示</strong>。保存“学好的高斯参数”，就是保存这一整组高斯的位置、形状、不透明度和颜色参数。</p>
+      <p class="io-caption">椭球显示的是高斯的等值面，便于看清组成；最终图像由平滑的高斯贡献合成。</p>
     </section>
     <section class="io-panel" id="io-render" role="tabpanel" aria-labelledby="io-tab-render" hidden>
-      <h3>同一个渲染器，训练时用来比较，查看时用来生成新视角</h3>
-      <div class="io-render-grid"><div class="io-flow">
-        <div><b>训练</b><p>照片 + 已知相机 + 初始点</p><span>↓ 初始化高斯，再反复渲染</span><p>与该相机的照片比较 → 调整高斯</p><span>↓</span><p><strong>保存学好的三维高斯</strong></p></div>
-        <div><b>渲染</b><p>学好的高斯 + 一个目标相机</p><span>↓ 投影、排序、合成</span><p><strong>该相机看到的一帧图像 →</strong></p></div>
-      </div><figure><img src="'''+BASE+'''garden-render.png" alt="原论文中 3DGS 对 Garden 场景生成的一帧渲染图"><figcaption>原论文的 Garden 渲染结果。与前两步为同一场景，采用论文给定的另一相机视角；本页展示已生成的结果。</figcaption></figure></div>
-      <p>接下来先固定学好的高斯，讲清楚<strong>一帧怎样算出来</strong>；再回到训练时如何利用渲染结果更新参数。</p>
+      <h3>相机看向这组高斯，在成像平面上生成图像</h3>
+      <figure>'''+camera_diagram()+'''<figcaption>同一场景、同一视角：右侧展示高斯的组成，成像平面展示合成结果。相机与视锥为空间关系示意，成像平面放在相机前方便于观察。</figcaption></figure>
+      <p>给定相机，把高斯<strong>投影到成像平面，按前后顺序合成像素</strong>，就得到这一帧。训练时再与该相机拍摄的照片比较，更新高斯参数。</p>
     </section>
     <div class="io-step-footer"><span data-io-progress>1 / 4 · 多视角照片</span><button data-io-next>下一步：相机与初始点 →</button></div>
-    <p class="io-sources">资料：<a href="https://jonbarron.info/mipnerf360/" target="_blank" rel="noreferrer">Garden 数据集</a> · <a href="https://viser.studio/main/examples/demos/colmap_visualizer/" target="_blank" rel="noreferrer">COLMAP 示例数据</a> · <a href="https://colmap.github.io/format.html" target="_blank" rel="noreferrer">相机参数定义</a> · <a href="https://arxiv.org/html/2308.04079v1#S4" target="_blank" rel="noreferrer">3DGS 原论文图 3（CC BY 4.0）</a></p>
+    <p class="io-sources">资料：<a href="https://jonbarron.info/mipnerf360/" target="_blank" rel="noreferrer">Garden 数据集</a> · <a href="https://viser.studio/main/examples/demos/colmap_visualizer/" target="_blank" rel="noreferrer">COLMAP 示例数据</a> · <a href="https://colmap.github.io/format.html" target="_blank" rel="noreferrer">相机参数定义</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting#running-the-real-time-viewer" target="_blank" rel="noreferrer">Kerbl 等：官方高斯可视化演示</a></p>
     </div>'''
 
 def build_static(destination):

@@ -64,3 +64,9 @@ body.print-mode .io-panel[hidden]{display:block}body.print-mode .io-steps,body.p
 .io-cloud-wrap .io-static-print{display:none}body.present .slide-body .io-sources{font-size:11px;line-height:1.6;margin:7px 0}body.print-mode .io-cloud-wrap .io-cloud-static{display:block}
 @media print{.io-cloud-wrap .io-cloud-static{display:block!important}}
 @media(min-width:1100px){body.present .io-flow{grid-template-columns:1fr 1fr;gap:12px}body.present .io-flow>div{padding:10px}body.present .io-render-grid figure img{max-height:200px}}
+/* Show how many Gaussians form the familiar scene, then connect it to a camera. */
+.io-representation-controls{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}.io-representation-controls button{font-size:12px;padding:6px 10px}.io-representation-controls [aria-pressed=true]{background:#e7f1eb;border-color:#85aa94;color:#205f43}.io-gaussian-scene{display:grid;grid-template-columns:1.65fr 1fr;gap:18px;max-width:960px;margin-inline:auto}.io-scene-frame{display:block;width:100%;height:auto;border-radius:6px;background:#fff}.io-gaussian-scene figure:last-child .io-scene-frame{aspect-ratio:680/375}.io-camera-diagram{display:block;width:100%;height:auto;max-height:none!important}.io-camera-diagram image,.io-scene-frame image{max-height:none}
+@media(min-width:1100px){body.present .io-gaussian-scene .io-scene-frame{height:230px}body.present .io-camera-diagram{height:285px}body.present .io-gaussian-scene figcaption{margin:4px 0;text-align:center}}
+@media(max-width:650px){.io-gaussian-scene{grid-template-columns:1fr}.io-camera-diagram{min-width:620px}#io-render figure{overflow-x:auto}}
+body.print-mode .io-representation-controls{display:none}
+@media print{.io-representation-controls{display:none!important}.io-camera-diagram{width:100%;height:auto}.io-gaussian-scene{grid-template-columns:1.65fr 1fr}}
