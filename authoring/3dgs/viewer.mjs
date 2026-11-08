@@ -1,4 +1,5 @@
 import {GAUSSIANS, tilePipeline, composite, gaussian2D} from './model.mjs';
+import {mountVisualIO} from './visual_io.mjs';
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const body=document.body, slides=$$('.lecture-slide');
@@ -179,6 +180,7 @@ $$('.copy-code').forEach(b=>b.addEventListener('click',async()=>{
   setTimeout(()=>b.textContent='复制代码',2000);
 }));
 window.addEventListener('resize',trackReadingPosition);
+$$('[data-io]').forEach(mountVisualIO);
 
 // Original project videos play within the lecture; no third-party player scripts.
 $$('.scene-video').forEach(figure=>{

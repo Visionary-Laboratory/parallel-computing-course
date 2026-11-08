@@ -4,6 +4,7 @@ Build with: python3 authoring/3dgs/build.py
 No network, packages, or original private course generator required.
 """
 from html import escape
+from visual_io import walkthrough
 
 TITLE = '3D Gaussian Splatting：从三维表示到 GPU 并行渲染'
 SUBTITLE = '沿着一帧图像，理解高斯表示、透明合成、工作分组与 CUDA 协作。'
@@ -54,11 +55,7 @@ add('novel-view', 'task', '拍过的照片，怎样变成没有拍过的视角�
     </div></div>''',
     '<div class="scene-print">'+fig('scene', '同一个场景，从已知相机视角到待生成的新视角；后续课程解释高斯的屏幕投影与像素颜色合成。此图为课程原创相机示意，并非视频截图。')+p('视频来源：<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023 项目页</a>。')+'</div>')
 add('train-vs-render', 'task', '先分清两件事：学习场景与渲染场景',
-    table(['过程','输入','输出 / 操作'], [
-        ['学习 / 训练','多视角照片、相机参数、初始点','反复渲染并与照片比较，更新高斯参数'],
-        ['渲染 / 推理','学好的高斯、一个目标相机','生成该相机的一帧图像']]),
-    p('原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。'),
-    p('先讲清<strong>固定参数时的一次前向渲染</strong>，再回到如何训练。移动虚拟相机需要重新投影和组织屏幕上的工作，通常不需要重新训练整个场景。'), refs=('paper',))
+    walkthrough())
 add('route', 'task', '沿一帧图像，串起前面学过的并行思想',
     fig('pipeline', '高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。'),
     table(['已有知识','在本讲解决什么问题'], [

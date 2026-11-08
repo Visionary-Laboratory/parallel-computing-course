@@ -8,7 +8,7 @@
 <aside class="course-sidebar" id="course-menu" aria-label="课程目录"><div class="sidebar-title">课程讲义 <span>已公开 6 讲</span></div><a href="../../"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1v15"/></svg> 课程概览</a><a href="../../glossary/">术语索引</a><div class="nav-label">第一部分 <b>理解并行计算</b></div><a href="../01-introduction/"><span>01</span>并行基础与性能模型<i>●</i></a><a href="../02-execution-models/"><span>02</span>并行硬件与执行模型<i>●</i></a><a href="../03-parallel-design/"><span>03</span>并行程序设计思想<i>●</i></a><a href="../04-memory-synchronization/"><span>04</span>缓存一致性与同步实现<i>●</i></a><div class="nav-label">第二部分 <b>走进 CUDA 编程</b></div><a href="../05-cuda-introduction/"><span>05</span>CUDA 编程入门<i>●</i></a><a href="../06-memory-hierarchy/"><span>06</span>CUDA 内存层次<i>●</i></a><a class="resources-link" href="../../#resources">参考资料 ↗</a><div class="nav-label">算子案例 · 本地草稿</div><a class="active" href="./" aria-current="page"><span>GS</span>3D Gaussian Splatting</a><p class="sidebar-note">公开课程讲义 <span>第一至六讲</span></p></aside>
 <div class="workspace"><div class="breadcrumb"><div><a href="../../">课程讲义</a><span>›</span><span>3D Gaussian Splatting</span></div><span>从阅读到课堂</span></div><div class="toolbar"><div class="location"><button id="menu" aria-expanded="false" aria-controls="course-menu" aria-label="切换课程目录">☰</button><span>CASE STUDY 3DGS</span><span>算子案例</span></div><div class="tools"><a id="export" href="?mode=print" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z"/></svg> 导出本讲 PDF</a><button id="depth" aria-pressed="false">主线 · 展开深入阅读 8 页</button><div class="mode-switch" role="tablist" aria-label="讲义显示模式"><button id="read" role="tab" aria-selected="true" aria-controls="lecture-panel"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1v15"/></svg> 阅读</button><button id="present" role="tab" aria-selected="false" aria-controls="lecture-panel" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 演示</button></div><button id="fullscreen" aria-label="全屏演示" title="全屏演示（F）"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div></div>
 <div class="print-tools"><a href="./">← 返回本讲</a><div><label><input id="print-answers" type="checkbox">包含参考答案</label><button id="print-now" disabled>正在准备图文…</button></div><p>导出本讲全部 57 个主题。选择“另存为 PDF”，建议 A4 纸张、关闭页眉和页脚；交互示例保留静态图文。</p><p id="print-status" role="status"></p></div>
-<div id="lecture-panel" role="tabpanel" aria-labelledby="read"><div class="reading-layout"><main id="main-content"><header class="lecture-title"><div class="eyebrow">算子案例 <span>本地草稿</span></div><h1>3D Gaussian Splatting：从三维表示到 GPU 并行渲染</h1><p>沿着一帧图像，理解高斯表示、透明合成、工作分组与 CUDA 协作。</p><div class="metadata">2026-11-05<br><span id="reading-count">49 页</span> · <button id="browse">逐页浏览 →</button><span class="duration"> · 约 135 分钟</span></div></header>
+<div id="lecture-panel" role="tabpanel" aria-labelledby="read"><div class="reading-layout"><main id="main-content"><header class="lecture-title"><div class="eyebrow">算子案例 <span>本地草稿</span></div><h1>3D Gaussian Splatting：从三维表示到 GPU 并行渲染</h1><p>沿着一帧图像，理解高斯表示、透明合成、工作分组与 CUDA 协作。</p><div class="metadata">2026-11-08<br><span id="reading-count">49 页</span> · <button id="browse">逐页浏览 →</button><span class="duration"> · 约 135 分钟</span></div></header>
 <section class="learning-overview"><h2>学完这一讲，你能</h2><ul><li>从高斯参数解释屏幕足迹与前后遮挡</li><li>用计数、Scan 与排序组织 Tile 候选</li><li>追踪 Block 内的装入、同步、合成与结束</li><li>从高斯覆盖的 Tile 数、像素实际处理的候选数量与图像质量，解释性能取舍</li></ul></section>
 <nav class="topic-overview" aria-label="本讲主题"><a href="#novel-view" data-target="novel-view">从照片到新视角</a><a href="#point-to-splat" data-target="point-to-splat">用高斯表示场景</a><a href="#camera-coordinates" data-target="camera-coordinates">从三维到屏幕</a><a href="#evaluate-alpha" data-target="evaluate-alpha">从覆盖到颜色</a><a href="#naive-cost" data-target="naive-cost">把工作组织成 Tile</a><a href="#block-mapping" data-target="block-mapping">GPU 怎样执行</a><a href="#training-loop" data-target="training-loop">场景怎样学出来</a><a href="#cost-model" data-target="cost-model">性能、质量与总结</a></nav>
 <noscript><p class="takeaway">当前为静态阅读。启用 JavaScript 后可使用演示、交互图示和深入阅读切换。</p><style>.hide-deep .deep{display:block!important}</style></noscript>
@@ -35,9 +35,53 @@
       <div class="slide-label"><a href="#train-vs-render" title="此主题的稳定链接"><span class="page-number">02</span> · 主题链接</a><button class="start-page" data-start="train-vs-render" aria-label="从02页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
       <div class="slide-topline"><span>并行计算与算子编程</span><span>从照片到新视角</span></div>
       <div class="print-page-label">02 / 57 · 从照片到新视角</div>
-      <div class="slide-body"><h2>先分清两件事：学习场景与渲染场景</h2><div class="table-scroll"><table><thead><tr><th scope="col">过程</th><th scope="col">输入</th><th scope="col">输出 / 操作</th></tr></thead><tbody><tr><td>学习 / 训练</td><td>多视角照片、相机参数、初始点</td><td>反复渲染并与照片比较，更新高斯参数</td></tr><tr><td>渲染 / 推理</td><td>学好的高斯、一个目标相机</td><td>生成该相机的一帧图像</td></tr></tbody></table></div>
-<p>原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。</p>
-<p>先讲清<strong>固定参数时的一次前向渲染</strong>，再回到如何训练。移动虚拟相机需要重新投影和组织屏幕上的工作，通常不需要重新训练整个场景。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a></div></div>
+      <div class="slide-body"><h2>先分清两件事：学习场景与渲染场景</h2><div class="io-walkthrough" data-io>
+    <div class="io-steps" role="tablist" aria-label="从训练输入到渲染输出">
+      <button role="tab" id="io-tab-photos" aria-controls="io-photos" aria-selected="true">① 多视角照片</button>
+      <button role="tab" id="io-tab-colmap" aria-controls="io-colmap" aria-selected="false" tabindex="-1">② 相机与初始点</button>
+      <button role="tab" id="io-tab-gaussians" aria-controls="io-gaussians" aria-selected="false" tabindex="-1">③ 学好的高斯</button>
+      <button role="tab" id="io-tab-render" aria-controls="io-render" aria-selected="false" tabindex="-1">④ 渲染一帧</button>
+    </div>
+    <section class="io-panel" id="io-photos" role="tabpanel" aria-labelledby="io-tab-photos">
+      <h3>输入照片：同一个 Garden 场景，从不同位置拍摄</h3>
+      <div class="io-photo-strip"><figure><img src="../../materials/lectures/3dgs/media/garden-0.jpg" alt="Garden 场景的输入照片 A，从另一个拍摄位置观察同一张桌子" loading="lazy"><figcaption>照片 A · DSC07966.JPG</figcaption></figure><figure><img src="../../materials/lectures/3dgs/media/garden-1.jpg" alt="Garden 场景的输入照片 B，从另一个拍摄位置观察同一张桌子" loading="lazy"><figcaption>照片 B · DSC08135.JPG</figcaption></figure><figure><img src="../../materials/lectures/3dgs/media/garden-2.jpg" alt="Garden 场景的输入照片 C，从另一个拍摄位置观察同一张桌子" loading="lazy"><figcaption>照片 C · DSC07975.JPG</figcaption></figure>
+      </div>
+      <p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。它们是<strong>训练时用来比较的真实图像</strong>，不是模型生成的结果。</p>
+      <p class="io-caption">来自 Mip-NeRF 360 的 Garden 数据，经 Viser 示例分发。展示原始照片的缩小版本；完整重建包含 185 个拍摄视角。</p>
+    </section>
+    <section class="io-panel" id="io-colmap" role="tabpanel" aria-labelledby="io-tab-colmap" hidden>
+      <h3>COLMAP 的结果：把照片的拍摄位置和稀疏三维点放进同一空间</h3>
+      <div class="io-colmap-grid"><div>
+        <div class="io-cloud-wrap"><img class="io-cloud-static" src="../../materials/lectures/3dgs/media/garden-colmap.svg" alt="Garden 的真实 COLMAP 稀疏点云及相机视锥，照片 A 的相机用橙色标出"><canvas class="io-cloud" width="760" height="420" role="img" aria-label="Garden 的真实稀疏点云和相机视锥，可用下方控件改变观察方向" hidden></canvas></div>
+        <div class="io-cloud-controls"><label>绕场景观察 <input data-orbit type="range" min="-180" max="180" value="25" aria-label="绕点云观察的角度"></label><button data-eye aria-pressed="false">从相机 A 看点云</button></div>
+        <p class="io-caption">彩色点是稀疏三维位置；线框锥体表示拍摄相机。橙色为当前照片的相机。仅抽样显示 16,000 个点、部分相机，远处点已裁剪。</p>
+      </div><div class="io-camera-card">
+        <div class="io-camera-buttons" role="group" aria-label="选择照片及其相机"><button data-camera="0" aria-pressed="true">照片 A</button><button data-camera="1" aria-pressed="false">照片 B</button><button data-camera="2" aria-pressed="false">照片 C</button></div>
+        <img class="io-selected-photo" src="../../materials/lectures/3dgs/media/garden-0.jpg" alt="当前选中相机 A 拍到的 Garden 照片">
+        <p class="io-camera-label">相机 A · 与左侧橙色视锥对应</p>
+        <div class="io-camera-facts"><span><b>位置与朝向</b>：锥尖在哪里，锥体朝哪里。</span><span><b>焦距与成像范围</b>：锥口张角表示视野大小。</span></div>
+        <p class="io-camera-values"></p>
+      </div></div>
+      <p>COLMAP 根据照片中的对应特征估计相机参数和<strong>稀疏点云</strong>。这些点提供高斯中心的初始位置；尚未包含训练后高斯的尺度、方向与不透明度。</p>
+      <p class="io-load-status" role="status"></p>
+    </section>
+    <section class="io-panel" id="io-gaussians" role="tabpanel" aria-labelledby="io-tab-gaussians" hidden>
+      <h3>训练输出：许多有位置、形状和外观的三维高斯</h3>
+      <div class="io-output-grid"><figure><img src="../../materials/lectures/3dgs/gaussian-anatomy.svg" alt="单个三维高斯的参数示意：中心决定位置，三个尺度与旋转决定椭球形状，颜色与不透明度影响贡献"><figcaption>课程示意：椭球表示一个等值面，方便看形状；高斯本身没有硬边界。</figcaption></figure>
+      <figure class="io-paper-figure"><img src="../../materials/lectures/3dgs/media/gaussians-paper-fig3.png" alt="原论文图3：左侧为 Train 场景渲染图，中间为局部放大，右侧缩小高斯以显示其各向异性形状"><figcaption><strong>真实训练结果（原论文图 3）</strong>：左边是渲染图，中间是局部放大，右边缩小高斯以露出形状。这里用 Train 场景观察基元的形状。</figcaption></figure></div>
+      <p>“学好的高斯参数”就是把这些基元的位置、三个方向的尺度、朝向、不透明度和颜色参数保存下来。训练会调整它们，也会增加或删除高斯，<strong>不是简单地给每个初始点套上同样大小的球</strong>。</p>
+    </section>
+    <section class="io-panel" id="io-render" role="tabpanel" aria-labelledby="io-tab-render" hidden>
+      <h3>同一个渲染器，训练时用来比较，查看时用来生成新视角</h3>
+      <div class="io-render-grid"><div class="io-flow">
+        <div><b>训练</b><p>照片 + 已知相机 + 初始点</p><span>↓ 初始化高斯，再反复渲染</span><p>与该相机的照片比较 → 调整高斯</p><span>↓</span><p><strong>保存学好的三维高斯</strong></p></div>
+        <div><b>渲染</b><p>学好的高斯 + 一个目标相机</p><span>↓ 投影、排序、合成</span><p><strong>该相机看到的一帧图像 →</strong></p></div>
+      </div><figure><img src="../../materials/lectures/3dgs/media/garden-render.png" alt="原论文中 3DGS 对 Garden 场景生成的一帧渲染图"><figcaption>原论文的 Garden 渲染结果。与前两步为同一场景，采用论文给定的另一相机视角；本页展示已生成的结果。</figcaption></figure></div>
+      <p>接下来先固定学好的高斯，讲清楚<strong>一帧怎样算出来</strong>；再回到训练时如何利用渲染结果更新参数。</p>
+    </section>
+    <div class="io-step-footer"><span data-io-progress>1 / 4 · 多视角照片</span><button data-io-next>下一步：相机与初始点 →</button></div>
+    <p class="io-sources">资料：<a href="https://jonbarron.info/mipnerf360/" target="_blank" rel="noreferrer">Garden 数据集</a> · <a href="https://viser.studio/main/examples/demos/colmap_visualizer/" target="_blank" rel="noreferrer">COLMAP 示例数据</a> · <a href="https://colmap.github.io/format.html" target="_blank" rel="noreferrer">相机参数定义</a> · <a href="https://arxiv.org/html/2308.04079v1#S4" target="_blank" rel="noreferrer">3DGS 原论文图 3（CC BY 4.0）</a></p>
+    </div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="route" data-topic="task" data-label="03" tabindex="-1">
       <div class="slide-label"><a href="#route" title="此主题的稳定链接"><span class="page-number">03</span> · 主题链接</a><button class="start-page" data-start="route" aria-label="从03页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -594,7 +638,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#train-vs-render" data-target="train-vs-render" aria-expanded="false" aria-controls="desktop-idea-train-vs-render">
             <span class="toc-page-number">02</span><span>先分清两件事：学习场景与渲染场景</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-train-vs-render" hidden><strong>本页要点</strong><p>原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-train-vs-render" hidden><strong>本页要点</strong><p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。它们是训练时用来比较的真实图像，不是模型生成的结果。</p></div>
         </li><li class="toc-entry" data-slide="route" data-deep="false">
           <a href="#route" data-target="route" aria-expanded="false" aria-controls="desktop-idea-route">
             <span class="toc-page-number">03</span><span>沿一帧图像，串起前面学过的并行思想</span>
@@ -882,7 +926,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#train-vs-render" data-target="train-vs-render" aria-expanded="false" aria-controls="mobile-idea-train-vs-render">
             <span class="toc-page-number">02</span><span>先分清两件事：学习场景与渲染场景</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-train-vs-render" hidden><strong>本页要点</strong><p>原始方法通常使用 SfM（运动恢复结构）提供相机位姿与稀疏点云。这里把它们作为已知输入；课堂不展开相机标定。</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-train-vs-render" hidden><strong>本页要点</strong><p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。它们是训练时用来比较的真实图像，不是模型生成的结果。</p></div>
         </li><li class="toc-entry" data-slide="route" data-deep="false">
           <a href="#route" data-target="route" aria-expanded="false" aria-controls="mobile-idea-route">
             <span class="toc-page-number">03</span><span>沿一帧图像，串起前面学过的并行思想</span>

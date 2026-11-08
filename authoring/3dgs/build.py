@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 import content
 import figures
+import visual_io
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -16,8 +17,12 @@ ASSETS=SITE/'materials/lectures/3dgs'
 DEST.mkdir(parents=True,exist_ok=True)
 ASSETS.mkdir(parents=True,exist_ok=True)
 figures.build(ASSETS)
-for name in ['viewer.css','viewer.mjs','model.mjs']:
+for name in ['viewer.css','viewer.mjs','model.mjs','visual_io.mjs']:
     shutil.copyfile(HERE/name,ASSETS/name)
+(ASSETS/'media').mkdir(exist_ok=True)
+for media in (HERE/'media').iterdir():
+    if media.is_file():shutil.copyfile(media,ASSETS/'media'/media.name)
+visual_io.build_static(ASSETS/'media')
 
 def refs(keys):
     return '<div class="references">来源与延伸：'+ ' · '.join(f'<a href="{content.SOURCES[k][1]}" target="_blank" rel="noreferrer">{escape(content.SOURCES[k][0])}</a>' for k in keys)+'</div>' if keys else ''
@@ -87,7 +92,7 @@ html=f'''<!doctype html>
 <aside class="course-sidebar" id="course-menu" aria-label="课程目录"><div class="sidebar-title">课程讲义 <span>已公开 6 讲</span></div><a href="../../">{icon('book')} 课程概览</a><a href="../../glossary/">术语索引</a>{nav}<a class="resources-link" href="../../#resources">参考资料 ↗</a><div class="nav-label">算子案例 · 本地草稿</div><a class="active" href="./" aria-current="page"><span>GS</span>3D Gaussian Splatting</a><p class="sidebar-note">公开课程讲义 <span>第一至六讲</span></p></aside>
 <div class="workspace"><div class="breadcrumb"><div><a href="../../">课程讲义</a><span>›</span><span>3D Gaussian Splatting</span></div><span>从阅读到课堂</span></div><div class="toolbar"><div class="location"><button id="menu" aria-expanded="false" aria-controls="course-menu" aria-label="切换课程目录">☰</button><span>CASE STUDY 3DGS</span><span>算子案例</span></div><div class="tools"><a id="export" href="?mode=print" target="_blank" rel="noopener">{icon('print')} 导出本讲 PDF</a><button id="depth" aria-pressed="false">主线 · 展开深入阅读 8 页</button><div class="mode-switch" role="tablist" aria-label="讲义显示模式"><button id="read" role="tab" aria-selected="true" aria-controls="lecture-panel">{icon('book')} 阅读</button><button id="present" role="tab" aria-selected="false" aria-controls="lecture-panel" tabindex="-1">{icon('screen')} 演示</button></div><button id="fullscreen" aria-label="全屏演示" title="全屏演示（F）">{icon('full')}</button></div></div>
 <div class="print-tools"><a href="./">← 返回本讲</a><div><label><input id="print-answers" type="checkbox">包含参考答案</label><button id="print-now" disabled>正在准备图文…</button></div><p>导出本讲全部 57 个主题。选择“另存为 PDF”，建议 A4 纸张、关闭页眉和页脚；交互示例保留静态图文。</p><p id="print-status" role="status"></p></div>
-<div id="lecture-panel" role="tabpanel" aria-labelledby="read"><div class="reading-layout"><main id="main-content"><header class="lecture-title"><div class="eyebrow">算子案例 <span>本地草稿</span></div><h1>{content.TITLE}</h1><p>{content.SUBTITLE}</p><div class="metadata">2026-11-05<br><span id="reading-count">49 页</span> · <button id="browse">逐页浏览 →</button><span class="duration"> · 约 135 分钟</span></div></header>
+<div id="lecture-panel" role="tabpanel" aria-labelledby="read"><div class="reading-layout"><main id="main-content"><header class="lecture-title"><div class="eyebrow">算子案例 <span>本地草稿</span></div><h1>{content.TITLE}</h1><p>{content.SUBTITLE}</p><div class="metadata">2026-11-08<br><span id="reading-count">49 页</span> · <button id="browse">逐页浏览 →</button><span class="duration"> · 约 135 分钟</span></div></header>
 <section class="learning-overview"><h2>学完这一讲，你能</h2><ul><li>从高斯参数解释屏幕足迹与前后遮挡</li><li>用计数、Scan 与排序组织 Tile 候选</li><li>追踪 Block 内的装入、同步、合成与结束</li><li>从高斯覆盖的 Tile 数、像素实际处理的候选数量与图像质量，解释性能取舍</li></ul></section>
 <nav class="topic-overview" aria-label="本讲主题">{''.join(topic_links)}</nav>
 <noscript><p class="takeaway">当前为静态阅读。启用 JavaScript 后可使用演示、交互图示和深入阅读切换。</p><style>.hide-deep .deep{{display:block!important}}</style></noscript>

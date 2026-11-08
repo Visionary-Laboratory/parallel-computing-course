@@ -18,6 +18,29 @@ def wrap(body,h=300):
 def build(destination):
     d=Path(destination); d.mkdir(parents=True,exist_ok=True)
     figs={}
+    # Three principal ellipses of a single Gaussian's illustrative isosurface.
+    def projected(v):
+        x,y,z=v;a=-.4;b=.55
+        xx=math.cos(b)*x+math.sin(b)*z
+        zz=-math.sin(b)*x+math.cos(b)*z
+        return (390+math.cos(a)*xx-math.sin(a)*y,175+math.sin(a)*xx+math.cos(a)*y-.4*zz)
+    b=ellipse(390,175,118,45,-18,GREEN,.13)
+    for plane in range(3):
+        points=[]
+        for i in range(73):
+            t=i*math.pi/36;v=[0,0,0];a0=plane;a1=(plane+1)%3
+            v[a0]=[130,55,38][a0]*math.cos(t);v[a1]=[130,55,38][a1]*math.sin(t)
+            points.append(projected(v))
+        b+='<polyline points="'+' '.join(f'{x:.1f},{y:.1f}' for x,y in points)+'" fill="none" stroke="'+GREEN+'" stroke-opacity=".65" stroke-width="1.5"/>'
+    for v,color in [([130,0,0],RED),([0,55,0],BLUE),([0,0,38],GREEN)]:
+        x,y=projected(v);b+=f'<path d="M390 175L{x:.1f} {y:.1f}" stroke="{color}" stroke-width="3"/>'
+    b+='<circle cx="390" cy="175" r="5" fill="#253e2e"/>'
+    b+=text(42,92,'中心 μ：放在哪里',21)+arrow(175,107,380,170)
+    b+=text(520,55,'三个尺度：各方向多宽',21)+arrow(565,70,470,140)
+    b+=text(525,245,'旋转：长轴朝向哪里',21)+arrow(540,222,475,188)
+    b+=text(45,280,'颜色 / SH：外观',21)+text(45,311,'不透明度：贡献强弱',21)
+    b+=text(400,350,'椭球画的是等值面，高斯贡献从中心向外平滑减弱',17,MUTED,'middle')
+    figs['gaussian-anatomy']=wrap(b,375)
     b=''
     for x,y,color in [(340,100,GREEN),(420,150,RED),(480,95,BLUE)]:
         b+=ellipse(x,y,45,70,-25,color)+ellipse(x,y,45,18,0,color,.08)
