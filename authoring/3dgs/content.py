@@ -48,7 +48,7 @@ add('novel-view', 'task', '拍过的照片，怎样变成没有拍过的视角�
       <div class="scene-error" hidden role="status">视频暂未加载成功，请检查网络后<button type="button" class="scene-retry">重新加载</button>。</div>
       <figcaption>Kerbl 等，SIGGRAPH 2023 · <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">原论文场景视频</a>。点击播放，可拖动进度条或全屏观看；视频需联网加载。</figcaption>
     </figure><div class="scene-observe">
-      <p><strong>新视角合成</strong>：根据已有视角的图像，生成场景在新相机位置和朝向下的图像。</p>
+      <p><strong>新视角合成</strong>是指根据已有视角的图像，生成场景在新相机位置和朝向下的图像的过程。</p>
       <h3>观察相机移动时的两件事</h3>
       <p><strong>视差：</strong>近处物体与远处背景的相对位置怎样变化？</p>
       <p><strong>遮挡：</strong>哪些细节从物体后面露出来，又被挡住？</p>
