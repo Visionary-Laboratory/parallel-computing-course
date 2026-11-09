@@ -186,7 +186,7 @@
       <div class="print-page-label">10 / 57 · 用高斯表示场景</div>
       <div class="slide-body"><h2>为什么颜色可以随观察方向变化？</h2><p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p>
 <p>把 SH 系数理解成一份“方向 → RGB”的小型配方：相机换方向，系数不变，求出的 RGB 可以改变。它仍是同一个高斯，并没有重新训练。</p>
-<div class="takeaway">对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。后面的手算直接给定 RGB；这里不展开球谐基函数。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+<div class="takeaway">对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用红、绿、蓝三个已知颜色，逐步计算它们在同一个像素中的贡献。这个例子从颜色已求出的阶段开始，演示按深度合成颜色的过程。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><h2 class="topic-heading">从三维到屏幕</h2><section class="lecture-slide" id="camera-coordinates" data-topic="projection" data-label="11" tabindex="-1">
       <div class="slide-label"><a href="#camera-coordinates" title="此主题的稳定链接"><span class="page-number">11</span> · 主题链接</a><button class="start-page" data-start="camera-coordinates" aria-label="从11页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -265,7 +265,7 @@
 <div class="equation" role="math">d² = (δₓ/2)² + δᵧ²　　g=exp(−d²/2)　　α=0.8g</div>
 <div class="table-scroll"><table><thead><tr><th scope="col">相对位置 δ</th><th scope="col">按宽度缩放后的 d²</th><th scope="col">高斯权重 g</th><th scope="col">局部 α</th></tr></thead><tbody><tr><td>(0,0)</td><td>0</td><td>1</td><td>0.8</td></tr><tr><td>(2,0)</td><td>1</td><td>≈0.6065</td><td>≈0.4852</td></tr><tr><td>(0,2)</td><td>4</td><td>≈0.1353</td><td>≈0.1083</td></tr></tbody></table></div>
 <p>沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。Q=diag(1/4,1) 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。</p>
-<div class="takeaway">同一高斯、不同像素，alpha 不同。后面的红绿蓝手算直接给定某一个像素处的 alpha，以便把注意力放到前后合成。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+<div class="takeaway">同一高斯在不同像素处的有效不透明度 α 不同。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用该像素处已知的 α，逐步计算前后遮挡怎样影响颜色贡献。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="transmittance" data-topic="compositing" data-label="18" tabindex="-1">
       <div class="slide-label"><a href="#transmittance" title="此主题的稳定链接"><span class="page-number">18</span> · 主题链接</a><button class="start-page" data-start="transmittance" aria-label="从18页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -715,7 +715,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#appearance" data-target="appearance" aria-expanded="false" aria-controls="desktop-idea-appearance">
             <span class="toc-page-number">10</span><span>为什么颜色可以随观察方向变化？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-appearance" hidden><strong>本页要点</strong><p>对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。后面的手算直接给定 RGB；这里不展开球谐基函数。</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-appearance" hidden><strong>本页要点</strong><p>对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用红、绿、蓝三个已知颜色，逐步计算它们在同一个像素中的贡献。这个例子从颜色已求出的阶段开始，演示按深度合成颜色的过程。</p></div>
         </li><li class="toc-entry" data-slide="camera-coordinates" data-deep="false">
           <a href="#camera-coordinates" data-target="camera-coordinates" aria-expanded="false" aria-controls="desktop-idea-camera-coordinates">
             <span class="toc-page-number">11</span><span>先把中心变换到相机坐标系</span>
@@ -755,7 +755,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#evaluate-alpha" data-target="evaluate-alpha" aria-expanded="false" aria-controls="desktop-idea-evaluate-alpha">
             <span class="toc-page-number">18</span><span>算一次有效不透明度 α：同样离中心 2 像素，为何不同？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-evaluate-alpha" hidden><strong>本页要点</strong><p>同一高斯、不同像素，alpha 不同。后面的红绿蓝手算直接给定某一个像素处的 alpha，以便把注意力放到前后合成。</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-evaluate-alpha" hidden><strong>本页要点</strong><p>同一高斯在不同像素处的有效不透明度 α 不同。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用该像素处已知的 α，逐步计算前后遮挡怎样影响颜色贡献。</p></div>
         </li><li class="toc-entry" data-slide="transmittance" data-deep="false">
           <a href="#transmittance" data-target="transmittance" aria-expanded="false" aria-controls="desktop-idea-transmittance">
             <span class="toc-page-number">19</span><span>前面的覆盖，决定后面还能贡献多少</span>
@@ -1003,7 +1003,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#appearance" data-target="appearance" aria-expanded="false" aria-controls="mobile-idea-appearance">
             <span class="toc-page-number">10</span><span>为什么颜色可以随观察方向变化？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-appearance" hidden><strong>本页要点</strong><p>对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。后面的手算直接给定 RGB；这里不展开球谐基函数。</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-appearance" hidden><strong>本页要点</strong><p>对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用红、绿、蓝三个已知颜色，逐步计算它们在同一个像素中的贡献。这个例子从颜色已求出的阶段开始，演示按深度合成颜色的过程。</p></div>
         </li><li class="toc-entry" data-slide="camera-coordinates" data-deep="false">
           <a href="#camera-coordinates" data-target="camera-coordinates" aria-expanded="false" aria-controls="mobile-idea-camera-coordinates">
             <span class="toc-page-number">11</span><span>先把中心变换到相机坐标系</span>
@@ -1043,7 +1043,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#evaluate-alpha" data-target="evaluate-alpha" aria-expanded="false" aria-controls="mobile-idea-evaluate-alpha">
             <span class="toc-page-number">18</span><span>算一次有效不透明度 α：同样离中心 2 像素，为何不同？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-evaluate-alpha" hidden><strong>本页要点</strong><p>同一高斯、不同像素，alpha 不同。后面的红绿蓝手算直接给定某一个像素处的 alpha，以便把注意力放到前后合成。</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-evaluate-alpha" hidden><strong>本页要点</strong><p>同一高斯在不同像素处的有效不透明度 α 不同。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用该像素处已知的 α，逐步计算前后遮挡怎样影响颜色贡献。</p></div>
         </li><li class="toc-entry" data-slide="transmittance" data-deep="false">
           <a href="#transmittance" data-target="transmittance" aria-expanded="false" aria-controls="mobile-idea-transmittance">
             <span class="toc-page-number">19</span><span>前面的覆盖，决定后面还能贡献多少</span>

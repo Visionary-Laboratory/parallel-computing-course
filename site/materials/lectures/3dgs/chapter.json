@@ -122,7 +122,7 @@
       "id": "appearance",
       "topic": "representation",
       "title": "为什么颜色可以随观察方向变化？",
-      "html": "<p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p>\n<p>把 SH 系数理解成一份“方向 → RGB”的小型配方：相机换方向，系数不变，求出的 RGB 可以改变。它仍是同一个高斯，并没有重新训练。</p>\n<div class=\"takeaway\">对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。后面的手算直接给定 RGB；这里不展开球谐基函数。</div>",
+      "html": "<p>同一位置从不同方向看，可能有不同亮度或高光。只保存固定 RGB 会限制这种外观的表达。原始 3DGS 用球谐函数（SH）的系数表达方向相关颜色。</p>\n<p>把 SH 系数理解成一份“方向 → RGB”的小型配方：相机换方向，系数不变，求出的 RGB 可以改变。它仍是同一个高斯，并没有重新训练。</p>\n<div class=\"takeaway\">对当前相机，先为每个高斯求一次 RGB，再供像素合成使用。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用红、绿、蓝三个已知颜色，逐步计算它们在同一个像素中的贡献。这个例子从颜色已求出的阶段开始，演示按深度合成颜色的过程。</div>",
       "refs": [
         "paper",
         "forward"
@@ -201,7 +201,7 @@
       "id": "evaluate-alpha",
       "topic": "compositing",
       "title": "算一次有效不透明度 α：同样离中心 2 像素，为何不同？",
-      "html": "<p>独立的二维算例：椭圆未旋转，横向标准差为 2 像素，纵向为 1 像素，不透明度 o=0.8。δ 是像素与中心的坐标差。</p>\n<div class=\"equation\" role=\"math\">d² = (δₓ/2)² + δᵧ²　　g=exp(−d²/2)　　α=0.8g</div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">相对位置 δ</th><th scope=\"col\">按宽度缩放后的 d²</th><th scope=\"col\">高斯权重 g</th><th scope=\"col\">局部 α</th></tr></thead><tbody><tr><td>(0,0)</td><td>0</td><td>1</td><td>0.8</td></tr><tr><td>(2,0)</td><td>1</td><td>≈0.6065</td><td>≈0.4852</td></tr><tr><td>(0,2)</td><td>4</td><td>≈0.1353</td><td>≈0.1083</td></tr></tbody></table></div>\n<p>沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。Q=diag(1/4,1) 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。</p>\n<div class=\"takeaway\">同一高斯、不同像素，alpha 不同。后面的红绿蓝手算直接给定某一个像素处的 alpha，以便把注意力放到前后合成。</div>",
+      "html": "<p>独立的二维算例：椭圆未旋转，横向标准差为 2 像素，纵向为 1 像素，不透明度 o=0.8。δ 是像素与中心的坐标差。</p>\n<div class=\"equation\" role=\"math\">d² = (δₓ/2)² + δᵧ²　　g=exp(−d²/2)　　α=0.8g</div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">相对位置 δ</th><th scope=\"col\">按宽度缩放后的 d²</th><th scope=\"col\">高斯权重 g</th><th scope=\"col\">局部 α</th></tr></thead><tbody><tr><td>(0,0)</td><td>0</td><td>1</td><td>0.8</td></tr><tr><td>(2,0)</td><td>1</td><td>≈0.6065</td><td>≈0.4852</td></tr><tr><td>(0,2)</td><td>4</td><td>≈0.1353</td><td>≈0.1083</td></tr></tbody></table></div>\n<p>沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。Q=diag(1/4,1) 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。</p>\n<div class=\"takeaway\">同一高斯在不同像素处的有效不透明度 α 不同。在“追踪一个像素：红、绿、蓝怎样叠加？”中，我们将直接使用该像素处已知的 α，逐步计算前后遮挡怎样影响颜色贡献。</div>",
       "refs": [
         "forward"
       ],
