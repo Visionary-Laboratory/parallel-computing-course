@@ -47,7 +47,7 @@ def walkthrough():
       <h3>输入照片：同一个 Garden 场景，从不同位置拍摄</h3>
       <div class="io-photo-strip">'''+''.join(f'<figure>{photo(i)}<figcaption>照片 {chr(65+i)}</figcaption></figure>' for i in range(3))+'''
       </div>
-      <p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。它们是<strong>训练时用来比较的真实图像</strong>，不是模型生成的结果。</p>
+      <p>三张照片里都有这张桌子，但桌面、花盆和背景的位置与可见部分不同。训练时，程序从各照片对应的相机位置渲染，再与这些<strong>真实照片</strong>比较。</p>
       <p class="io-caption">这里展示了其中三个拍摄视角；实际训练会使用更多视角的照片。</p>
     </section>
     <section class="io-panel" id="io-colmap" role="tabpanel" aria-labelledby="io-tab-colmap" hidden>
@@ -55,7 +55,7 @@ def walkthrough():
       <div class="io-colmap-grid"><div>
         <div class="io-cloud-wrap"><img class="io-cloud-static" src="'''+BASE+'''garden-colmap.svg" alt="Garden 的真实 COLMAP 稀疏点云及相机视锥，照片 A 的相机用橙色标出"><canvas class="io-cloud" width="760" height="420" role="img" aria-label="Garden 的真实稀疏点云和相机视锥，可用下方控件改变观察方向" hidden></canvas></div>
         <div class="io-cloud-controls"><label>绕场景观察 <input data-orbit type="range" min="-180" max="180" value="25" aria-label="绕点云观察的角度"></label><button data-eye aria-pressed="false">从相机 A 看点云</button></div>
-        <p class="io-caption">彩色点是稀疏三维位置；线框锥体表示拍摄相机。橙色为当前照片的相机。仅抽样显示 16,000 个点、部分相机，远处点已裁剪。</p>
+        <p class="io-caption">彩色点标出估计出的三维位置；线框锥体表示相机的位置、朝向和视野范围。橙色相机与右侧选中的照片对应。</p>
       </div><div class="io-camera-card">
         <div class="io-camera-buttons" role="group" aria-label="选择照片及其相机"><button data-camera="0" aria-pressed="true">照片 A</button><button data-camera="1" aria-pressed="false">照片 B</button><button data-camera="2" aria-pressed="false">照片 C</button></div>
         <img class="io-selected-photo" src="'''+BASE+'''garden-0.jpg" alt="当前选中相机 A 拍到的 Garden 照片">
@@ -63,7 +63,7 @@ def walkthrough():
         <div class="io-camera-facts"><span><b>位置与朝向</b>：锥尖在哪里，锥体朝哪里。</span><span><b>焦距与成像范围</b>：锥口张角表示视野大小。</span></div>
         <p class="io-camera-values"></p>
       </div></div>
-      <p>COLMAP 根据照片中的对应特征估计相机参数和<strong>稀疏点云</strong>。这些点提供高斯中心的初始位置；尚未包含训练后高斯的尺度、方向与不透明度。</p>
+      <p>COLMAP 是从照片估计相机参数和三维点的软件。它匹配不同照片中的同一处细节，估计这些细节的三维位置；这些离散的三维点组成<strong>稀疏点云</strong>，为高斯中心提供初始位置。</p>
       <p class="io-load-status" role="status"></p>
     </section>
     <section class="io-panel" id="io-gaussians" role="tabpanel" aria-labelledby="io-tab-gaussians" hidden>
@@ -71,12 +71,12 @@ def walkthrough():
       <div class="io-representation-controls" role="group" aria-label="查看高斯组成与渲染结果"><button data-representation="ellipsoids" aria-pressed="true">看组成场景的椭球</button><button data-representation="splats" aria-pressed="false">看同一视角的渲染结果</button></div>
       <div class="io-gaussian-scene"><figure>'''+scene_frame('260 335 680 375','Garden 的桌子和花瓶由许多高斯椭球组成',True)+'''<figcaption>场景中的桌子与花瓶 · 同一相机视角</figcaption></figure><figure>'''+scene_frame('390 475 265 190','桌面局部放大，可分辨大小和方向不同的高斯椭球',True)+'''<figcaption>桌面局部放大 · 对照形状与最终外观</figcaption></figure></div>
       <p>桌面、花瓶和地面由<strong>许多大小、方向不同的高斯共同表示</strong>。保存“学好的高斯参数”，就是保存这一整组高斯的位置、形状、不透明度和颜色参数。</p>
-      <p class="io-caption">椭球显示的是高斯的等值面，便于看清组成；最终图像由平滑的高斯贡献合成。</p>
+      <p class="io-caption">椭球轮廓连接高斯权重相同的位置，并不是硬外壳。切换到渲染结果，可以看到这些高斯的贡献如何共同形成场景外观。</p>
     </section>
     <section class="io-panel" id="io-render" role="tabpanel" aria-labelledby="io-tab-render" hidden>
       <h3>相机看向这组高斯，在成像平面上生成图像</h3>
       <figure>'''+camera_diagram()+'''<figcaption>同一场景、同一视角：右侧展示高斯的组成，成像平面展示合成结果。相机与视锥为空间关系示意，成像平面放在相机前方便于观察。</figcaption></figure>
-      <p>给定相机，把高斯<strong>投影到成像平面，按前后顺序合成像素</strong>，就得到这一帧。训练时再与该相机拍摄的照片比较，更新高斯参数。</p>
+      <p>给定相机，把高斯映射到表示图像的二维平面上，这一步称为<strong>投影</strong>。再将前后重叠的高斯按顺序合成像素颜色，就得到这一帧。训练时还要与对应照片比较、更新参数；渲染已学好的场景则到生成图像为止。</p>
     </section>
     <div class="io-step-footer"><span data-io-progress>1 / 4 · 多视角照片</span><button data-io-next>下一步：相机与初始点 →</button></div>
     <p class="io-sources">资料：<a href="https://jonbarron.info/mipnerf360/" target="_blank" rel="noreferrer">Garden 数据集</a> · <a href="https://viser.studio/main/examples/demos/colmap_visualizer/" target="_blank" rel="noreferrer">COLMAP 示例数据</a> · <a href="https://colmap.github.io/format.html" target="_blank" rel="noreferrer">相机参数定义</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting#running-the-real-time-viewer" target="_blank" rel="noreferrer">Kerbl 等：官方高斯可视化演示</a></p>

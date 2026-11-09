@@ -83,7 +83,7 @@ export function mountVisualIO(root){
     if(v){
       const {width,height,params:[fx,fy,cx,cy]}=v.camera;
       const fov=2*Math.atan(width/(2*fx))*180/Math.PI;
-      $('.io-camera-values',root).textContent=`该相机水平视野约 ${fov.toFixed(1)}°；原图 ${width}×${height}，fx≈${fx.toFixed(0)}、fy≈${fy.toFixed(0)} 像素。照片已缩小显示。`;
+      $('.io-camera-values',root).textContent=`水平视野约 ${fov.toFixed(1)}°，表示相机从左到右能看到的角度范围。`;
     }
     draw();
   }

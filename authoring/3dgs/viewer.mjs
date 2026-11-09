@@ -230,7 +230,7 @@ function ellipseDemo(el){
   <label>次轴尺度 σ₂ <output data-out="sy"></output><input aria-label="次轴尺度" data-key="sy" type="range" min="10" max="70" value="25"></label>
   <label>旋转角度 <output data-out="angle"></output><input aria-label="旋转角度" data-key="angle" type="range" min="-90" max="90" value="-25"></label>
   <label>不透明度 o <output data-out="opacity"></output><input aria-label="不透明度" data-key="opacity" type="range" min="10" max="100" value="80"></label>
-  <div class="demo-buttons"><button data-reset>重置</button></div><p>虚线：2σ 等值线<br>中心 alpha = o；向外平滑衰减</p></div></div>`;
+  <div class="demo-buttons"><button data-reset>重置</button></div><p>两个尺度的单位是像素。<br>虚线内外都有贡献，颜色向外逐渐变淡；调节不透明度改变深浅。</p></div></div>`;
   const canvas=$('canvas',el),ctx=canvas.getContext('2d');
   function draw(){
     const v={};$$('input',el).forEach(i=>{v[i.dataset.key]=Number(i.value);$(`[data-out="${i.dataset.key}"]`,el).textContent=i.dataset.key==='opacity'?fmt(Number(i.value)/100):i.value+(i.dataset.key==='angle'?'°':'');});
@@ -241,12 +241,12 @@ function ellipseDemo(el){
     }
     ctx.putImageData(img,0,0);ctx.strokeStyle='#176653';ctx.setLineDash([5,5]);ctx.beginPath();ctx.ellipse(240,160,2*v.sx,2*v.sy,angle,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
     ctx.fillStyle='#176653';ctx.beginPath();ctx.arc(240,160,3,0,Math.PI*2);ctx.fill();
-    ctx.font='13px sans-serif';ctx.fillStyle='#718779';ctx.fillText('μ',249,153);ctx.fillText('g(p) × o',15,25);
+    ctx.font='13px sans-serif';ctx.fillStyle='#718779';ctx.fillText('中心 μ',249,153);ctx.fillText('颜色越深，贡献越强',15,25);
   }
   $$('input',el).forEach(i=>i.addEventListener('input',draw));$('[data-reset]',el).addEventListener('click',()=>{$$('input',el).forEach(i=>i.value=i.defaultValue);draw();});draw();
 }
 function blendDemo(el){
-  el.innerHTML=`<div class="demo-grid"><div><canvas width="500" height="270" role="img" aria-label="当前步骤的累计颜色与剩余透射率"></canvas><div class="demo-buttons"><button data-back>上一步</button><button data-step>下一步</button><button data-reset>重置</button><button data-reverse>反转顺序</button></div></div><div><div class="swatch" aria-label="累计像素颜色"></div><div class="demo-result" aria-live="polite"></div><p>背景为黑色。颜色按线性 RGB 数值演示，屏幕色块只作定性辅助。</p></div></div>`;
+  el.innerHTML=`<div class="demo-grid"><div><canvas width="500" height="270" role="img" aria-label="当前步骤的累计颜色与剩余透射率"></canvas><div class="demo-buttons"><button data-back>上一步</button><button data-step>下一步</button><button data-reset>重置</button><button data-reverse>反转顺序</button></div></div><div><div class="swatch" aria-label="累计像素颜色"></div><div class="demo-result" aria-live="polite"></div><p>背景为黑色。用右侧 RGB 数值核对计算，色块辅助观察颜色变化。</p></div></div>`;
   const base=[{id:0,alpha:.5,color:[1,0,0]},{id:2,alpha:.25,color:[0,1,0]},{id:1,alpha:.5,color:[0,0,1]}];
   let order=[...base],step=mode==='print'?3:0;const ctx=$('canvas',el).getContext('2d');
   function draw(){
@@ -254,7 +254,8 @@ function blendDemo(el){
     order.forEach((g,i)=>{ctx.fillStyle=i<step?'#e4f1e9':'#f3f5f4';ctx.fillRect(25+i*160,30,140,92);ctx.fillStyle='#285b41';ctx.fillText(`G${g.id} · α=${g.alpha}`,40+i*160,63);ctx.fillStyle=['#d46a57','#5686bd','#398e70'][g.id];ctx.fillRect(45+i*160,80,95,12);});
     ctx.fillStyle='#edf2ee';ctx.fillRect(25,175,450,28);ctx.fillStyle='#176653';ctx.fillRect(25,175,450*r.T,28);ctx.fillStyle='#567360';ctx.fillText(`剩余透射率 T = ${fmt(r.T)}`,25,238);
     $('.swatch',el).style.background=`rgb(${r.C.map(x=>Math.round(x*255)).join(',')})`;
-    $('.demo-result',el).textContent=`步骤 ${step} / 3\n顺序：${order.map(g=>'G'+g.id).join(' → ')}\nC = (${r.C.map(fmt).join(', ')})\nT = ${fmt(r.T)}`;
+    const weight=step?r.history[step-1].weight:null;
+    $('.demo-result',el).textContent=`步骤 ${step} / 3\n从前到后：${order.map(g=>'G'+g.id).join(' → ')}\n${step?`本次颜色权重 Tα = ${fmt(weight)}`:'尚未加入高斯'}\n累计 RGB：C = (${r.C.map(fmt).join(', ')})\n留给后方的比例：T = ${fmt(r.T)}`;
     $('[data-back]',el).disabled=step===0;$('[data-step]',el).disabled=step===3;
   }
   $('[data-step]',el).addEventListener('click',()=>{step=Math.min(3,step+1);draw();});
@@ -263,7 +264,7 @@ function blendDemo(el){
   $('[data-reverse]',el).addEventListener('click',()=>{order.reverse();step=0;draw();});draw();
 }
 function tilesDemo(el){
-  el.innerHTML=`<div class="demo-grid"><canvas width="432" height="432" role="img" aria-label="四个高斯的包围框及 4×4 Tile 网格"></canvas><div><div class="tile-buttons" role="group" aria-label="选择 Tile">${Array.from({length:16},(_,i)=>`<button aria-pressed="${i===5}" data-tile="${i}">${i}</button>`).join('')}</div><div class="demo-result" aria-live="polite"></div><p>红 G₀ · 蓝 G₁ · 绿 G₂ · 黄 G₃<br>半开包围框；图示不表示真实深度排序误差。</p></div></div>`;
+  el.innerHTML=`<div class="demo-grid"><canvas width="432" height="432" role="img" aria-label="四个高斯的包围框及 4×4 Tile 网格"></canvas><div><div class="tile-buttons" role="group" aria-label="选择 Tile">${Array.from({length:16},(_,i)=>`<button aria-pressed="${i===5}" data-tile="${i}">${i}</button>`).join('')}</div><div class="demo-result" aria-live="polite"></div><p>红 G₀ · 蓝 G₁ · 绿 G₂ · 黄 G₃<br>虚线为候选包围框；颜色仅用于区分高斯。框的右、下边界不计入范围。</p></div></div>`;
   let selected=5;const canvas=$('canvas',el),ctx=canvas.getContext('2d'),pipe=tilePipeline();
   function draw(){
     ctx.clearRect(0,0,432,432);ctx.fillStyle='#fff';ctx.fillRect(0,0,432,432);
@@ -272,8 +273,8 @@ function tilesDemo(el){
     GAUSSIANS.forEach(g=>{ctx.strokeStyle=g.color;ctx.fillStyle=g.color;ctx.globalAlpha=.16;ctx.beginPath();ctx.ellipse(off+g.x*scale,off+g.y*scale,g.radius*scale*.8,g.radius*scale*.5,-.35,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;ctx.setLineDash([5,4]);ctx.strokeRect(off+(g.x-g.radius)*scale,off+(g.y-g.radius)*scale,2*g.radius*scale,2*g.radius*scale);ctx.setLineDash([]);ctx.beginPath();ctx.arc(off+g.x*scale,off+g.y*scale,3,0,Math.PI*2);ctx.fill();ctx.font='bold 13px sans-serif';ctx.fillText('G'+g.id,off+g.x*scale+5,off+g.y*scale-6);});
     ctx.strokeStyle='#bbcec1';ctx.lineWidth=1;for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(off+i*tile,off);ctx.lineTo(off+i*tile,408);ctx.stroke();ctx.beginPath();ctx.moveTo(off,off+i*tile);ctx.lineTo(408,off+i*tile);ctx.stroke();}
     ctx.font='12px sans-serif';ctx.fillStyle='#8a9d90';for(let i=0;i<16;i++)ctx.fillText(String(i),off+(i%4)*tile+6,off+Math.floor(i/4)*tile+16);
-    const records=pipe.sorted.filter(p=>p.tile===selected),range=pipe.ranges[selected];
-    $('.demo-result',el).textContent=`Tile ${selected}\n候选数：${records.length}\n深度顺序：${records.length?records.map(p=>'G'+p.id+'(z='+p.depth+')').join(' → '):'空 → 背景'}\n范围：[${range.join(', ')})\n全图高斯–Tile 配对记录总数 M = ${pipe.total}`;
+    const records=pipe.sorted.filter(p=>p.tile===selected);
+    $('.demo-result',el).textContent=`Tile ${selected}\n候选数：${records.length}\n从近到远：${records.length?records.map(p=>'G'+p.id+'(深度'+p.depth+')').join(' → '):'空列表，输出背景'}`;
     $$('[data-tile]',el).forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.tile)===selected)));
   }
   $$('[data-tile]',el).forEach(b=>b.addEventListener('click',()=>{selected=Number(b.dataset.tile);draw();}));

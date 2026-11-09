@@ -60,17 +60,19 @@ def build(destination):
         b+=box(x-48,y-30,100,64,label)+arrow(x+(55 if x<400 else -55),y,310 if x<400 else 530,150)
     b+=text(400,275,'固定场景 · 多个相机',17,MUTED,'middle'); figs['scene']=wrap(b)
     b=''
-    items=[('高斯参数','N 个基元'),('投影 / 计数','屏幕足迹'),('Scan / 写出','M 条配对记录'),('排序 / 分段','Tile 有序列表'),('并行渲染','P 个像素')]
+    items=[('高斯参数','位置、形状、外观'),('投影与计数','屏幕形状与覆盖块'),('前缀和与写出','生成配对记录'),('排序与分段','各块的有序列表'),('像素合成','输出一帧图像')]
     for i,(title,sub) in enumerate(items):
         x=18+i*156; b+=box(x,44,140,80,title,sub)
         if i<4:b+=arrow(x+142,84,x+152,84)
-    b+=text(400,165,'并行单位：高斯 → 配对记录 → Tile / 像素',18,MUTED,'middle');figs['pipeline']=wrap(b,195)
-    b=text(190,40,'只有位置',20,INK,'middle')+text(590,40,'大小、方向与柔和覆盖',20,INK,'middle')
+    b+=text(400,165,'高斯独立投影 → 按图像块组织记录 → 像素独立合成',18,MUTED,'middle');figs['pipeline']=wrap(b,195)
+    b='<defs><radialGradient id="soft-splat"><stop offset="0" stop-color="'+GREEN+'" stop-opacity=".7"/><stop offset=".5" stop-color="'+GREEN+'" stop-opacity=".35"/><stop offset="1" stop-color="'+GREEN+'" stop-opacity="0"/></radialGradient></defs>'
+    b+=text(190,40,'只有位置',20,INK,'middle')+text(590,40,'大小、方向与柔和覆盖',20,INK,'middle')
     for j in range(3):
         for i in range(5):
             x=90+i*50;y=95+j*58+math.sin(i)*10
             b+=f'<circle cx="{x}" cy="{y}" r="4" fill="{GREEN}"/>'
-            b+=ellipse(x+400,y,34,22,-20,GREEN,.17)
+            b+=f'<ellipse cx="{x+400}" cy="{y}" rx="51" ry="33" transform="rotate(-20,{x+400},{y})" fill="url(#soft-splat)"/>'
+            b+=f'<ellipse cx="{x+400}" cy="{y}" rx="34" ry="22" transform="rotate(-20,{x+400},{y})" fill="none" stroke="{GREEN}" stroke-width=".8" stroke-dasharray="3 3"/>'
     b+=arrow(355,150,420,150);figs['point-splat']=wrap(b,285)
     b=box(25,85,190,85,'中心的世界坐标')+box(305,85,190,85,'中心的相机坐标')+box(585,85,190,85,'中心的屏幕坐标','(u, v)')
     for x,index in [(120,'w'),(400,'c')]:
@@ -104,24 +106,25 @@ def build(destination):
         for x in range(16):b+=f'<rect x="{470+x*14}" y="{60+y*14}" width="12" height="12" fill="{GREEN if y==5 else "#b6d7c9"}"/>'
     b+=text(580,310,'每个线程唯一写出一个像素',17,MUTED,'middle');figs['ownership']=wrap(b,340)
     b=box(20,85,180,85,'Global','高斯参数数组')+arrow(210,125,300,125)+box(310,85,180,85,'Shared','当前候选批次')
-    for y,t in [(45,'像素 p₀：C₀ / T₀'),(130,'像素 p₁：C₁ / T₁'),(215,'像素 p₂：C₂ / T₂')]:
+    for y,t in [(45,'像素 p₀：C₀ 与 T₀'),(130,'像素 p₁：C₁ 与 T₁'),(215,'像素 p₂：C₂ 与 T₂')]:
         b+=arrow(500,125,570,y+25)+box(580,y,200,65,t)
     b+=text(275,240,'合作装入一次',17,MUTED,'middle')+text(680,315,'各自计算，共同读入',17,MUTED,'middle');figs['shared']=wrap(b,345)
     b=''
-    for i,(t,sub) in enumerate([('装入','各线程搬运'),('同步 ①','装入完成'),('使用','更新私有 C/T'),('同步 ②','旧数据读完'),('再装入','覆盖下一批')]):
+    for i,(t,sub) in enumerate([('装入','各线程分担搬运'),('同步 ①','等待新数据就绪'),('合成','更新私有 C、T'),('同步 ②','等待旧数据读完'),('再装入','下一批覆盖旧槽')]):
         b+=box(18+i*156,60,140,85,t,sub)
         if i<4:b+=arrow(160+i*156,103,171+i*156,103)
-    b+=text(400,195,'所有参与者经过相同的批次交接',18,MUTED,'middle');figs['barriers']=wrap(b,235)
+    b+=text(400,195,'像素已结束的线程，仍执行加载与同步',18,MUTED,'middle');figs['barriers']=wrap(b,235)
     b=''
-    for i,(n,width) in enumerate([(0,20),(24,95),(80,210),(410,570)]):
-        y=45+i*55;b+=text(25,y+18,f'Tile {i}',18)+f'<rect x="120" y="{y}" width="{width}" height="28" rx="5" fill="{GREEN}" opacity="{.35+i*.18}"/>'+text(135+width,y+21,str(n)+' 候选',16)
-    b+=text(400,295,'示意工作量，不代表测量时间',17,MUTED,'middle');figs['imbalance']=wrap(b,330)
+    for i,n in enumerate([0,24,80,410]):
+        width=n/410*530
+        y=45+i*55;b+=text(25,y+18,f'Tile {i}',18)+f'<rect x="120" y="{y}" width="{width}" height="28" rx="5" fill="{GREEN}" opacity="{.35+i*.18}"/>'+text(135+width,y+21,str(n)+' 个候选',16)
+    b+=text(400,295,'条长按候选数比例绘制；这是另一组工作量示例',17,MUTED,'middle');figs['imbalance']=wrap(b,330)
     b=''
     for i,(t,sub) in enumerate([('选相机','训练照片'),('渲染','当前参数'),('比较','图像损失'),('反向','参数梯度'),('更新','再次迭代')]):
         b+=box(18+i*156,55,140,80,t,sub)
         if i<4:b+=arrow(160+i*156,95,171+i*156,95)
     b+=f'<path d="M730 145V190H90V145" stroke="{GREEN}" fill="none" stroke-dasharray="6 5" marker-end="url(#arrow)"/>';figs['training']=wrap(b,225)
-    b=box(300,90,190,85,'高斯 Gᵢ','共享参数 / 总梯度')
+    b=box(300,90,190,85,'高斯 Gᵢ','参数与对应的总梯度')
     for i,y in enumerate([30,115,200]):
         b+=box(20,y,170,65,f'像素 p{i}')+arrow(290,130,195,y+32)
         b+=box(610,y,170,65,f'像素 p{i} 的梯度')+arrow(605,y+32,500,130)
