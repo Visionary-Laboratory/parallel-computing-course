@@ -72,7 +72,7 @@ def build(destination):
             b+=f'<circle cx="{x}" cy="{y}" r="4" fill="{GREEN}"/>'
             b+=ellipse(x+400,y,34,22,-20,GREEN,.17)
     b+=arrow(355,150,420,150);figs['point-splat']=wrap(b,285)
-    b=box(25,85,150,85,'世界坐标','μw')+arrow(180,128,255,128)+box(265,85,190,85,'相机坐标','Rc μw + tc')+arrow(460,128,535,128)+box(545,85,215,85,'屏幕坐标','(fx X/Z + cx, fy Y/Z + cy)')+text(400,220,'先改变坐标系，再除以深度',18,MUTED,'middle');figs['camera']=wrap(b,265)
+    b=box(25,85,150,85,'世界坐标','μw')+arrow(180,128,255,128)+box(265,85,190,85,'相机坐标','Rc μw + tc')+arrow(460,128,535,128)+box(545,85,215,85,'屏幕坐标','(u, v)')+text(400,220,'先改变坐标系，再除以深度',18,MUTED,'middle');figs['camera']=wrap(b,265)
     b=ellipse(170,145,65,95,-35,GREEN)+ellipse(170,145,65,25,0,GREEN,.06)+text(170,270,'三维尺度 + 方向',18,INK,'middle')
     b+=arrow(265,110,400,78)+arrow(265,185,400,215)
     b+=ellipse(530,85,100,27,12,BLUE)+text(680,90,'视角 A',17)

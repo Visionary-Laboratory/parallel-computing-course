@@ -30,6 +30,20 @@ def note(text): return '<div class="takeaway">' + text + '</div>'
 def eq(text): return '<div class="equation" role="math">' + text + '</div>'
 def math_eq(body, label):
     return '<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="'+escape(label,quote=True)+'">'+body+'</math></div>'
+def math_inline(body):
+    return '<math xmlns="http://www.w3.org/1998/Math/MathML">'+body+'</math>'
+def mi(value): return '<mi>'+escape(value)+'</mi>'
+def mn(value): return '<mn>'+str(value)+'</mn>'
+def mo(value): return '<mo>'+escape(value)+'</mo>'
+def mr(*parts): return '<mrow>'+''.join(parts)+'</mrow>'
+def sub(base, index): return '<msub>'+base+'<mi mathvariant="normal">'+escape(index)+'</mi></msub>'
+def sup(base, exponent): return '<msup>'+base+'<mn>'+str(exponent)+'</mn></msup>'
+def tr(base): return '<msup>'+base+'<mi mathvariant="normal">T</mi></msup>'
+def frac(numerator, denominator): return '<mfrac>'+mr(numerator)+mr(denominator)+'</mfrac>'
+def par(body): return mr(mo('('),body,mo(')'))
+def matrix(rows):
+    return mr(mo('['),'<mtable>'+''.join('<mtr>'+''.join('<mtd>'+cell+'</mtd>' for cell in row)+'</mtr>' for row in rows)+'</mtable>',mo(']'))
+GAP='<mspace width="1.5em"/>'
 def math_matrix(rows):
     return '<mrow><mo>[</mo><mtable>'+''.join('<mtr>'+''.join('<mtd><mn>'+str(v)+'</mn></mtd>' for v in row)+'</mtr>' for row in rows)+'</mtable><mo>]</mo></mrow>'
 def table(head, rows):
@@ -129,11 +143,11 @@ add('appearance', 'representation', '为什么颜色可以随观察方向变化�
 
 add('camera-coordinates', 'projection', '先把中心变换到相机坐标系',
     fig('camera', '世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。'),
-    eq('μ_c = R_c μ_w + t_c'),
+    math_eq(mr(sub(mi('μ'),'c'),mo('='),sub(mi('R'),'c'),sub(mi('μ'),'w'),mo('+'),sub(mi('t'),'c')), '相机坐标下的中心等于相机旋转乘世界坐标中心再加平移'),
     p('世界坐标描述场景中的固定位置；相机坐标描述相对当前相机的位置。用 Z_c 表示沿相机前向的深度。相机动了，同一高斯的相机坐标与排序深度就可能改变。'),
     note('相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。'))
 add('perspective', 'projection', '透视投影：越远，屏幕位移越小',
-    eq('u = fₓ X_c / Z_c + cₓ　　v = fᵧ Y_c / Z_c + cᵧ'),
+    math_eq(mr(mi('u'),mo('='),frac(sub(mi('f'),'x')+sub(mi('X'),'c'),sub(mi('Z'),'c')),mo('+'),sub(mi('c'),'x'),GAP,mi('v'),mo('='),frac(sub(mi('f'),'y')+sub(mi('Y'),'c'),sub(mi('Z'),'c')),mo('+'),sub(mi('c'),'y')), 'u 等于 fx Xc 除以 Zc 加 cx；v 等于 fy Yc 除以 Zc 加 cy'),
     p('fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：'),
     table(['相机坐标 (X,Y,Z)','屏幕坐标 (u,v)'], [['(0, 0, 2)','(32, 32)'],['(0.2, 0, 2)','(42, 32)'],['(0.2, 0, 4)','(37, 32)']]),
     p('第二、三个中心的 X 相同，深度加倍后，偏离主点的距离减半。Z 接近零时除法不稳定，不能把所有输入都直接投影。'))
@@ -144,20 +158,22 @@ add('project-shape', 'projection', '投影一个高斯，不能只投影中心',
     note('“投影后是二维高斯”在这里是一种局部近似，不是任意大三维高斯经过透视后的精确恒等式。'), refs=('paper',))
 add('project-covariance', 'projection', '同一个高斯，移远后屏幕足迹怎样缩小？',
     p('先取一个容易计算的局部近似：中心在相机主轴上，各方向一样宽，焦距 f=100 像素，三维标准差 σ=0.04，深度与 σ 使用相同长度单位。暂不加入屏幕滤波。'),
-    eq('屏幕标准差 ≈ fσ/Z'),
+    math_eq(mr('<mtext>屏幕标准差</mtext>',mo('≈'),frac(mi('f')+mi('σ'),mi('Z'))), '屏幕标准差约等于焦距乘三维标准差除以深度'),
     table(['深度 Z','屏幕标准差','二维协方差的对角值'], [['2','2 像素','4 像素²'],['4','1 像素','1 像素²']]),
     p('移远一倍，屏幕宽度减半，方差变为四分之一。一般椭球还要考虑朝向，不能都套用这个圆形特例。'),
     note('预处理输出二维形状 Σ₂D，再存下逆矩阵 Q=Σ₂D⁻¹，供像素计算相对距离。矩阵推导在深入阅读，主线追踪这份数据怎样被复用。'), refs=('paper','forward'))
 add('jacobian', 'projection', '深入：透视雅可比的每一项从哪里来？',
-    eq('S = diag(sₓ,sᵧ,s_z)，Σ = R S Sᵀ Rᵀ'),
+    math_eq(mr(mi('S'),mo('='),'<mi mathvariant="normal">diag</mi>',par(sub(mi('s'),'x')+mo(',')+sub(mi('s'),'y')+mo(',')+sub(mi('s'),'z')),GAP,mi('Σ'),mo('='),mi('R'),mi('S'),tr(mi('S')),tr(mi('R'))), 'S 是主轴尺度的对角矩阵，协方差为 R S S转置 R转置'),
     p('正尺度与有效旋转 R 给出正定协方差。R 可由归一化四元数得到。'),
-    eq('Σ_c = R_c Σ R_cᵀ　　Σ₂D ≈ J Σ_c Jᵀ'),
+    math_eq(mr(sub(mi('Σ'),'c'),mo('='),sub(mi('R'),'c'),mi('Σ'),tr(sub(mi('R'),'c')),GAP,sub(mi('Σ'),'2D'),mo('≈'),mi('J'),sub(mi('Σ'),'c'),tr(mi('J'))), '相机协方差为 Rc Σ Rc转置；屏幕协方差约为 J Σc J转置'),
     p('相机旋转 R_c 先改变形状的观察方向；2×3 的雅可比 J 表示相机坐标改变一点时，屏幕坐标改变多少。结果是 2×2 的屏幕协方差。'),
-    eq('J = [ fₓ/Z　 0　 −fₓX/Z² ;　0　 fᵧ/Z　 −fᵧY/Z² ]'),
-    p('对 u=fₓX/Z+cₓ 分别求 X、Y、Z 的偏导，得到第一行；v 的偏导给出第二行。靠近主轴时 X、Y 较小，深度扰动对屏幕位置的横向影响较弱。'),
-    p('例如 X=Y=0，fₓ=fᵧ=f，三维各向同性 Σ=σ²I，则 Σ₂D=(fσ/Z)²I。深度加倍，屏幕标准差减半，协方差对角元变为四分之一。'),
-    eq('g(p) = exp[−½ δᵀQδ]，δ=p−μ₂D，Q=Σ₂D⁻¹'),
-    p('二维对称 Q 只需保存 Qₓₓ、Qₓᵧ、Qᵧᵧ。展开二次型得到 Qₓₓδₓ²+2Qₓᵧδₓδᵧ+Qᵧᵧδᵧ²；交叉项不能漏掉系数 2。'),
+    math_eq(mr(mi('J'),mo('='),matrix([[frac(sub(mi('f'),'x'),mi('Z')),mn(0),mo('−')+frac(sub(mi('f'),'x')+mi('X'),sup(mi('Z'),2))],[mn(0),frac(sub(mi('f'),'y'),mi('Z')),mo('−')+frac(sub(mi('f'),'y')+mi('Y'),sup(mi('Z'),2))]])), 'J 是两行三列矩阵，第一行为 fx/Z、0、负fxX/Z平方；第二行为0、fy/Z、负fyY/Z平方'),
+    p('对透视投影公式中的 u 分别求 X、Y、Z 的偏导，得到第一行；v 的偏导给出第二行。这里 X、Y、Z 均为相机坐标。靠近主轴时 X、Y 较小，深度扰动对屏幕位置的横向影响较弱。'),
+    p('例如 X=Y=0，fₓ=fᵧ=f，三维各向同性 '+math_inline(mr(mi('Σ'),mo('='),sup(mi('σ'),2),mi('I')))+'，则：'),
+    math_eq(mr(sub(mi('Σ'),'2D'),mo('='),sup(par(frac(mi('f')+mi('σ'),mi('Z'))),2),mi('I')), '二维协方差等于焦距乘标准差除以深度的平方，再乘单位矩阵'),
+    p('深度加倍，屏幕标准差减半，协方差对角元变为四分之一。'),
+    math_eq(mr(mr(mi('g'),par(mi('p'))),mo('='),'<mi mathvariant="normal">exp</mi>',mr(mo('['),mo('−'),frac(mn(1),mn(2)),tr(mi('δ')),mi('Q'),mi('δ'),mo(']')),GAP,mi('δ'),mo('='),mi('p'),mo('−'),sub(mi('μ'),'2D'),GAP,mi('Q'),mo('='),sup(sub(mi('Σ'),'2D'),'−1')), '高斯权重为 exp 负二分之一 δ转置Qδ；δ为像素减屏幕中心，Q为屏幕协方差的逆矩阵'),
+    p('二维对称 Q 只需保存 Qₓₓ、Qₓᵧ、Qᵧᵧ。展开二次型得到 '+math_inline(mr(sub(mi('Q'),'xx'),sup(sub(mi('δ'),'x'),2),mo('+'),mn(2),sub(mi('Q'),'xy'),sub(mi('δ'),'x'),sub(mi('δ'),'y'),mo('+'),sub(mi('Q'),'yy'),sup(sub(mi('δ'),'y'),2)))+'；交叉项不能漏掉系数 2。'),
     note('这个例子有明确的中心与各向同性假设；不能据此把任意旋转椭球都简化成同一个屏幕圆。'), deep=True, refs=('paper',))
 add('finite-footprint', 'projection', '无限的高斯，有限的候选区域',
     p('不能为一个高斯访问整张图像。先沿屏幕椭圆最宽的方向取约 3 倍标准差，向上取整为候选半径，再用包围框找相交的 Tile，并裁剪到图像范围。'),
@@ -171,9 +187,9 @@ add('preprocess', 'projection', '每高斯预处理：先做一次，供后面�
 
 add('evaluate-alpha', 'compositing', '算一次有效不透明度 α：同样离中心 2 像素，为何不同？',
     p('独立的二维算例：椭圆未旋转，横向标准差为 2 像素，纵向为 1 像素，不透明度 o=0.8。δ 是像素与中心的坐标差。'),
-    eq('d² = (δₓ/2)² + δᵧ²　　g=exp(−d²/2)　　α=0.8g'),
+    math_eq(mr(sup(mi('d'),2),mo('='),sup(par(frac(sub(mi('δ'),'x'),mn(2))),2),mo('+'),sup(sub(mi('δ'),'y'),2),GAP,mi('g'),mo('='),'<mi mathvariant="normal">exp</mi>',par(mo('−')+frac(sup(mi('d'),2),mn(2))),GAP,mi('α'),mo('='),mn('0.8'),mi('g')), 'd平方等于δx除以2的平方加δy平方；g为exp负d平方除以2；有效不透明度为0.8g'),
     table(['相对位置 δ','按宽度缩放后的 d²','高斯权重 g','局部 α'], [['(0,0)','0','1','0.8'],['(2,0)','1','≈0.6065','≈0.4852'],['(0,2)','4','≈0.1353','≈0.1083']]),
-    p('沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。Q=diag(1/4,1) 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。'),
+    p('沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。'+math_inline(mr(mi('Q'),mo('='),'<mi mathvariant="normal">diag</mi>',par(frac(mn(1),mn(4))+mo(',')+mn(1))))+' 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。'),
     note('即使与中心的像素距离相同，沿不同主轴方向算出的有效不透明度 α 也可能不同。它由不透明度参数和该像素处的高斯权重共同决定。'), refs=('forward',))
 add('transmittance', 'compositing', '前面的覆盖，决定后面还能贡献多少',
     eq('C = 0，T = 1；从前到后遍历：'),
@@ -385,7 +401,7 @@ add('training-loop', 'learning', '渲染器怎样成为一个可学习的模型�
     p('例如投影位置偏了，中心参数可能收到调整信号；颜色偏暗，颜色参数可能收到调整信号。把全部贡献合起来，再由优化器更新参数，重复下一次渲染。'),
     p('要评估新视角能力，应另外使用未参加训练的相机图像；记住训练照片不等于学会所有新视角。'), refs=('paper','training'))
 add('gradient-path', 'learning', '像素误差，沿哪条链回到高斯参数？',
-    eq('损失 → 像素颜色 → alpha / 颜色 → 二维中心与形状 → 三维参数'),
+    eq('损失 → 像素颜色 → alpha 与颜色 → 二维中心与形状 → 三维参数'),
     p('颜色不对，可调整颜色系数；覆盖位置不对，可调整中心；足迹不合适，可调整尺度与旋转；遮挡强弱不对，可调整不透明度。它们通常共同影响损失，并非各自负责一种独立错误。'),
     p('反向计算复用前向的排序与 Tile 范围。渲染器并不对排序位置、整数 Tile 归属、增删高斯等离散决定做普通连续求导。'),
     note('可微渲染描述局部连续计算的梯度路径；整个带分支、排序和拓扑变化的过程不是处处光滑。'), refs=('paper','backward'))
@@ -408,7 +424,7 @@ add('learned-scene', 'learning', '训练完成，查看一帧时哪些东西还�
     note('“显式表示”节省了某些查询计算，但并不意味着每帧只需把点画到屏幕上。'))
 add('backward-memory', 'learning', '深入：为什么不保存每个像素的完整历史？',
     p('如果为每个像素保存所有贡献高斯与每一步 T，内存会随重叠深度增长。基线保存最终透射率、最后贡献位置等状态，反向重新遍历有序候选列表。'),
-    eq('T_before = T_after / (1 − α)　（对实际参与合成的项）'),
+    math_eq(mr(sub(mi('T'),'before'),mo('='),frac(sub(mi('T'),'after'),mn(1)+mo('−')+mi('α')),GAP,'<mtext>（对实际参与合成的项）</mtext>'), '参与合成前的透射率等于合成后的透射率除以一减有效不透明度'),
     p('反向从后向前恢复需要的系数，同时复用前向列表和批量加载。必须与前向的跳过、终止和 alpha 裁剪规则匹配。'),
     note('这里体现“保存还是重算”的权衡。减少每像素历史存储，并不代表没有全局排序缓冲区或没有反向计算成本。'), deep=True, refs=('paper','backward'))
 
@@ -418,7 +434,7 @@ add('cost-model', 'performance', '不要只数高斯：三个规模决定不同�
         ['M = Σᵢ nᵢ','高斯–Tile 配对记录总数；nᵢ 为高斯 i 的候选 Tile 数','写出、排序、范围与缓冲区'],
         ['K = Σₚ kₚ','所有像素实际检查的候选总数','像素遍历与合成']]),
     p('同样 N 个高斯，屏幕足迹更大时 M 可能更多；覆盖重叠更深、较晚达到不透明时 K 可能更大。改变相机也会改变这些量。'),
-    eq('一帧时间 = 预处理 + 分组 / 排序 + 渲染 + 其他开销'),
+    eq('一帧时间 = 预处理 + 分组与排序 + 渲染 + 其他开销'),
     note('这是解释成本的分解，不是能仅凭 N、M、K 精确预测毫秒数的硬件模型。'))
 add('tile-tradeoff', 'performance', 'Tile 越小一定越快吗？',
     table(['改变 Tile 大小','可能得到什么','可能付出什么'], [
