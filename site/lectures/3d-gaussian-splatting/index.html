@@ -229,11 +229,12 @@
       <div class="slide-label"><a href="#project-covariance" title="此主题的稳定链接"><span class="page-number">14</span> · 主题链接</a><button class="start-page" data-start="project-covariance" aria-label="从14页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
       <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
       <div class="print-page-label">14 / 57 · 从三维到屏幕</div>
-      <div class="slide-body"><h2>同一个高斯，移远后屏幕足迹怎样缩小？</h2><p>取一个各方向一样宽的三维高斯，中心位于相机光轴上。焦距 f=100 像素，三维标准差 σ=0.04；深度 Z 与 σ 使用相同长度单位。局部投影近似给出：</p>
+      <div class="slide-body"><h2>同一个高斯，移远后屏幕足迹怎样缩小？</h2><p>投影得到的屏幕宽度有两个用途：计算各像素处的高斯权重，以及确定需要检查多大的像素区域。相机距离改变时，这两项都会随之变化。</p>
+<p>取一个各方向一样宽的三维高斯，中心位于相机光轴上。焦距 f=100 像素，三维标准差 σ=0.04；深度 Z 与 σ 使用相同长度单位。局部投影近似给出：</p>
 <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="屏幕标准差约等于焦距乘三维标准差除以深度"><mrow><mtext>屏幕标准差</mtext><mo>≈</mo><mfrac><mrow><mi>f</mi><mi>σ</mi></mrow><mrow><mi>Z</mi></mrow></mfrac></mrow></math></div>
-<div class="table-scroll"><table><thead><tr><th scope="col">深度 Z</th><th scope="col">屏幕标准差</th><th scope="col">二维协方差的对角值</th></tr></thead><tbody><tr><td>2</td><td>2 像素</td><td>4 像素²</td></tr><tr><td>4</td><td>1 像素</td><td>1 像素²</td></tr></tbody></table></div>
-<p>移远一倍，屏幕宽度减半，方差变为四分之一。一般椭球还要考虑朝向，不能都套用这个圆形特例。</p>
-<div class="takeaway">程序还会计算二维协方差的逆矩阵 <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>Q</mi><mo>=</mo><msup><msub><mi>Σ</mi><mi mathvariant="normal">2D</mi></msub><mn>−1</mn></msup></mrow></math>。Q 把像素到中心的位移换算成相对于高斯宽度的距离，供各像素求权重时重复使用。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
+<div class="table-scroll"><table><thead><tr><th scope="col">深度 Z</th><th scope="col">屏幕标准差</th><th scope="col">二维协方差的对角值</th><th scope="col">离投影中心 2 像素处的权重</th></tr></thead><tbody><tr><td>2</td><td>2 像素</td><td>4 像素²</td><td>约 0.607</td></tr><tr><td>4</td><td>1 像素</td><td>1 像素²</td><td>约 0.135</td></tr></tbody></table></div>
+<p>距离加倍，屏幕宽度减半，方差变为四分之一。同样离投影中心 2 像素，原来只相隔一个标准差，现在相隔两个，权重就从约 0.607 降到 0.135。乘上相同的不透明度参数后，该位置的有效不透明度也会减小，改变像素颜色的合成结果。</p>
+<p>计算范围也随之缩小。例如，用屏幕标准差的 3 倍作为检查半径，半径会从 6 像素缩到 3 像素。需要检查的像素区域变小，与这个区域相交的 Tile 也可能减少，因此高斯数量不变时，渲染工作量仍会变化。一般椭球还要考虑朝向，这里的数值只对应圆形特例。</p><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide deep" id="jacobian" data-topic="projection" data-label="深入 01" tabindex="-1">
       <div class="slide-label"><a href="#jacobian" title="此主题的稳定链接"><span class="page-number">深入 01</span> · 主题链接</a><button class="start-page" data-start="jacobian" aria-label="从深入 01页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -258,6 +259,7 @@
       <div class="print-page-label">16 / 57 · 从三维到屏幕</div>
       <div class="slide-body"><h2>无限的高斯，有限的候选区域</h2><p>高斯的权重没有硬边界，但离中心足够远时很小。为减少检查，取屏幕椭圆最宽方向约 3 倍标准差作为候选半径，再用一个与屏幕坐标轴对齐的方框围住这个范围，这个方框称为<strong>包围框</strong>。</p>
 <p>与包围框相交的图像块称为这个高斯的<strong>候选 Tile</strong>。先检查矩形是否相交，可以快速排除远处的图像块；真正计算像素颜色时，仍按高斯公式求该像素处的有效不透明度。</p>
+<p>沿用光轴上圆形高斯的投影结果：深度从 2 增至 4，屏幕标准差从 2 像素减至 1 像素，对应的候选范围为：</p>
 <div class="table-scroll"><table><thead><tr><th scope="col">屏幕标准差（圆形例子）</th><th scope="col">3 倍标准差的半径</th><th scope="col">包围框边长</th></tr></thead><tbody><tr><td>2 像素</td><td>6 像素</td><td>12 像素</td></tr><tr><td>1 像素</td><td>3 像素</td><td>6 像素</td></tr></tbody></table></div>
 <div class="takeaway">包围框内的像素只是候选，权重可能很小；框外权重也不是严格为零。截取有限范围用少量精度换取更少的计算。表中未计滤波与取整，实际程序还要处理屏幕边界。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
@@ -265,7 +267,8 @@
       <div class="slide-label"><a href="#preprocess" title="此主题的稳定链接"><span class="page-number">16</span> · 主题链接</a><button class="start-page" data-start="preprocess" aria-label="从16页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
       <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
       <div class="print-page-label">17 / 57 · 从三维到屏幕</div>
-      <div class="slide-body"><h2>每高斯预处理：先做一次，供后面反复使用</h2><div class="table-scroll"><table><thead><tr><th scope="col">输入 / 步骤</th><th scope="col">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>
+      <div class="slide-body"><h2>每高斯预处理：先做一次，供后面反复使用</h2><p>程序还会计算二维协方差的逆矩阵 <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>Q</mi><mo>=</mo><msup><msub><mi>Σ</mi><mi mathvariant="normal">2D</mi></msub><mn>−1</mn></msup></mrow></math>。Q 把像素到中心的位移换算成相对于高斯宽度的距离，供各像素求权重时重复使用。</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">输入 / 步骤</th><th scope="col">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>
 <p>不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条配对记录。</p>
 <div class="takeaway">例如，一个高斯覆盖 100 个像素，三维投影和颜色只需为该相机算一次；100 个像素分别读取结果，计算各自的权重。</div><div class="references">来源与延伸：<a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/forward.cu" target="_blank" rel="noreferrer">官方实现：forward.cu</a> · <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu" target="_blank" rel="noreferrer">官方实现：rasterizer_impl.cu</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
@@ -759,7 +762,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#project-covariance" data-target="project-covariance" aria-expanded="false" aria-controls="desktop-idea-project-covariance">
             <span class="toc-page-number">14</span><span>同一个高斯，移远后屏幕足迹怎样缩小？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-project-covariance" hidden><strong>本页要点</strong><p>程序还会计算二维协方差的逆矩阵 Q=Σ2D−1。Q 把像素到中心的位移换算成相对于高斯宽度的距离，供各像素求权重时重复使用。</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-project-covariance" hidden><strong>本页要点</strong><p>投影得到的屏幕宽度有两个用途：计算各像素处的高斯权重，以及确定需要检查多大的像素区域。相机距离改变时，这两项都会随之变化。</p></div>
         </li><li class="toc-entry" data-slide="jacobian" data-deep="true" hidden>
           <a href="#jacobian" data-target="jacobian" aria-expanded="false" aria-controls="desktop-idea-jacobian">
             <span class="toc-page-number">15</span><span>深入：透视雅可比的每一项从哪里来？<small>深入阅读</small></span>
@@ -1047,7 +1050,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#project-covariance" data-target="project-covariance" aria-expanded="false" aria-controls="mobile-idea-project-covariance">
             <span class="toc-page-number">14</span><span>同一个高斯，移远后屏幕足迹怎样缩小？</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-project-covariance" hidden><strong>本页要点</strong><p>程序还会计算二维协方差的逆矩阵 Q=Σ2D−1。Q 把像素到中心的位移换算成相对于高斯宽度的距离，供各像素求权重时重复使用。</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-project-covariance" hidden><strong>本页要点</strong><p>投影得到的屏幕宽度有两个用途：计算各像素处的高斯权重，以及确定需要检查多大的像素区域。相机距离改变时，这两项都会随之变化。</p></div>
         </li><li class="toc-entry" data-slide="jacobian" data-deep="true" hidden>
           <a href="#jacobian" data-target="jacobian" aria-expanded="false" aria-controls="mobile-idea-jacobian">
             <span class="toc-page-number">15</span><span>深入：透视雅可比的每一项从哪里来？<small>深入阅读</small></span>

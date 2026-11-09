@@ -159,7 +159,7 @@
       "id": "project-covariance",
       "topic": "projection",
       "title": "同一个高斯，移远后屏幕足迹怎样缩小？",
-      "html": "<p>取一个各方向一样宽的三维高斯，中心位于相机光轴上。焦距 f=100 像素，三维标准差 σ=0.04；深度 Z 与 σ 使用相同长度单位。局部投影近似给出：</p>\n<div class=\"equation\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" aria-label=\"屏幕标准差约等于焦距乘三维标准差除以深度\"><mrow><mtext>屏幕标准差</mtext><mo>≈</mo><mfrac><mrow><mi>f</mi><mi>σ</mi></mrow><mrow><mi>Z</mi></mrow></mfrac></mrow></math></div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">深度 Z</th><th scope=\"col\">屏幕标准差</th><th scope=\"col\">二维协方差的对角值</th></tr></thead><tbody><tr><td>2</td><td>2 像素</td><td>4 像素²</td></tr><tr><td>4</td><td>1 像素</td><td>1 像素²</td></tr></tbody></table></div>\n<p>移远一倍，屏幕宽度减半，方差变为四分之一。一般椭球还要考虑朝向，不能都套用这个圆形特例。</p>\n<div class=\"takeaway\">程序还会计算二维协方差的逆矩阵 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>Q</mi><mo>=</mo><msup><msub><mi>Σ</mi><mi mathvariant=\"normal\">2D</mi></msub><mn>−1</mn></msup></mrow></math>。Q 把像素到中心的位移换算成相对于高斯宽度的距离，供各像素求权重时重复使用。</div>",
+      "html": "<p>投影得到的屏幕宽度有两个用途：计算各像素处的高斯权重，以及确定需要检查多大的像素区域。相机距离改变时，这两项都会随之变化。</p>\n<p>取一个各方向一样宽的三维高斯，中心位于相机光轴上。焦距 f=100 像素，三维标准差 σ=0.04；深度 Z 与 σ 使用相同长度单位。局部投影近似给出：</p>\n<div class=\"equation\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" aria-label=\"屏幕标准差约等于焦距乘三维标准差除以深度\"><mrow><mtext>屏幕标准差</mtext><mo>≈</mo><mfrac><mrow><mi>f</mi><mi>σ</mi></mrow><mrow><mi>Z</mi></mrow></mfrac></mrow></math></div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">深度 Z</th><th scope=\"col\">屏幕标准差</th><th scope=\"col\">二维协方差的对角值</th><th scope=\"col\">离投影中心 2 像素处的权重</th></tr></thead><tbody><tr><td>2</td><td>2 像素</td><td>4 像素²</td><td>约 0.607</td></tr><tr><td>4</td><td>1 像素</td><td>1 像素²</td><td>约 0.135</td></tr></tbody></table></div>\n<p>距离加倍，屏幕宽度减半，方差变为四分之一。同样离投影中心 2 像素，原来只相隔一个标准差，现在相隔两个，权重就从约 0.607 降到 0.135。乘上相同的不透明度参数后，该位置的有效不透明度也会减小，改变像素颜色的合成结果。</p>\n<p>计算范围也随之缩小。例如，用屏幕标准差的 3 倍作为检查半径，半径会从 6 像素缩到 3 像素。需要检查的像素区域变小，与这个区域相交的 Tile 也可能减少，因此高斯数量不变时，渲染工作量仍会变化。一般椭球还要考虑朝向，这里的数值只对应圆形特例。</p>",
       "refs": [
         "paper",
         "forward"
@@ -180,7 +180,7 @@
       "id": "finite-footprint",
       "topic": "projection",
       "title": "无限的高斯，有限的候选区域",
-      "html": "<p>高斯的权重没有硬边界，但离中心足够远时很小。为减少检查，取屏幕椭圆最宽方向约 3 倍标准差作为候选半径，再用一个与屏幕坐标轴对齐的方框围住这个范围，这个方框称为<strong>包围框</strong>。</p>\n<p>与包围框相交的图像块称为这个高斯的<strong>候选 Tile</strong>。先检查矩形是否相交，可以快速排除远处的图像块；真正计算像素颜色时，仍按高斯公式求该像素处的有效不透明度。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">屏幕标准差（圆形例子）</th><th scope=\"col\">3 倍标准差的半径</th><th scope=\"col\">包围框边长</th></tr></thead><tbody><tr><td>2 像素</td><td>6 像素</td><td>12 像素</td></tr><tr><td>1 像素</td><td>3 像素</td><td>6 像素</td></tr></tbody></table></div>\n<div class=\"takeaway\">包围框内的像素只是候选，权重可能很小；框外权重也不是严格为零。截取有限范围用少量精度换取更少的计算。表中未计滤波与取整，实际程序还要处理屏幕边界。</div>",
+      "html": "<p>高斯的权重没有硬边界，但离中心足够远时很小。为减少检查，取屏幕椭圆最宽方向约 3 倍标准差作为候选半径，再用一个与屏幕坐标轴对齐的方框围住这个范围，这个方框称为<strong>包围框</strong>。</p>\n<p>与包围框相交的图像块称为这个高斯的<strong>候选 Tile</strong>。先检查矩形是否相交，可以快速排除远处的图像块；真正计算像素颜色时，仍按高斯公式求该像素处的有效不透明度。</p>\n<p>沿用光轴上圆形高斯的投影结果：深度从 2 增至 4，屏幕标准差从 2 像素减至 1 像素，对应的候选范围为：</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">屏幕标准差（圆形例子）</th><th scope=\"col\">3 倍标准差的半径</th><th scope=\"col\">包围框边长</th></tr></thead><tbody><tr><td>2 像素</td><td>6 像素</td><td>12 像素</td></tr><tr><td>1 像素</td><td>3 像素</td><td>6 像素</td></tr></tbody></table></div>\n<div class=\"takeaway\">包围框内的像素只是候选，权重可能很小；框外权重也不是严格为零。截取有限范围用少量精度换取更少的计算。表中未计滤波与取整，实际程序还要处理屏幕边界。</div>",
       "refs": [
         "forward"
       ],
@@ -190,7 +190,7 @@
       "id": "preprocess",
       "topic": "projection",
       "title": "每高斯预处理：先做一次，供后面反复使用",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">输入 / 步骤</th><th scope=\"col\">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>\n<p>不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条配对记录。</p>\n<div class=\"takeaway\">例如，一个高斯覆盖 100 个像素，三维投影和颜色只需为该相机算一次；100 个像素分别读取结果，计算各自的权重。</div>",
+      "html": "<p>程序还会计算二维协方差的逆矩阵 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>Q</mi><mo>=</mo><msup><msub><mi>Σ</mi><mi mathvariant=\"normal\">2D</mi></msub><mn>−1</mn></msup></mrow></math>。Q 把像素到中心的位移换算成相对于高斯宽度的距离，供各像素求权重时重复使用。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">输入 / 步骤</th><th scope=\"col\">输出</th></tr></thead><tbody><tr><td>中心与当前相机</td><td>可见性判断、屏幕中心、深度</td></tr><tr><td>尺度、旋转、相机</td><td>二维协方差与逆矩阵</td></tr><tr><td>方向与 SH 系数</td><td>当前视角颜色</td></tr><tr><td>屏幕足迹</td><td>包围框、候选 Tile 数</td></tr></tbody></table></div>\n<p>不同高斯的这些计算大体独立，可以按高斯并行。后续每个像素无需重新计算这个高斯的三维投影。不可见或没有候选 Tile 的高斯产生零条配对记录。</p>\n<div class=\"takeaway\">例如，一个高斯覆盖 100 个像素，三维投影和颜色只需为该相机算一次；100 个像素分别读取结果，计算各自的权重。</div>",
       "refs": [
         "forward",
         "pipeline"
