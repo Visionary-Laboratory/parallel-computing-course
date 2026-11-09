@@ -72,7 +72,12 @@ def build(destination):
             b+=f'<circle cx="{x}" cy="{y}" r="4" fill="{GREEN}"/>'
             b+=ellipse(x+400,y,34,22,-20,GREEN,.17)
     b+=arrow(355,150,420,150);figs['point-splat']=wrap(b,285)
-    b=box(25,85,150,85,'世界坐标','μw')+arrow(180,128,255,128)+box(265,85,190,85,'相机坐标','Rc μw + tc')+arrow(460,128,535,128)+box(545,85,215,85,'屏幕坐标','(u, v)')+text(400,220,'先改变坐标系，再除以深度',18,MUTED,'middle');figs['camera']=wrap(b,265)
+    b=box(25,85,190,85,'中心的世界坐标')+box(305,85,190,85,'中心的相机坐标')+box(585,85,190,85,'中心的屏幕坐标','(u, v)')
+    for x,index in [(120,'w'),(400,'c')]:
+        b+=f'<text x="{x}" y="145" font-family="Georgia,Times New Roman,serif" font-size="25" fill="{GREEN}" text-anchor="middle">μ<tspan dy="6" font-size="16">{index}</tspan></text>'
+    b+=arrow(220,128,295,128)+text(258,108,'旋转、平移',13,MUTED,'middle')
+    b+=arrow(500,128,575,128)+text(538,108,'透视投影',13,MUTED,'middle')
+    b+=text(400,220,'同一个高斯中心，用三种坐标表示',18,MUTED,'middle');figs['camera']=wrap(b,265)
     b=ellipse(170,145,65,95,-35,GREEN)+ellipse(170,145,65,25,0,GREEN,.06)+text(170,270,'三维尺度 + 方向',18,INK,'middle')
     b+=arrow(265,110,400,78)+arrow(265,185,400,215)
     b+=ellipse(530,85,100,27,12,BLUE)+text(680,90,'视角 A',17)

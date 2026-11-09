@@ -192,9 +192,11 @@
       <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
       <div class="print-page-label">11 / 57 · 从三维到屏幕</div>
       <div class="slide-body"><h2>先把中心变换到相机坐标系</h2><figure><a href="../../materials/lectures/3dgs/camera.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/camera.svg" width="800" height="265" alt="世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。" loading="lazy"></a><figcaption>世界中的高斯中心先变换到相机坐标，再通过透视投影映射到屏幕；相机朝 +Z 的约定仅用于本讲算例。</figcaption></figure>
+<p>μ（希腊字母 mu）表示高斯中心。下标 w 表示世界坐标系，c 表示相机坐标系；<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>μ</mi><mi mathvariant="normal">w</mi></msub></math> 和 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>μ</mi><mi mathvariant="normal">c</mi></msub></math> 都是三维向量，描述的是同一个中心在不同坐标系中的位置。</p>
 <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="相机坐标下的中心等于相机旋转乘世界坐标中心再加平移"><mrow><msub><mi>μ</mi><mi mathvariant="normal">c</mi></msub><mo>=</mo><msub><mi>R</mi><mi mathvariant="normal">c</mi></msub><msub><mi>μ</mi><mi mathvariant="normal">w</mi></msub><mo>+</mo><msub><mi>t</mi><mi mathvariant="normal">c</mi></msub></mrow></math></div>
-<p>世界坐标描述场景中的固定位置；相机坐标描述相对当前相机的位置。用 Z_c 表示沿相机前向的深度。相机动了，同一高斯的相机坐标与排序深度就可能改变。</p>
-<div class="takeaway">相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</div></div>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>R</mi><mi mathvariant="normal">c</mi></msub></math> 是把世界坐标方向转换到相机坐标方向的 3×3 旋转矩阵；<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>t</mi><mi mathvariant="normal">c</mi></msub></math> 是该坐标变换的三维平移向量。先旋转，再加上平移，就得到中心的相机坐标。</p>
+<p>相机坐标的第三个分量 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>Z</mi><mi mathvariant="normal">c</mi></msub></math> 表示沿相机前向的深度。相机动了，同一高斯的相机坐标与排序深度就可能改变。</p>
+<div class="takeaway">这里变换的是坐标表示，并没有移动场景中的高斯。同一帧的所有高斯共用相同的相机变换；相机旋转 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>R</mi><mi mathvariant="normal">c</mi></msub></math> 与描述高斯自身朝向的旋转 R 是不同的矩阵。</div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="perspective" data-topic="projection" data-label="12" tabindex="-1">
       <div class="slide-label"><a href="#perspective" title="此主题的稳定链接"><span class="page-number">12</span> · 主题链接</a><button class="start-page" data-start="perspective" aria-label="从12页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -721,7 +723,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#camera-coordinates" data-target="camera-coordinates" aria-expanded="false" aria-controls="desktop-idea-camera-coordinates">
             <span class="toc-page-number">11</span><span>先把中心变换到相机坐标系</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-camera-coordinates" hidden><strong>本页要点</strong><p>相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-camera-coordinates" hidden><strong>本页要点</strong><p>这里变换的是坐标表示，并没有移动场景中的高斯。同一帧的所有高斯共用相同的相机变换；相机旋转 Rc 与描述高斯自身朝向的旋转 R 是不同的矩阵。</p></div>
         </li><li class="toc-entry" data-slide="perspective" data-deep="false">
           <a href="#perspective" data-target="perspective" aria-expanded="false" aria-controls="desktop-idea-perspective">
             <span class="toc-page-number">12</span><span>透视投影：越远，屏幕位移越小</span>
@@ -1009,7 +1011,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#camera-coordinates" data-target="camera-coordinates" aria-expanded="false" aria-controls="mobile-idea-camera-coordinates">
             <span class="toc-page-number">11</span><span>先把中心变换到相机坐标系</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-camera-coordinates" hidden><strong>本页要点</strong><p>相机旋转 R_c 与高斯自身旋转 R 是不同的矩阵；实际工程还要统一行列向量、坐标轴与矩阵存储约定。</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-camera-coordinates" hidden><strong>本页要点</strong><p>这里变换的是坐标表示，并没有移动场景中的高斯。同一帧的所有高斯共用相同的相机变换；相机旋转 Rc 与描述高斯自身朝向的旋转 R 是不同的矩阵。</p></div>
         </li><li class="toc-entry" data-slide="perspective" data-deep="false">
           <a href="#perspective" data-target="perspective" aria-expanded="false" aria-controls="mobile-idea-perspective">
             <span class="toc-page-number">12</span><span>透视投影：越远，屏幕位移越小</span>
