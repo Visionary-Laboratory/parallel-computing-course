@@ -77,7 +77,7 @@ def build(destination):
         b+=f'<text x="{x}" y="145" font-family="Georgia,Times New Roman,serif" font-size="25" fill="{GREEN}" text-anchor="middle">μ<tspan dy="6" font-size="16">{index}</tspan></text>'
     b+=arrow(220,128,295,128)+text(258,108,'旋转、平移',13,MUTED,'middle')
     b+=arrow(500,128,575,128)+text(538,108,'透视投影',13,MUTED,'middle')
-    b+=text(400,220,'同一个高斯中心，用三种坐标表示',18,MUTED,'middle');figs['camera']=wrap(b,265)
+    b+=text(400,220,'先求出中心相对相机的位置，再计算它落在屏幕上的位置',18,MUTED,'middle');figs['camera']=wrap(b,265)
     b=ellipse(170,145,65,95,-35,GREEN)+ellipse(170,145,65,25,0,GREEN,.06)+text(170,270,'三维尺度 + 方向',18,INK,'middle')
     b+=arrow(265,110,400,78)+arrow(265,185,400,215)
     b+=ellipse(530,85,100,27,12,BLUE)+text(680,90,'视角 A',17)
