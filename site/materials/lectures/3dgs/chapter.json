@@ -89,7 +89,7 @@
       "id": "gaussian-record",
       "topic": "representation",
       "title": "一个三维高斯，需要保存哪些参数？",
-      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">参数</th><th scope=\"col\">含义</th><th scope=\"col\">影响图像的方式</th></tr></thead><tbody><tr><td>中心 μ ∈ ℝ³</td><td>在场景中的位置</td><td>投影中心与深度</td></tr><tr><td>尺度 s ∈ ℝ³</td><td>三个主轴方向的大小，各分量为正</td><td>投影足迹的大小与长短比例</td></tr><tr><td>旋转四元数 q ∈ ℝ⁴</td><td>高斯的朝向，使用时归一化</td><td>投影足迹的方向与形状</td></tr><tr><td>不透明度 o ∈ ℝ（标量，1 个分量）</td><td>取值范围 [0,1]，控制贡献的强弱</td><td>局部 alpha 与遮挡</td></tr><tr><td>颜色参数 / SH 系数</td><td>随观察方向变化的外观</td><td>该相机下的 RGB</td></tr></tbody></table></div>\n<p>旋转用四元数存储，共有 4 个分量；使用时归一化为单位四元数。归一化后的四元数满足单位长度约束，描述的三维旋转仍只有 3 个自由度。</p>\n<p>这是一份显式参数表。渲染时反复读取它；训练时更新它。高斯数量也可以随训练改变。</p>\n<div class=\"takeaway\">高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。</div>",
+      "html": "<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">参数</th><th scope=\"col\">含义</th><th scope=\"col\">影响图像的方式</th></tr></thead><tbody><tr><td>中心 μ ∈ ℝ³</td><td>在场景中的位置</td><td>投影中心与深度</td></tr><tr><td>尺度 s ∈ ℝ³</td><td>三个主轴方向的大小，各分量为正</td><td>投影足迹的大小与长短比例</td></tr><tr><td>旋转四元数 q ∈ ℝ⁴</td><td>高斯的朝向，使用时归一化</td><td>投影足迹的方向与形状</td></tr><tr><td>不透明度 o ∈ ℝ（标量，1 个分量）</td><td>取值范围 [0,1]，控制贡献的强弱</td><td>有效不透明度 α 与遮挡</td></tr><tr><td>颜色参数 / SH 系数</td><td>随观察方向变化的外观</td><td>该相机下的 RGB</td></tr></tbody></table></div>\n<p>旋转用四元数存储，共有 4 个分量；使用时归一化为单位四元数。归一化后的四元数满足单位长度约束，描述的三维旋转仍只有 3 个自由度。</p>\n<p>这是一份显式参数表。渲染时反复读取它；训练时更新它。高斯数量也可以随训练改变。</p>\n<div class=\"takeaway\">高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。</div>",
       "refs": [
         "paper",
         "model"
@@ -111,7 +111,7 @@
       "id": "opacity",
       "topic": "representation",
       "title": "不透明度与高斯权重，是两个不同的量",
-      "html": "<div class=\"equation\" role=\"math\">αᵢ(p) = oᵢ · gᵢ(p)</div>\n<p>oᵢ 是这个高斯的不透明度，是取值在 [0,1] 内的标量，每个高斯只有 1 个值；gᵢ(p) 随像素位置变化；αᵢ(p) 才是它在该像素上的局部 alpha。中心附近 α 较大，边缘较小。</p>\n<p>原始实现训练时保存一个未约束的实数，再通过 sigmoid 函数映射为渲染使用的不透明度 o；映射前后都只有 1 个分量。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">假设 o = 0.8</th><th scope=\"col\">中心 g=1</th><th scope=\"col\">较远处 g=0.25</th></tr></thead><tbody><tr><td>局部 alpha</td><td>0.8</td><td>0.2</td></tr></tbody></table></div>\n<div class=\"takeaway\">这些 alpha 不需要在所有高斯之间归一化到总和为 1。后面的透射率会决定前后遮挡的权重。</div>",
+      "html": "<div class=\"equation\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" aria-label=\"高斯 i 在像素 p 处的有效不透明度，等于其不透明度参数乘以该像素处的高斯权重\"><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><msub><mi>o</mi><mi>i</mi></msub><mo>·</mo><msub><mi>g</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo></mrow></math></div>\n<p>oᵢ 是每个高斯保存的一个不透明度参数，取值在 [0,1] 内；gᵢ(p) 是投影后的高斯在像素 p 处的权重，中心为 1，远离中心逐渐减小。两者相乘得到 <strong>αᵢ(p)，即该高斯在像素 p 处的有效不透明度</strong>：它决定这个位置上，该高斯的颜色与后方颜色按什么比例混合。</p>\n<p>例如 αᵢ(p)=0.2 时，将这个高斯与它后方已经合成的颜色混合，结果是 <strong>20% 的该高斯颜色 + 80% 的后方颜色</strong>。α=0 表示完全透过后方颜色；α=1 表示完全挡住后方颜色。若前面还有其他高斯，它们还会进一步遮挡这里的颜色贡献。</p>\n<p>原始实现训练时保存一个未约束的实数，再通过 sigmoid 函数映射为渲染使用的不透明度 o；映射前后都只有 1 个分量。</p>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">假设 o = 0.8</th><th scope=\"col\">中心 g=1</th><th scope=\"col\">较远处 g=0.25</th></tr></thead><tbody><tr><td>有效不透明度 α</td><td>0.8</td><td>0.2</td></tr><tr><td>后方颜色的透过比例 1−α</td><td>20%</td><td>80%</td></tr></tbody></table></div>\n<div class=\"takeaway\">同一个高斯的 o 不随像素位置变化，但有效不透明度 α 会变化：中心遮挡强，边缘遮挡弱。不同高斯的 α 不需要加起来等于 1；后面将按深度顺序合成它们。</div>",
       "refs": [
         "paper",
         "model"
@@ -200,7 +200,7 @@
     {
       "id": "evaluate-alpha",
       "topic": "compositing",
-      "title": "算一次局部 alpha：同样离中心 2 像素，为何不同？",
+      "title": "算一次有效不透明度 α：同样离中心 2 像素，为何不同？",
       "html": "<p>独立的二维算例：椭圆未旋转，横向标准差为 2 像素，纵向为 1 像素，不透明度 o=0.8。δ 是像素与中心的坐标差。</p>\n<div class=\"equation\" role=\"math\">d² = (δₓ/2)² + δᵧ²　　g=exp(−d²/2)　　α=0.8g</div>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">相对位置 δ</th><th scope=\"col\">按宽度缩放后的 d²</th><th scope=\"col\">高斯权重 g</th><th scope=\"col\">局部 α</th></tr></thead><tbody><tr><td>(0,0)</td><td>0</td><td>1</td><td>0.8</td></tr><tr><td>(2,0)</td><td>1</td><td>≈0.6065</td><td>≈0.4852</td></tr><tr><td>(0,2)</td><td>4</td><td>≈0.1353</td><td>≈0.1083</td></tr></tbody></table></div>\n<p>沿横轴走 2 像素只走了一个标准差，沿纵轴却走了两个。Q=diag(1/4,1) 正是在记录这两个方向的缩放；旋转椭圆需要再计入方向关系。</p>\n<div class=\"takeaway\">同一高斯、不同像素，alpha 不同。后面的红绿蓝手算直接给定某一个像素处的 alpha，以便把注意力放到前后合成。</div>",
       "refs": [
         "forward"
@@ -221,7 +221,7 @@
       "id": "blend-demo",
       "topic": "compositing",
       "title": "追踪一个像素：红、绿、蓝怎样叠加？",
-      "html": "<div class=\"demo\" data-demo=\"blend\"></div><p class=\"caption\">教学算例直接给定该像素的局部 alpha：G₀=0.5、G₂=0.25、G₁=0.5。它们不是整幅图共享的常数。</p>\n<p>黑色背景，从前向后为 G₀（红）→ G₂（绿）→ G₁（蓝）。逐步观察每个颜色分量和剩余 T。</p>\n<div class=\"takeaway\">多个高斯共同影响一个像素，但它们的贡献权重不是简单平均。</div>",
+      "html": "<div class=\"demo\" data-demo=\"blend\"></div><p class=\"caption\">教学算例直接给定该像素的有效不透明度 α：G₀=0.5、G₂=0.25、G₁=0.5。它们不是整幅图共享的常数。</p>\n<p>黑色背景，从前向后为 G₀（红）→ G₂（绿）→ G₁（蓝）。逐步观察每个颜色分量和剩余 T。</p>\n<div class=\"takeaway\">多个高斯共同影响一个像素，但它们的贡献权重不是简单平均。</div>",
       "refs": [],
       "deep": false
     },
@@ -385,7 +385,7 @@
       "id": "render-pseudocode",
       "topic": "execution",
       "title": "把加载、顺序合成与两次交接接起来",
-      "html": "<p>教学契约：Block=(16,16)，t、x、y 沿用前页，pixel=(x,y)；[begin,end) 来自 ranges[tile_id]，shared 有 256 个参数槽，epsilon 为统一终止阈值。alpha_at 用屏幕形状求该像素的局部 alpha，假设结果在 [0,1]。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// 教学伪代码：保留 CUDA 的索引与块内同步，省略类型声明\nbool done = !inside;\nC = 0; T = 1;\nfor (int base = begin; base &lt; end; base += 256) {\n    if (__syncthreads_count(done) == 256) break;\n    int valid = min(256, end - base);\n    if (t &lt; valid)\n        shared[t] = projected[sorted_ids[base + t]];\n    __syncthreads();\n    if (!done) {\n        for (int j = 0; j &lt; valid; ++j) {\n            g = shared[j];\n            a = alpha_at(g, pixel);\n            C += T * a * g.color;\n            T *= (1 - a);\n            if (T &lt; epsilon) { done = true; break; }\n        }\n    }\n    __syncthreads(); // 所有线程读完后，下一批才可覆盖\n}\nif (inside) image[pixel] = C + T * background;</code></pre></div>\n<p>__syncthreads_count(done) 是全块同步并统计 done 的人数，所有线程得到同一个计数。只有 256 人都结束才统一退出；空范围直接跳过循环，输出背景。</p>\n<div class=\"takeaway\">这是教学循环：纳入当前项后再检查 T，省略 alpha 裁剪与微小贡献跳过。官方基线在阈值附近的处理次序不同，也不把所有 RGB 都装入 shared；本讲不要求两者逐位相同。</div>",
+      "html": "<p>教学契约：Block=(16,16)，t、x、y 沿用前页，pixel=(x,y)；[begin,end) 来自 ranges[tile_id]，shared 有 256 个参数槽，epsilon 为统一终止阈值。alpha_at 用屏幕形状求该像素的有效不透明度 α，假设结果在 [0,1]。</p>\n<div class=\"code-block\"><div class=\"code-label\"><span>教学伪代码</span><button class=\"copy-code\">复制代码</button></div><pre><code>// 教学伪代码：保留 CUDA 的索引与块内同步，省略类型声明\nbool done = !inside;\nC = 0; T = 1;\nfor (int base = begin; base &lt; end; base += 256) {\n    if (__syncthreads_count(done) == 256) break;\n    int valid = min(256, end - base);\n    if (t &lt; valid)\n        shared[t] = projected[sorted_ids[base + t]];\n    __syncthreads();\n    if (!done) {\n        for (int j = 0; j &lt; valid; ++j) {\n            g = shared[j];\n            a = alpha_at(g, pixel);\n            C += T * a * g.color;\n            T *= (1 - a);\n            if (T &lt; epsilon) { done = true; break; }\n        }\n    }\n    __syncthreads(); // 所有线程读完后，下一批才可覆盖\n}\nif (inside) image[pixel] = C + T * background;</code></pre></div>\n<p>__syncthreads_count(done) 是全块同步并统计 done 的人数，所有线程得到同一个计数。只有 256 人都结束才统一退出；空范围直接跳过循环，输出背景。</p>\n<div class=\"takeaway\">这是教学循环：纳入当前项后再检查 T，省略 alpha 裁剪与微小贡献跳过。官方基线在阈值附近的处理次序不同，也不把所有 RGB 都装入 shared；本讲不要求两者逐位相同。</div>",
       "refs": [
         "forward"
       ],
@@ -543,7 +543,7 @@
       "id": "summary",
       "topic": "performance",
       "title": "把整帧放回一起：表示、组织与执行",
-      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。\" loading=\"lazy\"></a><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">应该能够解释</th><th scope=\"col\">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、局部 alpha、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>配对记录增多、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>\n<div class=\"takeaway\">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。\" loading=\"lazy\"></a><figcaption>从高斯参数到屏幕像素：每个阶段改变数据的形式，也改变并行工作的单位。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">应该能够解释</th><th scope=\"col\">关键回答</th></tr></thead><tbody><tr><td>图像怎样形成？</td><td>投影足迹、有效不透明度 α、按深度合成</td></tr><tr><td>为什么需要前缀和与排序？</td><td>可变数量的唯一写址、Tile 分组与前后顺序</td></tr><tr><td>GPU 怎样协作？</td><td>一 Tile 一 Block，像素私有 C/T，批量 shared 复用</td></tr><tr><td>为什么有时不快？</td><td>配对记录增多、冗余检查、长尾、同步与组织成本</td></tr></tbody></table></div>\n<div class=\"takeaway\">最后的自检：沿 Tile 5 的 G₀ → G₂ → G₁，说明每条记录从哪里来、哪个线程读、哪个线程写结果。</div>",
       "refs": [],
       "deep": false
     },
