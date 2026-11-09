@@ -1,0 +1,20 @@
+{
+  "gaussians": 157729,
+  "levels": [
+    29,
+    146,
+    605,
+    2460,
+    9843,
+    39450,
+    157729
+  ],
+  "width": 480,
+  "height": 312,
+  "duration": 44,
+  "fps": 24,
+  "psnr_db": 26.556,
+  "source": "garden-0.jpg",
+  "source_sha256": "619c90be4594ea01aa774e0c2af97d750f3ac155eec78967bdce223189451f00",
+  "method": "Greedy multiscale 2D Gaussian source-over fitting; target shown separately, never overlaid on reconstruction."
+}

@@ -134,7 +134,17 @@
       <div class="slide-body"><h2>二维高斯：拉长、旋转，改变覆盖形状</h2><div class="demo" data-demo="ellipse"></div><p class="caption">调节两个尺度、角度和不透明度。图像按二维高斯公式计算；虚线为 2σ 等值线，图示不代表 GPU 性能。</p>
 <p>两个方向尺度相同，等值线是圆；尺度不同，就是椭圆。旋转只改变方向，不改变两个主轴尺度。</p>
 <p>先把两个尺度调成相同的值，再只增大主轴尺度，最后转动椭圆。观察：离中心同样远的两个点，沿长轴方向的贡献可以更大。</p>
-<div class="takeaway">高斯关心的是“相对自身宽度走了多远”。Σ（协方差）把各方向的宽度与朝向记在一起；它不是给所有方向使用同一个半径。</div></div>
+<div class="takeaway">高斯关心的是“相对自身宽度走了多远”。Σ（协方差）把各方向的宽度与朝向记在一起；它不是给所有方向使用同一个半径。</div>
+<section class="gaussian-film" aria-labelledby="gaussian-film-title">
+      <h3 id="gaussian-film-title">从一个高斯，到许多高斯组成的图像</h3>
+      <div class="gaussian-film-player"><video controls playsinline preload="metadata" poster="../../materials/lectures/3dgs/media/gaussian-build-poster.jpg" src="../../materials/lectures/3dgs/media/gaussian-build.mp4" aria-label="44秒动画：依次改变一个高斯的主轴尺度、次轴尺度、旋转和不透明度，再逐步叠加高斯，拟合 Garden 照片"></video></div>
+      <div class="gaussian-film-controls" role="group" aria-label="跳转到动画阶段">
+        <button data-film-time="0">主轴尺度 · 0:00</button><button data-film-time="4">次轴尺度 · 0:04</button><button data-film-time="8">旋转 · 0:08</button><button data-film-time="12">不透明度 · 0:12</button><button data-film-time="18">叠加成图 · 0:18</button><button data-film-time="40">最终结果 · 0:40</button>
+      </div>
+      <p class="gaussian-film-error" role="status" hidden>动画未能加载，请刷新本地页面后重试。</p>
+      <figure class="gaussian-film-print"><img src="../../materials/lectures/3dgs/media/gaussian-build-stages.jpg" alt="动画关键帧：一个高斯、128个高斯、3000个高斯、最终高斯合成图像" loading="lazy"><figcaption>从局部柔和覆盖，到许多高斯共同组成图像。</figcaption></figure>
+      <p class="caption">前半段每次只改变一个属性；后半段持续加入带有不同位置、形状与颜色的高斯。左侧为实际合成结果，右侧为目标照片。这是二维图像拟合演示；三维高斯需要先投影到成像平面，再进行合成。</p>
+    </section></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="gaussian-record" data-topic="representation" data-label="07" tabindex="-1">
       <div class="slide-label"><a href="#gaussian-record" title="此主题的稳定链接"><span class="page-number">07</span> · 主题链接</a><button class="start-page" data-start="gaussian-record" aria-label="从07页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>

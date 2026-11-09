@@ -14,7 +14,8 @@ class Audit(HTMLParser):
         a=dict(attrs)
         if 'id' in a:self.ids.append(a['id'])
         if tag=='a':self.links.append(a.get('href',''))
-        if tag in ('script','img'):self.assets.append(a.get('src',''))
+        if tag in ('script','img','video'):self.assets.append(a.get('src',''))
+        if tag=='video' and a.get('poster'):self.assets.append(a['poster'])
         if tag=='link':self.assets.append(a.get('href',''))
         if 'lecture-slide' in a.get('class','').split():
             if 'deep' in a.get('class','').split():self.deep+=1

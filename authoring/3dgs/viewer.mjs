@@ -201,6 +201,19 @@ $$('.scene-video').forEach(figure=>{
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)$$('video').forEach(v=>v.pause());});
 window.addEventListener('beforeprint',()=>$$('video').forEach(v=>v.pause()));
+$$('.gaussian-film').forEach(section=>{
+  const video=$('video',section),error=$('.gaussian-film-error',section);
+  let pendingTime=null;
+  async function seek(time){
+    if(video.readyState<1){pendingTime=time;video.load();return;}
+    video.currentTime=time;
+    try{await video.play();error.hidden=true;}catch{error.textContent='点击播放器中的播放按钮继续观看。';error.hidden=false;}
+  }
+  $$('[data-film-time]',section).forEach(button=>button.addEventListener('click',()=>seek(Number(button.dataset.filmTime))));
+  video.addEventListener('loadedmetadata',()=>{if(pendingTime!==null){const time=pendingTime;pendingTime=null;seek(time);}});
+  video.addEventListener('error',()=>{error.textContent='动画未能加载，请刷新本地页面后重试。';error.hidden=false;});
+  new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)video.pause();}).observe(video);
+});
 async function preparePrint(){
   const images=$$('img');images.forEach(img=>img.loading='eager');
   await Promise.allSettled([document.fonts.ready,...images.map(img=>img.decode())]);
