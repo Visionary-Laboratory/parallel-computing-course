@@ -176,7 +176,6 @@
       <div class="slide-body"><h2>不透明度与高斯权重，是两个不同的量</h2><div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="高斯 i 在像素 p 处的有效不透明度，等于其不透明度参数乘以该像素处的高斯权重"><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><msub><mi>o</mi><mi>i</mi></msub><mo>·</mo><msub><mi>g</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo></mrow></math></div>
 <p>oᵢ 是每个高斯保存的一个不透明度参数，取值在 [0,1] 内；gᵢ(p) 是投影后的高斯在像素 p 处的权重，中心为 1，远离中心逐渐减小。两者相乘得到 <strong>αᵢ(p)，即该高斯在像素 p 处的有效不透明度</strong>：它决定这个位置上，该高斯的颜色与后方颜色按什么比例混合。</p>
 <p>例如 αᵢ(p)=0.2 时，将这个高斯与它后方已经合成的颜色混合，结果是 <strong>20% 的该高斯颜色 + 80% 的后方颜色</strong>。α=0 表示完全透过后方颜色；α=1 表示完全挡住后方颜色。若前面还有其他高斯，它们还会进一步遮挡这里的颜色贡献。</p>
-<p>原始实现训练时保存一个未约束的实数，再通过 sigmoid 函数映射为渲染使用的不透明度 o；映射前后都只有 1 个分量。</p>
 <div class="table-scroll"><table><thead><tr><th scope="col">假设 o = 0.8</th><th scope="col">中心 g=1</th><th scope="col">较远处 g=0.25</th></tr></thead><tbody><tr><td>有效不透明度 α</td><td>0.8</td><td>0.2</td></tr><tr><td>后方颜色的透过比例 1−α</td><td>20%</td><td>80%</td></tr></tbody></table></div>
 <div class="takeaway">同一个高斯的 o 不随像素位置变化，但有效不透明度 α 会变化：中心遮挡强，边缘遮挡弱。不同高斯的 α 不需要加起来等于 1；后面将按深度顺序合成它们。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
@@ -230,7 +229,7 @@
       <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
       <div class="print-page-label">15 / 57 · 从三维到屏幕 · 深入阅读</div>
       <div class="slide-body"><h2>深入：透视雅可比的每一项从哪里来？</h2><div class="equation" role="math">S = diag(sₓ,sᵧ,s_z)，Σ = R S Sᵀ Rᵀ</div>
-<p>正尺度与有效旋转 R 给出正定协方差。R 可由归一化四元数得到；训练时可用 exp 把无约束变量变为正尺度。</p>
+<p>正尺度与有效旋转 R 给出正定协方差。R 可由归一化四元数得到。</p>
 <div class="equation" role="math">Σ_c = R_c Σ R_cᵀ　　Σ₂D ≈ J Σ_c Jᵀ</div>
 <p>相机旋转 R_c 先改变形状的观察方向；2×3 的雅可比 J 表示相机坐标改变一点时，屏幕坐标改变多少。结果是 2×2 的屏幕协方差。</p>
 <div class="equation" role="math">J = [ fₓ/Z　 0　 −fₓX/Z² ;　0　 fᵧ/Z　 −fᵧY/Z² ]</div>
