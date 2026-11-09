@@ -55,7 +55,7 @@
       "id": "route",
       "topic": "task",
       "title": "沿一帧图像，串起前面学过的并行思想",
-      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。\" loading=\"lazy\"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">已有知识</th><th scope=\"col\">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>\n<div class=\"takeaway\">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div>",
+      "html": "<figure><a href=\"../../materials/lectures/3dgs/pipeline.svg\" target=\"_blank\" rel=\"noopener\" title=\"打开原图\"><img src=\"../../materials/lectures/3dgs/pipeline.svg\" width=\"800\" height=\"195\" alt=\"高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。\" loading=\"lazy\"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>\n<div class=\"table-scroll\"><table><thead><tr><th scope=\"col\">已有知识</th><th scope=\"col\">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>\n<div class=\"takeaway\">本讲将分析：不同高斯的投影如何并行计算，前后遮挡为何要求按顺序合成，以及 Tile 分组如何减少像素计算、同时增加配对记录和排序开销。</div>",
       "refs": [],
       "deep": false
     },

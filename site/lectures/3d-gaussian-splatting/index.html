@@ -104,7 +104,7 @@
       <div class="print-page-label">03 / 57 · 从照片到新视角</div>
       <div class="slide-body"><h2>沿一帧图像，串起前面学过的并行思想</h2><figure><a href="../../materials/lectures/3dgs/pipeline.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/pipeline.svg" width="800" height="195" alt="高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。" loading="lazy"></a><figcaption>高斯参数 → 投影 → 计数与前缀和 → 生成配对记录 → 排序与分段 → Tile 渲染 → 图像。</figcaption></figure>
 <div class="table-scroll"><table><thead><tr><th scope="col">已有知识</th><th scope="col">在本讲解决什么问题</th></tr></thead><tbody><tr><td>第三讲：计数、前缀和、唯一地址</td><td>一个高斯对应多个 Tile，怎样并行写出可变数量的记录？</td></tr><tr><td>第五讲：线程索引与输出所有权</td><td>由哪个线程写一个像素？</td></tr><tr><td>第六讲：shared、同步与复用</td><td>相邻像素怎样共用一批高斯参数？</td></tr></tbody></table></div>
-<div class="takeaway">一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</div></div>
+<div class="takeaway">本讲将分析：不同高斯的投影如何并行计算，前后遮挡为何要求按顺序合成，以及 Tile 分组如何减少像素计算、同时增加配对记录和排序开销。</div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><h2 class="topic-heading">用高斯表示场景</h2><section class="lecture-slide" id="point-to-splat" data-topic="representation" data-label="04" tabindex="-1">
       <div class="slide-label"><a href="#point-to-splat" title="此主题的稳定链接"><span class="page-number">04</span> · 主题链接</a><button class="start-page" data-start="point-to-splat" aria-label="从04页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -658,7 +658,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#route" data-target="route" aria-expanded="false" aria-controls="desktop-idea-route">
             <span class="toc-page-number">03</span><span>沿一帧图像，串起前面学过的并行思想</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-route" hidden><strong>本页要点</strong><p>一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-route" hidden><strong>本页要点</strong><p>本讲将分析：不同高斯的投影如何并行计算，前后遮挡为何要求按顺序合成，以及 Tile 分组如何减少像素计算、同时增加配对记录和排序开销。</p></div>
         </li><li class="toc-entry" data-slide="point-to-splat" data-deep="false">
           <a href="#point-to-splat" data-target="point-to-splat" aria-expanded="false" aria-controls="desktop-idea-point-to-splat">
             <span class="toc-page-number">04</span><span>一个点的位置，还不足以覆盖一块表面</span>
@@ -946,7 +946,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#route" data-target="route" aria-expanded="false" aria-controls="mobile-idea-route">
             <span class="toc-page-number">03</span><span>沿一帧图像，串起前面学过的并行思想</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-route" hidden><strong>本页要点</strong><p>一路反复问：哪些工作独立？哪些有顺序？为了减少计算，额外花了什么成本？</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-route" hidden><strong>本页要点</strong><p>本讲将分析：不同高斯的投影如何并行计算，前后遮挡为何要求按顺序合成，以及 Tile 分组如何减少像素计算、同时增加配对记录和排序开销。</p></div>
         </li><li class="toc-entry" data-slide="point-to-splat" data-deep="false">
           <a href="#point-to-splat" data-target="point-to-splat" aria-expanded="false" aria-controls="mobile-idea-point-to-splat">
             <span class="toc-page-number">04</span><span>一个点的位置，还不足以覆盖一块表面</span>
