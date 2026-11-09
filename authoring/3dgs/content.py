@@ -30,11 +30,13 @@ def note(text): return '<div class="takeaway">' + text + '</div>'
 def eq(text): return '<div class="equation" role="math">' + text + '</div>'
 def math_eq(body, label):
     return '<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="'+escape(label,quote=True)+'">'+body+'</math></div>'
+def math_matrix(rows):
+    return '<mrow><mo>[</mo><mtable>'+''.join('<mtr>'+''.join('<mtd><mn>'+str(v)+'</mn></mtd>' for v in row)+'</mtr>' for row in rows)+'</mtable><mo>]</mo></mrow>'
 def table(head, rows):
     return '<div class="table-scroll"><table><thead><tr>' + ''.join('<th scope="col">'+c+'</th>' for c in head) + '</tr></thead><tbody>' + ''.join('<tr>'+''.join('<td>'+str(c)+'</td>' for c in row)+'</tr>' for row in rows) + '</tbody></table></div>'
 def code(text): return '<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>' + escape(text.strip()) + '</code></pre></div>'
 def columns(*items): return '<div class="teaching-columns">' + ''.join('<div>'+item+'</div>' for item in items) + '</div>'
-FIGURE_HEIGHTS = dict(scene=300, pipeline=195, **{'point-splat':285}, camera=265, projection=310, ownership=340, shared=345, barriers=235, imbalance=330, training=225, gradients=340, density=235)
+FIGURE_HEIGHTS = dict(scene=300, pipeline=195, **{'point-splat':285,'covariance-rotation':260}, camera=265, projection=310, ownership=340, shared=345, barriers=235, imbalance=330, training=225, gradients=340, density=235)
 def fig(name, caption): return f'<figure><a href="../../materials/lectures/3dgs/{name}.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/{name}.svg" width="800" height="{FIGURE_HEIGHTS[name]}" alt="{escape(caption, quote=True)}" loading="lazy"></a><figcaption>{caption}</figcaption></figure>'
 def demo(name, caption): return f'<div class="demo" data-demo="{name}"></div><p class="caption">{caption}</p>'
 def answer(text): return '<details class="answer"><summary>显示参考答案</summary><div><h3 class="answer-print-title">参考答案</h3>'+text+'</div></details>'
@@ -105,10 +107,15 @@ add('gaussian-record', 'representation', '一个三维高斯，需要保存哪�
     p('这是一份显式参数表。渲染时反复读取它；训练时更新它。高斯数量也可以随训练改变。'),
     note('高斯是可优化的场景基元，不是预先知道的真实物体，也不必一一对应物体表面上的点。'), refs=('paper','model'))
 add('covariance', 'representation', '协方差：把三个方向的宽度和朝向记下来',
-    p('先看与坐标轴对齐的高斯。若标准差尺度为 (2,1,1)，沿 x 方向比另外两个方向宽一倍；协方差对角线记的是尺度的平方。'),
-    eq('s = (2,1,1)　→　Σ = diag(4,1,1)　（尚未旋转）'),
-    table(['改变什么','形状怎样变化'], [['三个尺度相同','各方向一样宽；旋转不改变形状'],['只有一个尺度大','沿一个方向拉长'],['保持尺度，改变旋转','宽度不变，长轴换一个朝向']]),
-    note('三维中心负责位置，协方差负责形状。主线需要读懂这个分工；尺度与旋转怎样组成矩阵，留在深入阅读。'), refs=('paper','model'))
+    p('尺度决定高斯沿自身三个主轴的宽度。先把尺度平方放到对角线上，再用旋转矩阵 R 把这些主轴转到世界坐标系中的朝向。R 是 3×3 矩阵，由上一页的四元数 q 归一化后转换得到。'),
+    math_eq('''<mrow><mi>Σ</mi><mo>=</mo><mi>R</mi><mi mathvariant="normal">diag</mi><mo>\u2061</mo>
+      <mrow><mo>(</mo><msubsup><mi>s</mi><mi>x</mi><mn>2</mn></msubsup><mo>,</mo><msubsup><mi>s</mi><mi>y</mi><mn>2</mn></msubsup><mo>,</mo><msubsup><mi>s</mi><mi>z</mi><mn>2</mn></msubsup><mo>)</mo></mrow>
+      <msup><mi>R</mi><mi mathvariant="normal">T</mi></msup><mo>=</mo><mi>R</mi><mi>S</mi><msup><mi>S</mi><mi mathvariant="normal">T</mi></msup><msup><mi>R</mi><mi mathvariant="normal">T</mi></msup></mrow>''', '协方差等于 R 乘主轴尺度平方的对角矩阵再乘 R 的转置，也等于 R S S转置 R转置'),
+    p('S 是由三个尺度组成的对角矩阵。R 的三列给出旋转后的三个主轴方向；协方差需要<strong>左乘 R、右乘 R 的转置</strong>，将两个坐标分量的关系一起变换。'),
+    fig('covariance-rotation', '固定尺度 (2,1,1)，绕 z 轴逆时针旋转 45°。图示为经过中心的 x–y 截面，z 方向不变；虚线为固定坐标轴，彩色实线为高斯主轴。'),
+    math_eq('<mrow><msub><mi>Σ</mi><mn>0</mn></msub><mo>=</mo>'+math_matrix([[4,0,0],[0,1,0],[0,0,1]])+'<mspace width="1em"/><mo>→</mo><mspace width="1em"/><msub><mi>Σ</mi><mn>45°</mn></msub><mo>=</mo>'+math_matrix([[2.5,1.5,0],[1.5,2.5,0],[0,0,1]])+'</mrow>', '未旋转的协方差是对角矩阵4、1、1；绕z轴旋转45度后，对角项为2.5、2.5、1，xy与yx项均为1.5'),
+    p('旋转后，主轴宽度仍为 (2,1,1)，但相对于固定 x、y 轴，协方差出现了非零的非对角项 1.5，记录了倾斜的朝向。此时不能再把对角项直接当作原来的主轴尺度平方。'),
+    note('尺度决定沿主轴有多宽，旋转决定主轴朝哪里。三个尺度完全相同时，各方向一样宽，旋转不会改变协方差。'), refs=('paper','model'))
 add('opacity', 'representation', '不透明度与高斯权重，是两个不同的量',
     eq('αᵢ(p) = oᵢ · gᵢ(p)'),
     p('oᵢ 是这个高斯的参数；gᵢ(p) 随像素位置变化；αᵢ(p) 才是它在该像素上的局部 alpha。中心附近 α 较大，边缘较小。'),

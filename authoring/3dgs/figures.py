@@ -18,6 +18,18 @@ def wrap(body,h=300):
 def build(destination):
     d=Path(destination); d.mkdir(parents=True,exist_ok=True)
     figs={}
+    b=''
+    for cx,angle,title in [(195,0,'未旋转：主轴与坐标轴对齐'),(605,-45,'绕 z 轴旋转 45°')]:
+        cy=145
+        b+=text(cx,32,title,19,INK,'middle')
+        b+=f'<path d="M{cx-125} {cy}H{cx+125}M{cx} {cy+85}V{cy-88}" stroke="{LINE}" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/>'
+        b+=text(cx+132,cy+5,'x',17,MUTED)+text(cx+8,cy-82,'y',17,MUTED)
+        b+=ellipse(cx,cy,90,45,angle,GREEN,.16)
+        b+=f'<g transform="rotate({angle},{cx},{cy})"><path d="M{cx-90} {cy}H{cx+90}" stroke="{GREEN}" stroke-width="3"/><path d="M{cx} {cy-45}V{cy+45}" stroke="{BLUE}" stroke-width="3"/></g>'
+        b+=f'<circle cx="{cx}" cy="{cy}" r="4" fill="{INK}"/>'
+        b+=text(cx,245,'主轴标准差：2 和 1',17,MUTED,'middle')
+    b+=arrow(355,145,425,145)
+    figs['covariance-rotation']=wrap(b,260)
     # Three principal ellipses of a single Gaussian's illustrative isosurface.
     def projected(v):
         x,y,z=v;a=-.4;b=.55

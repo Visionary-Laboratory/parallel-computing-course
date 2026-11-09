@@ -159,10 +159,15 @@
       <div class="slide-label"><a href="#covariance" title="此主题的稳定链接"><span class="page-number">08</span> · 主题链接</a><button class="start-page" data-start="covariance" aria-label="从08页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
       <div class="slide-topline"><span>并行计算与算子编程</span><span>用高斯表示场景</span></div>
       <div class="print-page-label">08 / 57 · 用高斯表示场景</div>
-      <div class="slide-body"><h2>协方差：把三个方向的宽度和朝向记下来</h2><p>先看与坐标轴对齐的高斯。若标准差尺度为 (2,1,1)，沿 x 方向比另外两个方向宽一倍；协方差对角线记的是尺度的平方。</p>
-<div class="equation" role="math">s = (2,1,1)　→　Σ = diag(4,1,1)　（尚未旋转）</div>
-<div class="table-scroll"><table><thead><tr><th scope="col">改变什么</th><th scope="col">形状怎样变化</th></tr></thead><tbody><tr><td>三个尺度相同</td><td>各方向一样宽；旋转不改变形状</td></tr><tr><td>只有一个尺度大</td><td>沿一个方向拉长</td></tr><tr><td>保持尺度，改变旋转</td><td>宽度不变，长轴换一个朝向</td></tr></tbody></table></div>
-<div class="takeaway">三维中心负责位置，协方差负责形状。主线需要读懂这个分工；尺度与旋转怎样组成矩阵，留在深入阅读。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
+      <div class="slide-body"><h2>协方差：把三个方向的宽度和朝向记下来</h2><p>尺度决定高斯沿自身三个主轴的宽度。先把尺度平方放到对角线上，再用旋转矩阵 R 把这些主轴转到世界坐标系中的朝向。R 是 3×3 矩阵，由上一页的四元数 q 归一化后转换得到。</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="协方差等于 R 乘主轴尺度平方的对角矩阵再乘 R 的转置，也等于 R S S转置 R转置"><mrow><mi>Σ</mi><mo>=</mo><mi>R</mi><mi mathvariant="normal">diag</mi><mo>⁡</mo>
+      <mrow><mo>(</mo><msubsup><mi>s</mi><mi>x</mi><mn>2</mn></msubsup><mo>,</mo><msubsup><mi>s</mi><mi>y</mi><mn>2</mn></msubsup><mo>,</mo><msubsup><mi>s</mi><mi>z</mi><mn>2</mn></msubsup><mo>)</mo></mrow>
+      <msup><mi>R</mi><mi mathvariant="normal">T</mi></msup><mo>=</mo><mi>R</mi><mi>S</mi><msup><mi>S</mi><mi mathvariant="normal">T</mi></msup><msup><mi>R</mi><mi mathvariant="normal">T</mi></msup></mrow></math></div>
+<p>S 是由三个尺度组成的对角矩阵。R 的三列给出旋转后的三个主轴方向；协方差需要<strong>左乘 R、右乘 R 的转置</strong>，将两个坐标分量的关系一起变换。</p>
+<figure><a href="../../materials/lectures/3dgs/covariance-rotation.svg" target="_blank" rel="noopener" title="打开原图"><img src="../../materials/lectures/3dgs/covariance-rotation.svg" width="800" height="260" alt="固定尺度 (2,1,1)，绕 z 轴逆时针旋转 45°。图示为经过中心的 x–y 截面，z 方向不变；虚线为固定坐标轴，彩色实线为高斯主轴。" loading="lazy"></a><figcaption>固定尺度 (2,1,1)，绕 z 轴逆时针旋转 45°。图示为经过中心的 x–y 截面，z 方向不变；虚线为固定坐标轴，彩色实线为高斯主轴。</figcaption></figure>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="未旋转的协方差是对角矩阵4、1、1；绕z轴旋转45度后，对角项为2.5、2.5、1，xy与yx项均为1.5"><mrow><msub><mi>Σ</mi><mn>0</mn></msub><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>4</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow><mspace width="1em"/><mo>→</mo><mspace width="1em"/><msub><mi>Σ</mi><mn>45°</mn></msub><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>2.5</mn></mtd><mtd><mn>1.5</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>1.5</mn></mtd><mtd><mn>2.5</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math></div>
+<p>旋转后，主轴宽度仍为 (2,1,1)，但相对于固定 x、y 轴，协方差出现了非零的非对角项 1.5，记录了倾斜的朝向。此时不能再把对角项直接当作原来的主轴尺度平方。</p>
+<div class="takeaway">尺度决定沿主轴有多宽，旋转决定主轴朝哪里。三个尺度完全相同时，各方向一样宽，旋转不会改变协方差。</div><div class="references">来源与延伸：<a href="https://arxiv.org/html/2308.04079v1" target="_blank" rel="noreferrer">Kerbl 等，3D Gaussian Splatting，SIGGRAPH 2023（CC BY 4.0）</a> · <a href="https://github.com/graphdeco-inria/gaussian-splatting/blob/main/scene/gaussian_model.py" target="_blank" rel="noreferrer">官方实现：gaussian_model.py</a></div></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
     </section><section class="lecture-slide" id="opacity" data-topic="representation" data-label="09" tabindex="-1">
       <div class="slide-label"><a href="#opacity" title="此主题的稳定链接"><span class="page-number">09</span> · 主题链接</a><button class="start-page" data-start="opacity" aria-label="从09页开始浏览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4m-2-14 5 3-5 3Z"/></svg> 从此页开始</button></div>
@@ -698,7 +703,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#covariance" data-target="covariance" aria-expanded="false" aria-controls="desktop-idea-covariance">
             <span class="toc-page-number">08</span><span>协方差：把三个方向的宽度和朝向记下来</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-covariance" hidden><strong>本页要点</strong><p>三维中心负责位置，协方差负责形状。主线需要读懂这个分工；尺度与旋转怎样组成矩阵，留在深入阅读。</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-covariance" hidden><strong>本页要点</strong><p>尺度决定沿主轴有多宽，旋转决定主轴朝哪里。三个尺度完全相同时，各方向一样宽，旋转不会改变协方差。</p></div>
         </li><li class="toc-entry" data-slide="opacity" data-deep="false">
           <a href="#opacity" data-target="opacity" aria-expanded="false" aria-controls="desktop-idea-opacity">
             <span class="toc-page-number">09</span><span>不透明度与高斯权重，是两个不同的量</span>
@@ -986,7 +991,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#covariance" data-target="covariance" aria-expanded="false" aria-controls="mobile-idea-covariance">
             <span class="toc-page-number">08</span><span>协方差：把三个方向的宽度和朝向记下来</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-covariance" hidden><strong>本页要点</strong><p>三维中心负责位置，协方差负责形状。主线需要读懂这个分工；尺度与旋转怎样组成矩阵，留在深入阅读。</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-covariance" hidden><strong>本页要点</strong><p>尺度决定沿主轴有多宽，旋转决定主轴朝哪里。三个尺度完全相同时，各方向一样宽，旋转不会改变协方差。</p></div>
         </li><li class="toc-entry" data-slide="opacity" data-deep="false">
           <a href="#opacity" data-target="opacity" aria-expanded="false" aria-controls="mobile-idea-opacity">
             <span class="toc-page-number">09</span><span>不透明度与高斯权重，是两个不同的量</span>
