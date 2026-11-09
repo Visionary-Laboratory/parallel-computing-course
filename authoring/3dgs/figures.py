@@ -78,10 +78,23 @@ def build(destination):
     b+=arrow(220,128,295,128)+text(258,108,'旋转、平移',13,MUTED,'middle')
     b+=arrow(500,128,575,128)+text(538,108,'透视投影',13,MUTED,'middle')
     b+=text(400,220,'先求出中心相对相机的位置，再计算它落在屏幕上的位置',18,MUTED,'middle');figs['camera']=wrap(b,265)
-    b=ellipse(170,145,65,95,-35,GREEN)+ellipse(170,145,65,25,0,GREEN,.06)+text(170,270,'三维尺度 + 方向',18,INK,'middle')
-    b+=arrow(265,110,400,78)+arrow(265,185,400,215)
-    b+=ellipse(530,85,100,27,12,BLUE)+text(680,90,'视角 A',17)
-    b+=ellipse(530,215,54,43,-35,RED)+text(680,220,'视角 B',17)
+    b=text(200,35,'只保存投影中心',20,INK,'middle')+text(600,35,'同时保存中心与二维形状',20,INK,'middle')
+    for cx in (200,600):
+        for iy in range(11):
+            for ix in range(19):
+                dx=(ix-9)*14;dy=(iy-5)*14
+                fill='#f5f8f6';opacity=1
+                if cx==600:
+                    angle=math.radians(-25)
+                    a=dx*math.cos(angle)+dy*math.sin(angle)
+                    c=-dx*math.sin(angle)+dy*math.cos(angle)
+                    opacity=math.exp(-.5*((a/48)**2+(c/21)**2))
+                    fill=GREEN
+                b+=f'<rect x="{cx+dx-6.5}" y="{150+dy-6.5}" width="13" height="13" fill="{fill}" fill-opacity="{opacity:.4f}" stroke="{LINE}" stroke-width=".35"/>'
+        b+=f'<path d="M{cx-8} 150H{cx+8}M{cx} 142V158" stroke="{INK}" stroke-width="2"/>'
+        b+=text(cx,250,'中心位置相同',16,MUTED,'middle')
+    b+='<ellipse cx="600" cy="150" rx="96" ry="42" transform="rotate(-25,600,150)" fill="none" stroke="'+GREEN+'" stroke-width="1.5" stroke-dasharray="5 4"/>'
+    b+=text(200,285,'无法确定周围像素的权重',17,INK,'middle')+text(600,285,'可以计算每个像素的高斯权重',17,INK,'middle')
     figs['projection']=wrap(b,310)
     b=text(180,35,'Grid：4 × 4 个 Block',19,INK,'middle')+text(580,35,'一个 Block：16 × 16 线程',19,INK,'middle')
     for y in range(4):
