@@ -203,7 +203,8 @@
       <div class="slide-topline"><span>并行计算与算子编程</span><span>从三维到屏幕</span></div>
       <div class="print-page-label">12 / 57 · 从三维到屏幕</div>
       <div class="slide-body"><h2>透视投影：越远，屏幕位移越小</h2><div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="u 等于 fx Xc 除以 Zc 加 cx；v 等于 fy Yc 除以 Zc 加 cy"><mrow><mi>u</mi><mo>=</mo><mfrac><mrow><msub><mi>f</mi><mi mathvariant="normal">x</mi></msub><msub><mi>X</mi><mi mathvariant="normal">c</mi></msub></mrow><mrow><msub><mi>Z</mi><mi mathvariant="normal">c</mi></msub></mrow></mfrac><mo>+</mo><msub><mi>c</mi><mi mathvariant="normal">x</mi></msub><mspace width="1.5em"/><mi>v</mi><mo>=</mo><mfrac><mrow><msub><mi>f</mi><mi mathvariant="normal">y</mi></msub><msub><mi>Y</mi><mi mathvariant="normal">c</mi></msub></mrow><mrow><msub><mi>Z</mi><mi mathvariant="normal">c</mi></msub></mrow></mfrac><mo>+</mo><msub><mi>c</mi><mi mathvariant="normal">y</mi></msub></mrow></math></div>
-<p>fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：</p>
+<p>fₓ、fᵧ 是以像素计的焦距。相机正前方、穿过镜头中心的轴线称为<strong>光轴</strong>；光轴与成像平面的交点称为<strong>主点</strong>，其像素坐标是 (cₓ,cᵧ)。</p>
+<p>当高斯中心位于光轴上时，<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>X</mi><mi mathvariant="normal">c</mi></msub><mo>=</mo><msub><mi>Y</mi><mi mathvariant="normal">c</mi></msub><mo>=</mo><mn>0</mn></mrow></math>，公式中的两个分式都为 0，因此它投影到 (cₓ,cᵧ)。下例取 fₓ=fᵧ=100，并将主点设为 (32,32)：</p>
 <div class="table-scroll"><table><thead><tr><th scope="col">相机坐标 (X,Y,Z)</th><th scope="col">屏幕坐标 (u,v)</th></tr></thead><tbody><tr><td>(0, 0, 2)</td><td>(32, 32)</td></tr><tr><td>(0.2, 0, 2)</td><td>(42, 32)</td></tr><tr><td>(0.2, 0, 4)</td><td>(37, 32)</td></tr></tbody></table></div>
 <p>第二、三个中心的 X 相同，深度加倍后，偏离主点的距离减半。Z 接近零时除法不稳定，不能把所有输入都直接投影。</p></div>
       <div class="slide-bottomline"><span>人工智能学院</span><span class="slide-page-count"></span></div>
@@ -728,7 +729,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#perspective" data-target="perspective" aria-expanded="false" aria-controls="desktop-idea-perspective">
             <span class="toc-page-number">12</span><span>透视投影：越远，屏幕位移越小</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="desktop-idea-perspective" hidden><strong>本页要点</strong><p>fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：</p></div>
+          </a><div class="toc-page-idea" id="desktop-idea-perspective" hidden><strong>本页要点</strong><p>fₓ、fᵧ 是以像素计的焦距。相机正前方、穿过镜头中心的轴线称为光轴；光轴与成像平面的交点称为主点，其像素坐标是 (cₓ,cᵧ)。</p></div>
         </li><li class="toc-entry" data-slide="project-shape" data-deep="false">
           <a href="#project-shape" data-target="project-shape" aria-expanded="false" aria-controls="desktop-idea-project-shape">
             <span class="toc-page-number">13</span><span>投影一个高斯，不能只投影中心</span>
@@ -1016,7 +1017,7 @@ if (inside) image[pixel] = C + T * background;</code></pre></div>
           <a href="#perspective" data-target="perspective" aria-expanded="false" aria-controls="mobile-idea-perspective">
             <span class="toc-page-number">12</span><span>透视投影：越远，屏幕位移越小</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a><div class="toc-page-idea" id="mobile-idea-perspective" hidden><strong>本页要点</strong><p>fₓ、fᵧ 是以像素计的焦距，(cₓ,cᵧ) 是主点。下例取 fₓ=fᵧ=100，主点 (32,32)，只比较位置：</p></div>
+          </a><div class="toc-page-idea" id="mobile-idea-perspective" hidden><strong>本页要点</strong><p>fₓ、fᵧ 是以像素计的焦距。相机正前方、穿过镜头中心的轴线称为光轴；光轴与成像平面的交点称为主点，其像素坐标是 (cₓ,cᵧ)。</p></div>
         </li><li class="toc-entry" data-slide="project-shape" data-deep="false">
           <a href="#project-shape" data-target="project-shape" aria-expanded="false" aria-controls="mobile-idea-project-shape">
             <span class="toc-page-number">13</span><span>投影一个高斯，不能只投影中心</span>
