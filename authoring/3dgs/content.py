@@ -28,6 +28,8 @@ SLIDES = []
 def p(text): return '<p>' + text + '</p>'
 def note(text): return '<div class="takeaway">' + text + '</div>'
 def eq(text): return '<div class="equation" role="math">' + text + '</div>'
+def math_eq(body, label):
+    return '<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="'+escape(label,quote=True)+'">'+body+'</math></div>'
 def table(head, rows):
     return '<div class="table-scroll"><table><thead><tr>' + ''.join('<th scope="col">'+c+'</th>' for c in head) + '</tr></thead><tbody>' + ''.join('<tr>'+''.join('<td>'+str(c)+'</td>' for c in row)+'</tr>' for row in rows) + '</tbody></table></div>'
 def code(text): return '<div class="code-block"><div class="code-label"><span>教学伪代码</span><button class="copy-code">复制代码</button></div><pre><code>' + escape(text.strip()) + '</code></pre></div>'
@@ -69,7 +71,11 @@ add('point-to-splat', 'representation', '一个点的位置，还不足以覆盖
     p('一个点只告诉我们“在哪里”。为它增加空间尺度与方向，就能描述一个有范围的局部贡献：中心附近强，离中心越远越弱。'),
     p('图中的椭圆或椭球是等值线 / 等值面。高斯并不是边界坚硬的小球，也不是固定大小的方形像素。多个高斯可以重叠，共同描述同一片区域。'), refs=('paper',))
 add('gaussian-falloff', 'representation', '从一维开始：距离怎样改变贡献？',
-    eq('g(x) = exp[−½ ((x − μ) / σ)²]'),
+    math_eq('''<mrow><mrow><mi>g</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo>
+      <mi mathvariant="normal">exp</mi><mo>\u2061</mo><mrow><mo stretchy="true">[</mo>
+      <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
+      <msup><mrow><mo stretchy="true">(</mo><mfrac><mrow><mi>x</mi><mo>−</mo><mi>μ</mi></mrow><mi>σ</mi></mfrac><mo stretchy="true">)</mo></mrow><mn>2</mn></msup>
+      <mo stretchy="true">]</mo></mrow></mrow>''', 'g(x) 等于 exp，指数为负二分之一乘以 x 减 μ 除以 σ 的平方'),
     table(['离中心的距离','0','σ','2σ','3σ'], [['相对权重','1.000','0.607','0.135','0.011']]),
     p('<strong>μ</strong> 控制位置，<strong>σ &gt; 0</strong> 控制宽度。相同距离下，σ 越大，衰减越慢。这里使用峰值为 1 的未归一化高斯核，后续还要乘上可学习的不透明度。'),
     note('数学上高斯没有有限边界；程序为了节省计算，需要选定有限的处理范围。'))
