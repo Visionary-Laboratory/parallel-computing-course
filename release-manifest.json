@@ -10,7 +10,7 @@
     "07-parallel-primitives",
     "released-lecture-glossary"
   ],
-  "date": "2026-11-06",
+  "date": "2026-11-13",
   "lectures": [
     {
       "slug": "01-introduction",
@@ -44,11 +44,11 @@
     },
     {
       "slug": "07-parallel-primitives",
-      "slides": 81,
+      "slides": 70,
       "answers": 0
     }
   ],
-  "slides": 472,
+  "slides": 461,
   "answers": 65,
   "glossaryTerms": 82,
   "files": [
@@ -297,12 +297,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-CdNhGrSO.css",
-      "sha256": "61d09ef9208200bfd5f4410aa5d8cd512a0a5fb2f23083660afe478053220268"
+      "path": "site/assets/index-BPxqfOdp.js",
+      "sha256": "9bf166807e187e037d3ad1c830d44b05887ed3984a132bc0993f54b8f710081e"
     },
     {
-      "path": "site/assets/index-CmrHF29g.js",
-      "sha256": "549355ae592ba8767648613743831e6387e8c5eed82427e59d2ccc9d25d0cd8c"
+      "path": "site/assets/index-CdNhGrSO.css",
+      "sha256": "61d09ef9208200bfd5f4410aa5d8cd512a0a5fb2f23083660afe478053220268"
     },
     {
       "path": "site/favicon.svg",
@@ -310,39 +310,39 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "ea991b6d9fb0b9fb213e6b3a90e0fb113839a069ef7db479942b1a07a5c22f15"
+      "sha256": "6b3448070188a9d9722aa6fa37ab2c5a39977ba7753d454b7fb6351e987cf2dd"
     },
     {
       "path": "site/index.html",
-      "sha256": "2276591377dbddb8a9c17c3fd467d77b41cca655830a7855b3caac4eec9468df"
+      "sha256": "050c014da17f8eb97fd30e380a6f93005f4025ba46978d6a39f9460430422579"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "335d1947f312d89e5149bc537719e3f9a7f3c49b74be62c554bbfdffe44a465b"
+      "sha256": "ffbb11d12ee5dcddd6f35ccb9bd4fbaebb5fb5a8584955d971fc8b299f265f1d"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "f4fb213400c461e732e57e1cb8ee99e15c009b5d2c0b6bd65f6ba46a07fcb604"
+      "sha256": "8caac7f615b1664804f81b1a2780875ce1c01de24a11ce435f4d64810608c77d"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "3b91fbd58fb37318062a64952315f9afc047d32f21bd8fba34b25af3bbba7d5d"
+      "sha256": "af0a2cc33bf97c19ef6239eaecd94090d47972dd2737acc5d5aadbd345878da8"
     },
     {
       "path": "site/lectures/04-memory-synchronization/index.html",
-      "sha256": "72da992a4570b2d9711f25027feb74cfc5fd5e2aa35fb5f2cce34c6054cacb9a"
+      "sha256": "f93da3c6a6adbdb5341ce74c82b4d4c14529d03c8ddf71e2d1b592e8d1f284cc"
     },
     {
       "path": "site/lectures/05-cuda-introduction/index.html",
-      "sha256": "45dbd79b2e5ad5b7b8e6d345fc80e8a060e9c254a1bfc3b3fb622d185782458e"
+      "sha256": "4b331f990ac458d753a730fcfb70cd35e54b330fc57d0c4a21fdfe4b6faba56e"
     },
     {
       "path": "site/lectures/06-memory-hierarchy/index.html",
-      "sha256": "ff3bf3a42563fec5c5897aa0e65ad77794af26de122f7a3f769efc62a906025a"
+      "sha256": "8d467e790556316adbb6f94acc5d753e6abab6f81de385dc8a41c413b6ac97aa"
     },
     {
       "path": "site/lectures/07-parallel-primitives/index.html",
-      "sha256": "ce1fb217c860e18bf9564ab4d193d7aa14e244b42b397b2021b358c796421091"
+      "sha256": "46ac40b3b6be534e6658e587b4541086d16814e274a04bcf361ff4fe470717ce"
     },
     {
       "path": "site/materials/cuda/05_device_query.cu",
@@ -895,10 +895,6 @@
     {
       "path": "site/materials/lectures/07/figures/scan-segment-indices.svg",
       "sha256": "62810fa10414248bc1ada14b7d4c344debc1f5d80a550819f7b1cc68e80ecf59"
-    },
-    {
-      "path": "site/materials/lectures/07/figures/scatter-ownership.svg",
-      "sha256": "e3ea1f0237246ccff2585bb671a6bdc46f0edd492af935bcf2dd0b2450c71765"
     },
     {
       "path": "site/materials/lectures/07/figures/warp-exchange-paths.svg",
