@@ -63,7 +63,7 @@
     },
     {
       "slug": "10-flash-attention",
-      "slides": 61,
+      "slides": 62,
       "answers": 0
     },
     {
@@ -72,7 +72,7 @@
       "answers": 0
     }
   ],
-  "slides": 590,
+  "slides": 591,
   "answers": 65,
   "glossaryTerms": 99,
   "files": [
@@ -321,12 +321,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-CeAA0ig9.js",
-      "sha256": "3b95c90372e174839b62a535ee6b44b2a2522baa8e9e28779846844bf5fc2ce7"
+      "path": "site/assets/index-C63xvadF.js",
+      "sha256": "2799d8dbf9828ea47a2626fb346e0fb110616f3c72c07ffb8229116fe4f4c5c4"
     },
     {
-      "path": "site/assets/index-DDENngQ8.css",
-      "sha256": "4f07aa08981659df8838d847fd09f50037837f8a4f2328c0ee937d33a594315c"
+      "path": "site/assets/index-D6ifIAWe.css",
+      "sha256": "c604f596794f214c6923500af8a1e9036ee72965a7d3ca61527b9f40cf58df3d"
     },
     {
       "path": "site/favicon.svg",
@@ -334,55 +334,55 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "929004eb1653b12475885b610f76bd44aa891cf81dccc5788a6556933a256e01"
+      "sha256": "96573a429e7af881eed8111132bdfd3eda715f0f4d842ddf896b1c37c8b53992"
     },
     {
       "path": "site/index.html",
-      "sha256": "3a477f3c594d04855b8c7c9de6923b8e149350d6dbc24de56a8ab03ca3ac1d9b"
+      "sha256": "f595ff5b9c3cc62ac0c52cfcbea310dd10ca7bca4c9cd68ce02e069f0bfa3ef6"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "12b389330ecec3397138a98a0f1c67280aaa186080c4e5038daa691a4664f1a1"
+      "sha256": "f32088af23c1eb669981e39065aaa4efc6592ecb816a6629dd294b6aaa9349c6"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "c7ea60ada8376abc1ed8ee3491c819552d78c93c8eb2a6f6a867f987266107c1"
+      "sha256": "9bba9851ded3503b59683acb8e9593ee7e066fde3ced3bb2a04888400213e840"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "41797c99cd8d2c2abf6eb09cea4949dc74e5891d0811d819163fd86f6978ef3b"
+      "sha256": "780fbf36b602b52fff8045780769eb4b6299e3b6dd3755a9e454f9c2c660b718"
     },
     {
       "path": "site/lectures/04-memory-synchronization/index.html",
-      "sha256": "2991662d1f072a6e4d89606794e9224ea3ab6a91751a93112f07c64264793ff5"
+      "sha256": "edba582eb32a49f4b465e4fc2234c3fb7af5a336d0a1dc8f81ea24176fe5a56f"
     },
     {
       "path": "site/lectures/05-cuda-introduction/index.html",
-      "sha256": "d200bf09ed62377552f1f75aa2ab6144364f5aacb19aefaf3a0d0b33fe632048"
+      "sha256": "116c8fb730e93cc4016a34a8ad969ed33c70dcae7faa051e9887da3e5f30c070"
     },
     {
       "path": "site/lectures/06-memory-hierarchy/index.html",
-      "sha256": "3a5b123a83e1da04650a59fe77a2bff81d41ee993a90417d3f0b5f4109a5f265"
+      "sha256": "5f70031394aec3dbd3f4bd76d1740df9b8f184533565591b50fb9a11ccc58827"
     },
     {
       "path": "site/lectures/07-parallel-primitives/index.html",
-      "sha256": "44419ff3b0f47f4a75295db4a27723123ac2ab386a1517dcff5e47e7c002e6fb"
+      "sha256": "ee5fbad97406e40e3e348539ae7ee25e884e6a2930aa0e10af2ac6e11356326e"
     },
     {
       "path": "site/lectures/08-dnns-on-gpus/index.html",
-      "sha256": "15d470d5ba39b456205b7b858d0471edf6828c1c41abac01912bb712a8560a51"
+      "sha256": "af5224611a6fa6384377682d15192664064b2404e72e3a935d75ee0e227c07f2"
     },
     {
       "path": "site/lectures/09-modern-architecture/index.html",
-      "sha256": "3f81849b13fbe8fe9d4c55bce82a172a10e282ba7c6019617bae6cf239e85428"
+      "sha256": "a8b33a9f2e68663c78490360277921aa276ba16f382f6e404f1c0d509c6f2922"
     },
     {
       "path": "site/lectures/10-flash-attention/index.html",
-      "sha256": "7c7e9a1b94323bcd49c95970ce9d63a2ae4e68de2401de22b5435048ed5974e8"
+      "sha256": "6de0f5afd94fbd635cede9461adcbbe17b90fcedb7e2df0edc7d9c5d48283e85"
     },
     {
       "path": "site/lectures/11-gaussian-splatting/index.html",
-      "sha256": "d28f531cade6c0f9bad758170a31d51e132a70e278d4eeeae7ddff2120f91791"
+      "sha256": "62f69450e7cb0962f79b42d81456e03fc39ccd84d27a17cbfa4f8d4df6155758"
     },
     {
       "path": "site/materials/cuda/05_device_query.cu",
@@ -943,6 +943,10 @@
     {
       "path": "site/materials/lectures/07/figures/warp-shuffle-hardware.svg",
       "sha256": "033df369dd2946cd5f68fa076484ed3eae4eb306836d78c76159e198b0774216"
+    },
+    {
+      "path": "site/materials/lectures/10/figures/fa1-loop-order.svg",
+      "sha256": "1dcf64b13279da4784ef21830329ec4ca5de77b8d35ebcf785c2c32d172f81b4"
     },
     {
       "path": "site/materials/lectures/10/figures/fa3-two-blocks.svg",
