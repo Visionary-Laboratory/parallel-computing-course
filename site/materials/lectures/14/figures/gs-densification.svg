@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">训练改变数值，也改变数据结构</title><desc id="desc">训练改变数值，也改变数据结构。示意三种结构变换；具体触发阈值、尺度规则和优化器状态初始化由算法规定。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">训练改变数值，也改变数据结构</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">示意三种结构变换；具体触发阈值、尺度规则和优化器状态初始化由算法规定。</text>
+<text x="60" y="144" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">Clone · 增加表达能力</text>
+<text x="415" y="144" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">Split · 分辨更细结构</text>
+<text x="770" y="144" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">Prune · 移除弱贡献</text>
+<ellipse cx="190" cy="222" rx="71" ry="26" transform="rotate(-25 190 222)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<line x1="190" y1="259" x2="190" y2="303" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<ellipse cx="147" cy="357" rx="55" ry="22" transform="rotate(-25 147 357)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="228" cy="346" rx="55" ry="22" transform="rotate(-25 228 346)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="551" cy="222" rx="110" ry="40" transform="rotate(-12 551 222)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<line x1="551" y1="268" x2="551" y2="303" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<ellipse cx="504" cy="357" rx="45" ry="21" transform="rotate(-12 504 357)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="593" cy="341" rx="45" ry="21" transform="rotate(-12 593 341)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="911" cy="222" rx="55" ry="24" transform="rotate(15 911 222)" stroke="#687680" stroke-width="2" fill="#EDF1F3" fill-opacity="0.8"/>
+<line x1="911" y1="268" x2="911" y2="303" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="826" y="331" width="172" height="67" rx="8" fill="#FBECE7" stroke="#B74836" stroke-width="1.5"/>
+<text x="912.0" y="372.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">移除并压紧</text>
+<text x="556" y="466" font-size="23" fill="#20372F" text-anchor="middle" font-weight="700">参数、梯度统计、Adam 状态与索引，必须随同一批高斯一起更新。</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">箭头表达结构操作，不保证克隆或拆分后渲染结果严格不变；它们是优化过程的一部分。</text>
+</g></svg>

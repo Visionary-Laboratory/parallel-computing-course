@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="285" viewBox="0 0 1120 285" role="img" aria-labelledby="title desc">
+<title id="title">两个 Query 块的串行与重叠执行</title>
+<desc id="desc">教学时间单位。每次 QK 或 PV 耗时2，Softmax耗时3。串行计算A后再计算B需14。重叠时，矩阵单元依次执行A的QK零到二、B的QK二到四、A的PV五到七、B的PV八到十；普通单元执行A的Softmax二到五、B的Softmax五到八。每项工作都等自己的前置阶段完成，共需10。</desc>
+<rect width="1120" height="285" rx="12" fill="#f5f8f7"/>
+<g font-family="Arial, Microsoft YaHei, sans-serif" fill="#20372f">
+<text x="24" y="30" font-size="21" font-weight="700">同一计算依赖，安排不同执行时机</text>
+<rect x="735" y="12" width="24" height="20" rx="4" fill="#d6eade"/><text x="768" y="29" font-size="19">Query 块 A</text>
+<rect x="920" y="12" width="24" height="20" rx="4" fill="#dbe9f8"/><text x="953" y="29" font-size="19">Query 块 B</text>
+<g stroke="#d5dfda" stroke-dasharray="3 4"><path d="M195 48V250 M315 48V250 M435 48V250 M555 48V250 M675 48V250 M795 48V250 M915 48V250 M1035 48V250"/></g>
+<text x="24" y="81" font-size="22" font-weight="700">完全串行</text>
+<g stroke="#7ea78c" fill="#d6eade"><rect x="195" y="51" width="120" height="44" rx="5"/><rect x="315" y="51" width="180" height="44" rx="5"/><rect x="495" y="51" width="120" height="44" rx="5"/></g>
+<g stroke="#7c9fbe" fill="#dbe9f8"><rect x="615" y="51" width="120" height="44" rx="5"/><rect x="735" y="51" width="180" height="44" rx="5"/><rect x="915" y="51" width="120" height="44" rx="5"/></g>
+<g text-anchor="middle" font-size="20"><text x="255" y="80">A · QK</text><text x="405" y="80">A · Softmax</text><text x="555" y="80">A · PV</text><text x="675" y="80">B · QK</text><text x="825" y="80">B · Softmax</text><text x="975" y="80">B · PV</text></g>
+<text x="24" y="130" font-size="20" font-weight="700">重叠执行</text>
+<text x="24" y="170" font-size="20">矩阵单元</text>
+<g stroke="#7ea78c" fill="#d6eade"><rect x="195" y="140" width="120" height="44" rx="5"/><rect x="495" y="140" width="120" height="44" rx="5"/></g>
+<g stroke="#7c9fbe" fill="#dbe9f8"><rect x="315" y="140" width="120" height="44" rx="5"/><rect x="675" y="140" width="120" height="44" rx="5"/></g>
+<g text-anchor="middle" font-size="20"><text x="255" y="169">A · QK</text><text x="375" y="169">B · QK</text><text x="555" y="169">A · PV</text><text x="735" y="169">B · PV</text></g>
+<text x="24" y="223" font-size="20">算术与指数单元</text>
+<rect x="315" y="193" width="180" height="44" rx="5" stroke="#7ea78c" fill="#d6eade"/>
+<rect x="495" y="193" width="180" height="44" rx="5" stroke="#7c9fbe" fill="#dbe9f8"/>
+<g text-anchor="middle" font-size="20"><text x="405" y="222">A · Softmax</text><text x="585" y="222">B · Softmax</text></g>
+<text x="830" y="219" font-size="20" fill="#426c54">空白处：该资源等待</text>
+<path d="M195 249H1035" stroke="#7d9588"/>
+<g text-anchor="middle" font-size="18"><text x="195" y="273">0</text><text x="315" y="273">2</text><text x="435" y="273">4</text><text x="555" y="273">6</text><text x="675" y="273">8</text><text x="795" y="273">10</text><text x="915" y="273">12</text><text x="1035" y="273">14</text></g>
+<text x="24" y="273" font-size="17" fill="#647a6d">教学时间单位</text>
+</g></svg>

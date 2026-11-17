@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="330" viewBox="0 0 1120 330" role="img" aria-labelledby="title desc">
+<title id="title">HiGS：公共列表只建一次，细块各取所需</title><desc id="desc">四个细块属于同一宏块，公共列表按深度保存G0、G1、G2。细块0筛选G0，细块1筛选G0、G1、G2，细块2为空，细块3筛选G2。此图只解释分层与筛选，不提前引入批次合成。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">HiGS：公共列表只建一次，细块各取所需</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">教学示意把四个细块组成一个宏块；两种尺度分别服务建表与像素渲染。</text>
+<rect x="45" y="111" width="266" height="157" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="63" y="140" font-size="21" fill="#20372F" text-anchor="start" font-weight="600">粗层：一个宏块</text>
+<rect x="63" y="153" width="107" height="42" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="116.5" y="180.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 0</text>
+<rect x="184" y="153" width="107" height="42" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="237.5" y="180.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 1</text>
+<rect x="63" y="210" width="107" height="42" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="116.5" y="237.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 2</text>
+<rect x="184" y="210" width="107" height="42" rx="8" fill="#FFFFFF" stroke="#CFDCD5" stroke-width="1.5"/>
+<text x="237.5" y="237.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 3</text>
+<line x1="325" y1="192" x2="374" y2="192" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="388" y="111" width="297" height="157" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="536.5" y="151.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">公共深度列表</text>
+<text x="536.5" y="181.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">G0 → G1 → G2</text>
+<text x="536.5" y="211.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">3 条记录</text>
+<text x="536.5" y="241.64" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">加载后供细块复用</text>
+<line x1="700" y1="192" x2="748" y2="192" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="763" y="111" width="317" height="34" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="921.5" y="134.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 0：G0</text>
+<rect x="763" y="151" width="317" height="34" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="921.5" y="174.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 1：G0、G1、G2</text>
+<rect x="763" y="191" width="317" height="34" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="921.5" y="214.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 2：空</text>
+<rect x="763" y="231" width="317" height="34" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="921.5" y="254.46" font-size="19" fill="#20372F" text-anchor="middle" font-weight="600">细块 3：G2</text>
+<line x1="32" y1="281" x2="1088" y2="281" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="310" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">原来细块列表共 5 条记录；宏块公共列表为 3 条。细块筛选有成本，应有的像素贡献仍需计算。</text>
+</g></svg>

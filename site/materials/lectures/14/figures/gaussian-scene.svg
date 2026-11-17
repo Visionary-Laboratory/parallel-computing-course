@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">从照片学习一组可以投影的半透明椭球</title><desc id="desc">从照片学习一组可以投影的半透明椭球。3DGS 的优化对象是显式高斯参数；渲染新视角时，把它们投到图像并合成。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">从照片学习一组可以投影的半透明椭球</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">3DGS 的优化对象是显式高斯参数；渲染新视角时，把它们投到图像并合成。</text>
+<rect x="63" y="140" width="205" height="150" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<path d="M 78 264 L 129 200 L 167 243 L 211 185 L 253 264" fill="none" stroke="#246B96" stroke-width="2"/>
+<rect x="89" y="180" width="205" height="150" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<path d="M 104 304 L 155 240 L 193 283 L 237 225 L 279 304" fill="none" stroke="#246B96" stroke-width="2"/>
+<rect x="115" y="220" width="205" height="150" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<path d="M 130 344 L 181 280 L 219 323 L 263 265 L 305 344" fill="none" stroke="#246B96" stroke-width="2"/>
+<text x="163" y="445" font-size="23" fill="#20372F" text-anchor="middle" font-weight="700">多视角照片 + 位姿</text>
+<line x1="335" y1="286" x2="401" y2="286" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<ellipse cx="465" cy="190" rx="45" ry="17" transform="rotate(55 465 190)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="516" cy="190" rx="45" ry="17" transform="rotate(78 516 190)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="567" cy="190" rx="45" ry="17" transform="rotate(11 567 190)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="618" cy="190" rx="45" ry="17" transform="rotate(34 618 190)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="465" cy="245" rx="45" ry="17" transform="rotate(57 465 245)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="516" cy="245" rx="45" ry="17" transform="rotate(80 516 245)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="567" cy="245" rx="45" ry="17" transform="rotate(13 567 245)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="618" cy="245" rx="45" ry="17" transform="rotate(36 618 245)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="465" cy="300" rx="45" ry="17" transform="rotate(59 465 300)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="516" cy="300" rx="45" ry="17" transform="rotate(82 516 300)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="567" cy="300" rx="45" ry="17" transform="rotate(15 567 300)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="618" cy="300" rx="45" ry="17" transform="rotate(38 618 300)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<text x="550" y="445" font-size="23" fill="#20372F" text-anchor="middle" font-weight="700">可学习的高斯场景</text>
+<line x1="710" y1="286" x2="775" y2="286" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="799" y="144" width="267" height="240" rx="8" fill="#EDF1F3" stroke="#CFDCD5" stroke-width="1.5"/>
+<ellipse cx="844" cy="202" rx="33" ry="15" transform="rotate(0 844 202)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="901" cy="202" rx="33" ry="15" transform="rotate(19 901 202)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="958" cy="202" rx="33" ry="15" transform="rotate(38 958 202)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="1015" cy="202" rx="33" ry="15" transform="rotate(57 1015 202)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="844" cy="261" rx="33" ry="15" transform="rotate(1 844 261)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="901" cy="261" rx="33" ry="15" transform="rotate(20 901 261)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="958" cy="261" rx="33" ry="15" transform="rotate(39 958 261)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="1015" cy="261" rx="33" ry="15" transform="rotate(58 1015 261)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="844" cy="320" rx="33" ry="15" transform="rotate(2 844 320)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="901" cy="320" rx="33" ry="15" transform="rotate(21 901 320)" stroke="#176B52" stroke-width="2" fill="#E4F2EB" fill-opacity="0.8"/>
+<ellipse cx="958" cy="320" rx="33" ry="15" transform="rotate(40 958 320)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<ellipse cx="1015" cy="320" rx="33" ry="15" transform="rotate(59 1015 320)" stroke="#246B96" stroke-width="2" fill="#E7F1F8" fill-opacity="0.8"/>
+<text x="931" y="445" font-size="23" fill="#20372F" text-anchor="middle" font-weight="700">新相机下的投影</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">课程原创概念场景，不是论文的真实重建结果；照片数量、椭球数量与布局仅作示意。</text>
+</g></svg>

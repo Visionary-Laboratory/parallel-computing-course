@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">FA4：在两次 MMA 之间，P 经过寄存器和 TMEM</title><desc id="desc">FA4：在两次 MMA 之间，P 经过寄存器和 TMEM。第三部分的 SMEM、TMEM、TMA 与 tcgen05，在这里汇成一条完整数据流。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">FA4：在两次 MMA 之间，P 经过寄存器和 TMEM</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">第三部分的 SMEM、TMEM、TMA 与 tcgen05，在这里汇成一条完整数据流。</text>
+<rect x="55.0" y="140" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="166.5" y="194.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">Q/K：SMEM</text>
+<line x1="283.0" y1="187" x2="299.0" y2="187" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="305.0" y="140" width="223.0" height="94" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="416.5" y="179.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">QKᵀ → S</text>
+<text x="416.5" y="209.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">TMEM</text>
+<line x1="533.0" y1="187" x2="549.0" y2="187" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="555.0" y="140" width="223.0" height="94" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="666.5" y="179.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">Softmax</text>
+<text x="666.5" y="209.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">寄存器</text>
+<line x1="783.0" y1="187" x2="799.0" y2="187" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="805.0" y="140" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="916.5" y="194.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">P：TMEM</text>
+<path d="M 930 237 L 930 309 L 810 309" fill="none" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="553" y="267" width="243" height="84" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="674.5" y="301.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">P × V → u</text>
+<text x="674.5" y="331.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">TMEM</text>
+<rect x="270" y="267" width="210" height="84" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="375.0" y="316.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">V：SMEM</text>
+<line x1="489" y1="309" x2="544" y2="309" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="673" y1="360" x2="673" y2="391" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="422" y="402" width="500" height="76" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="672.0" y="447.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">u / ℓ → 转换 → 输出 O</text>
+<rect x="56" y="389" width="293" height="94" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="202.5" y="428.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">条件 correction</text>
+<text x="202.5" y="458.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">在 PV 之前缩放旧 u</text>
+<path d="M 351 431 L 383 431 L 383 370 L 574 370 L 574 355" fill="none" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">图中 P 是相对参考的未归一化权重；最终归一化由逐行分母 ℓ 完成。</text>
+</g></svg>

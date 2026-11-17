@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">不保存完整 P，反向时按需恢复</title><desc id="desc">不保存完整 P，反向时按需恢复。前向保存逐行 LSE；反向重算一个 S/P tile，再完成矩阵乘法与逐行修正。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">不保存完整 P，反向时按需恢复</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">前向保存逐行 LSE；反向重算一个 S/P tile，再完成矩阵乘法与逐行修正。</text>
+<rect x="55.0" y="147" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="166.5" y="201.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">Q、K、LSE</text>
+<line x1="283.0" y1="194" x2="299.0" y2="194" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="305.0" y="147" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="416.5" y="201.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">恢复当前 P tile</text>
+<line x1="533.0" y1="194" x2="549.0" y2="194" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="555.0" y="147" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="666.5" y="201.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">dP = dO Vᵀ</text>
+<line x1="783.0" y1="194" x2="799.0" y2="194" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="805.0" y="147" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="916.5" y="201.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">dS = P ⊙ (dP−D)</text>
+<rect x="65" y="352" width="292" height="96" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="211.0" y="408.84" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">dV = Pᵀ dO</text>
+<rect x="412" y="352" width="292" height="96" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="558.0" y="408.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">dQ = dS K / √d</text>
+<rect x="759" y="352" width="292" height="96" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="905.0" y="408.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">dK = dSᵀ Q / √d</text>
+<path d="M 408 247 L 408 300 L 212 300 L 212 345" fill="none" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M 922 247 L 922 298 L 558 298 L 558 345" fill="none" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="920" y1="247" x2="920" y2="344" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">Dᵢ = Σc Oᵢc dOᵢc；本图无 dropout，dK/dV 需要汇集来自不同 Query 行的贡献。</text>
+</g></svg>

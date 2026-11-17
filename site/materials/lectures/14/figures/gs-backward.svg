@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">反向传播走回同一张依赖图</title><desc id="desc">反向传播走回同一张依赖图。先固定可见集合、排序与截断分支，再讨论连续参数的导数。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">反向传播走回同一张依赖图</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">先固定可见集合、排序与截断分支，再讨论连续参数的导数。</text>
+<rect x="55.0" y="161" width="223.0" height="94" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="166.5" y="200.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">图像损失</text>
+<text x="166.5" y="230.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">dL/dC</text>
+<line x1="283.0" y1="208" x2="299.0" y2="208" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="305.0" y="161" width="223.0" height="94" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="416.5" y="200.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">合成反向</text>
+<text x="416.5" y="230.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">dα、dc</text>
+<line x1="533.0" y1="208" x2="549.0" y2="208" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="555.0" y="161" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="666.5" y="200.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">投影反向</text>
+<text x="666.5" y="230.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">dμ、dΣ</text>
+<line x1="783.0" y1="208" x2="799.0" y2="208" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="805.0" y="161" width="223.0" height="94" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="916.5" y="200.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">参数化反向</text>
+<text x="916.5" y="230.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">ds、dq、dSH</text>
+<rect x="85" y="345" width="463" height="101" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="316.5" y="388.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">一个像素读许多高斯</text>
+<text x="316.5" y="418.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">反向向许多高斯贡献梯度</text>
+<rect x="591" y="345" width="450" height="101" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="816.0" y="388.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">一个高斯覆盖许多像素</text>
+<text x="816.0" y="418.32" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">梯度必须正确归约</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">许多像素累加同一高斯的梯度会产生冲突；需要原子操作或分组归约，归约顺序影响舍入。</text>
+</g></svg>
