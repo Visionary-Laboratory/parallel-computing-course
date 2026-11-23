@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">中间结果是否落入显存，决定额外搬运</title><desc id="desc">中间结果是否落入显存，决定额外搬运。只核算 Z → bias + ReLU → Y；FP32，每个张量有 E 个元素，忽略 bias 读取。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">中间结果是否落入显存，决定额外搬运</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">只核算 Z → bias + ReLU → Y；FP32，每个张量有 E 个元素，忽略 bias 读取。</text>
+<rect x="50.0" y="135" width="313.3333333333333" height="100" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="206.66666666666666" y="177.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">GEMM</text>
+<text x="206.66666666666666" y="207.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">写 Z：4E B</text>
+<line x1="369.3333333333333" y1="185" x2="397.3333333333333" y2="185" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="403.3333333333333" y="135" width="313.3333333333333" height="100" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="560.0" y="177.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">bias + ReLU</text>
+<text x="560.0" y="207.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">读 Z：4E B</text>
+<line x1="722.6666666666666" y1="185" x2="750.6666666666666" y2="185" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="756.6666666666666" y="135" width="313.3333333333333" height="100" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="913.3333333333333" y="177.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">写 Y</text>
+<text x="913.3333333333333" y="207.82" font-size="23" fill="#20372F" text-anchor="middle" font-weight="600">4E B</text>
+<rect x="50" y="329" width="1015" height="93" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="557.5" y="384.34" font-size="26" fill="#20372F" text-anchor="middle" font-weight="600">融合 epilogue：GEMM 累加器 → bias + ReLU → 只写 Y：4E B</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">消除 Z 的一次写与一次读，共减少 8E B 逻辑全局流量；实际 HBM 字节和加速仍需测量。</text>
+</g></svg>

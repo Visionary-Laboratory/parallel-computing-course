@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">Batch 改变权重被复用的次数</title><desc id="desc">Batch 改变权重被复用的次数。同一组 K×N 权重；M 个输入行共同参与矩阵乘法。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">Batch 改变权重被复用的次数</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">同一组 K×N 权重；M 个输入行共同参与矩阵乘法。</text>
+<text x="268" y="142" font-size="26" fill="#20372F" text-anchor="middle" font-weight="700">M = 1</text>
+<rect x="50" y="185" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="226" y="187" width="155" height="214" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="303.5" y="287.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">W</text>
+<text x="303.5" y="317.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">K × N</text>
+<line x1="183" y1="233" x2="219" y2="233" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="388" y1="233" x2="425" y2="233" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="434" y="185" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="835" y="142" font-size="26" fill="#20372F" text-anchor="middle" font-weight="700">M = 8</text>
+<rect x="617" y="185" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="213" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="241" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="269" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="297" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="325" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="353" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="617" y="381" width="125" height="22" rx="3" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<rect x="793" y="187" width="155" height="214" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="870.5" y="287.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">W</text>
+<text x="870.5" y="317.5" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">K × N</text>
+<line x1="750" y1="233" x2="786" y2="233" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="955" y1="233" x2="992" y2="233" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="1001" y="185" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="213" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="241" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="269" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="297" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="325" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="353" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<rect x="1001" y="381" width="61" height="22" rx="3" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="557" y="468" font-size="25" fill="#176B52" text-anchor="middle" font-weight="700">FP16 理想流量：I = 2MKN / [2(MK + KN + MN)]</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">小 M 常被权重读取、启动与并行规模限制；更大 batch 的吞吐收益伴随排队延迟和内存成本。</text>
+</g></svg>

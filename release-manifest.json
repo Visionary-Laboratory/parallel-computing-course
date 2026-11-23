@@ -14,12 +14,8 @@
     "11-gaussian-splatting",
     "released-lecture-glossary"
   ],
-  "date": "2026-11-17",
+  "date": "2026-11-24",
   "titleOnlyLectures": [
-    {
-      "slug": "08-dnns-on-gpus",
-      "title": "DNNs on GPUs：把张量图变成高效算子"
-    },
     {
       "slug": "09-modern-architecture",
       "title": "现代GPU入门"
@@ -62,6 +58,11 @@
       "answers": 0
     },
     {
+      "slug": "08-dnns-on-gpus",
+      "slides": 95,
+      "answers": 0
+    },
+    {
       "slug": "10-flash-attention",
       "slides": 62,
       "answers": 0
@@ -72,9 +73,9 @@
       "answers": 0
     }
   ],
-  "slides": 591,
+  "slides": 686,
   "answers": 65,
-  "glossaryTerms": 99,
+  "glossaryTerms": 106,
   "files": [
     {
       "path": "site/.nojekyll",
@@ -321,12 +322,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-C63xvadF.js",
-      "sha256": "2799d8dbf9828ea47a2626fb346e0fb110616f3c72c07ffb8229116fe4f4c5c4"
+      "path": "site/assets/index-CkqoKPEq.css",
+      "sha256": "32ea90f699fefb6d7350098b59ecafe41996a567ab9a9127ceff91cd1a020404"
     },
     {
-      "path": "site/assets/index-D6ifIAWe.css",
-      "sha256": "c604f596794f214c6923500af8a1e9036ee72965a7d3ca61527b9f40cf58df3d"
+      "path": "site/assets/index-EEshs8gu.js",
+      "sha256": "639a3fdce9c65407a667421c4f6aa881f165a2c98f57e0c7c67485ad7414123b"
     },
     {
       "path": "site/favicon.svg",
@@ -334,55 +335,55 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "96573a429e7af881eed8111132bdfd3eda715f0f4d842ddf896b1c37c8b53992"
+      "sha256": "a8ec13c68db088c915537507dbf7a76ab053b3e78f18b622786164f9d5ed121c"
     },
     {
       "path": "site/index.html",
-      "sha256": "f595ff5b9c3cc62ac0c52cfcbea310dd10ca7bca4c9cd68ce02e069f0bfa3ef6"
+      "sha256": "70d241a34872eeab4019ddd525d914f03b670b26c92166150eff9479ca8f8a57"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "f32088af23c1eb669981e39065aaa4efc6592ecb816a6629dd294b6aaa9349c6"
+      "sha256": "d4bae60131dadd49c251eab9f289938897073975f46b48ff9ba1c637ae67b7cc"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "9bba9851ded3503b59683acb8e9593ee7e066fde3ced3bb2a04888400213e840"
+      "sha256": "4c7173b2150a7aaf2ecfac60a75bcda2ee97f5913fc2058710151c3bfd2e0949"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "780fbf36b602b52fff8045780769eb4b6299e3b6dd3755a9e454f9c2c660b718"
+      "sha256": "8285b69e797f5c5ae9ea572da2710d8c6da55269f90eabefd2d9dd021204c7fb"
     },
     {
       "path": "site/lectures/04-memory-synchronization/index.html",
-      "sha256": "edba582eb32a49f4b465e4fc2234c3fb7af5a336d0a1dc8f81ea24176fe5a56f"
+      "sha256": "62feb2493fd1468abaf5f9fade8169c9af1775d22418bf73c4636a4135580caf"
     },
     {
       "path": "site/lectures/05-cuda-introduction/index.html",
-      "sha256": "116c8fb730e93cc4016a34a8ad969ed33c70dcae7faa051e9887da3e5f30c070"
+      "sha256": "2e2f21cd08e71fb451ad7faed495f9743a94ee8b37280c5e4ebf2f41e5544efb"
     },
     {
       "path": "site/lectures/06-memory-hierarchy/index.html",
-      "sha256": "5f70031394aec3dbd3f4bd76d1740df9b8f184533565591b50fb9a11ccc58827"
+      "sha256": "95f1fe0d1da10726cb6f905bf120a205c8b8e1ac23bec67fe6a33f2f14733a48"
     },
     {
       "path": "site/lectures/07-parallel-primitives/index.html",
-      "sha256": "ee5fbad97406e40e3e348539ae7ee25e884e6a2930aa0e10af2ac6e11356326e"
+      "sha256": "3a9c1ec02cf3aa36033979d63a324f60bc51c713bea11c48e49364870c934303"
     },
     {
       "path": "site/lectures/08-dnns-on-gpus/index.html",
-      "sha256": "af5224611a6fa6384377682d15192664064b2404e72e3a935d75ee0e227c07f2"
+      "sha256": "f739f464e4b674b63c3c13591c19322e2ff8cef0c34a82456f8b61ddc5bff214"
     },
     {
       "path": "site/lectures/09-modern-architecture/index.html",
-      "sha256": "a8b33a9f2e68663c78490360277921aa276ba16f382f6e404f1c0d509c6f2922"
+      "sha256": "68d4b61b2e0b34679e0462a4af8105f566b145aaeb357e54de768eabacefcc01"
     },
     {
       "path": "site/lectures/10-flash-attention/index.html",
-      "sha256": "6de0f5afd94fbd635cede9461adcbbe17b90fcedb7e2df0edc7d9c5d48283e85"
+      "sha256": "204286f8c4ab40c746a862acbefdb5e353bd7f494abcf82efc641df53f62c81e"
     },
     {
       "path": "site/lectures/11-gaussian-splatting/index.html",
-      "sha256": "62f69450e7cb0962f79b42d81456e03fc39ccd84d27a17cbfa4f8d4df6155758"
+      "sha256": "b2020428956e61a3ae20eb749e54cc32c50c3e224a96c3e57fe84b4c10e6c715"
     },
     {
       "path": "site/materials/cuda/05_device_query.cu",
@@ -865,6 +866,10 @@
       "sha256": "7c13fd612f940112517f7ad5b7d1f06a533b16eac7e57a4cafe413df91f34175"
     },
     {
+      "path": "site/materials/lectures/05/figures/pointer-ownership.svg",
+      "sha256": "b316829f91ff8da4bcadff882216621e9dadcc91e8c58d897e05bf2cab24310f"
+    },
+    {
       "path": "site/materials/lectures/06/figures/gemm-output-grid.svg",
       "sha256": "2498a587b9b7d80b01f4eeafee17ea1d79ac3a86af439b298079891659946377"
     },
@@ -943,6 +948,58 @@
     {
       "path": "site/materials/lectures/07/figures/warp-shuffle-hardware.svg",
       "sha256": "033df369dd2946cd5f68fa076484ed3eae4eb306836d78c76159e198b0774216"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/affine-file-map.svg",
+      "sha256": "73d31a4d10f23fae9ecbe4badb832efcd7c5de8c19ca82dd2f4e7d432847fae3"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/affine-framework-flow.svg",
+      "sha256": "598bc2c7a7e0f93ba1d20cb9fa7a4ba54269c5e4437dabc5f8850d7eeba5514f"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/batch-reuse.svg",
+      "sha256": "814158ebf20da4b4f8f63850a56f9b6592a853ec52936d435583d76ae5268d10"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/convolution-coordinates.svg",
+      "sha256": "5a56067ff05f9660df2b9a9b29365fd749e0b0d766458a7128ef9068b8c316ad"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/cublas-operand-order.svg",
+      "sha256": "d788d3496e6d3038b0e001e164eba9cfd0104b0504f928b43d8b10020b1e35c3"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/fusion-traffic.svg",
+      "sha256": "5d110120cae9995c9f28681fb513f871e073d4a3ce5c0161da7a4ce4e3c91d46"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/gemm-thread-register-tile.svg",
+      "sha256": "fabac25a8e8972bb266f41f14e22c54941b9f2d41ecfed9e3ac98e34420c1860"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/im2col.svg",
+      "sha256": "49153e8737dbf448d6d16ca8a7f5486847ada736859d588f871edbdd4ee54c96"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/kv-cache-budget.svg",
+      "sha256": "32cbaeae41a746a7c976bdace7379ad80572c34ad2dbfe4a57532e4502d63709"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/linear-backward.svg",
+      "sha256": "422bf84746d096d2941b9024d2b399236fd83dc4c40b3a8e59974799ab981997"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/linear-example.svg",
+      "sha256": "87259a42b015241374b741fedb36bb271acf185916bfab5c919ba0e058da195c"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/row-column-layout.svg",
+      "sha256": "0ca48f93a44799aa07b2f92400547d7cd2edbef423dd382211e9bd8b318cba23"
+    },
+    {
+      "path": "site/materials/lectures/08/figures/softmax-stages.svg",
+      "sha256": "2ea9adf3723369629e5a2a1a6447e8ce35064ab492127629ba2880fda90cb430"
     },
     {
       "path": "site/materials/lectures/10/figures/fa1-loop-order.svg",

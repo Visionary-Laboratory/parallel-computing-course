@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+<title id="title">KV cache：保存历史需要多少空间</title><desc id="desc">KV cache：保存历史需要多少空间。示例：32 层 × batch 1 × 长度 4096 × 8 个 KV head × head dim 128 × FP16。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">KV cache：保存历史需要多少空间</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">示例：32 层 × batch 1 × 长度 4096 × 8 个 KV head × head dim 128 × FP16。</text>
+<rect x="51" y="133" width="1013" height="57" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="557.5" y="170.0" font-size="25" fill="#20372F" text-anchor="middle" font-weight="600">每层：K + V 两份历史张量</text>
+<rect x="64" y="228" width="449" height="172" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="89" y="261" font-size="27" fill="#246B96" text-anchor="start" font-weight="700">K</text>
+<line x1="165" y1="279" x2="165" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="211" y1="279" x2="211" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="257" y1="279" x2="257" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="303" y1="279" x2="303" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="349" y1="279" x2="349" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="395" y1="279" x2="395" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="441" y1="279" x2="441" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<text x="289" y="325" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">4096 × 8 × 128 × 2 B</text>
+<text x="289" y="373" font-size="23" fill="#566A63" text-anchor="middle" font-weight="400">每层 8 MiB</text>
+<rect x="603" y="228" width="449" height="172" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="628" y="261" font-size="27" fill="#246B96" text-anchor="start" font-weight="700">V</text>
+<line x1="704" y1="279" x2="704" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="750" y1="279" x2="750" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="796" y1="279" x2="796" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="842" y1="279" x2="842" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="888" y1="279" x2="888" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="934" y1="279" x2="934" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<line x1="980" y1="279" x2="980" y2="299" stroke="#CFDCD5" stroke-width="2"/>
+<text x="828" y="325" font-size="24" fill="#20372F" text-anchor="middle" font-weight="700">4096 × 8 × 128 × 2 B</text>
+<text x="828" y="373" font-size="23" fill="#566A63" text-anchor="middle" font-weight="400">每层 8 MiB</text>
+<text x="560" y="466" font-size="27" fill="#176B52" text-anchor="middle" font-weight="700">两份合计 16 MiB / 层 × 32 层 = 512 MiB</text>
+<line x1="32" y1="511" x2="1088" y2="511" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="540" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">只计有效 K/V 数据；batch、KV 头数和长度都会放大容量，另有对齐、页表和预留空间。</text>
+</g></svg>

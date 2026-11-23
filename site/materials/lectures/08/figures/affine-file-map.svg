@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="450" viewBox="0 0 1120 450" role="img" aria-labelledby="title desc">
+<title id="title">演示脚本，共用同一个 PyTorch 算子</title><desc id="desc">demo.py和optimize_x.py都导入affine.py，并调用其中的load_cuda。affine.py在导入时定义course::affine接口，登记CPU、Fake和backward；load_cuda编译加载affine.cu。affine.cu包含affine_cuda包装、affine_kernel计算和CUDA注册，生成.build中的扩展库，加载时将CUDA实现加入同一个PyTorch算子。准备完成后演示脚本调用前向和反向，optimize_x.py还更新输入向量。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">演示脚本，共用同一个 PyTorch 算子</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">上半部分完成准备与注册；demo.py 检验梯度，optimize_x.py 进一步循环更新输入。</text>
+<rect x="45" y="115" width="245" height="160" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="167.5" y="150" font-size="26" fill="#246B96" text-anchor="middle" font-weight="700">演示入口</text>
+<text x="167.5" y="188" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">demo.py</text>
+<text x="167.5" y="220" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">optimize_x.py</text>
+<text x="167.5" y="252" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">调用 load_cuda()</text>
+<rect x="385" y="115" width="320" height="160" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="545.0" y="150" font-size="26" fill="#246B96" text-anchor="middle" font-weight="700">affine.py</text>
+<text x="545.0" y="188" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">定义 course::affine</text>
+<text x="545.0" y="220" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">CPU / Fake / backward</text>
+<text x="545.0" y="252" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">load_cuda() 构建与加载</text>
+<rect x="810" y="115" width="270" height="160" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="945.0" y="150" font-size="26" fill="#176B52" text-anchor="middle" font-weight="700">affine.cu</text>
+<text x="945.0" y="188" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">affine_cuda 包装</text>
+<text x="945.0" y="220" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">affine_kernel 计算</text>
+<text x="945.0" y="252" font-size="21" fill="#20372F" text-anchor="middle" font-weight="400">→ .build/ 中的扩展库</text>
+<line x1="293" y1="180" x2="381" y2="180" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="337" y="163" font-size="19" fill="#246B96" text-anchor="middle" font-weight="400">导入</text>
+<line x1="708" y1="180" x2="806" y2="180" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="757" y="163" font-size="19" fill="#176B52" text-anchor="middle" font-weight="400">编译</text>
+<line x1="545" y1="278" x2="545" y2="321" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="560" y="310" font-size="19" fill="#246B96" text-anchor="start" font-weight="400">Python 侧注册</text>
+<line x1="945" y1="278" x2="945" y2="321" stroke="#176B52" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="960" y="310" font-size="19" fill="#176B52" text-anchor="start" font-weight="400">CUDA 注册</text>
+<rect x="385" y="325" width="695" height="68" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="732.5" y="352.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">PyTorch 算子系统</text>
+<text x="732.5" y="382.16" font-size="24" fill="#20372F" text-anchor="middle" font-weight="600">course::affine</text>
+<line x1="167" y1="278" x2="167" y2="321" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="180" y="310" font-size="19" fill="#936015" text-anchor="start" font-weight="400">准备完成后</text>
+<rect x="45" y="325" width="245" height="68" rx="8" fill="#FFF1CE" stroke="#936015" stroke-width="1.5"/>
+<text x="167.5" y="351.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">前向与反向</text>
+<text x="167.5" y="381.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">优化循环再更新 x</text>
+<line x1="293" y1="359" x2="381" y2="359" stroke="#936015" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="337" y="343" font-size="19" fill="#936015" text-anchor="middle" font-weight="400">执行</text>
+<line x1="32" y1="401" x2="1088" y2="401" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="430" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">蓝色：Python 接口与规则；绿色：CUDA 扩展；橙色：准备完成后的调用。箭头不表示 Tensor 数据搬运。</text>
+</g></svg>

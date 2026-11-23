@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="380" viewBox="0 0 1120 380" role="img" aria-labelledby="title desc">
+<title id="title">一次调用：框架组织，GPU 计算</title><desc id="desc">CPU上的Python传入CUDA Tensor x，PyTorch选择已注册的CUDA实现，调用CPU上的C++包装函数。包装函数分配输出Tensor y，在当前stream启动GPU kernel，kernel读取x并将2*x+1写入y。包装函数向Python返回输出Tensor，GPU数据不搬回CPU；CPU返回不代表GPU已经计算完成。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">一次调用：框架组织，GPU 计算</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">准备工作已完成：算子名字与 CUDA 实现已经登记到 PyTorch。</text>
+<text x="425" y="121" font-size="20" fill="#246B96" text-anchor="middle" font-weight="700">CPU：组织这次调用</text>
+<text x="965" y="121" font-size="20" fill="#176B52" text-anchor="middle" font-weight="700">GPU：执行计算</text>
+<rect x="45" y="144" width="220" height="78" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="155.0" y="175.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">Python</text>
+<text x="155.0" y="205.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">传入 Tensor x</text>
+<rect x="315" y="144" width="220" height="78" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="425.0" y="175.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">PyTorch</text>
+<text x="425.0" y="205.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">选择 CUDA 实现</text>
+<rect x="585" y="144" width="220" height="78" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="695.0" y="175.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">C++ 包装</text>
+<text x="695.0" y="205.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">分配 y，启动 kernel</text>
+<rect x="855" y="144" width="220" height="78" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="965.0" y="175.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">CUDA kernel</text>
+<text x="965.0" y="205.48" font-size="22" fill="#20372F" text-anchor="middle" font-weight="600">各线程写入 y[i]</text>
+<line x1="268" y1="183" x2="311" y2="183" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="538" y1="183" x2="581" y2="183" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="808" y1="183" x2="851" y2="183" stroke="#566A63" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M 695 224 V 287 H 155 V 224" fill="none" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="425" y="275" font-size="22" fill="#246B96" text-anchor="middle" font-weight="400">返回输出 Tensor y（数据仍在 GPU）</text>
+<text x="965" y="265" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">读取 x，写入 y</text>
+<text x="965" y="297" font-size="20" fill="#176B52" text-anchor="middle" font-weight="400">[−2, 0, 3] → [−3, 1, 7]</text>
+<line x1="32" y1="331" x2="1088" y2="331" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="360" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">箭头表示调用与返回；kernel 在当前 stream 排队，返回 Tensor 不代表 GPU 已完成计算。</text>
+</g></svg>

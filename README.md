@@ -1,6 +1,6 @@
 # 并行计算与算子编程 · 公开课程网站
 
-本仓库发布课程概览、第一至第七讲、第十讲 FlashAttention、第十一讲 3D Gaussian Splatting 和对应术语索引。第八讲 DNNs on GPUs、第九讲现代GPU入门仅显示标题，内容待更新。讲义支持连续阅读、逐页演示、交互图示与答案揭示。
+本仓库发布课程概览、第一至第八讲、第十讲 FlashAttention、第十一讲 3D Gaussian Splatting 和对应术语索引。第八讲为 CUDA 与 PyTorch；第九讲现代GPU入门仅显示标题，内容待更新。讲义支持连续阅读、逐页演示、交互图示与答案揭示。
 
 网站：https://visionary-laboratory.github.io/parallel-computing-course/
 

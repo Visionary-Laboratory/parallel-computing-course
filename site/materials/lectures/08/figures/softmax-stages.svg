@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="410" viewBox="0 0 1120 410" role="img" aria-labelledby="title desc">
+<title id="title">相同的三步计算，数据放在哪里？</title><desc id="desc">分步实现启动三个kernel，将行最大值、指数值和行和写入global memory供下一步读取。融合实现启动一个kernel，把每线程的四个值保留在寄存器中，归约通过warp shuffle和shared memory协作，只将最终概率写回global memory。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker><pattern id="inactive" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#EDF1F3"/><path d="M-2 2 L2 -2 M0 8 L8 0 M6 10 L10 6" stroke="#D7DFE3" stroke-width="1"/></pattern></defs>
+<rect width="1120" height="100%" rx="10" fill="#FFFFFF"/>
+<g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" fill="#20372F">
+<rect x="32" y="29" width="5" height="32" rx="2" fill="#176B52" stroke="none" stroke-width="1.5"/>
+<text x="51" y="54" font-size="28" fill="#20372F" text-anchor="start" font-weight="700">相同的三步计算，数据放在哪里？</text>
+<text x="51" y="86" font-size="19" fill="#566A63" text-anchor="start" font-weight="400">每行：求最大值 → 指数与求和 → 归一化。蓝色表示 global memory 中间数组。</text>
+<text x="45" y="147" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">分步</text>
+<rect x="148" y="110" width="205" height="66" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="250.5" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">kernel 1</text>
+<text x="250.5" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">最大值</text>
+<rect x="445" y="110" width="205" height="66" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="547.5" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">kernel 2</text>
+<text x="547.5" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">指数 + 求和</text>
+<rect x="742" y="110" width="205" height="66" rx="8" fill="#E7F1F8" stroke="#246B96" stroke-width="1.5"/>
+<text x="844.5" y="135.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">kernel 3</text>
+<text x="844.5" y="165.14" font-size="21" fill="#20372F" text-anchor="middle" font-weight="600">归一化</text>
+<line x1="355" y1="143" x2="441" y2="143" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="652" y1="143" x2="738" y2="143" stroke="#246B96" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="399" y="202" font-size="19" fill="#246B96" text-anchor="middle" font-weight="400">maximum</text>
+<text x="697" y="202" font-size="19" fill="#246B96" text-anchor="middle" font-weight="400">e、sums</text>
+<text x="983" y="150" font-size="23" fill="#176B52" text-anchor="start" font-weight="400">→ y</text>
+<text x="45" y="296" font-size="23" fill="#20372F" text-anchor="start" font-weight="700">融合</text>
+<rect x="148" y="238" width="799" height="103" rx="8" fill="#E4F2EB" stroke="#176B52" stroke-width="1.5"/>
+<text x="170" y="270" font-size="22" fill="#176B52" text-anchor="start" font-weight="700">一个 kernel</text>
+<text x="170" y="311" font-size="21" fill="#20372F" text-anchor="start" font-weight="400">v[4] 留在各线程寄存器；归约结果经 shuffle / shared 传给全块</text>
+<text x="983" y="298" font-size="23" fill="#176B52" text-anchor="start" font-weight="400">→ y</text>
+<line x1="32" y1="361" x2="1088" y2="361" stroke="#CFDCD5" stroke-width="1"/>
+<text x="36" y="390" font-size="18" fill="#566A63" text-anchor="start" font-weight="400">两种实现都从 x 读取输入；融合减少中间数组的写回与再读取，不改变 Softmax 的数学定义。</text>
+</g></svg>
