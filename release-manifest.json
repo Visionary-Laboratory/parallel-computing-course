@@ -14,7 +14,7 @@
     "11-gaussian-splatting",
     "released-lecture-glossary"
   ],
-  "date": "2026-11-24",
+  "date": "2026-11-27",
   "titleOnlyLectures": [
     {
       "slug": "09-modern-architecture",
@@ -322,12 +322,12 @@
       "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
     },
     {
-      "path": "site/assets/index-CkqoKPEq.css",
-      "sha256": "32ea90f699fefb6d7350098b59ecafe41996a567ab9a9127ceff91cd1a020404"
+      "path": "site/assets/index-Bylqt7jZ.css",
+      "sha256": "ca963edc5b35b6f57b6ed18c754df95971fd5bf556221bace5e87b994c1d56b3"
     },
     {
-      "path": "site/assets/index-EEshs8gu.js",
-      "sha256": "639a3fdce9c65407a667421c4f6aa881f165a2c98f57e0c7c67485ad7414123b"
+      "path": "site/assets/index-Do3mmC7H.js",
+      "sha256": "a751ca6ab5e5724ce63292b7b1e09603c591af16977bbda3873585d3e2d58e9a"
     },
     {
       "path": "site/favicon.svg",
@@ -335,55 +335,55 @@
     },
     {
       "path": "site/glossary/index.html",
-      "sha256": "a8ec13c68db088c915537507dbf7a76ab053b3e78f18b622786164f9d5ed121c"
+      "sha256": "d77db5974dc0e2743d89cc46bd70d69363680db1f6dbfdc6f7b165a2c405fba5"
     },
     {
       "path": "site/index.html",
-      "sha256": "70d241a34872eeab4019ddd525d914f03b670b26c92166150eff9479ca8f8a57"
+      "sha256": "05f8ac19442e95a854a93cfe121c9a1fb9e69b549830abfe87c406a074b2e763"
     },
     {
       "path": "site/lectures/01-introduction/index.html",
-      "sha256": "d4bae60131dadd49c251eab9f289938897073975f46b48ff9ba1c637ae67b7cc"
+      "sha256": "3a6e297f6a8033f395ccd3c2b5f4a12431897f230aea35905161a0fbd38417a9"
     },
     {
       "path": "site/lectures/02-execution-models/index.html",
-      "sha256": "4c7173b2150a7aaf2ecfac60a75bcda2ee97f5913fc2058710151c3bfd2e0949"
+      "sha256": "7442d1d33cd3ec2468e504f4907f3adb5e05b58aff4b95b042bcca50310bca69"
     },
     {
       "path": "site/lectures/03-parallel-design/index.html",
-      "sha256": "8285b69e797f5c5ae9ea572da2710d8c6da55269f90eabefd2d9dd021204c7fb"
+      "sha256": "71c5caa5e243b3af61a60523ea20e14028b42b4802098e9d965193cc68647a15"
     },
     {
       "path": "site/lectures/04-memory-synchronization/index.html",
-      "sha256": "62feb2493fd1468abaf5f9fade8169c9af1775d22418bf73c4636a4135580caf"
+      "sha256": "48d527a5a8588004046c4b6e6a586a3ce72a998a7098faf90d132dc1be461d69"
     },
     {
       "path": "site/lectures/05-cuda-introduction/index.html",
-      "sha256": "2e2f21cd08e71fb451ad7faed495f9743a94ee8b37280c5e4ebf2f41e5544efb"
+      "sha256": "b6e9dbbe7b140ffbad0abe5fc0829ebd4a920226c78a702dbe29cf295ba2cb83"
     },
     {
       "path": "site/lectures/06-memory-hierarchy/index.html",
-      "sha256": "95f1fe0d1da10726cb6f905bf120a205c8b8e1ac23bec67fe6a33f2f14733a48"
+      "sha256": "64781710e4974896d89700e2349e339491f5f8752c6cab0a41ea7d9338c64e72"
     },
     {
       "path": "site/lectures/07-parallel-primitives/index.html",
-      "sha256": "3a9c1ec02cf3aa36033979d63a324f60bc51c713bea11c48e49364870c934303"
+      "sha256": "19341cd5035fc90a09d976aa3f2b37ae1fd9e6e603a1e5c83d4736b5cab8e4be"
     },
     {
       "path": "site/lectures/08-dnns-on-gpus/index.html",
-      "sha256": "f739f464e4b674b63c3c13591c19322e2ff8cef0c34a82456f8b61ddc5bff214"
+      "sha256": "3542886e8fd788f0c3da25dd1567052ca4881c05872153d8c1524f526532249a"
     },
     {
       "path": "site/lectures/09-modern-architecture/index.html",
-      "sha256": "68d4b61b2e0b34679e0462a4af8105f566b145aaeb357e54de768eabacefcc01"
+      "sha256": "8d422a3c16b814e541d37342c86a4354c526412d456f19427c3d052096120cf1"
     },
     {
       "path": "site/lectures/10-flash-attention/index.html",
-      "sha256": "204286f8c4ab40c746a862acbefdb5e353bd7f494abcf82efc641df53f62c81e"
+      "sha256": "315be121b2a3e4df631c33a5928e2157e851adda4d77bfe7db630db3d03e7cb7"
     },
     {
       "path": "site/lectures/11-gaussian-splatting/index.html",
-      "sha256": "b2020428956e61a3ae20eb749e54cc32c50c3e224a96c3e57fe84b4c10e6c715"
+      "sha256": "785c160c4273520e2733b99615e76f7f6b8decbd57c488eccb33f6f5acffcd81"
     },
     {
       "path": "site/materials/cuda/05_device_query.cu",
@@ -408,6 +408,18 @@
     {
       "path": "site/materials/cuda/lecture05-cuda.zip",
       "sha256": "8d7c0fe87d162131f245b3ba5794a20cc228736d12d72083135a09bc674f4b92"
+    },
+    {
+      "path": "site/materials/cuda/lecture06-cuda.zip",
+      "sha256": "e702d4e820a5e6b17f0cd4495ad8ea07f03e07a77d23b18d1302dc3b72a0167d"
+    },
+    {
+      "path": "site/materials/cuda/lecture07-cuda.zip",
+      "sha256": "333623565a4b8da3e2c74d2158183766e7203082f92930c666df811b209bb606"
+    },
+    {
+      "path": "site/materials/cuda/lecture08-cuda.zip",
+      "sha256": "a1359927ceb39d15cfc7176a722d4ea3951fc7785436c26c8f5dd5f52bbfab50"
     },
     {
       "path": "site/materials/cuda/results/lecture05-rtx5090-laptop/results.csv",
